@@ -7,7 +7,7 @@
 
 :root{
     --color-primary: #191d2b;
-    --color-secondary: #ed5d28;
+    --color-secondary: #e66832;
     --color-white: #fff8f5;
     --color-grey: #737373;
     --br-sm-2: 14px;
@@ -30,7 +30,8 @@ a{
 }
 
 header {
-    height: 100vh;
+    background-color: #ed5d28;
+    height: 20vh;
     color: var(--color-white);
     overflow: hidden;
 }
@@ -42,69 +43,4 @@ section {
     left: 0;
     top: 0;
     padding: 3rem 18r;
-}
-
-.section {
-    transform: translateY(-100%);
-    transition: all .4s ease-in-out;
-    background-color: var(--color-primary);
-}
-
-.sec1 {
-    display: none;
-    transform: translateY(0) scale(1);
-}
-
-.sec2 {
-    display: none;
-    transform: translateY(0) scale(1);
-}
-
-.sec3 {
-    display: none;
-    transform: translateY(0) scale(1);
-}
-
-.sec4 {
-    display: none;
-    transform: translateY(0) scale(1);
-}
-
-//controls
-.controls{
-    position: fixed;
-    z-index: 10;
-    top: 50%;
-    right: 3%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transform: translateY(-50%);
-    .active-btn {
-        background-color: var(--color-secondary);
-        transition: all .4s ease-in-out;
-
-        i {
-            color: var(--color-white);
-        }
-    }
-    .control {
-        padding: 1rem;
-        cursor: pointer;
-        background-color: var(--color-grey);
-        width: 45px;
-        height: 45px;
-        border-radius: 12%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: .7rem;
-        box-shadow: var(--box-shadow-1);
-        i {
-            font-size: 1.3rem;
-            color: var(--color-white);
-            pointer-events: none;
-        }
-    }
 }
