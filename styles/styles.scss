@@ -15,7 +15,7 @@
 }
 
 body {
-    background-color: var(--color-primary);
+    background-color: var(--color-grey);
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 1.1rem;
     color: var(--color-white);
@@ -30,17 +30,16 @@ a{
 }
 
 header {
-    background-color: #ed5d28;
-    height: 20vh;
+    background-color: var(--color-secondary);
+    height: 24vh;
     color: var(--color-white);
     overflow: hidden;
 }
 
-section {
-    min-height: 100vh;
-    width: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    padding: 3rem 18r;
+.title {
+    color: #e66832;
+    background-color: var(--color-primary);
+    font-size: 4rem;
+    padding-left: 3%;
+    padding-top: 1%;
 }
