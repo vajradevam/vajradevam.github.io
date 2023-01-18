@@ -7,7 +7,8 @@
 
 :root{
     --color-primary: #191d2b;
-    --color-secondary: #e66832;
+    --color-secondary: #e03d0b;
+    --color-tertiary: #1b1f2b;
     --color-white: #fff8f5;
     --color-grey: #737373;
     --br-sm-2: 14px;
@@ -15,7 +16,7 @@
 }
 
 body {
-    background-color: var(--color-grey);
+    background-color: var(--color-primary);
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 1.1rem;
     color: var(--color-white);
@@ -38,7 +39,7 @@ header {
 
 .title {
     color: #e66832;
-    background-color: var(--color-primary);
+    background-color: var(--color-tertiary);
     font-size: 4rem;
     padding-left: 3%;
     padding-top: 1%;
