@@ -14,7 +14,7 @@ searchInput.addEventListener("input", (e) => {
 
 })
 
-fetch("./test.json")
+fetch("./words.json")
 .then(response => {
    return response.json();
 })
