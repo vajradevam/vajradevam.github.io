@@ -38,22 +38,25 @@ header {
   overflow: hidden;
 }
 
-@media (max-width: 479px) {
+@media screen and (max-width: 476px) {
   .title {
+    text-align: center;
     color: var(--color-secondary);
     background-color: var(--color-primary);
     font-size: 4rem;
   }
 }
-.title {
-  display: inline-flexbox;
-  justify-content: center;
-  margin: auto;
-  text-align: center;
-  color: var(--color-secondary);
-  width: 50%;
-  background-color: var(--color-primary);
-  font-size: 4rem;
+@media screen and (min-width: 476px) {
+  .title {
+    display: inline-flexbox;
+    justify-content: center;
+    margin: auto;
+    text-align: center;
+    color: var(--color-secondary);
+    width: 50%;
+    background-color: var(--color-primary);
+    font-size: 4rem;
+  }
 }
 
 .search-wrapper {
