@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="script.js" defer></script>
 </head>
 <body class="main-content">
 
@@ -17,6 +18,23 @@
         <div class="title"><span>Vishuddha</span></div>
     </header>
 
+    <br>
+
+    <div class="search-wrapper">
+        <label for="search">Search Words</label>
+        <input type="search" id="search">
+    </div>
+
+    <div class="user-cards" data-user-card-container></div>
+
+    <template data-user-template>
+        <div class="user-cards">
+            <div class="card">
+                <div class="header" data-header></div>
+                <div class="body" data-body></div>
+            </div>
+        </div>
+    </template>
 
 </body>
 </html> 

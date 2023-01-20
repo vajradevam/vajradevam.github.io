@@ -1,0 +1,819 @@
+{
+    "aadat": [
+        "aacharan"
+    ],
+    "aadmi": [
+        "vyakti"
+    ],
+    "aadmiyat": [
+        "manushyata"
+    ],
+    "aafat": [
+        "aapatti",
+        "aapdaa"
+    ],
+    "aarzoo": [
+        "ichchha"
+    ],
+    "aasaan": [
+        "saral"
+    ],
+    "aashiq": [
+        "premi"
+    ],
+    "aasmaan": [
+        "aakash"
+    ],
+    "agar": [
+        "yadi"
+    ],
+    "ailaan": [
+        "ghoshna"
+    ],
+    "ajeeb": [
+        "nirala",
+        "vichitra"
+    ],
+    "akal": [
+        "buddhi"
+    ],
+    "akhbaar": [
+        "samacharpatra"
+    ],
+    "aksar": [
+        "adhiktar"
+    ],
+    "alawa": [
+        "atirikt"
+    ],
+    "amir": [
+        "dhani",
+        "dhanvaan"
+    ],
+    "andaza": [
+        "anuman"
+    ],
+    "anjaam": [
+        "parinaam"
+    ],
+    "anzaam": [
+        "parinaam"
+    ],
+    "asar": [
+        "prabhaav"
+    ],
+    "aulaad": [
+        "santaan"
+    ],
+    "aurat": [
+        "mahila",
+        "stree"
+    ],
+    "azaadi": [
+        "swatantrata"
+    ],
+    "baazu": [
+        "bhuja"
+    ],
+    "bachcha": [
+        "baalak"
+    ],
+    "badbu": [
+        "durgandh"
+    ],
+    "badla": [
+        "pratishodh"
+    ],
+    "badlaav": [
+        "parivartan"
+    ],
+    "badtameeji": [
+        "dhristata"
+    ],
+    "bahtareen": [
+        "uttam"
+    ],
+    "barbaad": [
+        "nasht"
+    ],
+    "beizzatti": [
+        "apmaan"
+    ],
+    "bekaar": [
+        "vyarth"
+    ],
+    "bhaijaan": [
+        "bhrata"
+    ],
+    "bimaari": [
+        "rog"
+    ],
+    "biwi": [
+        "patni"
+    ],
+    "chehra": [
+        "mookh"
+    ],
+    "daad": [
+        "prashansa"
+    ],
+    "daag": [
+        "dosh",
+        "kalank"
+    ],
+    "daftar": [
+        "karyalaya"
+    ],
+    "dar": [
+        "bhay"
+    ],
+    "dard": [
+        "peeda"
+    ],
+    "dariya": [
+        "nadi"
+    ],
+    "daulat": [
+        "dhan",
+        "sampatti"
+    ],
+    "dawa": [
+        "aushadhi"
+    ],
+    "dil": [
+        "hriday"
+    ],
+    "dimaag": [
+        "mastishq"
+    ],
+    "dost": [
+        "mitra"
+    ],
+    "doston": [
+        "mitron"
+    ],
+    "duniya": [
+        "vishwa"
+    ],
+    "dushman": [
+        "shatru"
+    ],
+    "ehsaan": [
+        "kripa",
+        "upkaar"
+    ],
+    "ehsaas": [
+        "bhavna"
+    ],
+    "faasla": [
+        "antar"
+    ],
+    "faayada": [
+        "hit",
+        "laabh"
+    ],
+    "faisla": [
+        "nirnay"
+    ],
+    "farmaan": [
+        "aadesh",
+        "raajghoshna"
+    ],
+    "farmaish": [
+        "iccha"
+    ],
+    "farz": [
+        "kartavya"
+    ],
+    "fateh": [
+        "vijay"
+    ],
+    "fauj": [
+        "sena"
+    ],
+    "fauji": [
+        "sainik"
+    ],
+    "fida": [
+        "shradhha"
+    ],
+    "gaddar": [
+        "drohi"
+    ],
+    "gajab": [
+        "adbhut"
+    ],
+    "gareeb": [
+        "daridra",
+        "deen"
+    ],
+    "garib": [
+        "daridra",
+        "deen"
+    ],
+    "gazab": [
+        "adbhut"
+    ],
+    "gunaah": [
+        "aparadh"
+    ],
+    "gunah": [
+        "aparadh",
+        "apraadh"
+    ],
+    "haal": [
+        "dasha"
+    ],
+    "haalat": [
+        "stithi"
+    ],
+    "haasil": [
+        "prapt"
+    ],
+    "hafta": [
+        "saptaah"
+    ],
+    "hairaan": [
+        "achambit"
+    ],
+    "hamesha": [
+        "nirantar",
+        "sadaa",
+        "sadaiva"
+    ],
+    "hamla": [
+        "aakraman"
+    ],
+    "hamlaa": [
+        "aakraman"
+    ],
+    "haq": [
+        "adhikaar"
+    ],
+    "haqiqat": [
+        "vaastavikta"
+    ],
+    "hargiz": [
+        "kadaapi"
+    ],
+    "hawa": [
+        "pavan",
+        "vayu"
+    ],
+    "hazaar": [
+        "sahastra"
+    ],
+    "hifazat": [
+        "raksha"
+    ],
+    "hindustan": [
+        "bharat"
+    ],
+    "hissa": [
+        "bhaag"
+    ],
+    "hoshiyaar": [
+        "chatur",
+        "teevrabuddhi"
+    ],
+    "ijaat": [
+        "avishkaar"
+    ],
+    "ijazat": [
+        "anumati"
+    ],
+    "ijhaar": [
+        "abhivyakti",
+        "pradarshan"
+    ],
+    "ilaaj": [
+        "upchaar"
+    ],
+    "imaan": [
+        "vishwaas"
+    ],
+    "imaarat": [
+        "bhavan"
+    ],
+    "imandaar": [
+        "nishtavaan"
+    ],
+    "imtehaan": [
+        "pariksha"
+    ],
+    "inkar": [
+        "aswikaar",
+        "virodh"
+    ],
+    "insaan": [
+        "maanav"
+    ],
+    "intakaam": [
+        "pratishodh"
+    ],
+    "intezaam": [
+        "prabandh",
+        "vyavastha"
+    ],
+    "intezaar": [
+        "pratiksha"
+    ],
+    "ishaara": [
+        "sanket"
+    ],
+    "ishtehaar": [
+        "vigyapan"
+    ],
+    "istemaal": [
+        "prayog",
+        "upayog"
+    ],
+    "istemal": [
+        "prayog",
+        "upayog"
+    ],
+    "ittefaq": [
+        "sanyog"
+    ],
+    "izhaar": [
+        "abhivyakti",
+        "pradarshan"
+    ],
+    "izzat": [
+        "kirti",
+        "maan",
+        "pratishtha",
+        "yash"
+    ],
+    "jaanwar": [
+        "pashu"
+    ],
+    "jabardast": [
+        "adbhut"
+    ],
+    "jagah": [
+        "sthan"
+    ],
+    "jahaan": [
+        "vishwa"
+    ],
+    "jarur": [
+        "avashya"
+    ],
+    "jarurat": [
+        "avashyakta"
+    ],
+    "jaruri": [
+        "avashyak"
+    ],
+    "jashna": [
+        "utsav"
+    ],
+    "jawaab": [
+        "uttar"
+    ],
+    "jawaan": [
+        "yuva"
+    ],
+    "kaabil": [
+        "saksham",
+        "samarth"
+    ],
+    "kaafi": [
+        "paryaapt"
+    ],
+    "kaamyaab": [
+        "safal"
+    ],
+    "kaamyabi": [
+        "safalta"
+    ],
+    "kabool": [
+        "swikaar"
+    ],
+    "kamzor": [
+        "ashakt",
+        "durbal",
+        "nirbal"
+    ],
+    "karz": [
+        "roon",
+        "udhaar"
+    ],
+    "khaandaan": [
+        "gharana"
+    ],
+    "khaasiyat": [
+        "visheshta"
+    ],
+    "khali": [
+        "rikt"
+    ],
+    "khamosh": [
+        "maun"
+    ],
+    "khandaan": [
+        "vansh"
+    ],
+    "kharab": [
+        "akushal"
+    ],
+    "khareedna": [
+        "molna"
+    ],
+    "khatarnaak": [
+        "bhayaprad",
+        "sankatmay"
+    ],
+    "khatra": [
+        "sankat"
+    ],
+    "khilaaf": [
+        "viruddh"
+    ],
+    "khof": [
+        "bhay"
+    ],
+    "khoobi": [
+        "visheshta"
+    ],
+    "khoon": [
+        "hatya",
+        "rakt",
+        "vadh"
+    ],
+    "khud": [
+        "swayam"
+    ],
+    "khudko": [
+        "swayam"
+    ],
+    "khudse": [
+        "swayam"
+    ],
+    "khusbu": [
+        "sugandh"
+    ],
+    "khush": [
+        "prasann"
+    ],
+    "khushi": [
+        "anand",
+        "prasannata"
+    ],
+    "khwab": [
+        "sapna"
+    ],
+    "kism": [
+        "prakaar"
+    ],
+    "kismat": [
+        "bhagya"
+    ],
+    "kitaab": [
+        "pustak"
+    ],
+    "koshish": [
+        "prayaas"
+    ],
+    "kusur": [
+        "dosh"
+    ],
+    "lafj": [
+        "shabd"
+    ],
+    "lafz": [
+        "shabd"
+    ],
+    "maaf": [
+        "kshama"
+    ],
+    "maalik": [
+        "bhagwaan",
+        "swami"
+    ],
+    "madad": [
+        "sahayata"
+    ],
+    "mahaul": [
+        "vatavaran"
+    ],
+    "mahina": [
+        "maah"
+    ],
+    "mahol": [
+        "vatavaran"
+    ],
+    "mahsoos": [
+        "anubhuti"
+    ],
+    "majboor": [
+        "vivash"
+    ],
+    "manzil": [
+        "gantavya"
+    ],
+    "maqsad": [
+        "uddeshya"
+    ],
+    "mard": [
+        "purush"
+    ],
+    "mareez": [
+        "rogi"
+    ],
+    "mashhoor": [
+        "prashiddha"
+    ],
+    "masla": [
+        "samasya"
+    ],
+    "matlab": [
+        "arthaat",
+        "taatparya"
+    ],
+    "mausam": [
+        "rutu"
+    ],
+    "maut": [
+        "mrytyu"
+    ],
+    "maza": [
+        "aanand"
+    ],
+    "mazaa": [
+        "anand"
+    ],
+    "meharbaan": [
+        "dayalu"
+    ],
+    "mijaaz": [
+        "swabhaav"
+    ],
+    "mubarak": [
+        "abhinandan",
+        "badhai"
+    ],
+    "mulayam": [
+        "komal"
+    ],
+    "mumkin": [
+        "sambhav"
+    ],
+    "mushkil": [
+        "kathin"
+    ],
+    "musibat": [
+        "sankat"
+    ],
+    "naach": [
+        "nritya"
+    ],
+    "naacheez": [
+        "moolyaheen",
+        "tuchchh"
+    ],
+    "naainsaafi": [
+        "anyaaya"
+    ],
+    "naamanzur": [
+        "varjit"
+    ],
+    "naata": [
+        "sambandh"
+    ],
+    "naayaab": [
+        "durlabh"
+    ],
+    "nadan": [
+        "agyaat"
+    ],
+    "nafrat": [
+        "ghrina"
+    ],
+    "najaayaz": [
+        "anuchit"
+    ],
+    "nakli": [
+        "kritrim"
+    ],
+    "nalayak": [
+        "ayogya"
+    ],
+    "naraaz": [
+        "aprasann"
+    ],
+    "nasseb": [
+        "bhagya"
+    ],
+    "naubat": [
+        "samay"
+    ],
+    "naukar": [
+        "sevak"
+    ],
+    "nazar": [
+        "drishti"
+    ],
+    "nazdeek": [
+        "sameep"
+    ],
+    "nek": [
+        "punyaatma"
+    ],
+    "nigaah": [
+        "drishti"
+    ],
+    "nishan": [
+        "chinha"
+    ],
+    "noor": [
+        "prakash"
+    ],
+    "paagal": [
+        "moorkh"
+    ],
+    "paani": [
+        "jal"
+    ],
+    "paimaan": [
+        "pratigya",
+        "vachan"
+    ],
+    "pal": [
+        "kshan"
+    ],
+    "panaah": [
+        "sharan"
+    ],
+    "pareshaan": [
+        "vyakul"
+    ],
+    "pasand": [
+        "swikrit"
+    ],
+    "paseena": [
+        "shwed"
+    ],
+    "pesha": [
+        "vyavasaya"
+    ],
+    "peshaab": [
+        "mootra"
+    ],
+    "rishta": [
+        "sambandh"
+    ],
+    "saal": [
+        "varsh"
+    ],
+    "saalana": [
+        "vaarshik"
+    ],
+    "saalgirah": [
+        "varshgaanth"
+    ],
+    "sabra": [
+        "dhairya"
+    ],
+    "sau": [
+        "shat"
+    ],
+    "sawaal": [
+        "prashna"
+    ],
+    "sawal": [
+        "prashna"
+    ],
+    "september": [
+        "sita.ambar"
+    ],
+    "shaadi": [
+        "vivaah"
+    ],
+    "shaam": [
+        "sandhya"
+    ],
+    "shahar": [
+        "nagar"
+    ],
+    "shaheed": [
+        "veergati"
+    ],
+    "sharaab": [
+        "madira"
+    ],
+    "shayad": [
+        "kadachit"
+    ],
+    "sheesha": [
+        "darpan"
+    ],
+    "shukriya": [
+        "dhanyavaad"
+    ],
+    "sirf": [
+        "keval",
+        "maatra"
+    ],
+    "sust": [
+        "mand"
+    ],
+    "taaj": [
+        "mukut"
+    ],
+    "taareekh": [
+        "tithi"
+    ],
+    "tabdeel": [
+        "parivartit"
+    ],
+    "tabiyat": [
+        "swasthya"
+    ],
+    "takat": [
+        "shakti"
+    ],
+    "takdeer": [
+        "bhagya"
+    ],
+    "takht": [
+        "singhasan"
+    ],
+    "takleef": [
+        "kasht"
+    ],
+    "tandurust": [
+        "svasth"
+    ],
+    "taraf": [
+        "disha",
+        "oor",
+        "paksh"
+    ],
+    "tasveer": [
+        "chavi",
+        "chitra"
+    ],
+    "tohfa": [
+        "bhent",
+        "uphaar"
+    ],
+    "ujaad": [
+        "banjar"
+    ],
+    "umdaa": [
+        "achchha"
+    ],
+    "ummed": [
+        "apeksha"
+    ],
+    "umra": [
+        "aayu"
+    ],
+    "vaadaa": [
+        "vachan"
+    ],
+    "vaapas": [
+        "punar-aagaman"
+    ],
+    "wajah": [
+        "kaaran"
+    ],
+    "waqt": [
+        "samay"
+    ],
+    "yakeen": [
+        "vishwas"
+    ],
+    "zabaan": [
+        "jeebh"
+    ],
+    "zabardast": [
+        "adbhut"
+    ],
+    "zameen": [
+        "bhumi"
+    ],
+    "zameer": [
+        "antahakaran"
+    ],
+    "zaroor": [
+        "avashya"
+    ],
+    "zaroori": [
+        "aavashyak"
+    ],
+    "zehar": [
+        "vish"
+    ],
+    "zikr": [
+        "ullekh"
+    ],
+    "zimmedaari": [
+        "uttardayitva"
+    ],
+    "zindagi": [
+        "jeevan"
+    ]
+}
