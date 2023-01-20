@@ -66,6 +66,8 @@ header {
 }
 
 input {
+    border-radius: 5px;
+    box-shadow: 1px 1px var(--color-grey);
     border: 1px solid var(--color-grey);
     width: 50%;
     margin: auto;
@@ -76,6 +78,7 @@ input {
 }
 
 .user-cards {
+    box-shadow: .5px .5px var(--color-grey);
     display: grid;
     margin-left: .5rem;
     margin-right: .5rem;
