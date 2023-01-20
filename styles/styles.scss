@@ -39,8 +39,9 @@ header {
 }
 
 .title {
-    text-align: center;
+    display: inline-flexbox;
     margin: auto;
+    text-align: center;
     color: var(--color-secondary);
     width: 50%;
     background-color: var(--color-primary);
