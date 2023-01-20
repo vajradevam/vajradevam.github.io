@@ -8,7 +8,7 @@ searchInput.addEventListener("input", (e) => {
     const value = e.target.value.toLowerCase()
     
     words.forEach(word => {
-        const isVisible = word.word.toLowerCase().includes(value) 
+        const isVisible = word.word.toLowerCase().includes(value) || word.alternatives.toLowerCase().includes(value)
         word.element.classList.toggle("hide", !isVisible)
     })
 
@@ -33,6 +33,6 @@ fetch("./test.json")
     header.textContent = word.word[0].toUpperCase() + word.word.substring(1)
     body.textContent = alternatives.join(", ")
     userCardContainer.append(card)
-    return { word: word.word[0].toUpperCase() + word.word.substring(1), alternative: alternatives.join(", "), element: card}
+    return { word: word.word[0].toUpperCase() + word.word.substring(1), alternatives: alternatives.join(", "), element: card}
 })
 });
