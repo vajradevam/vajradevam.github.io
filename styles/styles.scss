@@ -55,7 +55,10 @@ header {
 }
 
 input {
-    font-size: 1rem;
+    padding-left: 0.25rem;
+    font-size: 2rem;
+    background-color: var(--color-white);
+    color: black;
 }
 
 .user-cards {
