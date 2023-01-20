@@ -38,8 +38,16 @@ header {
   overflow: hidden;
 }
 
+@media (max-width: 479px) {
+  .title {
+    color: var(--color-secondary);
+    background-color: var(--color-primary);
+    font-size: 4rem;
+  }
+}
 .title {
   display: inline-flexbox;
+  justify-content: center;
   margin: auto;
   text-align: center;
   color: var(--color-secondary);
