@@ -12,7 +12,7 @@ fetch("./test.json")
     const header = card.querySelector("[data-header]")
     const body = card.querySelector("[data-body]")
     header.textContent = user.word
-    body.textContent = user.alternative
+    body.textContent = user.alternative.join(", ")
     userCardContainer.append(card)
 })
 });
