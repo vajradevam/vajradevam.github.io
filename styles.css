@@ -1,14 +1,161 @@
+/* styles.css */
+
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
+    background-color: #fffaf0; /* Light creamy background */
+    color: #a00; /* Dark reddish-brown text */
+    font-family: 'Courier New', monospace; /* More distinct monospace font */
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    overflow-x: hidden;
+    line-height: 1.6; /* Improved line height for readability */
 }
 
 .container {
-    width: 80%;
-    margin: auto;
-    overflow: hidden;
+    width: 85%; /* Slightly wider container */
+    max-width: 1200px; /* Maximum width for larger screens */
+    margin: 30px auto; /* Increased top/bottom margin */
+    padding: 30px;
+    border: 3px double #d2691e; /* Double chocolate border */
+    box-shadow: 5px 5px 15px rgba(255, 215, 0, 0.3); /* Softer gold shadow */
+    border-radius: 12px; /* More rounded corners */
+    background: linear-gradient(to bottom right, #fff8dc, #fff5e1); /* Subtle gradient background */
 }
 
+h1 {
+    color: #ff6347; /* Tomato red h1 */
+    text-shadow: 2px 2px 0 #fff0f0; /* Very light pink text shadow */
+    font-size: 2.5em; /* Larger font size */
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #ff8c00; /* Dark orange h2 */
+    text-shadow: 1px 1px 0 #fff0f0;
+    margin-bottom: 15px;
+}
+
+h3 {
+    color: #b8860b; /* Dark goldenrod h3 */
+    text-shadow: 1px 1px 0 #fff0f0;
+    margin-bottom: 10px;
+}
+
+.nav-bar {
+    margin-bottom: 30px;
+    text-align: center; /* Center the nav bar */
+}
+
+.nav-bar a {
+    color: #8b4513; /* Saddle brown nav links */
+    text-decoration: none;
+    margin: 0 15px; /* Increased horizontal margin */
+    padding: 10px 18px; /* More padding */
+    border: 2px solid #8b4513;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s; /* Added transform transition */
+    box-shadow: 3px 3px 0 #8b4513;
+    font-weight: bold;
+}
+
+.nav-bar a:hover {
+    background-color: #8b4513;
+    color: #fffaf0;
+    transform: translateY(-2px); /* Lift on hover */
+    box-shadow: 1px 1px 0 #8b4513;
+}
+
+.section {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 2px dashed #ffb347; /* Light orange dashed border */
+    background-color: rgba(255, 255, 240, 0.6); /* Slightly more opaque background */
+    border-radius: 10px;
+    box-shadow: 3px 3px 8px rgba(255, 165, 0, 0.2); /* Orange shadow */
+}
+
+.blink {
+    animation: blinker 2s step-end infinite; /* More abrupt blink */
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
+.books-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Further increased min width */
+    grid-gap: 30px;
+}
+
+.book-card {
+    border: 2px solid #d9534f; /* Brick red border */
+    padding: 20px;
+    text-align: center;
+    background-color: rgba(255, 248, 220, 0.8); /* Cornsilk background */
+    box-shadow: 4px 4px 0 #d9534f;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    border-radius: 10px;
+}
+
+.book-card:hover {
+    transform: scale(1.05) translateY(-3px); /* Lift and scale on hover */
+    box-shadow: 2px 2px 0 #d9534f;
+}
+
+.book-image {
+    width: 150px; /* Increased image size */
+    height: 225px;
+    object-fit: cover;
+    margin-bottom: 15px;
+    image-rendering: pixelated;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Subtle image shadow */
+}
+
+.glitch {
+    animation: glitch 1.5s linear infinite; /* Adjusted glitch speed */
+}
+
+@keyframes glitch {
+    2%, 64% {
+        transform: translate(1px, 0) skew(0.5deg);
+    }
+    4%, 60% {
+        transform: translate(-1px, 0) skew(-0.5deg);
+    }
+    62% {
+        transform: translate(0, 0) skew(1.5deg);
+    }
+}
+
+p, li {
+    color: #551a00;
+    line-height: 1.7; /* Further improved line height */
+    font-size: 1.1em; /* Slightly larger font size */
+}
+
+footer {
+    color: #8b0000;
+    text-align: center;
+    padding: 20px 0;
+    border-top: 2px solid #ffb347;
+    margin-top: 30px; /* Added margin */
+}
+
+ul, ol {
+    list-style-type: disc;
+    padding-left: 30px;
+}
+
+pre {
+    background-color: rgba(255, 245, 238, 0.4); /* Light goldenrod background for code */
+    border: 2px solid #cd853f; /* Peru border */
+    padding: 20px;
+    overflow-x: auto;
+    border-radius: 8px;
+    color: #8b0000;
+    font-size: 1em;
+    line-height: 1.4;
+}
