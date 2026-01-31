@@ -1,63 +1,888 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Aman Pathak</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aman Pathak</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&family=Noto+Sans+Devanagari:wght@300;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-base: #191724;
+            --bg-surface: #1f1d2e;
+            --bg-highlight: #26233a;
+            
+            --pastel-gold: #f6c177;
+            --pastel-rose: #eb6f92;
+            --pastel-pine: #31748f;
+            --pastel-foam: #9ccfd8;
+            --pastel-iris: #c4a7e7;
+            
+            --text-main: #e0def4;
+            --text-muted: #908caa;
+
+            --cosmic-navy: var(--bg-base);
+            --void-black: #11111b;
+            --sacred-gold: var(--pastel-gold);
+            --mandala-red: var(--pastel-rose);
+            --ethereal-cyan: var(--pastel-foam);
+            --code-green: var(--pastel-pine);
+            
+            --font-serif: 'JetBrains Mono', monospace;
+            --font-sanskrit: 'Noto Sans Devanagari', sans-serif;
+            --font-body: 'JetBrains Mono', monospace;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            cursor: crosshair;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            width: 100vw;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            min-height: 100vh;
+        }
+
+        #akasha-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        aside {
+            background: rgba(31, 29, 46, 0.95);
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            border-right: 1px solid rgba(246, 193, 119, 0.1);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        main {
+            padding: 60px 80px;
+            overflow-y: auto;
+            height: 100vh;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-serif);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .sanskrit {
+            font-family: var(--font-sanskrit);
+            font-weight: 600;
+        }
+
+        .text-gold { color: var(--sacred-gold); }
+        .text-red { color: var(--mandala-red); }
+        
+        .sidebar-header {
+            text-align: center;
+        }
+
+        .mandala-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 30px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mini-mandala {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 1px dashed var(--pastel-iris);
+            border-radius: 50%;
+            animation: spin 30s linear infinite;
+        }
+
+        .mini-mandala::before {
+            content: '';
+            position: absolute;
+            top: 15%; left: 15%; right: 15%; bottom: 15%;
+            border: 1px solid var(--pastel-rose);
+            border-radius: 50%;
+            animation: spin 20s linear infinite reverse;
+        }
+
+        .sidebar-title {
+            font-size: 1.8rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .sidebar-subtitle {
+            font-size: 0.85rem;
+            color: var(--pastel-foam);
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+
+        nav ul {
+            list-style: none;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        nav li {
+            margin-bottom: 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--bg-base);
+            background: var(--pastel-gold);
+            transform: translateX(5px);
+        }
+
+        .sidebar-footer {
+            text-align: center;
+            font-size: 0.75rem;
+            opacity: 0.5;
+            margin-top: 40px;
+        }
+
+        section {
+            margin-bottom: 100px;
+            scroll-margin-top: 40px;
+        }
+
+        .section-header {
+            font-size: 2.5rem;
+            color: var(--pastel-iris);
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--bg-highlight);
+            padding-bottom: 15px;
+            display: inline-block;
+        }
+
+        .glitch-wrapper { position: relative; display: inline-block; }
+        .glitch { position: relative; }
+        .glitch::before, .glitch::after {
+            content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.8;
+        }
+        .glitch::before { color: var(--pastel-foam); z-index: -1; animation: glitch-anim-1 2.5s infinite linear alternate-reverse; }
+        .glitch::after { color: var(--pastel-rose); z-index: -2; animation: glitch-anim-2 3s infinite linear alternate-reverse; }
+        
+        @keyframes glitch-anim-1 {
+            0% { clip-path: inset(20% 0 80% 0); transform: translate(-2px, 1px); }
+            20% { clip-path: inset(60% 0 10% 0); transform: translate(2px, -1px); }
+            100% { clip-path: inset(30% 0 50% 0); transform: translate(1px, -1px); }
+        }
+        @keyframes glitch-anim-2 {
+            0% { clip-path: inset(10% 0 60% 0); transform: translate(2px, -1px); }
+            100% { clip-path: inset(20% 0 70% 0); transform: translate(-2px, 1px); }
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .terminal-window {
+            background: var(--bg-highlight);
+            border: 1px solid var(--pastel-foam);
+            border-radius: 8px;
+            padding: 0;
+            font-family: var(--font-mono);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .terminal-header {
+            background: rgba(156, 207, 216, 0.1);
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--pastel-foam);
+        }
+        .dot { height: 12px; width: 12px; border-radius: 50%; margin-right: 8px; }
+        .red { background: var(--pastel-rose); } .yellow { background: var(--pastel-gold); } .green { background: #9cce6a; }
+        .terminal-body { padding: 25px; color: var(--pastel-foam); line-height: 1.6; }
+        .prompt { color: var(--pastel-rose); margin-right: 10px; }
+        .output { color: var(--text-main); margin-bottom: 15px; display: block; }
+
+        .university-block {
+            background: var(--bg-surface);
+            border: 1px solid var(--bg-highlight);
+            border-left: 3px solid var(--pastel-gold);
+            padding: 30px;
+            border-radius: 4px;
+        }
+        .uni-title { color: var(--pastel-gold); font-size: 1.5rem; margin-bottom: 20px; }
+        .course-list { list-style: none; display: grid; gap: 10px; }
+        .course-item {
+            display: flex;
+            gap: 15px;
+            padding: 12px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 4px;
+            transition: transform 0.2s, background 0.2s;
+            text-decoration: none;
+            color: inherit;
+        }
+        .course-item:hover { transform: translateX(5px); background: rgba(255,255,255,0.05); }
+        .course-code { color: var(--pastel-foam); font-weight: bold; min-width: 140px; }
+        .course-name { color: var(--text-muted); }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .project-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--bg-highlight);
+            padding: 25px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--pastel-iris);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .project-card h3 { color: var(--pastel-rose); margin-bottom: 10px; font-size: 1.2rem; }
+        .tech-stack { color: var(--pastel-foam); font-size: 0.8rem; margin-bottom: 15px; font-weight: bold; }
+        .project-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; flex-grow: 1; }
+        .project-link {
+            color: var(--pastel-gold);
+            text-decoration: none;
+            font-size: 0.85rem;
+            border-bottom: 1px dashed var(--pastel-gold);
+            width: fit-content;
+        }
+        .project-link:hover { color: var(--text-main); border-bottom-style: solid; }
+
+        .papers-block {
+            background: var(--bg-surface);
+            padding: 30px;
+            border: 1px solid var(--bg-highlight);
+            border-left: 3px solid var(--pastel-pine);
+            border-radius: 4px;
+        }
+        .paper-group { margin-bottom: 25px; }
+        .paper-group:last-child { margin-bottom: 0; }
+        .paper-list { list-style: none; padding-left: 10px; }
+        .paper-item {
+            margin-bottom: 12px;
+            padding-left: 15px;
+            position: relative;
+            color: var(--text-muted);
+        }
+        .paper-item::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--pastel-pine);
+        }
+        .paper-link {
+            color: var(--pastel-foam);
+            text-decoration: none;
+            margin-left: 5px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(156, 207, 216, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+            transition: all 0.2s;
+        }
+        .paper-link:hover {
+            background: var(--pastel-foam);
+            color: var(--bg-base);
+        }
+
+        .timeline { border-left: 2px solid var(--bg-highlight); padding-left: 30px; }
+        .entry { margin-bottom: 50px; position: relative; }
+        .entry::before {
+            content: '';
+            position: absolute; left: -36px; top: 5px;
+            width: 10px; height: 10px; background: var(--pastel-iris);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px var(--bg-base);
+        }
+        .entry h3 { color: var(--pastel-gold); margin-bottom: 5px; }
+        
+        .shloka-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
+        .shloka-card {
+            background: linear-gradient(90deg, var(--bg-surface), transparent);
+            border-left: 3px solid var(--pastel-rose);
+            padding: 25px;
+        }
+        .shloka-sanskrit { font-size: 1.4rem; color: var(--pastel-iris); margin-bottom: 10px; }
+        .shloka-translation { color: var(--text-muted); font-style: italic; }
+
+        .contact-links {
+            display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px;
+        }
+        .link-btn {
+            padding: 10px 20px;
+            border: 1px solid var(--pastel-foam);
+            color: var(--pastel-foam);
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        .link-btn:hover { background: var(--pastel-foam); color: var(--bg-base); }
+
+        .source-code-link {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-highlight);
+            border: 1px solid var(--pastel-gold);
+            color: var(--pastel-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        .source-code-link:hover {
+            background: var(--pastel-gold);
+            color: var(--bg-base);
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(246, 193, 119, 0.4);
+        }
+
+        @media (max-width: 900px) {
+            body { grid-template-columns: 1fr; }
+            aside { height: auto; position: relative; padding: 60px 20px; border-right: none; border-bottom: 1px solid var(--bg-highlight); }
+            main { padding: 40px 20px; height: auto; }
+            nav ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+            nav li { margin-bottom: 0; }
+        }
+    </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="nav/courses.html">Courses</a></li>
-          <li><a href="contents/projects.html">Projects</a></li>
+    <canvas id="akasha-canvas"></canvas>
 
-        </ul>
-    </nav>
-      
-    
-  <div class="container">
-    <h1>Aman Pathak</h1>
-    <p><i>Computer Scientist | Engineer | Thinker | Philosopher</i></p>
+    <aside>
+        <div class="sidebar-header">
+            <div class="mandala-container">
+                <div class="mini-mandala"></div>
+                <div style="font-size: 3rem;">🕉️</div>
+            </div>
+            <h1 class="sidebar-title glitch" data-text="अमन पाठक">Aman Pathak</h1>
+            <p class="sidebar-subtitle">
+                Computer Scientist<br>
+                Engineer | Philosopher<br>
+                <span class="text-gold">"I love low level."</span>
+            </p>
+        </div>
 
-    <p>Email: vajradevam@gmail.com<br>
-       GitHub: <a href="https://github.com/vajradevam">github.com/vajradevam</a><br>
-       Blog: <a href="https://blog.vajradevam.in">blog.vajradevam.in</a><br>
-       CV: <a href="cv/Aman_Pathak_Resume.pdf">Download PDF</a></p>
+        <nav>
+            <ul>
+                <li><a href="#about" class="nav-link">Atman (About)</a></li>
+                <li><a href="#vidya" class="nav-link">Vidya (Courses)</a></li>
+                <li><a href="#projects" class="nav-link">Karma (Projects)</a></li>
+                <li><a href="#papers" class="nav-link">Shastra (Papers)</a></li>
+                <li><a href="#vichar" class="nav-link">Vichar (Thoughts)</a></li>
+                <li><a href="#shlokas" class="nav-link">Shruti (Texts)</a></li>
+                <li><a href="#contact" class="nav-link">Sampark (Contact)</a></li>
+            </ul>
+        </nav>
 
-    <h2>About</h2>
-    <p>
-        Mentally unstable genius. Engineer with questionable levels of insanity, and zero tolerance for bullshit.
-    </p>
+        <div class="sidebar-footer">
+            <p>© 2026 Aman Pathak</p>
+            <p style="margin-top:5px; font-size: 0.65rem;">System Status: Enlightened</p>
+        </div>
+    </aside>
 
-    <h2>Table of Contents</h2>
-        <table class="toc-table">
-            <tr>
-                <td><a href="contents/cs.html">Computer Science</a></td> 
-            </tr>
-            <tr>
-                <td><a href="contents/physics.html">Physics</a></td>
-            </tr>
-            <tr>
-              <td><a href="contents/maths.html">Mathematics</a></td>
-          </tr>
+    <main id="main-content">
+        
+        <section id="about">
+            <h2 class="section-header">Atman · Source Code</h2>
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                    <span style="margin-left: 10px; font-size: 0.8rem; opacity: 0.7;">aman@vajradevam:~</span>
+                </div>
+                <div class="terminal-body">
+                    <div>
+                        <span class="prompt">aman@vajradevam:~$</span> 
+                        <span class="typing-effect">cat vajradevam.txt</span>
+                    </div>
+                    <div class="output" style="margin-bottom: 25px; white-space: pre-wrap;">My name is Vajradevam, and it means “divine like the vajra” or “one who embodies the vajra.” The vajra is the thunderbolt and diamond, a symbol of strength that cannot be broken. In Hinduism, it is the weapon of Indra, the king of the gods, who uses it to protect order and defeat chaos. My name also reflects the qualities of Hanuman, whose power is steady and fearless, but always guided by devotion and humility. Like the vajra, his strength is not wild or selfish. It is controlled, loyal, and used in service of truth. My name reminds me that real power must be grounded in discipline and purpose.
 
+In Buddhism, the meaning of my name turns inward. The vajra represents wisdom that cannot be destroyed and clarity that cuts through ignorance. In Vajrayana Buddhism, the vajra is often held by Vajrapani, the protector and embodiment of the Buddha’s power. Vajrapani is called the holder of the vajra, showing the strength of awakened mind rather than physical force. From this view, Vajradevam does not mean a ruling god, but a state of awakened strength. It points to inner clarity, fearless compassion, and the power to face suffering without being shaken by it. My name becomes a reminder to live with unbreakable awareness and steady compassion.</div>
 
-        </table>
+                    <div>
+                        <span class="prompt">aman@vajradevam:~$</span> 
+                        cat personality_core.sys
+                    </div>
+                    <div class="output">
+                        > STATUS: Mentally unstable genius.<br>
+                        > CLASS: Engineer with questionable levels of insanity.<br>
+                        > TOLERANCE_BS: 0.0% (Zero)
+                    </div>
 
-      
+                    <div style="margin-top: 15px;">
+                        <span class="prompt">aman@vajradevam:~$</span> 
+                        cat mission_statement.txt
+                    </div>
+                    <div class="output">
+                        "You must place yourself in a position to give maximum glory to your Creator. So you go out there, and you be somebody glorious."
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <span class="prompt">aman@vajradevam:~$</span> _
+                    </div>
+                </div>
+            </div>
+        </section>
 
+        <section id="vidya">
+            <h2 class="section-header">Vidya · Knowledge</h2>
+            <div class="university-block">
+                <h3 class="uni-title">UW Madison Archives</h3>
+                <ul class="course-list">
+                    <a href="https://pages.cs.wisc.edu/~sohi/cs752/Spring2022/" target="_blank" class="course-item">
+                        <span class="course-code">COMP SCI 752</span> 
+                        <span class="course-name">ADVANCED COMPUTER ARCHITECTURE I</span>
+                    </a>
+                    <a href="https://ece757.ece.wisc.edu/" target="_blank" class="course-item">
+                        <span class="course-code">COMP SCI 757</span> 
+                        <span class="course-name">ADVANCED COMPUTER ARCHITECTURE II</span>
+                    </a>
+                    <a href="https://pages.cs.wisc.edu/~sinclair/courses/cs758/fall2019/includes/disc.html" target="_blank" class="course-item">
+                        <span class="course-code">COMP SCI 758</span> 
+                        <span class="course-name">ADVANCED TOPICS IN COMPUTER ARCHITECTURE</span>
+                    </a>
+                    <a href="https://pages.cs.wisc.edu/~mgliu/CS640/F22/index.html" target="_blank" class="course-item">
+                        <span class="course-code">COMP SCI 640</span> 
+                        <span class="course-name">INTRODUCTION TO COMPUTER NETWORKS</span>
+                    </a>
+                    <a href="https://pages.cs.wisc.edu/~bart/cs736.html" target="_blank" class="course-item">
+                        <span class="course-code">COMP SCI 736</span> 
+                        <span class="course-name">ADVANCED OPERATING SYSTEMS</span>
+                    </a>
+                    <a href="https://pages.cs.wisc.edu/~mgliu/CS740/F24/index.html" target="_blank" class="course-item">
+                        <span class="course-code">COMP SCI 740</span> 
+                        <span class="course-name">ADVANCED COMPUTER NETWORKS</span>
+                    </a>
+                    <a href="https://pages.cs.wisc.edu/~shivaram/cs744-sp24/" target="_blank" class="course-item">
+                        <span class="course-code">COMP SCI 744</span> 
+                        <span class="course-name">BIG DATA SYSTEMS</span>
+                    </a>
+                    <a href="https://pages.cs.wisc.edu/~jerryzhu/cs760.html" target="_blank" class="course-item">
+                        <span class="course-code">COMP SCI 760</span> 
+                        <span class="course-name">MACHINE LEARNING</span>
+                    </a>
+                    <a href="https://pages.cs.wisc.edu/~jerryzhu/cs540f23/index.html" target="_blank" class="course-item">
+                        <span class="course-code">COMP SCI 540</span> 
+                        <span class="course-name">INTRODUCTION TO ARTIFICIAL INTELLIGENCE</span>
+                    </a>
+                    <a href="https://pages.cs.wisc.edu/~rishab/cs435-fall24/index.html" target="_blank" class="course-item">
+                        <span class="course-code">COMP SCI 435</span> 
+                        <span class="course-name">INTRODUCTION TO CRYPTOGRAPHY</span>
+                    </a>
+                    <a href="https://pages.cs.wisc.edu/~ace/cs642-spring-2016.html" target="_blank" class="course-item">
+                        <span class="course-code">COMP SCI 642</span> 
+                        <span class="course-name">INTRODUCTION TO INFORMATION SECURITY</span>
+                    </a>
+                </ul>
+            </div>
+        </section>
 
-    <h2>Philosophy</h2>
+        <section id="projects">
+            <h2 class="section-header">Karma · Projects</h2>
+            <div class="project-grid">
+                
+                <div class="project-card">
+                    <h3>Attendance System</h3>
+                    <p class="tech-stack">Spring Boot • React • Docker</p>
+                    <p class="project-desc">Full-stack attendance management for educational institutions with role-based access and analytics.</p>
+                    <a href="https://github.com/vajradevam/Attendence-System" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
 
-    Gita - Compiled by <a href="https://blog.jyotiprakash.org/">Jyotiprakash Mishra</a> [<a href="../papers/Gita.pdf">pdf</a>]
-    <p>
-      Sometimes you have to be a bit too optimistic to make a difference.      <br><br>
-      I believe in thinking deeply, tinkering endlessly, and never settling for surface-level understanding.
-      I love low level.
-      You must place yourself in a position to give maximum glory to your Creator. So you go out there, and you be somebody glorious.
-    </p>
-  </div>
+                <div class="project-card">
+                    <h3>Commodore 64 Emulator</h3>
+                    <p class="tech-stack">Java • 6502 Asm</p>
+                    <p class="project-desc">Cycle-accurate 6502 CPU emulation with VIC-II text-mode graphics and PRG loading.</p>
+                    <a href="https://github.com/vajradevam/commodore64" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>Sudoku Engine</h3>
+                    <p class="tech-stack">Java • JavaFX • Algorithms</p>
+                    <p class="project-desc">Polished game with multiple difficulty levels, backtracking solver, hints, and a persistent top-10 leaderboard system.</p>
+                    <a href="https://github.com/vajradevam/judoku" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>Minesweeper</h3>
+                    <p class="tech-stack">Java • JavaFX</p>
+                    <p class="project-desc">Classic implementation with flood-fill algorithms, first-click safety measures, and custom board configurations.</p>
+                    <a href="https://github.com/vajradevam/minejweeper" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>Tetris Competitive</h3>
+                    <p class="tech-stack">Java • JavaFX</p>
+                    <p class="project-desc">Feature-rich implementation with wall-kicks, ghost pieces, and a split-screen two-player competitive mode.</p>
+                    <a href="https://github.com/vajradevam/jetris" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>vajrip</h3>
+                    <p class="tech-stack">C • TCP/IP • Linux TAP</p>
+                    <p class="project-desc">Userspace TCP/IP stack implementing Ethernet, IP, ICMP, UDP, and TCP flow control.</p>
+                    <a href="https://github.com/vajradevam/vajrip" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>Advx Defense</h3>
+                    <p class="tech-stack">Python • PyTorch • ML</p>
+                    <p class="project-desc">Research implementing FGSM, PGD, and CW attacks. Achieved ~98% accuracy against adversarial examples.</p>
+                    <a href="https://github.com/vajradevam/advx" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>2048 Web</h3>
+                    <p class="tech-stack">Tailwind • JS</p>
+                    <p class="project-desc">Polished implementation with smooth animations, touch support, score tracking, and responsive design.</p>
+                    <a href="https://github.com/vajradevam/2048" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>RISC-V Testbench</h3>
+                    <p class="tech-stack">C • Assembly • Verilog</p>
+                    <p class="project-desc">Standalone C programs to validate processor cores via deterministic register signaling.</p>
+                    <a href="https://github.com/vajradevam/riscc" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>CHIP-8 Emulator</h3>
+                    <p class="tech-stack">C • SDL2 • Emulation</p>
+                    <p class="project-desc">Cross-platform emulator with accurate 60Hz timers, sound support, and debug mode for instruction-level logging.</p>
+                    <a href="https://github.com/vajradevam/chip8" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>Ray Tracing Demo</h3>
+                    <p class="tech-stack">C • SDL2 • Graphics</p>
+                    <p class="project-desc">Real-time 2D ray casting demo visualizing object intersection, dynamic shadows, and interactive light sources.</p>
+                    <a href="https://github.com/vajradevam/ray-tracing-c" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>YASL Language</h3>
+                    <p class="tech-stack">Python • Interpreters</p>
+                    <p class="project-desc">"Yet Another Scripting Language" - Minimal interpreted language with hand-written parser.</p>
+                    <a href="https://github.com/vajradevam/yasl" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>Terminal Physics</h3>
+                    <p class="tech-stack">C • ANSI Escape Codes</p>
+                    <p class="project-desc">Lightweight physics animation using pure ASCII and ANSI sequences. No external libraries, just raw terminal control.</p>
+                    <a href="https://github.com/vajradevam/c-animation" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>Luma Compiler</h3>
+                    <p class="tech-stack">Java • Language Design</p>
+                    <p class="project-desc">Statically analyzed language with a full compilation pipeline: Lexer -> Parser -> AST -> Semantic Analysis -> Execution.</p>
+                    <a href="https://github.com/vajradevam/Luma-Lang" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>Takenizer</h3>
+                    <p class="tech-stack">Python • NLP • BPE</p>
+                    <p class="project-desc">Byte-level tokenizer using Byte Pair Encoding (BPE). Reversible encoding/decoding designed for LLM pipelines.</p>
+                    <a href="https://github.com/vajradevam/takenizer" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>RV32I Emulator</h3>
+                    <p class="tech-stack">Java • Architecture</p>
+                    <p class="project-desc">Five-stage unpipelined execution model for the RISC-V RV32I instruction set. Step-by-step register inspection.</p>
+                    <a href="https://github.com/vajradevam/rv32i-SingleBus-emulator" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>CST Pipeline</h3>
+                    <p class="tech-stack">Python • Data Processing</p>
+                    <p class="project-desc">Automated pipeline for extracting and transforming S-parameter and gain data from CST Studio simulation exports.</p>
+                    <a href="https://github.com/vajradevam/cst-studio-pipeline" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>sell-shell</h3>
+                    <p class="tech-stack">C • Syscalls • Unix</p>
+                    <p class="project-desc">Minimal Unix shell supporting foreground/background processes via fork/exec.</p>
+                    <a href="https://github.com/vajradevam/sell-shell" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>lolfetch</h3>
+                    <p class="tech-stack">C • Linux API</p>
+                    <p class="project-desc">High-performance system fetch tool retrieving kernel info without runtime dependencies.</p>
+                    <a href="https://github.com/vajradevam/lolfetch" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>LSTM Weather</h3>
+                    <p class="tech-stack">Python • TensorFlow</p>
+                    <p class="project-desc">Time-series forecasting model using Long Short-Term Memory networks to predict weather conditions from historical data.</p>
+                    <a href="https://github.com/vajradevam/basic-lstm-weather-prediction" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>Markov Chain Text</h3>
+                    <p class="tech-stack">JS • Probability</p>
+                    <p class="project-desc">Generates coherent sentences using a Markov chain model trained on user input. Pure client-side implementation.</p>
+                    <a href="https://github.com/vajradevam/markov-chain-sequence-generator" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>Game of Life</h3>
+                    <p class="tech-stack">JS • Cellular Automata</p>
+                    <p class="project-desc">Interactive simulation of Conway's rules. Visualizes emergent behavior with start/stop controls.</p>
+                    <a href="https://github.com/vajradevam/game-of-life" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>Palette Gen</h3>
+                    <p class="tech-stack">JS • Image Processing</p>
+                    <p class="project-desc">Extracts dominant colors from uploaded images to generate a matching 5-color hex palette.</p>
+                    <a href="https://github.com/vajradevam/color-scheme-generator" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>is_even</h3>
+                    <p class="tech-stack">C • Low-level</p>
+                    <p class="project-desc">A deliberately over-engineered check for even numbers to explore compiler behavior and unconventional logic.</p>
+                    <a href="https://github.com/vajradevam/is_even" target="_blank" class="project-link">View on GitHub →</a>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="papers">
+            <h2 class="section-header">Shastra · Papers</h2>
+            <div class="papers-block">
+                
+                <div class="paper-group">
+                    <ul class="paper-list">
+                        <li class="paper-item">
+                            Need of 512 bit standardized block ciphers 
+                            <a href="../papers/Need_of_512_bit_standardized_block_ciphers.pdf" target="_blank" class="paper-link">PDF</a>
+                        </li>
+                        <li class="paper-item">
+                            Attack surfaces in Operating Systems 
+                            <a href="../papers/Attack_surfaces_in_Operating_Systems.pdf" target="_blank" class="paper-link">PDF</a>
+                        </li>
+                        <li class="paper-item">
+                            On the Explainability of Models with a Large Number of Features 
+                            <a href="../papers/On_the_Explainability_of_Models_with_a_Large_Number_of_Features.pdf" target="_blank" class="paper-link">PDF</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="paper-group">
+                    <ul class="paper-list">
+                        <li class="paper-item">
+                            Lagrange Multipliers 
+                            <a href="../papers/lagrange-mults.pdf" target="_blank" class="paper-link">PDF</a>
+                        </li>
+                        <li class="paper-item">
+                            Fast Fourier Transform 
+                            <a href="../papers/FFT.pdf" target="_blank" class="paper-link">PDF</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="paper-group">
+                    <ul class="paper-list">
+                        <li class="paper-item">
+                            The Universe as a Cosmic Oscillator 
+                            <a href="../papers/The_Universe_as_a_Cosmic_Oscillator.pdf" target="_blank" class="paper-link">PDF</a>
+                        </li>
+                        <li class="paper-item">
+                            Planck Temperature - <a href="https://blog.jyotiprakash.org/" target="_blank" style="color: var(--pastel-foam); text-decoration: none; border-bottom: 1px dashed;">Jyotiprakash</a> 
+                            <a href="../papers/planck temp.pdf" target="_blank" class="paper-link">PDF</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="paper-group">
+                    <ul class="paper-list">
+                        <li class="paper-item">
+                            A Hardware Security Review of RISC-V
+                            <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sGi-V-oAAAAJ&citation_for_view=sGi-V-oAAAAJ:u-x6o8ySG0sC" target="_blank" class="paper-link">View</a>
+                            <div style="font-size: 0.8em; opacity: 0.6; margin-top: 2px;">J Mishra, SK Sahay, A Pathak • ICT4SD (2025)</div>
+                        </li>
+                        <li class="paper-item">
+                            Cache and Speculative Side Channel Attacks: A Comprehensive Review
+                            <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sGi-V-oAAAAJ&citation_for_view=sGi-V-oAAAAJ:u5HHmVD_uO8C" target="_blank" class="paper-link">View</a>
+                            <div style="font-size: 0.8em; opacity: 0.6; margin-top: 2px;">J Mishra, SK Sahay, A Pathak • ICT4SD (2025)</div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="vichar">
+            <h2 class="section-header">Vichar · Philosophy</h2>
+            <div class="timeline">
+                <article class="entry">
+                    <span style="font-size: 0.8rem; opacity: 0.6;">Compiled by Jyotiprakash Mishra</span>
+                    <h3>The Bhagavad Gita</h3>
+                    <p style="opacity: 0.8;">"Sometimes you have to be a bit too optimistic to make a difference."</p>
+                    <a href="assets/Gita.pdf" style="color: var(--pastel-foam); font-size: 0.8rem;">[Download PDF]</a>
+                </article>
+
+                <article class="entry">
+                    <span style="font-size: 0.8rem; opacity: 0.6;">Reflections</span>
+                    <h3>The Deep Dive</h3>
+                    <p style="opacity: 0.8;">I believe in thinking deeply, tinkering endlessly, and never settling for surface-level understanding. The surface is where the noise is; the signal is in the depths.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="shlokas">
+            <h2 class="section-header">Shruti · Texts</h2>
+            <div class="shloka-grid">
+                <div class="shloka-card" onclick="triggerSoundEffect()">
+                    <div class="shloka-sanskrit">ॐ असतो मा सद्गमय ।</div>
+                    <div class="shloka-translation">Lead me from the unreal to the real. From darkness to light.</div>
+                </div>
+                <div class="shloka-card" onclick="triggerSoundEffect()">
+                    <div class="shloka-sanskrit">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन ।</div>
+                    <div class="shloka-translation">You have a right to perform your prescribed duties, but you are not entitled to the fruits of your actions.</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2 class="section-header">Sampark · Contact</h2>
+            <p style="margin-bottom: 20px;">Signal will be sent to the ether. Response not guaranteed.</p>
+            <div class="contact-links">
+                <a href="mailto:vajradevam@gmail.com" class="link-btn">vajradevam@gmail.com</a>
+                <a href="https://github.com/vajradevam" target="_blank" class="link-btn">GitHub</a>
+                <a href="https://blog.vajradevam.in" target="_blank" class="link-btn">Blog</a>
+                <a href="assets/Aman_Pathak_Resume.pdf" target="_blank" class="link-btn">Download CV</a>
+            </div>
+        </section>
+
+    </main>
+
+    <a href="https://github.com/vajradevam/vajradevam.github.io" target="_blank" class="source-code-link" title="View Source Code">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+        </svg>
+    </a>
+
+    <script>
+        const canvas = document.getElementById('akasha-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+        
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width; this.y = Math.random() * height;
+                this.size = Math.random() * 2;
+                this.speedX = (Math.random() - 0.5) * 0.2; this.speedY = (Math.random() - 0.5) * 0.2;
+                this.opacity = Math.random() * 0.5;
+                this.gold = Math.random() > 0.9;
+            }
+            update() {
+                this.x += this.speedX; this.y += this.speedY;
+                if (this.x > width) this.x = 0; if (this.x < 0) this.x = width;
+                if (this.y > height) this.y = 0; if (this.y < 0) this.y = height;
+                if(Math.random() > 0.95) this.opacity = Math.random() * 0.8;
+            }
+            draw() {
+                ctx.fillStyle = this.gold ? `rgba(246, 193, 119, ${this.opacity})` : `rgba(156, 207, 216, ${this.opacity})`;
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+            }
+        }
+        function initParticles() { particles = []; for (let i = 0; i < 100; i++) particles.push(new Particle()); }
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateParticles);
+        }
+        window.addEventListener('resize', () => { resize(); initParticles(); });
+        resize(); initParticles(); animateParticles();
+
+        function triggerSoundEffect() {
+            // Placeholder for potential future sound effects, currently disabled as requested.
+        }
+
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    
+                    const id = entry.target.getAttribute('id');
+                    const activeLink = document.querySelector(`.nav-link[href="#${id}"]`);
+                    if (activeLink) {
+                        activeLink.classList.add('active');
+                    }
+                }
+            });
+        }, {
+            threshold: 0.3
+        });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+    </script>
 </body>
 </html>
