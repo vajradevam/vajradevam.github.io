@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aman Pathak · vajradevam</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<button class="theme-btn" id="themeToggle" title="Toggle theme">&#9681;</button>
+
+<div class="nav" style="padding:1.5rem 2rem 0">
+  <a href="index.html" class="active">home</a>
+  <a href="projects.html">projects</a>
+  <a href="research.html">research</a>
+  <a href="coursework.html">coursework</a>
+</div>
+
+<div class="page">
+
+<div class="hero">
+  <h1>Aman Pathak</h1>
+  <div class="tagline">
+    vajradevam &middot; "Life is an anomaly in eternal death"<br>
+    computer architecture / hardware security / low-level systems
+  </div>
+  <div class="links">
+    <a href="https://github.com/vajradevam">github/vajradevam</a>
+    <a href="https://vajradevam.in">vajradevam.in</a>
+    <a href="https://blog.vajradevam.in">blog</a>
+    <a href="mailto:vajradevam@gmail.com">vajradevam@gmail.com</a>
+  </div>
+</div>
+
+<hr>
+
+<p>Undergraduate researcher at BITS Pilani / ENineHQ working on hardware security for RISC-V architectures, side-channel attacks, and ML-based malware analysis. Previously researched RF &amp; antenna systems at KIIT. 5 Scopus publications, 6 filed RISC-V patents, 74+ GitHub repos.</p>
+
+<div class="section-title">education</div>
+
+<p><strong>Kalinga Institute of Industrial Technology (KIIT)</strong> &middot; CGPA: 8.92/10</p>
+<p class="sub">B.Tech in Computer Science &middot; 2022&ndash;2026</p>
+
+<div class="section-title">technical skills</div>
+
+<div class="skill-row"><span class="label">Languages</span> C, Rust, Java, Python, Verilog, SystemVerilog, VHDL, HLS, RISC-V/6502 Assembly, Go, Perl</div>
+<div class="skill-row"><span class="label">Systems</span> GNU/Linux, OpenBSD, GDB, Valgrind, Git, Docker, Vim, LaTeX, Wireshark, CST Studio</div>
+<div class="skill-row"><span class="label">Domains</span> Computer Architecture, Operating Systems, Hardware Security, Side-Channel Analysis, Embedded Systems, Compilers</div>
+
+</div>
+
+<div class="footer">
+  <span>"You must place yourself in a position to give maximum glory to your Creator."</span><br>
+  &copy; 2026 Aman Pathak
+</div>
+
+<script>
+const t=document.getElementById('themeToggle'),s=document.documentElement.classList;
+if(localStorage.getItem('theme')==='light'){s.add('light');t.innerHTML='&#9790;'}
+t.onclick=()=>{s.toggle('light');const l=s.contains('light');localStorage.setItem('theme',l?'light':'dark');t.innerHTML=l?'&#9790;':'&#9681;'}
+</script>
+</body>
+</html>

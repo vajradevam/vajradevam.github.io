@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research · Aman Pathak</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<button class="theme-btn" id="themeToggle" title="Toggle theme">&#9681;</button>
+
+<div class="nav" style="padding:1.5rem 2rem 0">
+  <a href="index.html">home</a>
+  <a href="projects.html">projects</a>
+  <a href="research.html" class="active">research</a>
+  <a href="coursework.html">coursework</a>
+</div>
+
+<div class="wrapper">
+
+<h1>Research</h1>
+
+<div class="section-title">research experience</div>
+
+<div class="research-item">
+  <strong>Undergraduate Researcher</strong> &middot; Hardware Security &amp; Malware Analysis
+  <span class="sub">(May&ndash;Aug 2025)</span><br>
+  <span class="org">BITS Pilani / ENineHQ Technologies Pvt. Ltd.</span>
+  <ul>
+    <li>Hardware security of RISC-V architectures, side-channel attack mitigation, cryptographic implementations</li>
+    <li>Malware analysis using high-dimensional ML on embedded system binaries</li>
+  </ul>
+</div>
+
+<div class="research-item">
+  <strong>Undergraduate Researcher</strong> &middot; RF &amp; Antenna Systems
+  <span class="sub">(Feb 2023&ndash;Aug 2024)</span><br>
+  <span class="org">KIIT University</span>
+  <ul>
+    <li>Ku/X-band microstrip patch antennas in CST Studio for THz/GHz RF communication</li>
+    <li>Python GUI for ASCII data preprocessing; deep learning for antenna parameter optimisation</li>
+  </ul>
+</div>
+
+<div class="section-title">publications</div>
+
+<div class="pub">
+  <span class="title">Memory Security: From Cold Boot Attacks to Side-Channel Defenses</span><br>
+  <span class="venue">J. Mishra, S.K. Sahay, S. Mishra, <strong>A. Pathak</strong> &middot; 11th ICTIS, Springer LNNS, 2026</span>
+</div>
+
+<div class="pub">
+  <span class="title">Formal Verification of Software-Managed Cache Coherency for RISC-V Heterogeneous Embedded Systems</span><br>
+  <span class="venue">J. Mishra, S.K. Sahay, S. Mishra, <strong>A. Pathak</strong> &middot; SmartCom, Springer LNNS, 2026</span>
+</div>
+
+<div class="pub">
+  <span class="title">RV-JOSH: A Hardened Operating System for RISC-V based on Java</span><br>
+  <span class="venue">J. Mishra, S.K. Sahay, S. Mishra, <strong>A. Pathak</strong> &middot; SmartCom, Springer LNNS, 2026</span>
+</div>
+
+<div class="pub">
+  <span class="title">Cache and Speculative Side Channel Attacks: A Comprehensive Review</span><br>
+  <span class="venue">J. Mishra, S.K. Sahay, <strong>A. Pathak</strong> &middot; ICT4SD, Springer LNNS, Vol.2 pp.219&ndash;233, 2025</span>
+</div>
+
+<div class="pub">
+  <span class="title">A Hardware Security Review of RISC-V</span><br>
+  <span class="venue">J. Mishra, S.K. Sahay, <strong>A. Pathak</strong> &middot; ICT4SD, Springer LNNS, Vol.2 pp.409&ndash;422, 2025</span>
+</div>
+
+</div>
+
+<div class="footer">
+  &copy; 2026 Aman Pathak
+</div>
+
+<script>
+const t=document.getElementById('themeToggle'),s=document.documentElement.classList;
+if(localStorage.getItem('theme')==='light'){s.add('light');t.innerHTML='&#9790;'}
+t.onclick=()=>{s.toggle('light');const l=s.contains('light');localStorage.setItem('theme',l?'light':'dark');t.innerHTML=l?'&#9790;':'&#9681;'}
+</script>
+</body>
+</html>

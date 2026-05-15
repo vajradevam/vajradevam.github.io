@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coursework · Aman Pathak</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<button class="theme-btn" id="themeToggle" title="Toggle theme">&#9681;</button>
+
+<div class="nav" style="padding:1.5rem 2rem 0">
+  <a href="index.html">home</a>
+  <a href="projects.html">projects</a>
+  <a href="research.html">research</a>
+  <a href="coursework.html" class="active">coursework</a>
+</div>
+
+<div class="wrapper">
+
+<h1>Coursework</h1>
+<p class="sub">B.Tech in Computer Science, KIIT &middot; CGPA: 8.92/10</p>
+
+<div class="section-title">computer science core</div>
+<div class="course-group">
+  <span class="items">Data Structures, Design and Analysis of Algorithms, Automata Theory and Formal Languages, Discrete Mathematics, Computer Organization and Architecture, Operating Systems, Database Management Systems, Object Oriented Programming using Java, Software Engineering, Computer Networks, High Performance Computing, Compiler, Artificial Intelligence, Machine Learning, Deep Learning Techniques, Cloud Computing</span>
+</div>
+
+<div class="section-title">mathematics &amp; sciences</div>
+<div class="course-group">
+  <span class="items">Differential Equations and Linear Algebra, Transforms and Numerical Methods, Probability and Statistics, Physics, Chemistry, Nano Science, Science of Living Systems, Environmental Science</span>
+</div>
+
+<div class="section-title">minor: vlsi &amp; embedded systems</div>
+<div class="course-group">
+  <span class="items">Semiconductor Technology, VLSI Circuits and Systems, Machine Learning based Signal Processing, Embedded System Design and Applications</span>
+</div>
+
+<div class="section-title">labs &amp; projects</div>
+<div class="course-group">
+  <span class="items">Programming Lab, Data Structures Laboratory, Digital Systems Design Laboratory, Operating Systems Laboratory, Java Programming Laboratory, Database Management Systems Laboratory, Algorithms Laboratory, Computer Networks Laboratory, Artificial Intelligence Laboratory, Applications Development Laboratory, Engineering Lab, Chemistry Lab, Physics Lab, Project I, Mini Project, Internship</span>
+</div>
+
+<div class="section-title">electives &amp; others</div>
+<div class="course-group">
+  <span class="items">Engineering Economics, Universal Human Values, Business Ethics and Corporate Governance, Sound Engineering, International Economic Cooperation, Scientific and Technical Writing, Industry 4.0 Technologies, Engineering Professional Practice, Indian Classical &amp; Western Music, Creativity Innovation and Entrepreneurship, English, Yoga</span>
+</div>
+
+</div>
+
+<div class="footer">
+  &copy; 2026 Aman Pathak
+</div>
+
+<script>
+const t=document.getElementById('themeToggle'),s=document.documentElement.classList;
+if(localStorage.getItem('theme')==='light'){s.add('light');t.innerHTML='&#9790;'}
+t.onclick=()=>{s.toggle('light');const l=s.contains('light');localStorage.setItem('theme',l?'light':'dark');t.innerHTML=l?'&#9790;':'&#9681;'}
+</script>
+</body>
+</html>

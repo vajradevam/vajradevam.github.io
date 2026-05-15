@@ -1,0 +1,42 @@
+:root{--bg:#0d0d0d;--fg:#c9d1d9;--h1:#f0f6fc;--h2:#58a6ff;--h3:#f0f6fc;--muted:#8b949e;--line:#21262d;--link:#58a6ff;--border:#21262d;--footer:#484f58}
+.light{--bg:#fafafa;--fg:#1a1a1a;--h1:#000;--h2:#0366d6;--h3:#1a1a1a;--muted:#666;--line:#ddd;--link:#0366d6;--border:#ddd;--footer:#888}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px}
+body{font-family:Consolas,"Liberation Mono","Courier New",monospace;background:var(--bg);color:var(--fg);line-height:1.7;min-height:100vh;display:flex;flex-direction:column;transition:background .2s,color .2s}
+.wrapper,.page{flex:1;padding:1.5rem 2rem;max-width:none}
+a{color:var(--link)}
+a:hover{text-decoration:underline}
+h1{font-size:1.8rem;font-weight:700;color:var(--h1)}
+h2{font-size:1.05rem;font-weight:600;color:var(--h2);margin:1.8rem 0 0.5rem}
+h3{font-size:0.95rem;font-weight:600;color:var(--h3);margin:1rem 0 0.3rem}
+.sub{color:var(--muted);font-size:0.8rem}
+.links{display:flex;flex-wrap:wrap;gap:0.3rem 1.2rem;margin:0.3rem 0}
+.links a{font-size:0.85rem}
+ul{padding-left:1.3rem;margin:0.2rem 0}
+li{margin:0.1rem 0}
+.project{margin:0.35rem 0;padding-left:0}
+.project .name{font-size:0.88rem;color:var(--h3)}
+.project .name .lang{color:var(--muted);font-weight:400;font-size:0.75rem}
+.project .desc{color:var(--muted);font-size:0.8rem;margin-left:0}
+.pub{margin:0.35rem 0;font-size:0.88rem}
+.pub .title{font-style:italic}
+.pub .venue{color:var(--muted);font-size:0.8rem}
+.skill-row{margin:0.15rem 0;font-size:0.88rem}
+.skill-row .label{color:var(--muted);display:inline-block;min-width:6rem}
+.footer{padding:1rem 2rem 1.5rem;font-size:0.75rem;color:var(--footer)}
+.footer span{color:var(--muted)}
+.research-item{margin:0.5rem 0;font-size:0.88rem}
+.research-item .org{color:var(--muted);font-size:0.8rem}
+hr{border:none;border-top:1px solid var(--line);margin:0.3rem 0}
+p{margin:0.2rem 0;font-size:0.88rem}
+.theme-btn{position:fixed;top:0.6rem;right:0.6rem;width:2rem;height:2rem;border:1px solid var(--line);border-radius:3px;background:var(--bg);color:var(--muted);cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;z-index:100}
+.theme-btn:hover{color:var(--fg);border-color:var(--fg)}
+.nav{display:flex;gap:1rem;margin:0 0 1.5rem;flex-wrap:wrap}
+.nav a{font-size:0.85rem;color:var(--muted)}
+.nav a:hover,.nav a.active{color:var(--link)}
+.hero h1{font-size:2.2rem}
+.hero .tagline{color:var(--muted);font-size:0.9rem;margin:0.1rem 0 0.5rem}
+.course-group{margin:0.5rem 0;font-size:0.88rem}
+.course-group .title{color:var(--h3);font-weight:600;display:block;margin-bottom:0.1rem}
+.course-group .items{color:var(--muted);font-size:0.82rem}
+.section-title{margin:1.8rem 0 0.5rem;padding-bottom:0.2rem;border-bottom:1px solid var(--line);font-size:1.05rem;font-weight:600;color:var(--h2);text-transform:capitalize}
