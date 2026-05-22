@@ -4,81 +4,131 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Research · Aman Pathak</title>
+<meta name="description" content="Research profile - hardware security, RISC-V, formal verification, side-channel attacks, 5 publications, 6 patents.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<button class="theme-btn" id="themeToggle" title="Toggle theme">&#9681;</button>
 
-<div class="nav" style="padding:1.5rem 2rem 0">
+<div id="bg-canvas"></div>
+
+<nav>
+  <span class="brand">vajradevam</span>
   <a href="index.html">home</a>
   <a href="projects.html">projects</a>
   <a href="research.html" class="active">research</a>
   <a href="coursework.html">coursework</a>
+</nav>
+
+<div class="container">
+
+<div class="page-header">
+  <h1>Research</h1>
+  <div class="sub">5 publications · 6 filed patents · hardware security · formal verification · RISC-V</div>
 </div>
 
-<div class="wrapper">
+<section>
+  <div class="section-heading">
+    <span class="num">/exp</span> experience
+  </div>
 
-<h1>Research</h1>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="role">Undergraduate Researcher <span class="date">· May–Aug 2025</span></div>
+      <div class="org">BITS Pilani / ENineHQ Technologies - Hardware Security &amp; Malware Analysis</div>
+      <ul>
+        <li>Hardware security of RISC-V architectures, side-channel attack mitigation (masking, hiding, dual-rail logic), cryptographic implementations</li>
+        <li>Formal automata-based modeling of software-managed cache coherency using RISC-V Zicbom extension - proved coherency verification decidable for bounded programs with 58.8% average CMO reduction on embedded benchmarks</li>
+        <li>Malware analysis using high-dimensional ML on embedded system binaries</li>
+      </ul>
+    </div>
 
-<div class="section-title">research experience</div>
+    <div class="timeline-item">
+      <div class="role">Undergraduate Researcher <span class="date">· Feb 2023–Aug 2024</span></div>
+      <div class="org">KIIT University - RF &amp; Antenna Systems</div>
+      <ul>
+        <li>Designed Ku/X-band microstrip patch antennas in CST Studio for THz/GHz RF communication</li>
+        <li>Built Python-based GUI for ASCII data preprocessing; deep learning for antenna parameter optimisation</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-<div class="research-item">
-  <strong>Undergraduate Researcher</strong> &middot; Hardware Security &amp; Malware Analysis
-  <span class="sub">(May&ndash;Aug 2025)</span><br>
-  <span class="org">BITS Pilani / ENineHQ Technologies Pvt. Ltd.</span>
-  <ul>
-    <li>Hardware security of RISC-V architectures, side-channel attack mitigation, cryptographic implementations</li>
-    <li>Malware analysis using high-dimensional ML on embedded system binaries</li>
-  </ul>
+<section>
+  <div class="section-heading">
+    <span class="num">/ip</span> patents
+  </div>
+
+  <div class="pub-list">
+    <div class="pub-item">
+      <div class="title">DFI Monitor (202631036811)</div>
+      <div class="venue">Hardware Data-Flow Integrity Monitor with Register-File Provenance Tagging for RISC-V IoT Processors</div>
+    </div>
+    <div class="pub-item">
+      <div class="title">Fusion Engine (202631036816)</div>
+      <div class="venue">Programmable Instruction Fusion Engine with SRAM-Based Rules Table for RISC-V IoT Processors</div>
+    </div>
+    <div class="pub-item">
+      <div class="title">HPC Malware (202631036812)</div>
+      <div class="venue">Hardware-Accelerated Microarchitectural Event Classifier with Programmable Feature Extraction Pipeline and On-Chip Ensemble Inference Engine for Real-Time Malware Detection in RISC-V Processors</div>
+    </div>
+    <div class="pub-item">
+      <div class="title">Crypto Engine (202631036813)</div>
+      <div class="venue">Per-Peripheral Cryptographic Session Engine with Hardware Key Rotation for RISC-V IoT System-on-Chip</div>
+    </div>
+    <div class="pub-item">
+      <div class="title">NUMA (202631036815)</div>
+      <div class="venue">RISC-V Processor Architecture with Tiered-Memory ISA Extension, Tier-Aware TLB, and Thunderbolt-Attached External DRAM Expansion with RISC-V Bridge Controller for Linux-Based Heterogeneous Memory Systems</div>
+    </div>
+    <div class="pub-item">
+      <div class="title">Trace BDT (202631036814)</div>
+      <div class="venue">On-Chip Binary Decision Tree Inference Engine Integrated with RISC-V Trace Encoder for Real-Time IoT Security Monitoring</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-heading">
+    <span class="num">/papers</span> publications
+  </div>
+
+  <div class="pub-list">
+    <div class="pub-item">
+      <div class="title">Memory Security: From Cold Boot Attacks to Side-Channel Defenses</div>
+      <div class="venue">J. Mishra, S.K. Sahay, S. Mishra, <strong>A. Pathak</strong> · 11th ICTIS, Springer LNNS, 2026</div>
+      <div style="font-size:0.78rem;color:var(--fg-muted);margin-top:0.3rem">Systematic review of memory encryption for volatile RAM protection. Covers Intel TME/MK-TME, AMD SME, Merkle tree integrity, and side-channel countermeasures against DPA/SPA, bus sniffing, cold boot attacks, and address-pattern analysis in multi-tenant environments.</div>
+    </div>
+
+    <div class="pub-item">
+      <div class="title">Formal Verification of Software-Managed Cache Coherency for RISC-V Heterogeneous Embedded Systems</div>
+      <div class="venue">J. Mishra, S.K. Sahay, S. Mishra, <strong>A. Pathak</strong> · SmartCom, Springer LNNS, 2026</div>
+      <div style="font-size:0.78rem;color:var(--fg-muted);margin-top:0.3rem">Formal automata-based model for software-managed cache coherency using the RISC-V Zicbom extension. Characterizes necessary and sufficient conditions for safe DMA operations. Proves coherency verification decidable for bounded programs. Achieves 58.8% average CMO reduction on embedded benchmarks including sensor fusion and edge NN inference.</div>
+    </div>
+
+    <div class="pub-item">
+      <div class="title">RV-JOSH: A Hardened Operating System for RISC-V based on Java</div>
+      <div class="venue">J. Mishra, S.K. Sahay, S. Mishra, <strong>A. Pathak</strong> · SmartCom, Springer LNNS, 2026</div>
+      <div style="font-size:0.78rem;color:var(--fg-muted);margin-top:0.3rem">RISC-V OS with kernel written entirely in Java via JNI. User processes are Java programs loaded as OS processes. Dual-layer malware detection: static bytecode analysis (n-gram opcode features + random forest/NN classifiers) and runtime monitoring via QEMU-augmented HPCs. Page-level memory encryption with selective encryption and periodic rekeying for SPA/DPA resistance on IoT deployments.</div>
+    </div>
+
+    <div class="pub-item">
+      <div class="title">Cache and Speculative Side Channel Attacks: A Comprehensive Review</div>
+      <div class="venue">J. Mishra, S.K. Sahay, <strong>A. Pathak</strong> · ICT4SD, Springer LNNS, Vol.2 pp.219–233, 2025</div>
+      <div style="font-size:0.78rem;color:var(--fg-muted);margin-top:0.3rem">Trace of microarchitectural side-channel attack evolution: Prime+Probe → Flush+Reload → Spectre V1/V2 → Meltdown → Foreshadow → ZombieLoad → RIDL → CacheOut → BranchScope → Apple Silicon attacks. Analyzes mechanisms, exploitation environments, and security implications. Systematic evaluation of hardware, compiler, and OS mitigation strategies with analysis of the security-performance trade-off.</div>
+    </div>
+
+    <div class="pub-item">
+      <div class="title">A Hardware Security Review of RISC-V</div>
+      <div class="venue">J. Mishra, S.K. Sahay, <strong>A. Pathak</strong> · ICT4SD, Springer LNNS, Vol.2 pp.409–422, 2025</div>
+      <div style="font-size:0.78rem;color:var(--fg-muted);margin-top:0.3rem">Examination of security vulnerabilities across the open RISC-V ecosystem: microarchitectural side channels, trusted execution environments, secure boot, cryptographic ISA extensions (Zk), memory encryption, and EM fault injection. Contextualizes risks for RISC-V adoption in security-critical applications and national processor initiatives.</div>
+    </div>
+  </div>
+</section>
+
 </div>
 
-<div class="research-item">
-  <strong>Undergraduate Researcher</strong> &middot; RF &amp; Antenna Systems
-  <span class="sub">(Feb 2023&ndash;Aug 2024)</span><br>
-  <span class="org">KIIT University</span>
-  <ul>
-    <li>Ku/X-band microstrip patch antennas in CST Studio for THz/GHz RF communication</li>
-    <li>Python GUI for ASCII data preprocessing; deep learning for antenna parameter optimisation</li>
-  </ul>
-</div>
-
-<div class="section-title">publications</div>
-
-<div class="pub">
-  <span class="title">Memory Security: From Cold Boot Attacks to Side-Channel Defenses</span><br>
-  <span class="venue">J. Mishra, S.K. Sahay, S. Mishra, <strong>A. Pathak</strong> &middot; 11th ICTIS, Springer LNNS, 2026</span>
-</div>
-
-<div class="pub">
-  <span class="title">Formal Verification of Software-Managed Cache Coherency for RISC-V Heterogeneous Embedded Systems</span><br>
-  <span class="venue">J. Mishra, S.K. Sahay, S. Mishra, <strong>A. Pathak</strong> &middot; SmartCom, Springer LNNS, 2026</span>
-</div>
-
-<div class="pub">
-  <span class="title">RV-JOSH: A Hardened Operating System for RISC-V based on Java</span><br>
-  <span class="venue">J. Mishra, S.K. Sahay, S. Mishra, <strong>A. Pathak</strong> &middot; SmartCom, Springer LNNS, 2026</span>
-</div>
-
-<div class="pub">
-  <span class="title">Cache and Speculative Side Channel Attacks: A Comprehensive Review</span><br>
-  <span class="venue">J. Mishra, S.K. Sahay, <strong>A. Pathak</strong> &middot; ICT4SD, Springer LNNS, Vol.2 pp.219&ndash;233, 2025</span>
-</div>
-
-<div class="pub">
-  <span class="title">A Hardware Security Review of RISC-V</span><br>
-  <span class="venue">J. Mishra, S.K. Sahay, <strong>A. Pathak</strong> &middot; ICT4SD, Springer LNNS, Vol.2 pp.409&ndash;422, 2025</span>
-</div>
-
-</div>
-
-<div class="footer">
-  &copy; 2026 Aman Pathak
-</div>
-
-<script>
-const t=document.getElementById('themeToggle'),s=document.documentElement.classList;
-if(localStorage.getItem('theme')==='light'){s.add('light');t.innerHTML='&#9790;'}
-t.onclick=()=>{s.toggle('light');const l=s.contains('light');localStorage.setItem('theme',l?'light':'dark');t.innerHTML=l?'&#9790;':'&#9681;'}
-</script>
+<button class="theme-btn" id="themeToggle" title="Toggle theme">◁</button>
+<script src="theme.js"></script>
+<script src="scene.js"></script>
 </body>
 </html>
