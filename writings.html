@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Writings · Aman Pathak</title>
+<meta name="description" content="Publications, books, and writings by Aman Pathak.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="bg-canvas"></div>
+
+<nav>
+  <span class="brand">vajradevam</span>
+  <a href="index.html">home</a>
+  <a href="projects.html">projects</a>
+  <a href="research.html">research</a>
+  <a href="writings.html" class="active">writings</a>
+  <a href="coursework.html">coursework</a>
+</nav>
+
+<div class="container">
+
+<div class="page-header">
+  <h1>Writings</h1>
+  <div class="sub" id="writingCount"></div>
+</div>
+
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="search writings…" />
+</div>
+
+<div class="writings-list" id="writingsList"></div>
+
+<div class="writings-empty" id="writingsEmpty">
+  <p>no writings match your search</p>
+</div>
+
+</div>
+
+<button class="theme-btn" id="themeToggle" title="Toggle theme">◁</button>
+<script src="theme.js"></script>
+<script src="scene.js"></script>
+<script>
+(function() {
+  var container = document.getElementById('writingsList');
+  var empty = document.getElementById('writingsEmpty');
+  var countEl = document.getElementById('writingCount');
+  var searchInput = document.getElementById('searchInput');
+  var data = [];
+  var currentQuery = '';
+
+  function titleFromName(name) {
+    return name.replace(/\.pdf$/i, '').replace(/[-_]/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+
+  function render() {
+    var q = currentQuery.toLowerCase().trim();
+    var filtered = data.filter(function(w) {
+      if (!q) return true;
+      return w.title.toLowerCase().includes(q);
+    });
+
+    countEl.textContent = filtered.length + ' writing' + (filtered.length !== 1 ? 's' : '');
+
+    if (filtered.length === 0) {
+      container.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+
+    container.innerHTML = filtered.map(function(w) {
+      return '<div class="writing-item">'
+        + '<div class="writing-title"><a href="writings/' + w.file + '" target="_blank">' + w.title + '</a></div>'
+        + '<a class="writing-link" href="writings/' + w.file + '" target="_blank">open PDF →</a>'
+        + '</div>';
+    }).join('');
+  }
+
+  searchInput.addEventListener('input', function() {
+    currentQuery = this.value;
+    render();
+  });
+
+  function fromAPI() {
+    fetch('https://api.github.com/repos/vajradevam/vajradevam.github.io/contents/writings')
+      .then(function(r) { return r.json(); })
+      .then(function(files) {
+        data = [];
+        (files || []).forEach(function(f) {
+          if (f.name.endsWith('.pdf') && f.type === 'file') {
+            data.push({ file: f.name, title: titleFromName(f.name) });
+          }
+        });
+        if (data.length === 0) throw new Error('no pdfs');
+        render();
+      })
+      .catch(function() {});
+  }
+
+  fetch('writings/list.json')
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d && d.length > 0) {
+        data = d.map(function(e) {
+          if (typeof e === 'string') return { file: e, title: titleFromName(e) };
+          return e;
+        });
+        render();
+      } else {
+        fromAPI();
+      }
+    })
+    .catch(function() {
+      fromAPI();
+    });
+
+})();
+</script>
+
+<style>
+.search-bar {
+  margin-bottom: 1.5rem;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  font-size: 0.85rem;
+  font-family: "JetBrains Mono", "SF Mono", "Fira Code", monospace;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--fg);
+  outline: none;
+  transition: border-color .2s;
+}
+
+.search-bar input:focus {
+  border-color: var(--accent-1);
+}
+
+.search-bar input::placeholder {
+  color: var(--fg-muted);
+}
+
+.writings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.writing-item {
+  padding: 1rem 1.4rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: all .2s;
+}
+
+.writing-item:hover {
+  border-color: rgba(192, 132, 252, 0.3);
+  background: var(--bg-hover);
+}
+
+.writing-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--heading);
+  margin-bottom: 0.5rem;
+}
+
+.writing-title a {
+  color: var(--heading);
+  text-decoration: none;
+}
+
+.writing-title a:hover {
+  color: var(--accent-1);
+}
+
+.writing-link {
+  font-size: 0.72rem;
+  font-family: "JetBrains Mono", "SF Mono", "Fira Code", monospace;
+  color: var(--accent-1);
+  text-decoration: none;
+  transition: gap .2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.writing-link:hover {
+  gap: 0.5rem;
+}
+
+.writings-empty {
+  display: none;
+  text-align: center;
+  padding: 3rem 0;
+  color: var(--fg-muted);
+  font-size: 0.85rem;
+  font-family: "JetBrains Mono", "SF Mono", "Fira Code", monospace;
+}
+</style>
+
+</body>
+</html>

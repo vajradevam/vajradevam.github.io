@@ -1,0 +1,19 @@
+name: generate writings list
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'writings/*.pdf'
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - run: node generate.js
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add writings/list.json
+          git diff --staged --quiet || git commit -m "auto: update writings list [skip ci]"
+          git push
