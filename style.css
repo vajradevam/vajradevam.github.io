@@ -92,7 +92,8 @@ nav a.active {
 
 /* --- Hero --- */
 .hero {
-  padding: 3rem 0 4rem;
+  padding: 3rem 0 0;
+  margin-bottom: 2rem;
 }
 
 .hero .greeting {
@@ -121,13 +122,11 @@ nav a.active {
   color: var(--fg-muted);
   margin-bottom: 1.5rem;
   line-height: 1.6;
-  max-width: 600px;
 }
 
 .hero p {
   font-size: 0.9rem;
   color: var(--fg-muted);
-  max-width: 580px;
   margin-bottom: 2rem;
   line-height: 1.8;
 }
@@ -180,23 +179,28 @@ section {
 
 /* --- Now --- */
 .now-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.now-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.8rem;
+.now-list li {
   font-size: 0.88rem;
   color: var(--fg-muted);
+  padding-left: 1.2rem;
+  position: relative;
+  margin-bottom: 0.6rem;
 }
 
-.now-item .arrow {
-  color: var(--accent-1);
-  flex-shrink: 0;
-  font-size: 0.75rem;
+.now-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 0.45em;
+  height: 0.45em;
+  background: var(--accent-1);
+  clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
 }
 
 /* --- Skills --- */
@@ -421,27 +425,21 @@ section {
   color: var(--heading);
 }
 
-/* --- Coursework tag cloud --- */
-.tag-cloud {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.tag-cloud .tag {
-  font-size: 0.78rem;
-  padding: 0.3rem 0.8rem;
-  border: 1px solid var(--border);
-  border-radius: 6px;
+/* --- Coursework list --- */
+.course-list {
+  font-size: 0.88rem;
   color: var(--fg-muted);
-  background: var(--bg-card);
-  transition: all .15s;
+  line-height: 2;
 }
 
-.tag-cloud .tag:hover {
-  border-color: var(--accent-1);
-  color: var(--accent-1);
-  background: var(--bg-hover);
+.course-list .course {
+  display: inline;
+}
+
+.course-list .course + .course::before {
+  content: ' · ';
+  color: var(--fg-muted);
+  opacity: 0.4;
 }
 
 .course-group {
@@ -538,6 +536,8 @@ footer p {
 .page-header .sub a {
   color: var(--accent-2);
 }
+
+
 
 /* --- Project filter --- */
 .filter-bar {

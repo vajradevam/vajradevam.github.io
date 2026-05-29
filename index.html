@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Aman Pathak · vajradevam</title>
-<meta name="description" content="Undergraduate researcher in computer architecture, hardware security, and low-level systems. RISC-V, side-channel attacks, formal verification.">
+<meta name="description" content="PhD Scholar in computer architecture, hardware security, and low-level systems. RISC-V, side-channel attacks, formal verification.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -27,37 +27,45 @@
   <div class="greeting">Hi, I'm</div>
   <h1>Aman Pathak</h1>
   <div class="subtitle">
-    Undergraduate researcher. I work on hardware security, RISC-V, and low-level software.
+    PhD Scholar. I work on hardware security, RISC-V, and low-level software.
   </div>
   <p>
-    I'm an undergraduate researcher at BITS Pilani and ENineHQ, working at the intersection
-    of hardware security, RISC-V architectures, and low-level software. My current work spans
-    side-channel mitigation, formal verification of cache coherency, and ML-based malware
-    analysis on embedded binaries. Earlier, I designed Ku/X-band antennas at KIIT, and I have
-    six patents filed in the RISC-V space covering data-flow integrity, crypto engines, and
+    I'm a PhD Scholar in the Department of Computer Science and Information Systems at
+    BITS Pilani KK Birla Goa Campus, working at the intersection of hardware security,
+    RISC-V architectures, and low-level software. My current work spans side-channel
+    mitigation, formal verification of cache coherency, and ML-based malware analysis on
+    embedded binaries. Earlier, I designed Ku/X-band antennas at KIIT, and I have six
+    patents filed in the RISC-V space covering data-flow integrity, crypto engines, and
     on-chip ML.
   </p>
   <p>
     Outside of research, I spend a lot of time building things close to the metal. I've written
     a TCP/IP stack from scratch, a malloc replacement, a cycle-accurate 6502 emulator, a
     container runtime using raw namespaces and seccomp, a bytecode VM in Go, and neural networks
-    built purely from matrix operations. I also write about these topics on my blog, where I've
-    published 58 posts on architecture, compilers, and C. And I teach.
+    built purely from matrix operations. This is not an exhaustive list, I keep adding projects
+    to my profile as a hobby. I also write about these topics on my blog, where I've published
+    posts on architecture, compilers, and C. And I teach sometimes.
   </p>
-
+  <p>
+    Low-level stuff intrigues me. A C program is nothing but bytes in memory, there is no
+    abstraction beyond that. Sure, memory is made of transistors and semiconductors, and VLSI
+    gives us gates and voltages and whatnot, but C, and the assembly it compiles to, is quite
+    magical. I know exactly what it is going to do, and nothing is hidden. It is the naked, and
+    quite often the bitter, truth. More than low levels <em>per se</em>, to borrow from
+    category theory, I am interested in the stripped-down, non-abstracted, naked-truth stuff.
+  </p>
 </section>
-
 <section>
   <div class="section-heading">
     <span class="num">/focus</span> now
   </div>
-  <div class="now-list">
-    <div class="now-item"><span class="arrow">→</span> Securing CXL memory fabrics: coherence directory poisoning, protocol-processor boundary attacks, compression side channels, and fabric-amplified Row Hammer</div>
-    <div class="now-item"><span class="arrow">→</span> Security-aware architectural certification testing (SecACT) for RISC-V: PMP bypass via microarchitectural state, vendor extension validation, and the ACT security gap</div>
-    <div class="now-item"><span class="arrow">→</span> Formalizing the Linux kernel shared-page mutation bug class: dirty invariant model, page-cache anti-forensics, zero-copy I/O abuse, and in-place crypto redesign</div>
-    <div class="now-item"><span class="arrow">→</span> Fundamental side channels in LLM serving: SpecLeak, KV cache sharing isolation impossibility, and speculative decoding GPU microarchitectural leakage</div>
-    <div class="now-item"><span class="arrow">→</span> Covert channels beyond cache timing: GPU coherence directory state as a cross-GPU communication primitive</div>
-  </div>
+  <ul class="now-list">
+    <li>Securing CXL memory fabrics: coherence directory poisoning, protocol-processor boundary attacks, compression side channels, and fabric-amplified Row Hammer</li>
+    <li>Security-aware architectural certification testing (SecACT) for RISC-V: PMP bypass via microarchitectural state, vendor extension validation, and the ACT security gap</li>
+    <li>Formalizing the Linux kernel shared-page mutation bug class: dirty invariant model, page-cache anti-forensics, zero-copy I/O abuse, and in-place crypto redesign</li>
+    <li>Fundamental side channels in LLM serving: SpecLeak, KV cache sharing isolation impossibility, and speculative decoding GPU microarchitectural leakage</li>
+    <li>Covert channels beyond cache timing: GPU coherence directory state as a cross-GPU communication primitive</li>
+  </ul>
 </section>
 
 <section>
@@ -129,7 +137,7 @@
 
   </div>
 
-  <a href="projects.html" class="project-link">view all 50+ projects →</a>
+  <a href="projects.html" class="project-link">view all 50+ projects</a>
 </section>
 
 <section id="coursework">
@@ -138,53 +146,54 @@
   </div>
 
   <p style="font-size:0.85rem;color:var(--fg-muted);margin-bottom:1.5rem;">
+    PhD Computer Science &amp; Information Systems, BITS Pilani KK Birla Goa Campus ·
     B.Tech Computer Science, KIIT · CGPA: 8.8/10
-    <a href="coursework.html" style="color:var(--accent-1);margin-left:0.5rem">see all →</a>
+    <a href="coursework.html" style="color:var(--accent-1);margin-left:0.5rem">see all</a>
   </p>
 
   <div class="course-group">
     <span class="label">CS Core <span class="count">· 16</span></span>
-    <div class="tag-cloud">
-      <span class="tag">Data Structures</span>
-      <span class="tag">Algorithms</span>
-      <span class="tag">Automata Theory</span>
-      <span class="tag">Discrete Math</span>
-      <span class="tag">COA</span>
-      <span class="tag">Operating Systems</span>
-      <span class="tag">DBMS</span>
-      <span class="tag">OOP (Java)</span>
-      <span class="tag">Software Eng.</span>
-      <span class="tag">Computer Networks</span>
-      <span class="tag">HPC</span>
-      <span class="tag">Compiler</span>
-      <span class="tag">AI</span>
-      <span class="tag">ML</span>
-      <span class="tag">Deep Learning</span>
-      <span class="tag">Cloud Computing</span>
+    <div class="course-list">
+      <span class="course">Data Structures</span>
+      <span class="course">Algorithms</span>
+      <span class="course">Automata Theory</span>
+      <span class="course">Discrete Math</span>
+      <span class="course">COA</span>
+      <span class="course">Operating Systems</span>
+      <span class="course">DBMS</span>
+      <span class="course">OOP (Java)</span>
+      <span class="course">Software Eng.</span>
+      <span class="course">Computer Networks</span>
+      <span class="course">HPC</span>
+      <span class="course">Compiler</span>
+      <span class="course">AI</span>
+      <span class="course">ML</span>
+      <span class="course">Deep Learning</span>
+      <span class="course">Cloud Computing</span>
     </div>
   </div>
 
   <div class="course-group">
     <span class="label">VLSI &amp; Embedded <span class="count">· 4</span></span>
-    <div class="tag-cloud">
-      <span class="tag">Semiconductor Tech.</span>
-      <span class="tag">VLSI Circuits</span>
-      <span class="tag">ML Signal Proc.</span>
-      <span class="tag">Embedded System Design</span>
+    <div class="course-list">
+      <span class="course">Semiconductor Tech.</span>
+      <span class="course">VLSI Circuits</span>
+      <span class="course">ML Signal Proc.</span>
+      <span class="course">Embedded System Design</span>
     </div>
   </div>
 
   <div class="course-group">
     <span class="label">Math &amp; Sciences <span class="count">· 8</span></span>
-    <div class="tag-cloud">
-      <span class="tag">DE &amp; Linear Algebra</span>
-      <span class="tag">Transforms &amp; Num. Methods</span>
-      <span class="tag">Probability &amp; Stats</span>
-      <span class="tag">Physics</span>
-      <span class="tag">Chemistry</span>
-      <span class="tag">Nano Science</span>
-      <span class="tag">Science of Living Systems</span>
-      <span class="tag">Env. Science</span>
+    <div class="course-list">
+      <span class="course">DE &amp; Linear Algebra</span>
+      <span class="course">Transforms &amp; Num. Methods</span>
+      <span class="course">Probability &amp; Stats</span>
+      <span class="course">Physics</span>
+      <span class="course">Chemistry</span>
+      <span class="course">Nano Science</span>
+      <span class="course">Science of Living Systems</span>
+      <span class="course">Env. Science</span>
     </div>
   </div>
 </section>
