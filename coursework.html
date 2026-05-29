@@ -14,16 +14,19 @@
 
 <nav>
   <span class="brand">vajradevam</span>
-  <a href="index.html">home</a>
-  <a href="projects.html">projects</a>
-  <a href="research.html">research</a>
-  <a href="writings.html">writings</a>
-  <a href="coursework.html" class="active">coursework</a>
+  <button class="nav-toggle" id="navToggle">☰</button>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">home</a>
+    <a href="projects.html">projects</a>
+    <a href="research.html">research</a>
+    <a href="writings.html">writings</a>
+    <a href="coursework.html" class="active">coursework</a>
+  </div>
 </nav>
 
 <div class="container">
 
-<div class="page-header">
+  <div class="page-header reveal">
   <h1>Coursework</h1>
   <div class="sub">PhD Computer Science &amp; Information Systems, BITS Pilani KK Birla Goa Campus · B.Tech Computer Science, KIIT · CGPA: 8.8/10</div>
 </div>
@@ -118,8 +121,9 @@
 
 </div>
 
-<button class="theme-btn" id="themeToggle" title="Toggle theme">◁</button>
+<button class="theme-btn" id="themeToggle" title="Toggle theme">☾</button>
 <script src="theme.js"></script>
 <script src="scene.js"></script>
+<script src="ui.js"></script>
 </body>
 </html>

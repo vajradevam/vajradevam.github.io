@@ -10,7 +10,7 @@
       root.toggle('light');
       var isLight = root.contains('light');
       localStorage.setItem('theme', isLight ? 'light' : 'dark');
-      btn.textContent = isLight ? '\u2600' : '\u25C1';
+      btn.textContent = isLight ? '\u2600' : '\u263E';
     };
   }
 })();

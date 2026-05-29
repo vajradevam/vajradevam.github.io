@@ -14,16 +14,19 @@
 
 <nav>
   <span class="brand">vajradevam</span>
-  <a href="index.html">home</a>
-  <a href="projects.html">projects</a>
-  <a href="research.html">research</a>
-  <a href="writings.html" class="active">writings</a>
-  <a href="coursework.html">coursework</a>
+  <button class="nav-toggle" id="navToggle">☰</button>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">home</a>
+    <a href="projects.html">projects</a>
+    <a href="research.html">research</a>
+    <a href="writings.html" class="active">writings</a>
+    <a href="coursework.html">coursework</a>
+  </div>
 </nav>
 
 <div class="container">
 
-<div class="page-header">
+  <div class="page-header reveal">
   <h1>Writings</h1>
   <div class="sub" id="writingCount"></div>
 </div>
@@ -40,9 +43,10 @@
 
 </div>
 
-<button class="theme-btn" id="themeToggle" title="Toggle theme">◁</button>
+<button class="theme-btn" id="themeToggle" title="Toggle theme">☾</button>
 <script src="theme.js"></script>
 <script src="scene.js"></script>
+<script src="ui.js"></script>
 <script>
 (function() {
   var container = document.getElementById('writingsList');
@@ -162,7 +166,7 @@
 }
 
 .writing-item:hover {
-  border-color: rgba(192, 132, 252, 0.3);
+  border-color: rgba(129, 161, 193, 0.25);
   background: var(--bg-hover);
 }
 

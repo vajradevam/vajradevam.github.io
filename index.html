@@ -14,11 +14,14 @@
 
 <nav>
   <span class="brand">vajradevam</span>
-  <a href="index.html" class="active">home</a>
-  <a href="projects.html">projects</a>
-  <a href="research.html">research</a>
-  <a href="writings.html">writings</a>
-  <a href="coursework.html">coursework</a>
+  <button class="nav-toggle" id="navToggle">☰</button>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html" class="active">home</a>
+    <a href="projects.html">projects</a>
+    <a href="research.html">research</a>
+    <a href="writings.html">writings</a>
+    <a href="coursework.html">coursework</a>
+  </div>
 </nav>
 
 <div class="container">
@@ -27,7 +30,7 @@
   <div class="greeting">Hi, I'm</div>
   <h1>Aman Pathak</h1>
   <div class="subtitle">
-    PhD Scholar. I work on hardware security, RISC-V, and low-level software.
+    <span class="typewriter">PhD Scholar. I work on hardware security, RISC-V, and low-level software.</span>
   </div>
   <p>
     I'm a PhD Scholar in the Department of Computer Science and Information Systems at
@@ -55,7 +58,7 @@
     category theory, I am interested in the stripped-down, non-abstracted, naked-truth stuff.
   </p>
 </section>
-<section>
+<section class="reveal">
   <div class="section-heading">
     <span class="num">/focus</span> now
   </div>
@@ -68,7 +71,7 @@
   </ul>
 </section>
 
-<section>
+<section class="reveal reveal-delay-1">
   <div class="section-heading">
     <span class="num">/stack</span> skills
   </div>
@@ -79,124 +82,6 @@
   </div>
 </section>
 
-<section id="projects">
-  <div class="section-heading">
-    <span class="num">/work</span> projects
-  </div>
-
-  <div class="bento">
-
-    <a href="https://github.com/vajradevam/whale" class="bento-card featured">
-      <div class="top"><span class="icon">🐋</span><span class="cat">systems · container runtime</span></div>
-      <div class="name">whale</div>
-      <div class="desc">A minimal container runtime written from scratch in C. Uses Linux namespaces (PID, mount, network, UTS, user), cgroups v2 for resource isolation, seccomp-BPF for syscall filtering, and overlayfs for layered filesystems. No Docker, no runc - just raw system calls and a deep understanding of what containers actually are.</div>
-      <div class="tags"><span>C</span><span>containers</span><span>namespaces</span><span>cgroups</span><span>seccomp</span></div>
-    </a>
-
-    <a href="https://github.com/vajradevam/vajrip" class="bento-card">
-      <div class="top"><span class="icon">◇</span><span class="cat">networking</span></div>
-      <div class="name">vajrip</div>
-      <div class="desc">Userspace TCP/IP stack from scratch - Ethernet, ARP, IP, ICMP, UDP, TCP with full connection management and flow control over Linux TAP.</div>
-      <div class="tags"><span>C</span><span>TCP/IP</span><span>kernel</span></div>
-    </a>
-
-    <a href="https://github.com/vajradevam/nook" class="bento-card">
-      <div class="top"><span class="icon">🗄️</span><span class="cat">databases</span></div>
-      <div class="name">nook</div>
-      <div class="desc">Tiny embedded ordered key/value database in Go with SQL support, authentication, and a clean internal design. Built to understand LSM trees and B-tree storage engines from the ground up.</div>
-      <div class="tags"><span>Go</span><span>database</span><span>storage</span></div>
-    </a>
-
-    <a href="https://github.com/vajradevam/memoria" class="bento-card">
-      <div class="top"><span class="icon">◆</span><span class="cat">systems · memory</span></div>
-      <div class="name">memoria</div>
-      <div class="desc">malloc/free replacement with segregated free lists, mmap-backed heap, leak detection, and 57 passing tests. Benchmarked against glibc with 20 real-world data structure demos.</div>
-      <div class="tags"><span>C</span><span>allocator</span><span>memory</span></div>
-    </a>
-
-    <a href="https://github.com/vajradevam/commodore64" class="bento-card">
-      <div class="top"><span class="icon">◈</span><span class="cat">emulation</span></div>
-      <div class="name">commodore64</div>
-      <div class="desc">Cycle-accurate 6502 CPU with VIC-II text-mode graphics, CIA keyboard scanning, 64KB memory map, and PRG loading. All 56 official opcodes, all addressing modes.</div>
-      <div class="tags"><span>Java</span><span>6502</span><span>emulation</span></div>
-    </a>
-
-    <a href="https://github.com/vajradevam/mridu" class="bento-card">
-      <div class="top"><span class="icon">⚙️</span><span class="cat">virtual machines</span></div>
-      <div class="name">mridu</div>
-      <div class="desc">A bytecode VM interpreter written in Go. Implements a custom instruction set with register-based execution, stack operations, and a clean dispatch loop.</div>
-      <div class="tags"><span>Go</span><span>VM</span><span>bytecode</span></div>
-    </a>
-
-    <a href="https://github.com/vajradevam/urls" class="bento-card">
-      <div class="top"><span class="icon">◎</span><span class="cat">web · fullstack</span></div>
-      <div class="name">urls</div>
-      <div class="desc">Self-hosted URL shortener on Astro SSR + Netlify. Custom slugs, click analytics, QR codes, password protection, link expiration, JWT auth, per-user isolation.</div>
-      <div class="tags"><span>Astro</span><span>fullstack</span><span>auth</span></div>
-    </a>
-
-  </div>
-
-  <a href="projects.html" class="project-link">view all 50+ projects</a>
-</section>
-
-<section id="coursework">
-  <div class="section-heading">
-    <span class="num">/edu</span> coursework
-  </div>
-
-  <p style="font-size:0.85rem;color:var(--fg-muted);margin-bottom:1.5rem;">
-    PhD Computer Science &amp; Information Systems, BITS Pilani KK Birla Goa Campus ·
-    B.Tech Computer Science, KIIT · CGPA: 8.8/10
-    <a href="coursework.html" style="color:var(--accent-1);margin-left:0.5rem">see all</a>
-  </p>
-
-  <div class="course-group">
-    <span class="label">CS Core <span class="count">· 16</span></span>
-    <div class="course-list">
-      <span class="course">Data Structures</span>
-      <span class="course">Algorithms</span>
-      <span class="course">Automata Theory</span>
-      <span class="course">Discrete Math</span>
-      <span class="course">COA</span>
-      <span class="course">Operating Systems</span>
-      <span class="course">DBMS</span>
-      <span class="course">OOP (Java)</span>
-      <span class="course">Software Eng.</span>
-      <span class="course">Computer Networks</span>
-      <span class="course">HPC</span>
-      <span class="course">Compiler</span>
-      <span class="course">AI</span>
-      <span class="course">ML</span>
-      <span class="course">Deep Learning</span>
-      <span class="course">Cloud Computing</span>
-    </div>
-  </div>
-
-  <div class="course-group">
-    <span class="label">VLSI &amp; Embedded <span class="count">· 4</span></span>
-    <div class="course-list">
-      <span class="course">Semiconductor Tech.</span>
-      <span class="course">VLSI Circuits</span>
-      <span class="course">ML Signal Proc.</span>
-      <span class="course">Embedded System Design</span>
-    </div>
-  </div>
-
-  <div class="course-group">
-    <span class="label">Math &amp; Sciences <span class="count">· 8</span></span>
-    <div class="course-list">
-      <span class="course">DE &amp; Linear Algebra</span>
-      <span class="course">Transforms &amp; Num. Methods</span>
-      <span class="course">Probability &amp; Stats</span>
-      <span class="course">Physics</span>
-      <span class="course">Chemistry</span>
-      <span class="course">Nano Science</span>
-      <span class="course">Science of Living Systems</span>
-      <span class="course">Env. Science</span>
-    </div>
-  </div>
-</section>
 
 <footer>
   <p>
@@ -209,8 +94,9 @@
 
 </div>
 
-<button class="theme-btn" id="themeToggle" title="Toggle theme">◁</button>
+<button class="theme-btn" id="themeToggle" title="Toggle theme">☾</button>
 <script src="theme.js"></script>
 <script src="scene.js"></script>
+<script src="ui.js"></script>
 </body>
 </html>

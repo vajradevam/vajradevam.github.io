@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Projects · Aman Pathak</title>
-<meta name="description" content="76 open-source projects - container runtimes, TCP/IP stacks, emulators, compilers, ML, databases, web apps.">
+<meta name="description" content="Open-source projects - container runtimes, TCP/IP stacks, emulators, compilers, ML, databases, web apps.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -14,19 +14,25 @@
 
 <nav>
   <span class="brand">vajradevam</span>
-  <a href="index.html">home</a>
-  <a href="projects.html" class="active">projects</a>
-  <a href="research.html">research</a>
-  <a href="writings.html">writings</a>
-  <a href="coursework.html">coursework</a>
+  <button class="nav-toggle" id="navToggle">☰</button>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">home</a>
+    <a href="projects.html" class="active">projects</a>
+    <a href="research.html">research</a>
+    <a href="writings.html">writings</a>
+    <a href="coursework.html">coursework</a>
+  </div>
 </nav>
 
 <div class="container">
 
-<div class="page-header">
+  <div class="page-header reveal">
   <h1>Projects</h1>
-  <div class="sub"><a href="https://github.com/vajradevam?tab=repositories">github.com/vajradevam</a> · 76 repositories</div>
+  <div class="sub"><a href="https://github.com/vajradevam?tab=repositories">github.com/vajradevam</a></div>
+  <div id="ghStats" class="gh-stats"></div>
 </div>
+
+<div id="ghActivity" class="gh-activity reveal"><div class="gh-loading">loading activity...</div></div>
 
 <div class="filter-bar" id="filterBar">
   <span class="filter-btn active" data-filter="all">all</span>
@@ -331,9 +337,10 @@
 
 </div>
 
-<button class="theme-btn" id="themeToggle" title="Toggle theme">◁</button>
+<button class="theme-btn" id="themeToggle" title="Toggle theme">☾</button>
 <script src="theme.js"></script>
 <script src="scene.js"></script>
+<script src="ui.js"></script>
 <script>
 (function() {
   var btns = document.querySelectorAll('.filter-btn');
@@ -352,6 +359,126 @@
       });
     });
   });
+})();
+</script>
+
+<script>
+(function() {
+  var activityEl = document.getElementById('ghActivity');
+  var statsEl = document.getElementById('ghStats');
+  var username = 'vajradevam';
+
+  function cacheGet(key) {
+    try {
+      var item = JSON.parse(localStorage.getItem('gh_' + key));
+      if (item && Date.now() - item.ts < 300000) return item.data;
+    } catch(e) {}
+    return null;
+  }
+  function cacheSet(key, data) {
+    try { localStorage.setItem('gh_' + key, JSON.stringify({ data: data, ts: Date.now() })); } catch(e) {}
+  }
+
+  function fmtDate(iso) {
+    var d = new Date(iso);
+    return d.toLocaleString('en-US', { month: 'short', day: 'numeric' });
+  }
+
+  function truncate(msg, n) {
+    if (msg.length <= n) return msg;
+    return msg.slice(0, n) + '…';
+  }
+
+  function showStats() {
+    var cached = cacheGet('repos_stats');
+    if (cached) {
+      renderStats(cached);
+      return;
+    }
+    fetch('https://api.github.com/users/' + username + '/repos?per_page=100&sort=pushed')
+      .then(function(r) { return r.json(); })
+      .then(function(repos) {
+        if (!Array.isArray(repos)) return;
+        cacheSet('repos_stats', repos);
+        renderStats(repos);
+      })
+      .catch(function() {});
+  }
+
+  function renderStats(repos) {
+    if (!statsEl) return;
+    var totalRepos = repos.length;
+    var totalStars = repos.reduce(function(s, r) { return s + (r.stargazers_count || 0); }, 0);
+    var totalForks = repos.reduce(function(s, r) { return s + (r.forks_count || 0); }, 0);
+    statsEl.innerHTML =
+      '<span class="gh-stat"><strong>' + totalRepos + '</strong> repos</span>' +
+      '<span class="gh-stat"><strong>' + totalStars + '</strong> stars</span>' +
+      '<span class="gh-stat"><strong>' + totalForks + '</strong> forks</span>';
+  }
+
+  function renderCommits(el, events) {
+    if (!Array.isArray(events) || events.length === 0) {
+      el.innerHTML = '<div class="gh-error">no recent activity</div>';
+      return;
+    }
+
+    var commits = [];
+    events.forEach(function(e) {
+      if (e.type === 'PushEvent' && e.payload && e.payload.commits) {
+        e.payload.commits.forEach(function(c) {
+          if (c.message && !c.message.match(/^Merge/)) {
+            commits.push({
+              repo: e.repo.name,
+              message: c.message.split('\n')[0],
+              url: 'https://github.com/' + e.repo.name + '/commit/' + c.sha,
+              date: e.created_at,
+            });
+          }
+        });
+      }
+    });
+
+    if (commits.length === 0) {
+      el.innerHTML = '<div class="gh-error">no recent activity</div>';
+      return;
+    }
+
+    commits = commits.slice(0, 20);
+    el.innerHTML = '<div class="gh-commit-list">' +
+      commits.map(function(c) {
+        return '<a class="gh-commit" href="' + c.url + '" target="_blank" rel="noopener">' +
+          '<span class="gh-commit-dot"></span>' +
+          '<span class="gh-commit-date">' + fmtDate(c.date) + '</span>' +
+          '<span class="gh-commit-body">' +
+            '<div class="gh-commit-repo">' + c.repo + '</div>' +
+            '<div class="gh-commit-msg">' + truncate(c.message, 72) + '</div>' +
+          '</span>' +
+        '</a>';
+      }).join('') +
+    '</div>';
+  }
+
+  var cached = cacheGet('events');
+  if (cached) {
+    renderCommits(activityEl, cached);
+    showStats();
+  } else {
+    fetch('https://api.github.com/users/' + username + '/events?per_page=100')
+      .then(function(r) {
+        if (!r.ok) throw new Error('API error');
+        return r.json();
+      })
+      .then(function(events) {
+        if (!Array.isArray(events)) throw new Error('bad response');
+        cacheSet('events', events);
+        renderCommits(activityEl, events);
+        showStats();
+      })
+      .catch(function() {
+        activityEl.innerHTML = '<div class="gh-error">could not load activity</div>';
+        showStats();
+      });
+  }
 })();
 </script>
 </body>
