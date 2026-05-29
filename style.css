@@ -1,31 +1,33 @@
 :root {
-  --bg: #060608;
-  --bg-card: #0c0c14;
-  --bg-hover: #111122;
-  --fg: #f1f5f9;
-  --fg-muted: #64748b;
-  --heading: #f8fafc;
-  --accent-1: #c084fc;
-  --accent-2: #818cf8;
-  --accent-3: #22d3ee;
-  --line: #1e1e30;
-  --border: #1e1e30;
-  --glow: rgba(192, 132, 252, 0.2);
+  --bg: #050508;
+  --bg-card: rgba(12, 12, 22, 0.6);
+  --bg-hover: rgba(17, 17, 34, 0.8);
+  --fg: #e8edf5;
+  --fg-muted: #6b7a99;
+  --heading: #f0f4fc;
+  --accent-1: #b47ae8;
+  --accent-2: #7a8af0;
+  --accent-3: #2dd4bf;
+  --line: rgba(30, 30, 50, 0.6);
+  --border: rgba(30, 30, 50, 0.8);
+  --glow: rgba(180, 122, 232, 0.12);
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", "Fira Code", monospace;
 }
 
 .light {
-  --bg: #f8fafc;
-  --bg-card: #ffffff;
-  --bg-hover: #f1f5f9;
-  --fg: #0f172a;
-  --fg-muted: #64748b;
-  --heading: #0f172a;
+  --bg: #f5f7fc;
+  --bg-card: rgba(255, 255, 255, 0.7);
+  --bg-hover: rgba(240, 243, 250, 0.9);
+  --fg: #121826;
+  --fg-muted: #55657d;
+  --heading: #0b1120;
   --accent-1: #7c3aed;
-  --accent-2: #6366f1;
-  --accent-3: #0891b2;
-  --line: #e2e8f0;
-  --border: #e2e8f0;
-  --glow: rgba(124, 58, 237, 0.1);
+  --accent-2: #4f6af0;
+  --accent-3: #0d9488;
+  --line: rgba(200, 210, 230, 0.5);
+  --border: rgba(200, 210, 230, 0.7);
+  --glow: rgba(124, 58, 237, 0.07);
 }
 
 *, *::before, *::after {
@@ -40,45 +42,71 @@ html {
 }
 
 body {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-sans);
   background: var(--bg);
   color: var(--fg);
-  line-height: 1.7;
+  line-height: 1.75;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  transition: background .3s, color .3s;
+  transition: background .4s, color .4s;
+}
+
+::selection {
+  background: rgba(180, 122, 232, 0.25);
+  color: var(--heading);
 }
 
 /* --- Navigation --- */
 nav {
   display: flex;
   align-items: center;
-  gap: 0.5rem 1.5rem;
-  padding: 1.5rem 2rem;
+  gap: 0.4rem 1.5rem;
+  padding: 1.2rem 2rem;
   max-width: 880px;
   margin: 0 auto;
   width: 100%;
   flex-wrap: wrap;
+  position: sticky;
+  top: 0.8rem;
+  z-index: 50;
+  background: rgba(5, 5, 8, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition: background .4s;
+}
+
+.light nav {
+  background: rgba(245, 247, 252, 0.7);
 }
 
 nav .brand {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 600;
   color: var(--heading);
   margin-right: auto;
+  letter-spacing: -0.01em;
 }
 
 nav a {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--fg-muted);
   text-decoration: none;
-  transition: color .2s;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  transition: all .2s;
 }
 
-nav a:hover,
-nav a.active {
+nav a:hover {
   color: var(--heading);
+  background: var(--bg-hover);
+}
+
+nav a.active {
+  color: var(--accent-1);
+  background: rgba(180, 122, 232, 0.08);
 }
 
 /* --- Main container --- */
@@ -92,69 +120,52 @@ nav a.active {
 
 /* --- Hero --- */
 .hero {
-  padding: 3rem 0 0;
+  padding: 4rem 0 1.5rem;
   margin-bottom: 2rem;
 }
 
 .hero .greeting {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 500;
   background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 0.8rem;
-  font-family: "JetBrains Mono", "SF Mono", "Fira Code", monospace;
+  margin-bottom: 0.6rem;
+  font-family: var(--font-mono);
 }
 
 .hero h1 {
-  font-size: 3.2rem;
-  font-weight: 700;
+  font-size: 3.4rem;
+  font-weight: 650;
   color: var(--heading);
-  line-height: 1.08;
-  margin-bottom: 0.6rem;
-  letter-spacing: -0.03em;
+  line-height: 1.06;
+  margin-bottom: 0.8rem;
+  letter-spacing: -0.035em;
 }
 
 .hero .subtitle {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 400;
   color: var(--fg-muted);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.8rem;
   line-height: 1.6;
 }
 
 .hero p {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   color: var(--fg-muted);
-  margin-bottom: 2rem;
-  line-height: 1.8;
-}
-
-.hero .stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem 1.5rem;
-}
-
-.hero .stat {
-  font-size: 0.78rem;
-  color: var(--fg-muted);
-  font-family: "JetBrains Mono", "SF Mono", "Fira Code", monospace;
-}
-
-.hero .stat span {
-  color: var(--accent-2);
-  font-weight: 600;
+  margin-bottom: 1.6rem;
+  line-height: 1.85;
 }
 
 /* --- Section --- */
 section {
-  margin-bottom: 4.5rem;
+  margin-bottom: 4rem;
 }
 
 .section-heading {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--heading);
   margin-bottom: 1.5rem;
@@ -164,10 +175,11 @@ section {
 }
 
 .section-heading .num {
-  font-family: "JetBrains Mono", "SF Mono", "Fira Code", monospace;
-  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   color: var(--accent-1);
   font-weight: 400;
+  opacity: 0.8;
 }
 
 .section-heading::after {
@@ -185,11 +197,12 @@ section {
 }
 
 .now-list li {
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   color: var(--fg-muted);
   padding-left: 1.2rem;
   position: relative;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.55rem;
+  line-height: 1.65;
 }
 
 .now-list li::before {
@@ -197,29 +210,30 @@ section {
   position: absolute;
   left: 0;
   top: 0.5em;
-  width: 0.45em;
-  height: 0.45em;
+  width: 0.4em;
+  height: 0.4em;
   background: var(--accent-1);
   clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+  opacity: 0.7;
 }
 
 /* --- Skills --- */
 .skill-grid {
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
+  gap: 0.65rem;
 }
 
 .skill-row {
   display: flex;
   gap: 1rem;
-  font-size: 0.88rem;
+  font-size: 0.85rem;
 }
 
 .skill-row .label {
-  min-width: 7rem;
-  font-family: "JetBrains Mono", "SF Mono", "Fira Code", monospace;
-  font-size: 0.75rem;
+  min-width: 6.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
   color: var(--accent-2);
   flex-shrink: 0;
   padding-top: 0.05rem;
@@ -233,26 +247,27 @@ section {
 .bento {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 0.8rem;
 }
 
 .bento-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 1.5rem 1.5rem 1.8rem;
+  border-radius: 12px;
+  padding: 1.4rem 1.4rem 1.6rem;
   text-decoration: none;
   color: inherit;
   display: flex;
   flex-direction: column;
-  transition: all .25s;
+  transition: all .3s;
+  backdrop-filter: blur(4px);
 }
 
 .bento-card:hover {
-  border-color: rgba(192, 132, 252, 0.3);
+  border-color: rgba(180, 122, 232, 0.25);
   background: var(--bg-hover);
-  box-shadow: 0 0 30px var(--glow);
-  transform: translateY(-2px);
+  box-shadow: 0 8px 40px var(--glow);
+  transform: translateY(-3px);
 }
 
 .bento-card.featured {
@@ -263,13 +278,13 @@ section {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
 }
 
 .bento-card .icon {
-  font-size: 1.1rem;
-  width: 2rem;
-  height: 2rem;
+  font-size: 1rem;
+  width: 1.8rem;
+  height: 1.8rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -279,71 +294,75 @@ section {
 }
 
 .bento-card .cat {
-  font-size: 0.7rem;
-  font-family: "JetBrains Mono", "SF Mono", "Fira Code", monospace;
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
   color: var(--accent-1);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
+  opacity: 0.8;
 }
 
 .bento-card .name {
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--heading);
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.35rem;
 }
 
 .bento-card .desc {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: var(--fg-muted);
-  line-height: 1.65;
-  margin-bottom: 1rem;
+  line-height: 1.7;
+  margin-bottom: 0.8rem;
   flex: 1;
 }
 
 .bento-card .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.35rem;
 }
 
 .bento-card .tags span {
-  font-size: 0.65rem;
-  font-family: "JetBrains Mono", "SF Mono", "Fira Code", monospace;
+  font-size: 0.62rem;
+  font-family: var(--font-mono);
   color: var(--accent-2);
-  padding: 0.15rem 0.5rem;
+  padding: 0.12rem 0.45rem;
   border: 1px solid var(--border);
-  border-radius: 3px;
+  border-radius: 4px;
+  opacity: 0.8;
 }
 
 .project-link {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.82rem;
-  font-family: "JetBrains Mono", "SF Mono", "Fira Code", monospace;
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
   color: var(--accent-1);
-  margin-top: 1.5rem;
+  margin-top: 1.2rem;
   text-decoration: none;
-  transition: gap .2s;
+  transition: gap .25s;
+  opacity: 0.85;
 }
 
 .project-link:hover {
   gap: 0.7rem;
+  opacity: 1;
 }
 
 /* --- Research Timeline --- */
 .timeline {
   display: flex;
   flex-direction: column;
-  gap: 1.8rem;
+  gap: 1.6rem;
 }
 
 .timeline-item {
-  padding-left: 1.5rem;
-  border-left: 2px solid var(--line);
-  padding-bottom: 0.3rem;
-  transition: border-color .2s;
+  padding-left: 1.4rem;
+  border-left: 1.5px solid var(--line);
+  padding-bottom: 0.2rem;
+  transition: border-color .3s;
 }
 
 .timeline-item:hover {
@@ -351,7 +370,7 @@ section {
 }
 
 .timeline-item .role {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 600;
   color: var(--heading);
   margin-bottom: 0.05rem;
@@ -360,11 +379,11 @@ section {
 .timeline-item .date {
   font-weight: 400;
   color: var(--fg-muted);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
 }
 
 .timeline-item .org {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: var(--accent-2);
   margin-bottom: 0.5rem;
 }
@@ -375,49 +394,57 @@ section {
 }
 
 .timeline-item li {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: var(--fg-muted);
   padding-left: 1rem;
   position: relative;
   margin-bottom: 0.2rem;
+  line-height: 1.65;
 }
 
 .timeline-item li::before {
-  content: '▹';
+  content: '';
   position: absolute;
-  left: 0;
-  color: var(--accent-1);
+  left: 0.05em;
+  top: 0.55em;
+  width: 0.35em;
+  height: 0.35em;
+  background: var(--accent-1);
+  clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+  opacity: 0.6;
 }
 
 /* --- Publications --- */
 .pub-list {
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
+  gap: 0.65rem;
 }
 
 .pub-item {
   padding: 1rem 1.2rem;
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  transition: all .2s;
+  border-radius: 10px;
+  transition: all .25s;
+  backdrop-filter: blur(4px);
 }
 
 .pub-item:hover {
-  border-color: rgba(129, 140, 248, 0.3);
+  border-color: rgba(122, 138, 240, 0.25);
   background: var(--bg-hover);
+  box-shadow: 0 4px 24px var(--glow);
 }
 
 .pub-item .title {
   font-size: 0.85rem;
   font-weight: 500;
   color: var(--heading);
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.15rem;
 }
 
 .pub-item .venue {
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: var(--fg-muted);
 }
 
@@ -427,9 +454,9 @@ section {
 
 /* --- Coursework list --- */
 .course-list {
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   color: var(--fg-muted);
-  line-height: 2;
+  line-height: 2.1;
 }
 
 .course-list .course {
@@ -439,37 +466,47 @@ section {
 .course-list .course + .course::before {
   content: ' · ';
   color: var(--fg-muted);
-  opacity: 0.4;
+  opacity: 0.35;
 }
 
 .course-group {
-  margin-bottom: 1.8rem;
+  margin-bottom: 1.6rem;
 }
 
 .course-group .label {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 600;
   color: var(--heading);
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.5rem;
   display: block;
 }
 
 .course-group .label .count {
   font-weight: 400;
   color: var(--fg-muted);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
 }
 
 /* --- Footer --- */
 footer {
   text-align: center;
   padding: 3rem 0 1rem;
+  opacity: 0.7;
 }
 
 footer p {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--fg-muted);
-  font-family: "JetBrains Mono", "SF Mono", "Fira Code", monospace;
+  font-family: var(--font-mono);
+}
+
+footer a {
+  color: var(--accent-1);
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
 }
 
 /* --- Three.js background canvas --- */
@@ -495,41 +532,43 @@ footer p {
   right: 1.5rem;
   width: 2.4rem;
   height: 2.4rem;
-  border-radius: 8px;
+  border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--bg-card);
   color: var(--fg-muted);
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 100;
-  transition: all .2s;
-  backdrop-filter: blur(8px);
+  transition: all .25s;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .theme-btn:hover {
   border-color: var(--accent-1);
   color: var(--accent-1);
-  box-shadow: 0 0 20px var(--glow);
+  box-shadow: 0 0 24px var(--glow);
+  transform: scale(1.05);
 }
 
 /* --- Page header for subpages --- */
 .page-header {
-  padding: 2rem 0 2.5rem;
+  padding: 2rem 0 2rem;
 }
 
 .page-header h1 {
   font-size: 2rem;
-  font-weight: 700;
+  font-weight: 650;
   color: var(--heading);
   margin-bottom: 0.3rem;
   letter-spacing: -0.02em;
 }
 
 .page-header .sub {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: var(--fg-muted);
 }
 
@@ -537,26 +576,24 @@ footer p {
   color: var(--accent-2);
 }
 
-
-
 /* --- Project filter --- */
 .filter-bar {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.35rem;
   margin-bottom: 1.5rem;
 }
 
 .filter-btn {
-  font-size: 0.72rem;
-  font-family: "JetBrains Mono", "SF Mono", "Fira Code", monospace;
-  padding: 0.3rem 0.8rem;
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  padding: 0.25rem 0.7rem;
   border: 1px solid var(--border);
   border-radius: 6px;
   background: transparent;
   color: var(--fg-muted);
   cursor: pointer;
-  transition: all .15s;
+  transition: all .2s;
 }
 
 .filter-btn:hover {
@@ -579,10 +616,10 @@ footer p {
 .project-list .item {
   display: flex;
   gap: 1.5rem;
-  padding: 0.8rem 1rem;
-  margin: 0 -1rem;
-  border-radius: 6px;
-  transition: background .15s;
+  padding: 0.7rem 0.8rem;
+  margin: 0 -0.8rem;
+  border-radius: 8px;
+  transition: background .2s;
 }
 
 .project-list .item:hover {
@@ -599,7 +636,7 @@ footer p {
 }
 
 .project-list .item .name a {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 500;
   color: var(--heading);
   text-decoration: none;
@@ -610,45 +647,50 @@ footer p {
 }
 
 .project-list .item .name .lang {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   color: var(--accent-2);
-  font-family: "JetBrains Mono", "SF Mono", "Fira Code", monospace;
+  font-family: var(--font-mono);
   margin-left: 0.3rem;
+  opacity: 0.8;
 }
 
 .project-list .item .desc {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: var(--fg-muted);
 }
 
 /* --- Scroll margin --- */
-section[id] { scroll-margin-top: 2rem; }
+section[id] { scroll-margin-top: 5rem; }
 
 /* --- Responsive --- */
 @media (max-width: 700px) {
-  .bento { grid-template-columns: 1fr; }
+  .bento { grid-template-columns: 1fr; gap: 0.7rem; }
   .bento-card.featured { grid-column: 1; }
   .hero h1 { font-size: 2rem; }
   .hero .subtitle { font-size: 0.95rem; }
+  .hero { padding: 2.5rem 0 1rem; }
   .container { padding: 1rem 1.2rem 3rem; }
-  nav { padding: 1rem 1.2rem; }
-  nav .brand { font-size: 0.82rem; }
-  .skill-row { flex-direction: column; gap: 0.15rem; }
+  nav { padding: 0.8rem 1.2rem; top: 0.5rem; border-radius: 10px; }
+  nav .brand { font-size: 0.8rem; }
+  .skill-row { flex-direction: column; gap: 0.1rem; }
   .skill-row .label { min-width: 0; }
-  .project-list .item { flex-direction: column; gap: 0.2rem; }
+  .project-list .item { flex-direction: column; gap: 0.15rem; }
   .page-header h1 { font-size: 1.5rem; }
+  nav a { font-size: 0.75rem; padding: 0.2rem 0.4rem; }
 }
 
 @media (max-width: 480px) {
   .hero h1 { font-size: 1.6rem; }
-  .hero { padding: 1.5rem 0 2.5rem; }
-  .bento-card { padding: 1.2rem; }
+  .hero { padding: 1.5rem 0 0.5rem; }
+  .bento-card { padding: 1rem; }
   .pub-item { padding: 0.7rem 0.9rem; }
-  nav { gap: 0.3rem 1rem; }
+  nav { gap: 0.25rem 0.8rem; }
+  .hero p { max-width: 100%; }
 }
 
 @media print {
   .theme-btn { display: none; }
   body { background: #fff; color: #000; }
   .bento-card, .pub-item { border-color: #ddd; }
+  nav { border: 1px solid #ddd; background: #fff; backdrop-filter: none; }
 }
