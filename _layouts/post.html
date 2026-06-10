@@ -1,0 +1,24 @@
+---
+layout: default
+---
+<article class="post">
+  <a class="post-back" href="{{ '/blog/' | relative_url }}">all posts</a>
+
+  <h1 class="post-title">{{ page.title }}</h1>
+
+  <div class="post-meta">
+    <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+    {% if page.tags %}
+      <span class="post-tags">
+        {% for tag in page.tags %}<a class="tag" href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">#{{ tag }}</a>{% endfor %}
+      </span>
+    {% endif %}
+  </div>
+
+  <div class="post-body">
+    {{ content }}
+  </div>
+
+  <hr class="post-rule">
+  <a class="post-back" href="{{ '/blog/' | relative_url }}">all posts</a>
+</article>

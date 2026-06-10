@@ -1,0 +1,35 @@
+---
+layout: page
+permalink: /tags/
+nav: blog
+title: Tags
+heading: Tags
+sub: "Browse posts by topic."
+---
+
+{% assign sortedTags = site.tags | sort %}
+
+{% if sortedTags.size == 0 %}
+  <p class="gh-loading">No tags yet.</p>
+{% else %}
+  <div class="tag-cloud">
+    {% for tag in sortedTags %}
+      <a class="tag" href="#{{ tag[0] | slugify }}">#{{ tag[0] }} <span style="color:var(--muted)">({{ tag[1].size }})</span></a>
+    {% endfor %}
+  </div>
+
+  {% for tag in sortedTags %}
+    <section class="section" id="{{ tag[0] | slugify }}">
+      <h2 class="year">#{{ tag[0] }}</h2>
+      {% for post in tag[1] %}
+        <div class="post-entry">
+          <div class="post-entry-head">
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+          </div>
+          {% if post.description %}<p class="post-entry-desc">{{ post.description }}</p>{% endif %}
+        </div>
+      {% endfor %}
+    </section>
+  {% endfor %}
+{% endif %}

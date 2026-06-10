@@ -1,38 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Projects · Aman Pathak</title>
-<meta name="description" content="Open-source projects - container runtimes, TCP/IP stacks, emulators, compilers, ML, databases, web apps.">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
+---
+layout: page
+permalink: /projects/
+nav: projects
+title: Projects
+heading: Projects
+sub: '<a href="https://github.com/vajradevam?tab=repositories">github.com/vajradevam</a>'
+description: "Open-source projects - container runtimes, TCP/IP stacks, emulators, compilers, ML, databases, web apps."
+---
 
-<div id="bg-canvas"></div>
+<div id="ghStats" class="gh-stats"></div>
 
-<nav>
-  <span class="brand">vajradevam</span>
-  <button class="nav-toggle" id="navToggle">☰</button>
-  <div class="nav-links" id="navLinks">
-    <a href="index.html">home</a>
-    <a href="projects.html" class="active">projects</a>
-    <a href="research.html">research</a>
-    <a href="writings.html">writings</a>
-    <a href="coursework.html">coursework</a>
-  </div>
-</nav>
-
-<div class="container">
-
-  <div class="page-header reveal">
-  <h1>Projects</h1>
-  <div class="sub"><a href="https://github.com/vajradevam?tab=repositories">github.com/vajradevam</a></div>
-  <div id="ghStats" class="gh-stats"></div>
-</div>
-
-<div id="ghActivity" class="gh-activity reveal"><div class="gh-loading">loading activity...</div></div>
+<div id="ghActivity" class="gh-activity"><div class="gh-loading">loading activity...</div></div>
 
 <div class="filter-bar" id="filterBar">
   <span class="filter-btn active" data-filter="all">all</span>
@@ -48,299 +26,67 @@
 
 <div class="project-list" id="projectList">
 
-<div class="item" data-category="systems">
-  <div class="name"><a href="https://github.com/vajradevam/whale">whale</a><span class="lang">C</span></div>
-  <div class="desc">Minimal container runtime using Linux namespaces, cgroups v2, seccomp-BPF, and overlayfs from scratch</div>
-</div>
-
-<div class="item" data-category="systems">
-  <div class="name"><a href="https://github.com/vajradevam/vajrip">vajrip</a><span class="lang">C</span></div>
-  <div class="desc">Userspace TCP/IP stack: Ethernet, ARP, IP, ICMP, UDP, TCP from scratch, Linux TAP</div>
-</div>
-
-<div class="item" data-category="systems">
-  <div class="name"><a href="https://github.com/vajradevam/memoria">memoria</a><span class="lang">C</span></div>
-  <div class="desc">malloc/free replacement, segregated free list, mmap heap, leak detection, 57 tests</div>
-</div>
-
-<div class="item" data-category="systems">
-  <div class="name"><a href="https://github.com/vajradevam/slinep">slinep</a><span class="lang">C</span></div>
-  <div class="desc">Bezier rasterizer + 12 programs: fluid sim, cloth, metaballs, Fourier, terrain</div>
-</div>
-
-<div class="item" data-category="systems">
-  <div class="name"><a href="https://github.com/vajradevam/lolfetch">lolfetch</a><span class="lang">C</span></div>
-  <div class="desc">System info fetch tool with ASCII art</div>
-</div>
-
-<div class="item" data-category="systems">
-  <div class="name"><a href="https://github.com/vajradevam/ray-tracing-c">ray-tracing-c</a><span class="lang">C</span></div>
-  <div class="desc">2D raycasting, 360 rays, interactive shadows, SDL2</div>
-</div>
-
-<div class="item" data-category="systems">
-  <div class="name"><a href="https://github.com/vajradevam/sell-shell">sell-shell</a><span class="lang">C</span></div>
-  <div class="desc">Minimal Unix shell, fork/exec, foreground/background processes</div>
-</div>
-
-<div class="item" data-category="systems">
-  <div class="name"><a href="https://github.com/vajradevam/c-animation">c-animation</a><span class="lang">C</span></div>
-  <div class="desc">ASCII physics animation using raw ANSI escape sequences</div>
-</div>
-
-<div class="item" data-category="systems">
-  <div class="name"><a href="https://github.com/vajradevam/classmate">classmate</a><span class="lang">C</span></div>
-  <div class="desc">-</div>
-</div>
-
-<div class="item" data-category="systems">
-  <div class="name"><a href="https://github.com/vajradevam/RV-Sparse">RV-Sparse</a><span class="lang">C</span></div>
-  <div class="desc">-</div>
-</div>
-
-<div class="item" data-category="systems">
-  <div class="name"><a href="https://github.com/vajradevam/cn-lab">cn-lab</a><span class="lang">C</span></div>
-  <div class="desc">Computer networks lab</div>
-</div>
-
-<div class="item" data-category="web">
-  <div class="name"><a href="https://github.com/vajradevam/nook">nook</a><span class="lang">Go</span></div>
-  <div class="desc">Tiny embedded ordered key/value database with SQL and auth, built from scratch</div>
-</div>
-
-<div class="item" data-category="web">
-  <div class="name"><a href="https://github.com/vajradevam/mridu">mridu</a><span class="lang">Go</span></div>
-  <div class="desc">Bytecode VM interpreter in Go</div>
-</div>
-
-<div class="item" data-category="web">
-  <div class="name"><a href="https://github.com/vajradevam/urls">urls</a><span class="lang">Astro</span></div>
-  <div class="desc">URL shortener, custom slugs, analytics, QR codes, JWT auth, dark mode</div>
-</div>
-
-<div class="item" data-category="web">
-  <div class="name"><a href="https://github.com/vajradevam/alonzo">alonzo</a><span class="lang">React/Node</span></div>
-  <div class="desc">FaaS platform: upload &amp; execute JS functions via API, rate limiting</div>
-</div>
-
-<div class="item" data-category="web">
-  <div class="name"><a href="https://github.com/vajradevam/juice">juice</a><span class="lang">Node.js</span></div>
-  <div class="desc">VPS hardware monitor API: CPU, memory, disk, network over HTTP</div>
-</div>
-
-<div class="item" data-category="web">
-  <div class="name"><a href="https://github.com/vajradevam/Attendence-System">attendance-system</a><span class="lang">Spring/React</span></div>
-  <div class="desc">Role-based attendance tracking, timetable, real-time stats</div>
-</div>
-
-<div class="item" data-category="web">
-  <div class="name"><a href="https://github.com/vajradevam/LLM-Ping">LLM-Ping</a><span class="lang">Python</span></div>
-  <div class="desc">TUI tool pinging free LLM models across NIM, OpenRouter, Groq, Z.AI</div>
-</div>
-
-<div class="item" data-category="web">
-  <div class="name"><a href="https://github.com/vajradevam/deeptrace">deeptrace</a><span class="lang">C++</span></div>
-  <div class="desc">Deep Packet Inspection CLI tool</div>
-</div>
-
-<div class="item" data-category="web">
-  <div class="name"><a href="https://github.com/vajradevam/pit">pit</a><span class="lang">Python</span></div>
-  <div class="desc">Git implementation in Python</div>
-</div>
-
-<div class="item" data-category="web">
-  <div class="name"><a href="https://github.com/vajradevam/vectdb">vectdb</a><span class="lang">C++</span></div>
-  <div class="desc">Vector database</div>
-</div>
-
-<div class="item" data-category="emulators">
-  <div class="name"><a href="https://github.com/vajradevam/chip8">chip8</a><span class="lang">C</span></div>
-  <div class="desc">CHIP-8 emulator, SDL2, 35 opcodes, 60Hz timers, sound, debug</div>
-</div>
-
-<div class="item" data-category="emulators">
-  <div class="name"><a href="https://github.com/vajradevam/schip">schip</a><span class="lang">C</span></div>
-  <div class="desc">Enhanced CHIP-8 emulator</div>
-</div>
-
-<div class="item" data-category="emulators">
-  <div class="name"><a href="https://github.com/vajradevam/commodore64">commodore64</a><span class="lang">Java</span></div>
-  <div class="desc">Cycle-accurate 6502 CPU, VIC-II text-mode graphics, PRG loading</div>
-</div>
-
-<div class="item" data-category="emulators">
-  <div class="name"><a href="https://github.com/vajradevam/rv32i-SingleBus-emulator">rv32i-emulator</a><span class="lang">Java</span></div>
-  <div class="desc">5-stage unpipelined RV32I, Swing GUI, step-through execution</div>
-</div>
-
-<div class="item" data-category="ml">
-  <div class="name"><a href="https://github.com/vajradevam/wthr">wthr</a><span class="lang">Python</span></div>
-  <div class="desc">Weather/AQI prediction, 109K observations, 25+ models benchmarked</div>
-</div>
-
-<div class="item" data-category="ml">
-  <div class="name"><a href="https://github.com/vajradevam/slm-bench">slm-bench</a><span class="lang">Python</span></div>
-  <div class="desc">50+ quantized SLMs benchmarked across 5 quality domains, ROUGE scoring</div>
-</div>
-
-<div class="item" data-category="ml">
-  <div class="name"><a href="https://github.com/vajradevam/advx">advx</a><span class="lang">PyTorch</span></div>
-  <div class="desc">Adversarial attacks on MNIST: FGSM, PGD, DeepFool, CW, ~98% accuracy</div>
-</div>
-
-<div class="item" data-category="ml">
-  <div class="name"><a href="https://github.com/vajradevam/basic-lstm-weather-prediction">lstm-weather</a><span class="lang">TF/Keras</span></div>
-  <div class="desc">Multivariate LSTM, bidirectional, stacked, CNN-LSTM, ConvLSTM variants</div>
-</div>
-
-<div class="item" data-category="ml">
-  <div class="name"><a href="https://github.com/vajradevam/ml-nanosensor-lab">ml-nanosensor</a><span class="lang">Python</span></div>
-  <div class="desc">ML for THz antenna design from CST Studio simulation data</div>
-</div>
-
-<div class="item" data-category="ml">
-  <div class="name"><a href="https://github.com/vajradevam/vajranet">vajranet</a><span class="lang">PyTorch</span></div>
-  <div class="desc">Neural networks from scratch on MNIST (784-128-128-64-10)</div>
-</div>
-
-<div class="item" data-category="ml">
-  <div class="name"><a href="https://github.com/vajradevam/nn-zth">nn-zth</a><span class="lang">Python</span></div>
-  <div class="desc">Karpathy's Zero to Hero: backprop from scratch, makemore language model</div>
-</div>
-
-<div class="item" data-category="ml">
-  <div class="name"><a href="https://github.com/vajradevam/takenizer">takenizer</a><span class="lang">Python</span></div>
-  <div class="desc">BPE tokenizer for LLMs trained on Shakespeare</div>
-</div>
-
-<div class="item" data-category="ml">
-  <div class="name"><a href="https://github.com/vajradevam/smol">smol</a><span class="lang">Python</span></div>
-  <div class="desc">Fine-tuning Phi-3 to Yoda-speak with LoRA, BitsAndBytes, PEFT</div>
-</div>
-
-<div class="item" data-category="ml">
-  <div class="name"><a href="https://github.com/vajradevam/simplest-markov-chain">markov-chain</a><span class="lang">Python</span></div>
-  <div class="desc">Minimal Markov chain text generator</div>
-</div>
-
-<div class="item" data-category="games">
-  <div class="name"><a href="https://github.com/vajradevam/jetris">jetris</a><span class="lang">JavaFX</span></div>
-  <div class="desc">Tetris: 7 tetrominoes, ghost piece, wall-kicks, hold, 2-player mode</div>
-</div>
-
-<div class="item" data-category="games">
-  <div class="name"><a href="https://github.com/vajradevam/minejweeper">minejweeper</a><span class="lang">JavaFX</span></div>
-  <div class="desc">Minesweeper: 4 difficulty levels, flood-fill, Win95-style UI</div>
-</div>
-
-<div class="item" data-category="games">
-  <div class="name"><a href="https://github.com/vajradevam/judoku">judoku</a><span class="lang">JavaFX</span></div>
-  <div class="desc">Sudoku: backtracking generator, hints, solver, leaderboard</div>
-</div>
-
-<div class="item" data-category="frontend">
-  <div class="name"><a href="https://github.com/vajradevam/2048">2048</a><span class="lang">HTML/CSS/JS</span></div>
-  <div class="desc">2048 game, touch support, CSS animations, Tailwind</div>
-</div>
-
-<div class="item" data-category="frontend">
-  <div class="name"><a href="https://github.com/vajradevam/game-of-life">game-of-life</a><span class="lang">JS</span></div>
-  <div class="desc">Conway's Game of Life, 50x50 grid, start/stop controls</div>
-</div>
-
-<div class="item" data-category="frontend">
-  <div class="name"><a href="https://github.com/vajradevam/color-scheme-generator">color-scheme</a><span class="lang">CSS/JS</span></div>
-  <div class="desc">Upload image to generate 5-color palette via ColorThief</div>
-</div>
-
-<div class="item" data-category="frontend">
-  <div class="name"><a href="https://github.com/vajradevam/markov-chain-sequence-generator">markov-web</a><span class="lang">HTML/JS</span></div>
-  <div class="desc">Client-side Markov chain sentence generator</div>
-</div>
-
-<div class="item" data-category="compilers">
-  <div class="name"><a href="https://github.com/vajradevam/Luma-Lang">Luma-Lang</a><span class="lang">Java</span></div>
-  <div class="desc">Toy programming language: lexer, parser, AST, semantic analysis</div>
-</div>
-
-<div class="item" data-category="compilers">
-  <div class="name"><a href="https://github.com/vajradevam/yasl">yasl</a><span class="lang">Python</span></div>
-  <div class="desc">"Yet Another Scripting Language" with hand-written parser</div>
-</div>
-
-<div class="item" data-category="compilers">
-  <div class="name"><a href="https://github.com/vajradevam/riscc">riscc</a><span class="lang">Asm/C/Verilog</span></div>
-  <div class="desc">RISC-V testbench: standalone C programs validating processor cores</div>
-</div>
-
-<div class="item" data-category="misc">
-  <div class="name"><a href="https://github.com/vajradevam/DDownloader">DDownloader</a><span class="lang">Python</span></div>
-  <div class="desc">Discord bot: download all media from a specific user across an entire server</div>
-</div>
-
-<div class="item" data-category="misc">
-  <div class="name"><a href="https://github.com/vajradevam/chatbot">chatbot</a><span class="lang">Python</span></div>
-  <div class="desc">Groq API chatbot with LLaMA, Gemma, Qwen, DeepSeek models</div>
-</div>
-
-<div class="item" data-category="misc">
-  <div class="name"><a href="https://github.com/vajradevam/chatora">chatora</a><span class="lang">Python</span></div>
-  <div class="desc">Gemini API chatbot built with Streamlit</div>
-</div>
-
-<div class="item" data-category="misc">
-  <div class="name"><a href="https://github.com/vajradevam/cst-studio-pipeline">cst-pipeline</a><span class="lang">Python</span></div>
-  <div class="desc">S11/gain extraction from CST Studio ASCII exports with GUI</div>
-</div>
-
-<div class="item" data-category="misc">
-  <div class="name"><a href="https://github.com/vajradevam/cst-studio-plotter">cst-plotter</a><span class="lang">Python</span></div>
-  <div class="desc">Publication-quality graphs: S11, gain, VSWR, efficiency</div>
-</div>
-
-<div class="item" data-category="misc">
-  <div class="name"><a href="https://github.com/vajradevam/aoc_2023">aoc_2023</a><span class="lang">Python</span></div>
-  <div class="desc">6 solutions</div>
-</div>
-
-<div class="item" data-category="misc">
-  <div class="name"><a href="https://github.com/vajradevam/aoc_2024">aoc_2024</a><span class="lang">C</span></div>
-  <div class="desc">Solutions in C</div>
-</div>
-
-<div class="item" data-category="misc">
-  <div class="name"><a href="https://github.com/vajradevam/aoc_2025">aoc_2025</a><span class="lang">Haskell</span></div>
-  <div class="desc">Solutions in Haskell</div>
-</div>
-
-<div class="item" data-category="misc">
-  <div class="name"><a href="https://github.com/vajradevam/is_even">is_even</a><span class="lang">C</span></div>
-  <div class="desc">Satirical: "find out if a number is even using switch case"</div>
-</div>
-
-<div class="item" data-category="misc">
-  <div class="name"><a href="https://github.com/vajradevam/sickastley-dots">dotfiles</a><span class="lang">Shell</span></div>
-  <div class="desc">Arch Linux / i3wm dotfiles</div>
-</div>
-
-<div class="item" data-category="misc">
-  <div class="name"><a href="https://github.com/vajradevam/ai-lab">ai-lab</a><span class="lang">Python</span></div>
-  <div class="desc">AI coursework: search algorithms, CSP, ML, stock agent</div>
-</div>
-
-<div class="item" data-category="misc">
-  <div class="name"><a href="https://github.com/vajradevam/ad-lab">ad-lab</a><span class="lang">Python</span></div>
-  <div class="desc">Algorithm design lab</div>
-</div>
+<div class="item" data-category="systems"><div class="name"><a href="https://github.com/vajradevam/whale">whale</a><span class="lang">C</span></div><div class="desc">Minimal container runtime using Linux namespaces, cgroups v2, seccomp-BPF, and overlayfs from scratch</div></div>
+<div class="item" data-category="systems"><div class="name"><a href="https://github.com/vajradevam/vajrip">vajrip</a><span class="lang">C</span></div><div class="desc">Userspace TCP/IP stack: Ethernet, ARP, IP, ICMP, UDP, TCP from scratch, Linux TAP</div></div>
+<div class="item" data-category="systems"><div class="name"><a href="https://github.com/vajradevam/memoria">memoria</a><span class="lang">C</span></div><div class="desc">malloc/free replacement, segregated free list, mmap heap, leak detection, 57 tests</div></div>
+<div class="item" data-category="systems"><div class="name"><a href="https://github.com/vajradevam/slinep">slinep</a><span class="lang">C</span></div><div class="desc">Bezier rasterizer + 12 programs: fluid sim, cloth, metaballs, Fourier, terrain</div></div>
+<div class="item" data-category="systems"><div class="name"><a href="https://github.com/vajradevam/lolfetch">lolfetch</a><span class="lang">C</span></div><div class="desc">System info fetch tool with ASCII art</div></div>
+<div class="item" data-category="systems"><div class="name"><a href="https://github.com/vajradevam/ray-tracing-c">ray-tracing-c</a><span class="lang">C</span></div><div class="desc">2D raycasting, 360 rays, interactive shadows, SDL2</div></div>
+<div class="item" data-category="systems"><div class="name"><a href="https://github.com/vajradevam/sell-shell">sell-shell</a><span class="lang">C</span></div><div class="desc">Minimal Unix shell, fork/exec, foreground/background processes</div></div>
+<div class="item" data-category="systems"><div class="name"><a href="https://github.com/vajradevam/c-animation">c-animation</a><span class="lang">C</span></div><div class="desc">ASCII physics animation using raw ANSI escape sequences</div></div>
+<div class="item" data-category="systems"><div class="name"><a href="https://github.com/vajradevam/classmate">classmate</a><span class="lang">C</span></div><div class="desc">-</div></div>
+<div class="item" data-category="systems"><div class="name"><a href="https://github.com/vajradevam/RV-Sparse">RV-Sparse</a><span class="lang">C</span></div><div class="desc">-</div></div>
+<div class="item" data-category="systems"><div class="name"><a href="https://github.com/vajradevam/cn-lab">cn-lab</a><span class="lang">C</span></div><div class="desc">Computer networks lab</div></div>
+<div class="item" data-category="web"><div class="name"><a href="https://github.com/vajradevam/nook">nook</a><span class="lang">Go</span></div><div class="desc">Tiny embedded ordered key/value database with SQL and auth, built from scratch</div></div>
+<div class="item" data-category="web"><div class="name"><a href="https://github.com/vajradevam/mridu">mridu</a><span class="lang">Go</span></div><div class="desc">Bytecode VM interpreter in Go</div></div>
+<div class="item" data-category="web"><div class="name"><a href="https://github.com/vajradevam/urls">urls</a><span class="lang">Astro</span></div><div class="desc">URL shortener, custom slugs, analytics, QR codes, JWT auth, dark mode</div></div>
+<div class="item" data-category="web"><div class="name"><a href="https://github.com/vajradevam/alonzo">alonzo</a><span class="lang">React/Node</span></div><div class="desc">FaaS platform: upload &amp; execute JS functions via API, rate limiting</div></div>
+<div class="item" data-category="web"><div class="name"><a href="https://github.com/vajradevam/juice">juice</a><span class="lang">Node.js</span></div><div class="desc">VPS hardware monitor API: CPU, memory, disk, network over HTTP</div></div>
+<div class="item" data-category="web"><div class="name"><a href="https://github.com/vajradevam/Attendence-System">attendance-system</a><span class="lang">Spring/React</span></div><div class="desc">Role-based attendance tracking, timetable, real-time stats</div></div>
+<div class="item" data-category="web"><div class="name"><a href="https://github.com/vajradevam/LLM-Ping">LLM-Ping</a><span class="lang">Python</span></div><div class="desc">TUI tool pinging free LLM models across NIM, OpenRouter, Groq, Z.AI</div></div>
+<div class="item" data-category="web"><div class="name"><a href="https://github.com/vajradevam/deeptrace">deeptrace</a><span class="lang">C++</span></div><div class="desc">Deep Packet Inspection CLI tool</div></div>
+<div class="item" data-category="web"><div class="name"><a href="https://github.com/vajradevam/pit">pit</a><span class="lang">Python</span></div><div class="desc">Git implementation in Python</div></div>
+<div class="item" data-category="web"><div class="name"><a href="https://github.com/vajradevam/vectdb">vectdb</a><span class="lang">C++</span></div><div class="desc">Vector database</div></div>
+<div class="item" data-category="emulators"><div class="name"><a href="https://github.com/vajradevam/chip8">chip8</a><span class="lang">C</span></div><div class="desc">CHIP-8 emulator, SDL2, 35 opcodes, 60Hz timers, sound, debug</div></div>
+<div class="item" data-category="emulators"><div class="name"><a href="https://github.com/vajradevam/schip">schip</a><span class="lang">C</span></div><div class="desc">Enhanced CHIP-8 emulator</div></div>
+<div class="item" data-category="emulators"><div class="name"><a href="https://github.com/vajradevam/commodore64">commodore64</a><span class="lang">Java</span></div><div class="desc">Cycle-accurate 6502 CPU, VIC-II text-mode graphics, PRG loading</div></div>
+<div class="item" data-category="emulators"><div class="name"><a href="https://github.com/vajradevam/rv32i-SingleBus-emulator">rv32i-emulator</a><span class="lang">Java</span></div><div class="desc">5-stage unpipelined RV32I, Swing GUI, step-through execution</div></div>
+<div class="item" data-category="ml"><div class="name"><a href="https://github.com/vajradevam/wthr">wthr</a><span class="lang">Python</span></div><div class="desc">Weather/AQI prediction, 109K observations, 25+ models benchmarked</div></div>
+<div class="item" data-category="ml"><div class="name"><a href="https://github.com/vajradevam/slm-bench">slm-bench</a><span class="lang">Python</span></div><div class="desc">50+ quantized SLMs benchmarked across 5 quality domains, ROUGE scoring</div></div>
+<div class="item" data-category="ml"><div class="name"><a href="https://github.com/vajradevam/advx">advx</a><span class="lang">PyTorch</span></div><div class="desc">Adversarial attacks on MNIST: FGSM, PGD, DeepFool, CW, ~98% accuracy</div></div>
+<div class="item" data-category="ml"><div class="name"><a href="https://github.com/vajradevam/basic-lstm-weather-prediction">lstm-weather</a><span class="lang">TF/Keras</span></div><div class="desc">Multivariate LSTM, bidirectional, stacked, CNN-LSTM, ConvLSTM variants</div></div>
+<div class="item" data-category="ml"><div class="name"><a href="https://github.com/vajradevam/ml-nanosensor-lab">ml-nanosensor</a><span class="lang">Python</span></div><div class="desc">ML for THz antenna design from CST Studio simulation data</div></div>
+<div class="item" data-category="ml"><div class="name"><a href="https://github.com/vajradevam/vajranet">vajranet</a><span class="lang">PyTorch</span></div><div class="desc">Neural networks from scratch on MNIST (784-128-128-64-10)</div></div>
+<div class="item" data-category="ml"><div class="name"><a href="https://github.com/vajradevam/nn-zth">nn-zth</a><span class="lang">Python</span></div><div class="desc">Karpathy's Zero to Hero: backprop from scratch, makemore language model</div></div>
+<div class="item" data-category="ml"><div class="name"><a href="https://github.com/vajradevam/takenizer">takenizer</a><span class="lang">Python</span></div><div class="desc">BPE tokenizer for LLMs trained on Shakespeare</div></div>
+<div class="item" data-category="ml"><div class="name"><a href="https://github.com/vajradevam/smol">smol</a><span class="lang">Python</span></div><div class="desc">Fine-tuning Phi-3 to Yoda-speak with LoRA, BitsAndBytes, PEFT</div></div>
+<div class="item" data-category="ml"><div class="name"><a href="https://github.com/vajradevam/simplest-markov-chain">markov-chain</a><span class="lang">Python</span></div><div class="desc">Minimal Markov chain text generator</div></div>
+<div class="item" data-category="games"><div class="name"><a href="https://github.com/vajradevam/jetris">jetris</a><span class="lang">JavaFX</span></div><div class="desc">Tetris: 7 tetrominoes, ghost piece, wall-kicks, hold, 2-player mode</div></div>
+<div class="item" data-category="games"><div class="name"><a href="https://github.com/vajradevam/minejweeper">minejweeper</a><span class="lang">JavaFX</span></div><div class="desc">Minesweeper: 4 difficulty levels, flood-fill, Win95-style UI</div></div>
+<div class="item" data-category="games"><div class="name"><a href="https://github.com/vajradevam/judoku">judoku</a><span class="lang">JavaFX</span></div><div class="desc">Sudoku: backtracking generator, hints, solver, leaderboard</div></div>
+<div class="item" data-category="frontend"><div class="name"><a href="https://github.com/vajradevam/2048">2048</a><span class="lang">HTML/CSS/JS</span></div><div class="desc">2048 game, touch support, CSS animations, Tailwind</div></div>
+<div class="item" data-category="frontend"><div class="name"><a href="https://github.com/vajradevam/game-of-life">game-of-life</a><span class="lang">JS</span></div><div class="desc">Conway's Game of Life, 50x50 grid, start/stop controls</div></div>
+<div class="item" data-category="frontend"><div class="name"><a href="https://github.com/vajradevam/color-scheme-generator">color-scheme</a><span class="lang">CSS/JS</span></div><div class="desc">Upload image to generate 5-color palette via ColorThief</div></div>
+<div class="item" data-category="frontend"><div class="name"><a href="https://github.com/vajradevam/markov-chain-sequence-generator">markov-web</a><span class="lang">HTML/JS</span></div><div class="desc">Client-side Markov chain sentence generator</div></div>
+<div class="item" data-category="compilers"><div class="name"><a href="https://github.com/vajradevam/Luma-Lang">Luma-Lang</a><span class="lang">Java</span></div><div class="desc">Toy programming language: lexer, parser, AST, semantic analysis</div></div>
+<div class="item" data-category="compilers"><div class="name"><a href="https://github.com/vajradevam/yasl">yasl</a><span class="lang">Python</span></div><div class="desc">"Yet Another Scripting Language" with hand-written parser</div></div>
+<div class="item" data-category="compilers"><div class="name"><a href="https://github.com/vajradevam/riscc">riscc</a><span class="lang">Asm/C/Verilog</span></div><div class="desc">RISC-V testbench: standalone C programs validating processor cores</div></div>
+<div class="item" data-category="misc"><div class="name"><a href="https://github.com/vajradevam/DDownloader">DDownloader</a><span class="lang">Python</span></div><div class="desc">Discord bot: download all media from a specific user across an entire server</div></div>
+<div class="item" data-category="misc"><div class="name"><a href="https://github.com/vajradevam/chatbot">chatbot</a><span class="lang">Python</span></div><div class="desc">Groq API chatbot with LLaMA, Gemma, Qwen, DeepSeek models</div></div>
+<div class="item" data-category="misc"><div class="name"><a href="https://github.com/vajradevam/chatora">chatora</a><span class="lang">Python</span></div><div class="desc">Gemini API chatbot built with Streamlit</div></div>
+<div class="item" data-category="misc"><div class="name"><a href="https://github.com/vajradevam/cst-studio-pipeline">cst-pipeline</a><span class="lang">Python</span></div><div class="desc">S11/gain extraction from CST Studio ASCII exports with GUI</div></div>
+<div class="item" data-category="misc"><div class="name"><a href="https://github.com/vajradevam/cst-studio-plotter">cst-plotter</a><span class="lang">Python</span></div><div class="desc">Publication-quality graphs: S11, gain, VSWR, efficiency</div></div>
+<div class="item" data-category="misc"><div class="name"><a href="https://github.com/vajradevam/aoc_2023">aoc_2023</a><span class="lang">Python</span></div><div class="desc">6 solutions</div></div>
+<div class="item" data-category="misc"><div class="name"><a href="https://github.com/vajradevam/aoc_2024">aoc_2024</a><span class="lang">C</span></div><div class="desc">Solutions in C</div></div>
+<div class="item" data-category="misc"><div class="name"><a href="https://github.com/vajradevam/aoc_2025">aoc_2025</a><span class="lang">Haskell</span></div><div class="desc">Solutions in Haskell</div></div>
+<div class="item" data-category="misc"><div class="name"><a href="https://github.com/vajradevam/is_even">is_even</a><span class="lang">C</span></div><div class="desc">Satirical: "find out if a number is even using switch case"</div></div>
+<div class="item" data-category="misc"><div class="name"><a href="https://github.com/vajradevam/sickastley-dots">dotfiles</a><span class="lang">Shell</span></div><div class="desc">Arch Linux / i3wm dotfiles</div></div>
+<div class="item" data-category="misc"><div class="name"><a href="https://github.com/vajradevam/ai-lab">ai-lab</a><span class="lang">Python</span></div><div class="desc">AI coursework: search algorithms, CSP, ML, stock agent</div></div>
+<div class="item" data-category="misc"><div class="name"><a href="https://github.com/vajradevam/ad-lab">ad-lab</a><span class="lang">Python</span></div><div class="desc">Algorithm design lab</div></div>
 
 </div>
 
-</div>
-
-<button class="theme-btn" id="themeToggle" title="Toggle theme">☾</button>
-<script src="theme.js"></script>
-<script src="scene.js"></script>
-<script src="ui.js"></script>
+{% raw %}
 <script>
 (function() {
   var btns = document.querySelectorAll('.filter-btn');
@@ -360,9 +106,7 @@
     });
   });
 })();
-</script>
 
-<script>
 (function() {
   var activityEl = document.getElementById('ghActivity');
   var statsEl = document.getElementById('ghStats');
@@ -391,10 +135,7 @@
 
   function showStats() {
     var cached = cacheGet('repos_stats');
-    if (cached) {
-      renderStats(cached);
-      return;
-    }
+    if (cached) { renderStats(cached); return; }
     fetch('https://api.github.com/users/' + username + '/repos?per_page=100&sort=pushed')
       .then(function(r) { return r.json(); })
       .then(function(repos) {
@@ -421,7 +162,6 @@
       el.innerHTML = '<div class="gh-error">no recent activity</div>';
       return;
     }
-
     var commits = [];
     events.forEach(function(e) {
       if (e.type === 'PushEvent' && e.payload && e.payload.commits) {
@@ -437,12 +177,10 @@
         });
       }
     });
-
     if (commits.length === 0) {
       el.innerHTML = '<div class="gh-error">no recent activity</div>';
       return;
     }
-
     commits = commits.slice(0, 20);
     el.innerHTML = '<div class="gh-commit-list">' +
       commits.map(function(c) {
@@ -464,10 +202,7 @@
     showStats();
   } else {
     fetch('https://api.github.com/users/' + username + '/events?per_page=100')
-      .then(function(r) {
-        if (!r.ok) throw new Error('API error');
-        return r.json();
-      })
+      .then(function(r) { if (!r.ok) throw new Error('API error'); return r.json(); })
       .then(function(events) {
         if (!Array.isArray(events)) throw new Error('bad response');
         cacheSet('events', events);
@@ -481,5 +216,4 @@
   }
 })();
 </script>
-</body>
-</html>
+{% endraw %}

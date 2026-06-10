@@ -1,37 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Aman Pathak · vajradevam</title>
-<meta name="description" content="PhD Scholar in computer architecture, hardware security, and low-level systems. RISC-V, side-channel attacks, formal verification.">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<div id="bg-canvas"></div>
-
-<nav>
-  <span class="brand">vajradevam</span>
-  <button class="nav-toggle" id="navToggle">☰</button>
-  <div class="nav-links" id="navLinks">
-    <a href="index.html" class="active">home</a>
-    <a href="projects.html">projects</a>
-    <a href="research.html">research</a>
-    <a href="writings.html">writings</a>
-    <a href="coursework.html">coursework</a>
-  </div>
-</nav>
-
-<div class="container">
+---
+layout: default
+nav: home
+title: null
+description: "PhD Scholar in computer architecture, hardware security, and low-level systems. RISC-V, side-channel attacks, formal verification."
+---
 
 <section class="hero">
   <div class="greeting">Hi, I'm</div>
   <h1>Aman Pathak</h1>
-  <div class="subtitle">
-    <span class="typewriter">PhD Scholar. I work on hardware security, RISC-V, and low-level software.</span>
-  </div>
+  <div class="subtitle">PhD Scholar working on hardware security, RISC-V, and low-level software.</div>
   <p>
     I'm a PhD Scholar in the Department of Computer Science and Information Systems at
     BITS Pilani KK Birla Goa Campus, working at the intersection of hardware security,
@@ -58,11 +35,27 @@
     category theory, I am interested in the stripped-down, non-abstracted, naked-truth stuff.
   </p>
 </section>
-<section class="reveal">
+
+<section class="section">
   <div class="section-heading">
-    <span class="num">/focus</span> now
+    Recent posts
+    <a class="section-link" href="{{ '/blog/' | relative_url }}">all posts</a>
   </div>
-  <ul class="now-list">
+  {% for post in site.posts limit: 4 %}
+  <div class="post-entry">
+    <div class="post-entry-head">
+      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+    </div>
+    {% if post.description %}<p class="post-entry-desc">{{ post.description }}</p>{% endif %}
+    {% if post.tags %}<div class="tags">{% for tag in post.tags %}<a class="tag" href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">#{{ tag }}</a>{% endfor %}</div>{% endif %}
+  </div>
+  {% endfor %}
+</section>
+
+<section class="section">
+  <div class="section-heading">Now</div>
+  <ul class="dash-list">
     <li>Securing CXL memory fabrics: coherence directory poisoning, protocol-processor boundary attacks, compression side channels, and fabric-amplified Row Hammer</li>
     <li>Security-aware architectural certification testing (SecACT) for RISC-V: PMP bypass via microarchitectural state, vendor extension validation, and the ACT security gap</li>
     <li>Formalizing the Linux kernel shared-page mutation bug class: dirty invariant model, page-cache anti-forensics, zero-copy I/O abuse, and in-place crypto redesign</li>
@@ -71,32 +64,9 @@
   </ul>
 </section>
 
-<section class="reveal reveal-delay-1">
-  <div class="section-heading">
-    <span class="num">/stack</span> skills
-  </div>
-  <div class="skill-grid">
-    <div class="skill-row"><span class="label">Languages</span><span class="items">C · Rust · Java · Python · Verilog · SystemVerilog · VHDL · HLS · RISC-V/6502 Asm · x86 Asm · Chisel · Go · Perl · Haskell · JavaScript</span></div>
-    <div class="skill-row"><span class="label">Systems</span><span class="items">GNU/Linux · OpenBSD · GDB · Valgrind · Git · Docker · Vim · LaTeX · Wireshark · CST Studio · Yosys · Verilator · OpenSTA</span></div>
-    <div class="skill-row"><span class="label">Domains</span><span class="items">Computer Architecture · OS · Hardware Security · Side-Channel Analysis · Embedded Systems · Compilers · Formal Verification · VLSI</span></div>
-  </div>
+<section class="section">
+  <div class="section-heading">Skills</div>
+  <div class="skill-row"><span class="label">Languages</span><span class="items">C · Rust · Java · Python · Verilog · SystemVerilog · VHDL · HLS · RISC-V/6502 Asm · x86 Asm · Chisel · Go · Perl · Haskell · JavaScript</span></div>
+  <div class="skill-row"><span class="label">Systems</span><span class="items">GNU/Linux · OpenBSD · GDB · Valgrind · Git · Docker · Vim · LaTeX · Wireshark · CST Studio · Yosys · Verilator · OpenSTA</span></div>
+  <div class="skill-row"><span class="label">Domains</span><span class="items">Computer Architecture · OS · Hardware Security · Side-Channel Analysis · Embedded Systems · Compilers · Formal Verification · VLSI</span></div>
 </section>
-
-
-<footer>
-  <p>
-    <a href="https://blog.vajradevam.in" style="color:var(--accent-1)">blog</a>
-    · <a href="https://github.com/vajradevam" style="color:var(--accent-1)">github</a>
-    · <a href="mailto:vajradevam@gmail.com" style="color:var(--accent-1)">email</a>
-    · built by Aman Pathak · © 2026
-  </p>
-</footer>
-
-</div>
-
-<button class="theme-btn" id="themeToggle" title="Toggle theme">☾</button>
-<script src="theme.js"></script>
-<script src="scene.js"></script>
-<script src="ui.js"></script>
-</body>
-</html>

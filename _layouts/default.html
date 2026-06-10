@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+{% include head.html %}
+</head>
+<body>
+
+<header class="site-nav">
+{% include nav.html %}
+</header>
+
+<main class="container">
+{{ content }}
+</main>
+
+{% include footer.html %}
+
+{% if page.math %}
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['\\[', '\\]'], ['$$', '$$']],
+      processEscapes: true,
+      tags: 'ams'
+    },
+    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+{% endif %}
+
+<script src="{{ '/assets/js/ui.js' | relative_url }}"></script>
+</body>
+</html>

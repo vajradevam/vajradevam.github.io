@@ -1,0 +1,37 @@
+title: Aman Pathak
+tagline: "Writing, building, and all things close to the metal"
+description: "PhD Scholar in computer architecture, hardware security, and low-level systems. RISC-V, side-channel attacks, formal verification."
+author: Aman Pathak
+url: "https://vajradevam.in"
+baseurl: ""
+
+timezone: Asia/Kolkata
+
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      permalink: /blog/:title/
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - generate.js
+  - README.md
+  - node_modules
+  - vendor
+  - .github
+  - LICENSE

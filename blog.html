@@ -1,0 +1,85 @@
+---
+layout: page
+permalink: /blog/
+nav: blog
+title: Blog
+heading: Blog
+sub: "Writing, musing, and all things close to the metal."
+description: "Posts on computer architecture, hardware security, compilers, C, and low-level systems."
+---
+
+<div class="search-bar">
+  <input type="text" id="blogSearch" placeholder="search posts by title, tag, or keyword…" autocomplete="off" />
+</div>
+
+{% if site.tags.size > 0 %}
+<div class="tag-cloud">
+  {% assign sortedTags = site.tags | sort %}
+  {% for tag in sortedTags %}
+    <a class="tag" href="{{ '/tags/' | relative_url }}#{{ tag[0] | slugify }}">#{{ tag[0] }}</a>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% if site.posts.size == 0 %}
+  <p class="gh-loading">No posts yet, check back soon.</p>
+{% else %}
+  <div id="blogList">
+  {% assign postsByYear = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+  {% for year in postsByYear %}
+    <div class="year-group">
+      <h2 class="year">{{ year.name }}</h2>
+      {% for post in year.items %}
+        <div class="post-entry" data-search="{{ post.title | strip_html | downcase | escape }} {{ post.description | strip_html | downcase | escape }} {% for tag in post.tags %}{{ tag | downcase | escape }} {% endfor %}">
+          <div class="post-entry-head">
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+          </div>
+          {% if post.description %}<p class="post-entry-desc">{{ post.description }}</p>{% endif %}
+          {% if post.tags %}
+            <div class="tags">
+              {% for tag in post.tags %}<a class="tag" href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">#{{ tag }}</a>{% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+  </div>
+
+  <div class="writings-empty" id="blogEmpty"><p>no posts match your search</p></div>
+{% endif %}
+
+{% raw %}
+<script>
+(function () {
+  var input = document.getElementById('blogSearch');
+  if (!input) return;
+  var entries = [].slice.call(document.querySelectorAll('#blogList .post-entry'));
+  var groups = [].slice.call(document.querySelectorAll('#blogList .year-group'));
+  var empty = document.getElementById('blogEmpty');
+
+  input.addEventListener('input', function () {
+    var q = this.value.toLowerCase().trim();
+    var anyVisible = false;
+
+    entries.forEach(function (el) {
+      var hay = el.getAttribute('data-search') || '';
+      var match = !q || hay.indexOf(q) > -1;
+      el.style.display = match ? '' : 'none';
+      if (match) anyVisible = true;
+    });
+
+    groups.forEach(function (g) {
+      var hasVisible = false;
+      g.querySelectorAll('.post-entry').forEach(function (e) {
+        if (e.style.display !== 'none') hasVisible = true;
+      });
+      g.style.display = hasVisible ? '' : 'none';
+    });
+
+    if (empty) empty.style.display = anyVisible ? 'none' : 'block';
+  });
+})();
+</script>
+{% endraw %}

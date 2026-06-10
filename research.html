@@ -1,44 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Research · Aman Pathak</title>
-<meta name="description" content="PhD Scholar - hardware security, RISC-V, formal verification, side-channel attacks, 5 publications, 6 patents.">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
+---
+layout: page
+permalink: /research/
+nav: research
+title: Research
+heading: Research
+sub: "PhD Scholar · 5 publications · 6 filed patents · hardware security · formal verification · RISC-V"
+description: "PhD Scholar - hardware security, RISC-V, formal verification, side-channel attacks, 5 publications, 6 patents."
+---
 
-<div id="bg-canvas"></div>
-
-<nav>
-  <span class="brand">vajradevam</span>
-  <button class="nav-toggle" id="navToggle">☰</button>
-  <div class="nav-links" id="navLinks">
-    <a href="index.html">home</a>
-    <a href="projects.html">projects</a>
-    <a href="research.html" class="active">research</a>
-    <a href="writings.html">writings</a>
-    <a href="coursework.html">coursework</a>
-  </div>
-</nav>
-
-<div class="container">
-
-  <div class="page-header reveal">
-  <h1>Research</h1>
-  <div class="sub">PhD Scholar · 5 publications · 6 filed patents · hardware security · formal verification · RISC-V</div>
-</div>
-
-<section>
-  <div class="section-heading">
-    <span class="num">/exp</span> experience
-  </div>
-
+<section class="section">
+  <div class="section-heading">Experience</div>
   <div class="timeline">
     <div class="timeline-item">
-      <div class="role">PhD Scholar <span class="date">· 2026–present</span></div>
+      <div class="role">PhD Scholar <span class="date">· 2026-present</span></div>
       <div class="org">BITS Pilani KK Birla Goa Campus - CSIS Dept, Hardware Security &amp; Computer Architecture</div>
       <ul>
         <li>Hardware security of RISC-V architectures, side-channel attack mitigation, and formal verification of cache coherency protocols</li>
@@ -48,7 +22,7 @@
     </div>
 
     <div class="timeline-item">
-      <div class="role">Undergraduate Researcher <span class="date">· May–Aug 2025</span></div>
+      <div class="role">Undergraduate Researcher <span class="date">· May-Aug 2025</span></div>
       <div class="org">BITS Pilani / ENineHQ Technologies - Hardware Security &amp; Malware Analysis</div>
       <ul>
         <li>Hardware security of RISC-V architectures, side-channel attack mitigation (masking, hiding, dual-rail logic), cryptographic implementations</li>
@@ -58,7 +32,7 @@
     </div>
 
     <div class="timeline-item">
-      <div class="role">Undergraduate Researcher <span class="date">· Feb 2023–Aug 2024</span></div>
+      <div class="role">Undergraduate Researcher <span class="date">· Feb 2023-Aug 2024</span></div>
       <div class="org">KIIT University - RF &amp; Antenna Systems</div>
       <ul>
         <li>Designed Ku/X-band microstrip patch antennas in CST Studio for THz/GHz RF communication</li>
@@ -68,11 +42,8 @@
   </div>
 </section>
 
-<section>
-  <div class="section-heading">
-    <span class="num">/ip</span> patents
-  </div>
-
+<section class="section">
+  <div class="section-heading">Patents</div>
   <div class="pub-list">
     <div class="pub-item">
       <div class="title">DFI Monitor (202631036811)</div>
@@ -101,49 +72,37 @@
   </div>
 </section>
 
-<section>
-  <div class="section-heading">
-    <span class="num">/papers</span> publications
-  </div>
-
+<section class="section">
+  <div class="section-heading">Publications</div>
   <div class="pub-list">
     <div class="pub-item">
       <div class="title">Memory Security: From Cold Boot Attacks to Side-Channel Defenses</div>
       <div class="venue">J. Mishra, S.K. Sahay, S. Mishra, <strong>A. Pathak</strong> · 11th ICTIS, Springer LNNS, 2026</div>
-      <div style="font-size:0.78rem;color:var(--fg-muted);margin-top:0.3rem">Systematic review of memory encryption for volatile RAM protection. Covers Intel TME/MK-TME, AMD SME, Merkle tree integrity, and side-channel countermeasures against DPA/SPA, bus sniffing, cold boot attacks, and address-pattern analysis in multi-tenant environments.</div>
+      <div class="abstract">Systematic review of memory encryption for volatile RAM protection. Covers Intel TME/MK-TME, AMD SME, Merkle tree integrity, and side-channel countermeasures against DPA/SPA, bus sniffing, cold boot attacks, and address-pattern analysis in multi-tenant environments.</div>
     </div>
 
     <div class="pub-item">
       <div class="title">Formal Verification of Software-Managed Cache Coherency for RISC-V Heterogeneous Embedded Systems</div>
       <div class="venue">J. Mishra, S.K. Sahay, S. Mishra, <strong>A. Pathak</strong> · SmartCom, Springer LNNS, 2026</div>
-      <div style="font-size:0.78rem;color:var(--fg-muted);margin-top:0.3rem">Formal automata-based model for software-managed cache coherency using the RISC-V Zicbom extension. Characterizes necessary and sufficient conditions for safe DMA operations. Proves coherency verification decidable for bounded programs. Achieves 58.8% average CMO reduction on embedded benchmarks including sensor fusion and edge NN inference.</div>
+      <div class="abstract">Formal automata-based model for software-managed cache coherency using the RISC-V Zicbom extension. Characterizes necessary and sufficient conditions for safe DMA operations. Proves coherency verification decidable for bounded programs. Achieves 58.8% average CMO reduction on embedded benchmarks including sensor fusion and edge NN inference.</div>
     </div>
 
     <div class="pub-item">
       <div class="title">RV-JOSH: A Hardened Operating System for RISC-V based on Java</div>
       <div class="venue">J. Mishra, S.K. Sahay, S. Mishra, <strong>A. Pathak</strong> · SmartCom, Springer LNNS, 2026</div>
-      <div style="font-size:0.78rem;color:var(--fg-muted);margin-top:0.3rem">RISC-V OS with kernel written entirely in Java via JNI. User processes are Java programs loaded as OS processes. Dual-layer malware detection: static bytecode analysis (n-gram opcode features + random forest/NN classifiers) and runtime monitoring via QEMU-augmented HPCs. Page-level memory encryption with selective encryption and periodic rekeying for SPA/DPA resistance on IoT deployments.</div>
+      <div class="abstract">RISC-V OS with kernel written entirely in Java via JNI. User processes are Java programs loaded as OS processes. Dual-layer malware detection: static bytecode analysis (n-gram opcode features + random forest/NN classifiers) and runtime monitoring via QEMU-augmented HPCs. Page-level memory encryption with selective encryption and periodic rekeying for SPA/DPA resistance on IoT deployments.</div>
     </div>
 
     <div class="pub-item">
       <div class="title">Cache and Speculative Side Channel Attacks: A Comprehensive Review</div>
-      <div class="venue">J. Mishra, S.K. Sahay, <strong>A. Pathak</strong> · ICT4SD, Springer LNNS, Vol.2 pp.219–233, 2025</div>
-      <div style="font-size:0.78rem;color:var(--fg-muted);margin-top:0.3rem">Trace of microarchitectural side-channel attack evolution: Prime+Probe → Flush+Reload → Spectre V1/V2 → Meltdown → Foreshadow → ZombieLoad → RIDL → CacheOut → BranchScope → Apple Silicon attacks. Analyzes mechanisms, exploitation environments, and security implications. Systematic evaluation of hardware, compiler, and OS mitigation strategies with analysis of the security-performance trade-off.</div>
+      <div class="venue">J. Mishra, S.K. Sahay, <strong>A. Pathak</strong> · ICT4SD, Springer LNNS, Vol.2 pp.219-233, 2025</div>
+      <div class="abstract">Trace of microarchitectural side-channel attack evolution: Prime+Probe -> Flush+Reload -> Spectre V1/V2 -> Meltdown -> Foreshadow -> ZombieLoad -> RIDL -> CacheOut -> BranchScope -> Apple Silicon attacks. Analyzes mechanisms, exploitation environments, and security implications. Systematic evaluation of hardware, compiler, and OS mitigation strategies with analysis of the security-performance trade-off.</div>
     </div>
 
     <div class="pub-item">
       <div class="title">A Hardware Security Review of RISC-V</div>
-      <div class="venue">J. Mishra, S.K. Sahay, <strong>A. Pathak</strong> · ICT4SD, Springer LNNS, Vol.2 pp.409–422, 2025</div>
-      <div style="font-size:0.78rem;color:var(--fg-muted);margin-top:0.3rem">Examination of security vulnerabilities across the open RISC-V ecosystem: microarchitectural side channels, trusted execution environments, secure boot, cryptographic ISA extensions (Zk), memory encryption, and EM fault injection. Contextualizes risks for RISC-V adoption in security-critical applications and national processor initiatives.</div>
+      <div class="venue">J. Mishra, S.K. Sahay, <strong>A. Pathak</strong> · ICT4SD, Springer LNNS, Vol.2 pp.409-422, 2025</div>
+      <div class="abstract">Examination of security vulnerabilities across the open RISC-V ecosystem: microarchitectural side channels, trusted execution environments, secure boot, cryptographic ISA extensions (Zk), memory encryption, and EM fault injection. Contextualizes risks for RISC-V adoption in security-critical applications and national processor initiatives.</div>
     </div>
   </div>
 </section>
-
-</div>
-
-<button class="theme-btn" id="themeToggle" title="Toggle theme">☾</button>
-<script src="theme.js"></script>
-<script src="scene.js"></script>
-<script src="ui.js"></script>
-</body>
-</html>
