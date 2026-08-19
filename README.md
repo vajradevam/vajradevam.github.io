@@ -10,14 +10,14 @@ _config.yml          site config (plugins, permalinks)
 _layouts/            default / page / post templates
 _includes/           head, nav, footer partials
 _data/               content as data (projects, publications, patents,
-                     experience, coursework, skills, now, categories)
+                     experience, skills, now, categories)
 _posts/              blog posts (Markdown)
 assets/css/style.css the theme
 assets/js/           ui.js + per-page scripts (projects, blog, writings)
 index.html           home
 blog.html            blog index (by year)
 tags.html            posts grouped by tag
-research.html projects.html writings.html coursework.html
+research.html projects.html writings.html
 writings/            PDFs + auto-generated list.json
 ```
 

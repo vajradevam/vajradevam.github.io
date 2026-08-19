@@ -396,14 +396,6 @@ a.tag::before { content: ""; }
   white-space: nowrap;
 }
 
-/* ---------- Coursework ---------- */
-.course-group { margin-bottom: 1.6rem; }
-.course-group .label { font-family: var(--font-display); font-weight: 700; color: var(--ink); display: block; margin-bottom: 0.4rem; }
-.course-group .label .count { font-family: var(--font-mono); font-weight: 400; font-size: 0.78rem; color: var(--muted); }
-.course-list { color: var(--ink-soft); }
-.course-list .course { display: inline; }
-.course-list .course + .course::before { content: " · "; color: var(--border-dk); }
-
 /* ---------- Projects ---------- */
 .project-section .section-heading { margin-bottom: 0.8rem; }
 .project-count {
