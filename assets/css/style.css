@@ -1,29 +1,47 @@
 /* ==========================================================================
-   Aman Pathak -light / paper theme
-   Typography-first, warm cream palette. No animated background.
+   Aman Pathak - Atom One Dark Pro (vibrant "Bold" treatment)
+   Dark mode: One Dark #282c34 base with a vivid, high-saturation palette.
+   Light mode: matching vivid One Light family. Typography-first.
    ========================================================================== */
 
 :root {
-  --bg:        #fff9ef;   /* warm paper */
-  --bg-alt:    #fdf2dd;   /* card / highlight */
-  --bg-sink:   #f6ead2;   /* deeper inset (code, etc.) */
-  --ink:       #2b2233;   /* near-black plum */
-  --ink-soft:  #4a4255;
-  --muted:     #7c7388;
-  --accent:    #d1495b;   /* coral-red -links */
-  --accent-dk: #ad3446;
-  --teal:      #2a9d8f;   /* secondary -tags */
-  --teal-dk:   #1f7a6f;
-  --gold:      #e3a008;   /* warm highlight */
-  --border:    #ead9bd;
-  --border-dk: #ddc69f;
+  /* one light - vibrant */
+  --bg:        #fafafa;
+  --bg-alt:    #f0f1f3;   /* card / highlight */
+  --bg-sink:   #e4e5ea;   /* deeper inset (code, etc.) */
+  --ink:       #383a42;   /* near-black text */
+  --ink-soft:  #4f525e;
+  --muted:     #8b8f9d;
+  --accent:    #2563eb;   /* electric blue -links */
+  --accent-dk: #1d4ed8;
+  --teal:      #0d9488;   /* vivid teal -secondary */
+  --teal-dk:   #0f766e;
+  --gold:      #d97706;   /* amber highlight */
+  --border:    #e2e3e8;
+  --border-dk: #c9ccd4;
 
-  /* colour-cycle palette (used across tags, headings, cards) */
-  --c1: #d1495b;  /* coral  */
-  --c2: #2a9d8f;  /* teal   */
-  --c3: #e3a008;  /* gold   */
-  --c4: #3d7ea6;  /* blue   */
-  --c5: #8e7cc3;  /* purple */
+  /* colour-cycle palette (tags, headings, cards) - vivid */
+  --c1: #ef4444;  /* red    */
+  --c2: #2563eb;  /* blue   */
+  --c3: #d97706;  /* amber  */
+  --c4: #a21caf;  /* purple */
+  --c5: #15803d;  /* green  */
+
+  /* text selection wash */
+  --sel: #2563eb30;
+  /* code blocks (light mode) */
+  --code-bg: #f3f3f5;
+  --code-fg: #383a42;
+  /* rouge syntax highlighting (vivid One Light) */
+  --sy-c:  #9a9daa;  /* comments       */
+  --sy-k:  #a21caf;  /* keywords/types */
+  --sy-s:  #15803d;  /* strings        */
+  --sy-n:  #b45309;  /* numbers        */
+  --sy-f:  #2563eb;  /* functions      */
+  --sy-t:  #dc2626;  /* tags           */
+  --sy-a:  #b45309;  /* attributes     */
+  --sy-o:  #0e7490;  /* operators      */
+  --sy-cp: #a21caf;  /* preprocessor   */
 
   --font-sans:    "Karla", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-display: "Space Grotesk", var(--font-sans);
@@ -34,32 +52,50 @@
 }
 
 html[data-theme="dark"] {
-  --bg:        #17131f;   /* deep plum-black */
-  --bg-alt:    #211a2e;
-  --bg-sink:   #2b2240;
-  --ink:       #f2ecf7;
-  --ink-soft:  #cbc0db;
-  --muted:     #9a8eb2;
-  --accent:    #ff6b81;   /* bright coral */
-  --accent-dk: #ff97a8;
-  --teal:      #45d6bd;
-  --teal-dk:   #6fe7d2;
-  --gold:      #ffcf5c;
-  --border:    #382c52;
-  --border-dk: #4c3d6e;
+  /* one dark - vibrant */
+  --bg:        #282c34;   /* classic One Dark base kept */
+  --bg-alt:    #2f343e;   /* card / highlight */
+  --bg-sink:   #1e222a;   /* deeper inset */
+  --ink:       #e7ebf2;   /* text strong */
+  --ink-soft:  #b4bccb;   /* text */
+  --muted:     #8b94a5;
+  --accent:    #4da3ff;   /* electric blue -links */
+  --accent-dk: #7cc0ff;
+  --teal:      #2fd6c8;   /* vivid cyan -secondary */
+  --teal-dk:   #6fe8dd;
+  --gold:      #ffd23f;   /* sun yellow highlight */
+  --border:    #3a4050;
+  --border-dk: #545d70;
 
-  --c1: #ff6b81;
-  --c2: #45d6bd;
-  --c3: #ffcf5c;
-  --c4: #5fb0e8;
-  --c5: #b9a7ec;
+  /* colour-cycle palette - vibrant syntax hues */
+  --c1: #ff5370;  /* red    */
+  --c2: #4da3ff;  /* blue   */
+  --c3: #ffd23f;  /* yellow */
+  --c4: #c861f2;  /* purple */
+  --c5: #3ddc84;  /* green  */
+
+  --sel: #4da3ff30;
+  /* code blocks (dark mode)
+     --code-bg is intentionally darker than --bg for depth */
+  --code-bg: #1e222a;
+  --code-fg: #c9d0dc;
+  /* rouge syntax highlighting (vibrant One Dark) */
+  --sy-c:  #5c6370;  /* comments       */
+  --sy-k:  #c861f2;  /* keywords/types */
+  --sy-s:  #3ddc84;  /* strings        */
+  --sy-n:  #ffab40;  /* numbers        */
+  --sy-f:  #4da3ff;  /* functions      */
+  --sy-t:  #ff5370;  /* tags           */
+  --sy-a:  #ffab40;  /* attributes     */
+  --sy-o:  #2fd6c8;  /* operators      */
+  --sy-cp: #c861f2;  /* preprocessor   */
 }
 
 body { transition: background .3s ease, color .3s ease; }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-::selection { background: rgba(209, 73, 91, 0.18); color: var(--ink); }
+::selection { background: var(--sel); color: var(--ink); }
 
 html {
   font-size: 17px;
@@ -300,8 +336,9 @@ a.tag::before { content: ""; }
   border-radius: 5px;
 }
 .post-body pre {
-  background: #2b2233;
-  color: #f3ecdd;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border: 1px solid var(--border);
   padding: 1.1rem 1.2rem;
   border-radius: 10px;
   overflow-x: auto;
@@ -310,16 +347,16 @@ a.tag::before { content: ""; }
 }
 .post-body pre code { background: none; padding: 0; font-size: inherit; color: inherit; }
 
-/* Rouge syntax highlighting (warm theme on dark code blocks) */
-.post-body .highlight .c, .post-body .highlight .c1, .post-body .highlight .cm { color: #8d8398; font-style: italic; } /* comments */
-.post-body .highlight .k, .post-body .highlight .kd, .post-body .highlight .kt, .post-body .highlight .kn { color: #ff8fa3; } /* keywords / types */
-.post-body .highlight .s, .post-body .highlight .s1, .post-body .highlight .s2, .post-body .highlight .sc { color: #97d8c4; } /* strings */
-.post-body .highlight .mi, .post-body .highlight .mf, .post-body .highlight .il { color: #f4b860; } /* numbers */
-.post-body .highlight .nf, .post-body .highlight .nb { color: #ffd166; } /* functions / builtins */
-.post-body .highlight .nt { color: #ff8fa3; } /* tags */
-.post-body .highlight .na { color: #f4b860; } /* attributes */
-.post-body .highlight .o, .post-body .highlight .p { color: #cfc4d6; } /* operators / punctuation */
-.post-body .highlight .cp { color: #b8a6c9; } /* preprocessor */
+/* Rouge syntax highlighting (switchable: One Dark / One Light) */
+.post-body .highlight .c, .post-body .highlight .c1, .post-body .highlight .cm { color: var(--sy-c); font-style: italic; } /* comments */
+.post-body .highlight .k, .post-body .highlight .kd, .post-body .highlight .kt, .post-body .highlight .kn { color: var(--sy-k); } /* keywords / types */
+.post-body .highlight .s, .post-body .highlight .s1, .post-body .highlight .s2, .post-body .highlight .sc { color: var(--sy-s); } /* strings */
+.post-body .highlight .mi, .post-body .highlight .mf, .post-body .highlight .il { color: var(--sy-n); } /* numbers */
+.post-body .highlight .nf, .post-body .highlight .nb { color: var(--sy-f); } /* functions / builtins */
+.post-body .highlight .nt { color: var(--sy-t); } /* tags */
+.post-body .highlight .na { color: var(--sy-a); } /* attributes */
+.post-body .highlight .o, .post-body .highlight .p { color: var(--sy-o); } /* operators / punctuation */
+.post-body .highlight .cp { color: var(--sy-cp); } /* preprocessor */
 .post-body table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
 .post-body th, .post-body td { border: 1px solid var(--border-dk); padding: 0.5rem 0.7rem; text-align: left; }
 .post-body th { background: var(--bg-alt); }
