@@ -9,10 +9,10 @@ Every Java project you will ever work with, whether it is built by an IDE, Code 
 Maven, or Gradle, ultimately does two things with command-line tools. Learn to do them
 by hand and the abstractions become understandable.
 
-```text
-javac   the compiler    .java source  ->  .class bytecode
-java    the launcher    loads .class files into the JVM and runs the program
-```
+| Tool | Role | What it does |
+|---|---|---|
+| `javac` | the compiler | `.java` source → `.class` bytecode |
+| `java` | the launcher | loads `.class` files into the JVM and runs the program |
 
 The two steps behave differently, and that difference is the source of most beginner
 errors. Compilation is a path-aware translation step. At runtime, classes are linked by
