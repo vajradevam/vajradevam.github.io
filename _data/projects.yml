@@ -1,0 +1,232 @@
+# Open-source projects. `name` is the display name, `repo` is the GitHub
+# repository slug (differs from the display name for a few projects).
+# Categories reference slugs in _data/categories.yml.
+
+- name: whale
+  repo: whale
+  lang: C
+  category: systems
+  desc: "Minimal container runtime using Linux namespaces, cgroups v2, seccomp-BPF, and overlayfs from scratch"
+- name: vajrip
+  repo: vajrip
+  lang: C
+  category: systems
+  desc: "Userspace TCP/IP stack: Ethernet, ARP, IP, ICMP, UDP, TCP from scratch, Linux TAP"
+- name: memoria
+  repo: memoria
+  lang: C
+  category: systems
+  desc: "malloc/free replacement, segregated free list, mmap heap, leak detection, 57 tests"
+- name: slinep
+  repo: slinep
+  lang: C
+  category: systems
+  desc: "Bezier rasterizer + 12 programs: fluid sim, cloth, metaballs, Fourier, terrain"
+- name: lolfetch
+  repo: lolfetch
+  lang: C
+  category: systems
+  desc: "System info fetch tool with ASCII art"
+- name: ray-tracing-c
+  repo: ray-tracing-c
+  lang: C
+  category: systems
+  desc: "2D raycasting, 360 rays, interactive shadows, SDL2"
+- name: sell-shell
+  repo: sell-shell
+  lang: C
+  category: systems
+  desc: "Minimal Unix shell, fork/exec, foreground/background processes"
+- name: c-animation
+  repo: c-animation
+  lang: C
+  category: systems
+  desc: "ASCII physics animation using raw ANSI escape sequences"
+- name: RV-Sparse
+  repo: RV-Sparse
+  lang: C
+  category: systems
+- name: nook
+  repo: nook
+  lang: Go
+  category: web
+  desc: "Tiny embedded ordered key/value database with SQL and auth, built from scratch"
+- name: mridu
+  repo: mridu
+  lang: Go
+  category: web
+  desc: "Bytecode VM interpreter in Go"
+- name: urls
+  repo: urls
+  lang: Astro
+  category: web
+  desc: "URL shortener, custom slugs, analytics, QR codes, JWT auth, dark mode"
+- name: alonzo
+  repo: alonzo
+  lang: React/Node
+  category: web
+  desc: "FaaS platform: upload & execute JS functions via API, rate limiting"
+- name: juice
+  repo: juice
+  lang: Node.js
+  category: web
+  desc: "VPS hardware monitor API: CPU, memory, disk, network over HTTP"
+- name: attendance-system
+  repo: Attendence-System
+  lang: Spring/React
+  category: web
+  desc: "Role-based attendance tracking, timetable, real-time stats"
+- name: LLM-Ping
+  repo: LLM-Ping
+  lang: Python
+  category: web
+  desc: "TUI tool pinging free LLM models across NIM, OpenRouter, Groq, Z.AI"
+- name: deeptrace
+  repo: deeptrace
+  lang: C++
+  category: web
+  desc: "Deep Packet Inspection CLI tool"
+- name: pit
+  repo: pit
+  lang: Python
+  category: web
+  desc: "Git implementation in Python"
+- name: vectdb
+  repo: vectdb
+  lang: C++
+  category: web
+  desc: "Vector database"
+
+- name: chip8
+  repo: chip8
+  lang: C
+  category: emulators
+  desc: "CHIP-8 emulator, SDL2, 35 opcodes, 60Hz timers, sound, debug"
+- name: schip
+  repo: schip
+  lang: C
+  category: emulators
+  desc: "Enhanced CHIP-8 emulator"
+- name: commodore64
+  repo: commodore64
+  lang: Java
+  category: emulators
+  desc: "Cycle-accurate 6502 CPU, VIC-II text-mode graphics, PRG loading"
+- name: rv32i-emulator
+  repo: rv32i-SingleBus-emulator
+  lang: Java
+  category: emulators
+  desc: "5-stage unpipelined RV32I, Swing GUI, step-through execution"
+
+- name: wthr
+  repo: wthr
+  lang: Python
+  category: ml
+  desc: "Weather/AQI prediction, 109K observations, 25+ models benchmarked"
+- name: slm-bench
+  repo: slm-bench
+  lang: Python
+  category: ml
+  desc: "50+ quantized SLMs benchmarked across 5 quality domains, ROUGE scoring"
+- name: advx
+  repo: advx
+  lang: PyTorch
+  category: ml
+  desc: "Adversarial attacks on MNIST: FGSM, PGD, DeepFool, CW, ~98% accuracy"
+- name: lstm-weather
+  repo: basic-lstm-weather-prediction
+  lang: TF/Keras
+  category: ml
+  desc: "Multivariate LSTM, bidirectional, stacked, CNN-LSTM, ConvLSTM variants"
+- name: ml-nanosensor
+  repo: ml-nanosensor-lab
+  lang: Python
+  category: ml
+  desc: "ML for THz antenna design from CST Studio simulation data"
+- name: vajranet
+  repo: vajranet
+  lang: PyTorch
+  category: ml
+  desc: "Neural networks from scratch on MNIST (784-128-128-64-10)"
+- name: takenizer
+  repo: takenizer
+  lang: Python
+  category: ml
+  desc: "BPE tokenizer for LLMs trained on Shakespeare"
+- name: smol
+  repo: smol
+  lang: Python
+  category: ml
+  desc: "Fine-tuning Phi-3 to Yoda-speak with LoRA, BitsAndBytes, PEFT"
+- name: jetris
+  repo: jetris
+  lang: JavaFX
+  category: games
+  desc: "Tetris: 7 tetrominoes, ghost piece, wall-kicks, hold, 2-player mode"
+- name: minejweeper
+  repo: minejweeper
+  lang: JavaFX
+  category: games
+  desc: "Minesweeper: 4 difficulty levels, flood-fill, Win95-style UI"
+- name: judoku
+  repo: judoku
+  lang: JavaFX
+  category: games
+  desc: "Sudoku: backtracking generator, hints, solver, leaderboard"
+
+- name: 2048
+  repo: 2048
+  lang: HTML/CSS/JS
+  category: frontend
+  desc: "2048 game, touch support, CSS animations, Tailwind"
+- name: game-of-life
+  repo: game-of-life
+  lang: JS
+  category: frontend
+  desc: "Conway's Game of Life, 50x50 grid, start/stop controls"
+- name: color-scheme
+  repo: color-scheme-generator
+  lang: CSS/JS
+  category: frontend
+  desc: "Upload image to generate 5-color palette via ColorThief"
+- name: Luma-Lang
+  repo: Luma-Lang
+  lang: Java
+  category: compilers
+  desc: "Toy programming language: lexer, parser, AST, semantic analysis"
+- name: yasl
+  repo: yasl
+  lang: Python
+  category: compilers
+  desc: "\"Yet Another Scripting Language\" with hand-written parser"
+- name: riscc
+  repo: riscc
+  lang: Asm/C/Verilog
+  category: compilers
+  desc: "RISC-V testbench: standalone C programs validating processor cores"
+
+- name: DDownloader
+  repo: DDownloader
+  lang: Python
+  category: misc
+  desc: "Discord bot: download all media from a specific user across an entire server"
+- name: chatbot
+  repo: chatbot
+  lang: Python
+  category: misc
+  desc: "Groq API chatbot with LLaMA, Gemma, Qwen, DeepSeek models"
+- name: chatora
+  repo: chatora
+  lang: Python
+  category: misc
+  desc: "Gemini API chatbot built with Streamlit"
+- name: cst-pipeline
+  repo: cst-studio-pipeline
+  lang: Python
+  category: misc
+  desc: "S11/gain extraction from CST Studio ASCII exports with GUI"
+- name: cst-plotter
+  repo: cst-studio-plotter
+  lang: Python
+  category: misc
+  desc: "Publication-quality graphs: S11, gain, VSWR, efficiency"

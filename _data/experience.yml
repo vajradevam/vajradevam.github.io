@@ -1,0 +1,23 @@
+# Research / work timeline, newest first.
+- role: PhD Scholar
+  date: 2026-present
+  org: "BITS Pilani KK Birla Goa Campus - CSIS Dept, Hardware Security & Computer Architecture"
+  bullets:
+    - "Hardware security of RISC-V architectures, side-channel attack mitigation, and formal verification of cache coherency protocols"
+    - "Investigating CXL memory fabric security, coherence directory attacks, and fabric-amplified Row Hammer"
+    - "Security-aware architectural certification testing (SecACT) for RISC-V and microarchitectural side-channel analysis"
+
+- role: Undergraduate Researcher
+  date: May-Aug 2025
+  org: "BITS Pilani / ENineHQ Technologies - Hardware Security & Malware Analysis"
+  bullets:
+    - "Hardware security of RISC-V architectures, side-channel attack mitigation (masking, hiding, dual-rail logic), cryptographic implementations"
+    - "Formal automata-based modeling of software-managed cache coherency using RISC-V Zicbom extension - proved coherency verification decidable for bounded programs with 58.8% average CMO reduction on embedded benchmarks"
+    - "Malware analysis using high-dimensional ML on embedded system binaries"
+
+- role: Undergraduate Researcher
+  date: Feb 2023-Aug 2024
+  org: "KIIT University - RF & Antenna Systems"
+  bullets:
+    - "Designed Ku/X-band microstrip patch antennas in CST Studio for THz/GHz RF communication"
+    - "Built Python-based GUI for ASCII data preprocessing; deep learning for antenna parameter optimisation"

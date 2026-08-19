@@ -1,0 +1,43 @@
+# Skills shown on the home page, grouped by row.
+- label: Languages
+  items:
+    - C
+    - Rust
+    - Java
+    - Python
+    - Verilog
+    - SystemVerilog
+    - VHDL
+    - HLS
+    - RISC-V/6502 Asm
+    - x86 Asm
+    - Chisel
+    - Go
+    - Perl
+    - Haskell
+    - JavaScript
+- label: Systems
+  items:
+    - GNU/Linux
+    - OpenBSD
+    - GDB
+    - Valgrind
+    - Git
+    - Docker
+    - Vim
+    - LaTeX
+    - Wireshark
+    - CST Studio
+    - Yosys
+    - Verilator
+    - OpenSTA
+- label: Domains
+  items:
+    - Computer Architecture
+    - OS
+    - Hardware Security
+    - Side-Channel Analysis
+    - Embedded Systems
+    - Compilers
+    - Formal Verification
+    - VLSI

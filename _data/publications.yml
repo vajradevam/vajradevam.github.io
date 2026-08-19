@@ -1,0 +1,81 @@
+# Peer-reviewed publications. `author` is highlighted in bold on the page.
+# Only entries whose authors include A. Pathak.
+
+- title: "ARCHER: A Cycle-Accurate RISC-V Emulator for Microarchitectural Side-Channel and Memory-Encryption Research"
+  authors: [J. Mishra, S.K. Sahay, S. Mishra, A. Pathak]
+  venue: "Computers (MDPI), Vol. 15, Issue 8, p. 479"
+  year: 2026
+  note: "SCI-Q1"
+
+- title: "PACE: A Page-Adaptive, Cache-Anchored Memory-Encryption Engine for RISC-V with Formally-Verified nth-Order DPA Resistance"
+  authors: [J. Mishra, S.K. Sahay, S. Mishra, A. Pathak]
+  venue: "Chips (MDPI), Vol. 5, Issue 3, p. 26"
+  year: 2026
+  note: "SCI-Q2"
+
+- title: "Novel Microarchitectural Side-Channel Attacks on Open-Source RISC-V Cores"
+  authors: [J. Mishra, S.K. Sahay, S. Mishra, A. Pathak]
+  venue: "Chips (MDPI)"
+  note: "under review; revised after first round"
+
+- title: "A Hardware Security Review of RISC-V"
+  authors: [J. Mishra, S.K. Sahay, A. Pathak]
+  venue: "Lecture Notes in Networks and Systems (ICT4SD), Vol. 2, pp. 409–422, Springer"
+  year: 2025
+  note: "Scopus"
+
+- title: "Cache and Speculative Side-Channel Attacks: A Comprehensive Review"
+  authors: [J. Mishra, S.K. Sahay, A. Pathak]
+  venue: "Lecture Notes in Networks and Systems (ICT4SD), Vol. 2, pp. 219–233, Springer"
+  year: 2025
+  note: "Scopus"
+
+- title: "Memory Security: From Cold Boot Attacks to Side-Channel Defenses"
+  authors: [J. Mishra, S.K. Sahay, S. Mishra, A. Pathak]
+  venue: "Lecture Notes in Networks and Systems (11th ICTIS), Springer"
+  year: 2026
+  note: "accepted · Scopus"
+
+- title: "Formal Verification of Software-Managed Cache Coherency for RISC-V Heterogeneous Embedded Systems"
+  authors: [J. Mishra, S.K. Sahay, S. Mishra, A. Pathak]
+  venue: "Lecture Notes in Networks and Systems, Vol. 1997, pp. 430–442, Springer"
+  year: 2026
+  note: "Scopus"
+
+- title: "RV-JOSH: A Hardened Operating System for RISC-V based on Java"
+  authors: [J. Mishra, S.K. Sahay, S. Mishra, A. Pathak]
+  venue: "Lecture Notes in Networks and Systems (SmartCom), Springer"
+  year: 2026
+  note: "accepted · Scopus"
+
+- title: "Catching the Set Builder: Hardware Detection of Eviction-Set Construction at the Shared LLC on RISC-V"
+  authors: [J. Mishra, S.K. Sahay, S. Mishra, L.K. Vashishtha, A. Pathak]
+  venue: "Communications in Computer and Information Science (COCOLE), Springer"
+  year: 2026
+  note: "accepted · Scopus"
+
+- title: "The Replacement Policy Is a Side Channel: Closing the Reload+Refresh Leak at the Policy Level on RISC-V"
+  authors: [J. Mishra, S.K. Sahay, S. Mishra, L.K. Vashishtha, A. Pathak]
+  venue: "Communications in Computer and Information Science (COCOLE), Springer"
+  year: 2026
+  note: "accepted · Scopus"
+
+- title: "The Walk Is the Channel: Page-Table-Walker Cache Partitioning for Deterministic Domain Isolation on Out-of-Order RISC-V"
+  authors: [J. Mishra, S.K. Sahay, S. Mishra, L.K. Vashishtha, A. Pathak]
+  venue: "ISED 2026"
+  note: "under review"
+
+- title: "History Is the Channel: Why Index Coloring Cannot Isolate a History-Based Branch Predictor, and a Warm Per-Domain Fix on Open RISC-V RTL"
+  authors: [J. Mishra, S.K. Sahay, S. Mishra, L.K. Vashishtha, A. Pathak]
+  venue: "ISED 2026"
+  note: "under review"
+
+- title: "Closing a Spectre-v1 Cache Leak on BOOM with a Per-Domain Guard"
+  authors: [J. Mishra, S.K. Sahay, S. Mishra, L.K. Vashishtha, A. Pathak]
+  venue: "ISED 2026"
+  note: "under review"
+
+- title: "No-Op or No Security? A Backward-Compatible, Discoverable, Fail-Closed Contract for Security Directives in the RISC-V HINT Encoding Space"
+  authors: [J. Mishra, S.K. Sahay, S. Mishra, L.K. Vashishtha, A. Pathak]
+  venue: "ISED 2026"
+  note: "under review"

@@ -1,0 +1,6 @@
+# "Now" focus list on the home page.
+- "Securing CXL memory fabrics: coherence directory poisoning, protocol-processor boundary attacks, compression side channels, and fabric-amplified Row Hammer"
+- "Security-aware architectural certification testing (SecACT) for RISC-V: PMP bypass via microarchitectural state, vendor extension validation, and the ACT security gap"
+- "Formalizing the Linux kernel shared-page mutation bug class: dirty invariant model, page-cache anti-forensics, zero-copy I/O abuse, and in-place crypto redesign"
+- "Fundamental side channels in LLM serving: SpecLeak, KV cache sharing isolation impossibility, and speculative decoding GPU microarchitectural leakage"
+- "Covert channels beyond cache timing: GPU coherence directory state as a cross-GPU communication primitive"

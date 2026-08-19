@@ -37,36 +37,18 @@ description: "PhD Scholar in computer architecture, hardware security, and low-l
 </section>
 
 <section class="section">
-  <div class="section-heading">
-    Recent posts
-    <a class="section-link" href="{{ '/blog/' | relative_url }}">all posts</a>
-  </div>
-  {% for post in site.posts limit: 4 %}
-  <div class="post-entry">
-    <div class="post-entry-head">
-      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
-    </div>
-    {% if post.description %}<p class="post-entry-desc">{{ post.description }}</p>{% endif %}
-    {% if post.tags %}<div class="tags">{% for tag in post.tags %}<a class="tag" href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">#{{ tag }}</a>{% endfor %}</div>{% endif %}
-  </div>
-  {% endfor %}
-</section>
-
-<section class="section">
   <div class="section-heading">Now</div>
   <ul class="dash-list">
-    <li>Securing CXL memory fabrics: coherence directory poisoning, protocol-processor boundary attacks, compression side channels, and fabric-amplified Row Hammer</li>
-    <li>Security-aware architectural certification testing (SecACT) for RISC-V: PMP bypass via microarchitectural state, vendor extension validation, and the ACT security gap</li>
-    <li>Formalizing the Linux kernel shared-page mutation bug class: dirty invariant model, page-cache anti-forensics, zero-copy I/O abuse, and in-place crypto redesign</li>
-    <li>Fundamental side channels in LLM serving: SpecLeak, KV cache sharing isolation impossibility, and speculative decoding GPU microarchitectural leakage</li>
-    <li>Covert channels beyond cache timing: GPU coherence directory state as a cross-GPU communication primitive</li>
+    {% for item in site.data.now %}
+    <li>{{ item }}</li>
+    {% endfor %}
   </ul>
 </section>
 
 <section class="section">
   <div class="section-heading">Skills</div>
-  <div class="skill-row"><span class="label">Languages</span><span class="items">C · Rust · Java · Python · Verilog · SystemVerilog · VHDL · HLS · RISC-V/6502 Asm · x86 Asm · Chisel · Go · Perl · Haskell · JavaScript</span></div>
-  <div class="skill-row"><span class="label">Systems</span><span class="items">GNU/Linux · OpenBSD · GDB · Valgrind · Git · Docker · Vim · LaTeX · Wireshark · CST Studio · Yosys · Verilator · OpenSTA</span></div>
-  <div class="skill-row"><span class="label">Domains</span><span class="items">Computer Architecture · OS · Hardware Security · Side-Channel Analysis · Embedded Systems · Compilers · Formal Verification · VLSI</span></div>
+  {% for row in site.data.skills %}
+  <div class="skill-row"><span class="label">{{ row.label }}</span><span class="items">{% for item in row.items %}
+<span class="skill-chip">{{ item }}</span>{% endfor %}</span></div>
+  {% endfor %}
 </section>

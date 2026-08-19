@@ -4,105 +4,50 @@ permalink: /research/
 nav: research
 title: Research
 heading: Research
-sub: "PhD Scholar · 5 publications · 6 filed patents · hardware security · formal verification · RISC-V"
-description: "PhD Scholar - hardware security, RISC-V, formal verification, side-channel attacks, 5 publications, 6 patents."
+description: "PhD Scholar - hardware security, RISC-V, formal verification, side-channel attacks, 14 publications, 6 patents."
 ---
 
 <section class="section">
   <div class="section-heading">Experience</div>
   <div class="timeline">
+    {% for item in site.data.experience %}
     <div class="timeline-item">
-      <div class="role">PhD Scholar <span class="date">· 2026-present</span></div>
-      <div class="org">BITS Pilani KK Birla Goa Campus - CSIS Dept, Hardware Security &amp; Computer Architecture</div>
+      <div class="role">{{ item.role }} <span class="date">· {{ item.date }}</span></div>
+      <div class="org">{{ item.org }}</div>
       <ul>
-        <li>Hardware security of RISC-V architectures, side-channel attack mitigation, and formal verification of cache coherency protocols</li>
-        <li>Investigating CXL memory fabric security, coherence directory attacks, and fabric-amplified Row Hammer</li>
-        <li>Security-aware architectural certification testing (SecACT) for RISC-V and microarchitectural side-channel analysis</li>
+        {% for bullet in item.bullets %}
+        <li>{{ bullet }}</li>
+        {% endfor %}
       </ul>
     </div>
-
-    <div class="timeline-item">
-      <div class="role">Undergraduate Researcher <span class="date">· May-Aug 2025</span></div>
-      <div class="org">BITS Pilani / ENineHQ Technologies - Hardware Security &amp; Malware Analysis</div>
-      <ul>
-        <li>Hardware security of RISC-V architectures, side-channel attack mitigation (masking, hiding, dual-rail logic), cryptographic implementations</li>
-        <li>Formal automata-based modeling of software-managed cache coherency using RISC-V Zicbom extension - proved coherency verification decidable for bounded programs with 58.8% average CMO reduction on embedded benchmarks</li>
-        <li>Malware analysis using high-dimensional ML on embedded system binaries</li>
-      </ul>
-    </div>
-
-    <div class="timeline-item">
-      <div class="role">Undergraduate Researcher <span class="date">· Feb 2023-Aug 2024</span></div>
-      <div class="org">KIIT University - RF &amp; Antenna Systems</div>
-      <ul>
-        <li>Designed Ku/X-band microstrip patch antennas in CST Studio for THz/GHz RF communication</li>
-        <li>Built Python-based GUI for ASCII data preprocessing; deep learning for antenna parameter optimisation</li>
-      </ul>
-    </div>
+    {% endfor %}
   </div>
 </section>
 
 <section class="section">
   <div class="section-heading">Patents</div>
   <div class="pub-list">
+    {% for patent in site.data.patents %}
     <div class="pub-item">
-      <div class="title">DFI Monitor (202631036811)</div>
-      <div class="venue">Hardware Data-Flow Integrity Monitor with Register-File Provenance Tagging for RISC-V IoT Processors</div>
+      <div class="title">{{ patent.title }}</div>
+      <div class="venue">{{ patent.desc }}</div>
     </div>
-    <div class="pub-item">
-      <div class="title">Fusion Engine (202631036816)</div>
-      <div class="venue">Programmable Instruction Fusion Engine with SRAM-Based Rules Table for RISC-V IoT Processors</div>
-    </div>
-    <div class="pub-item">
-      <div class="title">HPC Malware (202631036812)</div>
-      <div class="venue">Hardware-Accelerated Microarchitectural Event Classifier with Programmable Feature Extraction Pipeline and On-Chip Ensemble Inference Engine for Real-Time Malware Detection in RISC-V Processors</div>
-    </div>
-    <div class="pub-item">
-      <div class="title">Crypto Engine (202631036813)</div>
-      <div class="venue">Per-Peripheral Cryptographic Session Engine with Hardware Key Rotation for RISC-V IoT System-on-Chip</div>
-    </div>
-    <div class="pub-item">
-      <div class="title">NUMA (202631036815)</div>
-      <div class="venue">RISC-V Processor Architecture with Tiered-Memory ISA Extension, Tier-Aware TLB, and Thunderbolt-Attached External DRAM Expansion with RISC-V Bridge Controller for Linux-Based Heterogeneous Memory Systems</div>
-    </div>
-    <div class="pub-item">
-      <div class="title">Trace BDT (202631036814)</div>
-      <div class="venue">On-Chip Binary Decision Tree Inference Engine Integrated with RISC-V Trace Encoder for Real-Time IoT Security Monitoring</div>
-    </div>
+    {% endfor %}
   </div>
 </section>
 
 <section class="section">
   <div class="section-heading">Publications</div>
   <div class="pub-list">
+    {% for pub in site.data.publications %}
     <div class="pub-item">
-      <div class="title">Memory Security: From Cold Boot Attacks to Side-Channel Defenses</div>
-      <div class="venue">J. Mishra, S.K. Sahay, S. Mishra, <strong>A. Pathak</strong> · 11th ICTIS, Springer LNNS, 2026</div>
-      <div class="abstract">Systematic review of memory encryption for volatile RAM protection. Covers Intel TME/MK-TME, AMD SME, Merkle tree integrity, and side-channel countermeasures against DPA/SPA, bus sniffing, cold boot attacks, and address-pattern analysis in multi-tenant environments.</div>
+      <div class="title">{{ pub.title }}</div>
+      <div class="venue">
+        {% for author in pub.authors %}{% if author == "A. Pathak" %}<strong>{{ author }}</strong>{% else %}{{ author }}{% endif %}{% unless forloop.last %}, {% endunless %}{% endfor %}
+        · {{ pub.venue }}{% if pub.year %}, {{ pub.year }}{% endif %}{% if pub.note %} <span class="pub-note">{{ pub.note }}</span>{% endif %}
+      </div>
+      {% if pub.abstract %}<div class="abstract">{{ pub.abstract }}</div>{% endif %}
     </div>
-
-    <div class="pub-item">
-      <div class="title">Formal Verification of Software-Managed Cache Coherency for RISC-V Heterogeneous Embedded Systems</div>
-      <div class="venue">J. Mishra, S.K. Sahay, S. Mishra, <strong>A. Pathak</strong> · SmartCom, Springer LNNS, 2026</div>
-      <div class="abstract">Formal automata-based model for software-managed cache coherency using the RISC-V Zicbom extension. Characterizes necessary and sufficient conditions for safe DMA operations. Proves coherency verification decidable for bounded programs. Achieves 58.8% average CMO reduction on embedded benchmarks including sensor fusion and edge NN inference.</div>
-    </div>
-
-    <div class="pub-item">
-      <div class="title">RV-JOSH: A Hardened Operating System for RISC-V based on Java</div>
-      <div class="venue">J. Mishra, S.K. Sahay, S. Mishra, <strong>A. Pathak</strong> · SmartCom, Springer LNNS, 2026</div>
-      <div class="abstract">RISC-V OS with kernel written entirely in Java via JNI. User processes are Java programs loaded as OS processes. Dual-layer malware detection: static bytecode analysis (n-gram opcode features + random forest/NN classifiers) and runtime monitoring via QEMU-augmented HPCs. Page-level memory encryption with selective encryption and periodic rekeying for SPA/DPA resistance on IoT deployments.</div>
-    </div>
-
-    <div class="pub-item">
-      <div class="title">Cache and Speculative Side Channel Attacks: A Comprehensive Review</div>
-      <div class="venue">J. Mishra, S.K. Sahay, <strong>A. Pathak</strong> · ICT4SD, Springer LNNS, Vol.2 pp.219-233, 2025</div>
-      <div class="abstract">Trace of microarchitectural side-channel attack evolution: Prime+Probe -> Flush+Reload -> Spectre V1/V2 -> Meltdown -> Foreshadow -> ZombieLoad -> RIDL -> CacheOut -> BranchScope -> Apple Silicon attacks. Analyzes mechanisms, exploitation environments, and security implications. Systematic evaluation of hardware, compiler, and OS mitigation strategies with analysis of the security-performance trade-off.</div>
-    </div>
-
-    <div class="pub-item">
-      <div class="title">A Hardware Security Review of RISC-V</div>
-      <div class="venue">J. Mishra, S.K. Sahay, <strong>A. Pathak</strong> · ICT4SD, Springer LNNS, Vol.2 pp.409-422, 2025</div>
-      <div class="abstract">Examination of security vulnerabilities across the open RISC-V ecosystem: microarchitectural side channels, trusted execution environments, secure boot, cryptographic ISA extensions (Zk), memory encryption, and EM fault injection. Contextualizes risks for RISC-V adoption in security-critical applications and national processor initiatives.</div>
-    </div>
+    {% endfor %}
   </div>
 </section>

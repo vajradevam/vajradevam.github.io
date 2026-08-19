@@ -213,7 +213,16 @@ hr { border: none; border-top: 1px dashed var(--border-dk); margin: 2.5rem 0; }
   color: var(--teal-dk);
   font-weight: 700;
 }
-.skill-row .items { color: var(--ink-soft); }
+.skill-row .items { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.skill-chip {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 0.16rem 0.6rem;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: var(--ink-soft);
+}
 
 /* ---------- Blog post list (entries) ---------- */
 .post-entry { padding: 1.1rem 0; border-bottom: 1px dashed var(--border-dk); }
@@ -316,7 +325,6 @@ a.tag::before { content: ""; }
 .post-body th { background: var(--bg-alt); }
 
 /* ---------- Research: timeline + publications ---------- */
-.timeline { display: flex; flex-direction: column; gap: 1.6rem; }
 .timeline-item { padding-left: 1.3rem; border-left: 3px solid var(--border-dk); }
 .timeline-item:hover { border-left-color: var(--accent); }
 .timeline-item .role { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; }
@@ -339,6 +347,17 @@ a.tag::before { content: ""; }
 .pub-item .venue { font-size: 0.88rem; color: var(--muted); }
 .pub-item .venue strong { color: var(--teal-dk); }
 .pub-item .abstract { font-size: 0.88rem; color: var(--ink-soft); margin-top: 0.4rem; }
+.pub-note {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--teal-dk);
+  background: var(--bg-sink);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 0.08rem 0.55rem;
+  margin-left: 0.3rem;
+  white-space: nowrap;
+}
 
 /* ---------- Coursework ---------- */
 .course-group { margin-bottom: 1.6rem; }
@@ -349,55 +368,46 @@ a.tag::before { content: ""; }
 .course-list .course + .course::before { content: " · "; color: var(--border-dk); }
 
 /* ---------- Projects ---------- */
-.filter-bar { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.8rem; }
-.filter-btn {
+.project-section .section-heading { margin-bottom: 0.8rem; }
+.project-count {
   font-family: var(--font-mono);
   font-size: 0.78rem;
-  padding: 0.25rem 0.7rem;
-  border: 1.5px solid var(--border-dk);
-  border-radius: 20px;
-  background: transparent;
-  color: var(--ink-soft);
-  cursor: pointer;
-  transition: all .15s;
+  color: var(--muted);
+  margin-left: auto;
+  font-weight: 400;
 }
-.filter-btn:hover { border-color: var(--accent); color: var(--accent); }
-.filter-btn.active { background: var(--ink); border-color: var(--ink); color: var(--bg); }
 
 .project-list { display: flex; flex-direction: column; }
-.project-list .item {
-  display: flex; gap: 1.2rem; align-items: baseline;
-  padding: 0.7rem 0.6rem; margin: 0 -0.6rem;
-  border-radius: 8px; transition: background .15s;
-  border-bottom: 1px dashed var(--border);
+.project-row {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 0.2rem;
+  border-bottom: 1px dashed var(--border-dk);
 }
-.project-list .item:hover { background: var(--bg-alt); }
-.project-list .item.hidden { display: none; }
-.project-list .item .name { flex: 0 0 8rem; }
-.project-list .item .name a { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; color: var(--ink); }
-.project-list .item .name a:hover { color: var(--accent); }
-.project-list .item .name .lang { font-family: var(--font-mono); font-size: 0.7rem; color: var(--teal-dk); margin-left: 0.4rem; }
-.project-list .item .desc { font-size: 0.92rem; color: var(--ink-soft); }
-
-/* GitHub activity */
-.gh-stats { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 0.6rem; }
-.gh-stat { font-family: var(--font-mono); font-size: 0.85rem; color: var(--muted); }
-.gh-stat strong { color: var(--accent); font-size: 0.95rem; }
-.gh-activity { margin-bottom: 2.5rem; }
-.gh-loading, .gh-error { font-family: var(--font-mono); font-size: 0.85rem; color: var(--muted); }
-.gh-commit-list { display: flex; flex-direction: column; gap: 0.5rem; }
-.gh-commit {
-  display: flex; gap: 0.8rem; align-items: flex-start;
-  padding: 0.6rem 0.9rem; background: var(--bg-alt);
-  border: 1px solid var(--border); border-radius: 8px;
-  color: inherit; transition: border-color .15s;
+.project-row:last-child { border-bottom: none; }
+.project-row:hover { background: var(--bg-alt); }
+.project-row .p-nm {
+  flex: 0 0 11.5rem;
+  min-width: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.96rem;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.gh-commit:hover { border-color: var(--accent); text-decoration: none; }
-.gh-commit-date { font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted); min-width: 4.5rem; padding-top: 0.15rem; }
-.gh-commit-body { flex: 1; min-width: 0; }
-.gh-commit-repo { font-family: var(--font-mono); font-size: 0.72rem; color: var(--teal-dk); }
-.gh-commit-msg { font-size: 0.92rem; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.gh-commit-dot { width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 0.5rem; }
+.project-row .p-nm a { color: var(--ink); }
+.project-row .p-nm a:hover { color: var(--accent); text-decoration: none; }
+.project-row .p-lg {
+  flex: 0 0 8.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--teal-dk);
+}
+.project-row .p-desc {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
 
 /* ---------- Writings (PDF list) ---------- */
 .search-bar { margin-bottom: 1.5rem; }
@@ -463,13 +473,6 @@ a.tag::before { content: ""; }
 .timeline .timeline-item:nth-of-type(5n+4) { border-left-color: var(--c4); }
 .timeline .timeline-item:nth-of-type(5n+5) { border-left-color: var(--c5); }
 
-.filter-bar .filter-btn:nth-of-type(5n+1):hover, .filter-bar .filter-btn:nth-of-type(5n+1).active { border-color: var(--c1); color: var(--c1); }
-.filter-bar .filter-btn:nth-of-type(5n+2):hover, .filter-bar .filter-btn:nth-of-type(5n+2).active { border-color: var(--c2); color: var(--c2); }
-.filter-bar .filter-btn:nth-of-type(5n+3):hover, .filter-bar .filter-btn:nth-of-type(5n+3).active { border-color: var(--c3); color: var(--c3); }
-.filter-bar .filter-btn:nth-of-type(5n+4):hover, .filter-bar .filter-btn:nth-of-type(5n+4).active { border-color: var(--c4); color: var(--c4); }
-.filter-bar .filter-btn:nth-of-type(5n+5):hover, .filter-bar .filter-btn:nth-of-type(5n+5).active { border-color: var(--c5); color: var(--c5); }
-.filter-btn.active { background: var(--bg-alt); }
-
 .year-group:nth-of-type(5n+1) .year { color: var(--c1); }
 .year-group:nth-of-type(5n+2) .year { color: var(--c2); }
 .year-group:nth-of-type(5n+3) .year { color: var(--c3); }
@@ -509,14 +512,14 @@ html[data-theme="dark"] .theme-btn .icon-sun { display: block; }
   .nav-links.open { display: flex; }
   .skill-row { flex-direction: column; gap: 0.1rem; }
   .skill-row .label { flex-basis: auto; }
-  .project-list .item { flex-direction: column; gap: 0.15rem; }
-  .project-list .item .name { flex-basis: auto; }
+  .project-row { flex-direction: column; align-items: flex-start; gap: 0.1rem; }
+  .project-row .p-nm, .project-row .p-lg { flex-basis: auto; }
   .post-entry-head { flex-direction: column; gap: 0.1rem; }
   .footer-meta { margin-left: 0; width: 100%; }
 }
 
 @media print {
-  .site-nav, .site-footer, .filter-bar, .gh-activity { display: none; }
+  .site-nav, .site-footer { display: none; }
   body { background: #fff; color: #000; }
   a { color: #000; }
 }

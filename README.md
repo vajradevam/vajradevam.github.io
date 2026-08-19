@@ -9,9 +9,11 @@ and served by GitHub Pages (custom domain `vajradevam.in`). Light, typography-fi
 _config.yml          site config (plugins, permalinks)
 _layouts/            default / page / post templates
 _includes/           head, nav, footer partials
+_data/               content as data (projects, publications, patents,
+                     experience, coursework, skills, now, categories)
 _posts/              blog posts (Markdown)
 assets/css/style.css the theme
-assets/js/ui.js      mobile-nav toggle
+assets/js/           ui.js + per-page scripts (projects, blog, writings)
 index.html           home
 blog.html            blog index (by year)
 tags.html            posts grouped by tag

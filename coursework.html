@@ -9,89 +9,12 @@ description: "Coursework completed by Aman Pathak: PhD at BITS Pilani Goa, B.Tec
 ---
 
 <section class="section">
+  {% for group in site.data.coursework %}
   <div class="course-group">
-    <span class="label">Computer Science Core <span class="count">· 16 courses</span></span>
+    <span class="label">{{ group.label }} <span class="count">· {{ group.courses.size }} courses</span></span>
     <div class="course-list">
-      <span class="course">Data Structures</span>
-      <span class="course">Design and Analysis of Algorithms</span>
-      <span class="course">Automata Theory and Formal Languages</span>
-      <span class="course">Discrete Mathematics</span>
-      <span class="course">Computer Organization and Architecture</span>
-      <span class="course">Operating Systems</span>
-      <span class="course">Database Management Systems</span>
-      <span class="course">OOP using Java</span>
-      <span class="course">Software Engineering</span>
-      <span class="course">Computer Networks</span>
-      <span class="course">High Performance Computing</span>
-      <span class="course">Compiler</span>
-      <span class="course">Artificial Intelligence</span>
-      <span class="course">Machine Learning</span>
-      <span class="course">Deep Learning Techniques</span>
-      <span class="course">Cloud Computing</span>
+      {% for course in group.courses %}<span class="course">{{ course }}</span>{% endfor %}
     </div>
   </div>
-
-  <div class="course-group">
-    <span class="label">Minor: VLSI &amp; Embedded Systems <span class="count">· 4 courses</span></span>
-    <div class="course-list">
-      <span class="course">Semiconductor Technology</span>
-      <span class="course">VLSI Circuits and Systems</span>
-      <span class="course">ML based Signal Processing</span>
-      <span class="course">Embedded System Design and Applications</span>
-    </div>
-  </div>
-
-  <div class="course-group">
-    <span class="label">Mathematics &amp; Sciences <span class="count">· 8 courses</span></span>
-    <div class="course-list">
-      <span class="course">Differential Equations and Linear Algebra</span>
-      <span class="course">Transforms and Numerical Methods</span>
-      <span class="course">Probability and Statistics</span>
-      <span class="course">Physics</span>
-      <span class="course">Chemistry</span>
-      <span class="course">Nano Science</span>
-      <span class="course">Science of Living Systems</span>
-      <span class="course">Environmental Science</span>
-    </div>
-  </div>
-
-  <div class="course-group">
-    <span class="label">Labs &amp; Projects <span class="count">· 16 courses</span></span>
-    <div class="course-list">
-      <span class="course">Programming Lab</span>
-      <span class="course">Data Structures Lab</span>
-      <span class="course">Digital Systems Design Lab</span>
-      <span class="course">Operating Systems Lab</span>
-      <span class="course">Java Programming Lab</span>
-      <span class="course">DBMS Lab</span>
-      <span class="course">Algorithms Lab</span>
-      <span class="course">Computer Networks Lab</span>
-      <span class="course">AI Lab</span>
-      <span class="course">Applications Development Lab</span>
-      <span class="course">Engineering Lab</span>
-      <span class="course">Chemistry Lab</span>
-      <span class="course">Physics Lab</span>
-      <span class="course">Project I</span>
-      <span class="course">Mini Project</span>
-      <span class="course">Internship</span>
-    </div>
-  </div>
-
-  <div class="course-group">
-    <span class="label">Electives &amp; Others <span class="count">· 12 courses</span></span>
-    <div class="course-list">
-      <span class="course">Engineering Economics</span>
-      <span class="course">Universal Human Values</span>
-      <span class="course">Business Ethics</span>
-      <span class="course">Sound Engineering</span>
-      <span class="course">International Economic Cooperation</span>
-      <span class="course">Scientific and Technical Writing</span>
-      <span class="course">Industry 4.0 Technologies</span>
-      <span class="course">Engineering Professional Practice</span>
-      <span class="course">Indian Classical &amp; Western Music</span>
-      <span class="course">Creativity Innovation and Entrepreneurship</span>
-      <span class="course">English</span>
-      <span class="course">Yoga</span>
-    </div>
-  </div>
+  {% endfor %}
 </section>

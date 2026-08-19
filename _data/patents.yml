@@ -1,0 +1,13 @@
+# Filed patents. `desc` is the full invention title.
+- title: DFI Monitor (202631036811)
+  desc: "Hardware Data-Flow Integrity Monitor with Register-File Provenance Tagging for RISC-V IoT Processors"
+- title: Fusion Engine (202631036816)
+  desc: "Programmable Instruction Fusion Engine with SRAM-Based Rules Table for RISC-V IoT Processors"
+- title: HPC Malware (202631036812)
+  desc: "Hardware-Accelerated Microarchitectural Event Classifier with Programmable Feature Extraction Pipeline and On-Chip Ensemble Inference Engine for Real-Time Malware Detection in RISC-V Processors"
+- title: Crypto Engine (202631036813)
+  desc: "Per-Peripheral Cryptographic Session Engine with Hardware Key Rotation for RISC-V IoT System-on-Chip"
+- title: NUMA (202631036815)
+  desc: "RISC-V Processor Architecture with Tiered-Memory ISA Extension, Tier-Aware TLB, and Thunderbolt-Attached External DRAM Expansion with RISC-V Bridge Controller for Linux-Based Heterogeneous Memory Systems"
+- title: Trace BDT (202631036814)
+  desc: "On-Chip Binary Decision Tree Inference Engine Integrated with RISC-V Trace Encoder for Real-Time IoT Security Monitoring"

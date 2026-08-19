@@ -30,6 +30,11 @@
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 {% endif %}
 
+{% if page.js %}
+{% for script in page.js %}
+<script src="{{ script | relative_url }}"></script>
+{% endfor %}
+{% endif %}
 <script src="{{ '/assets/js/ui.js' | relative_url }}"></script>
 </body>
 </html>
