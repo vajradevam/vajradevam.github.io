@@ -1276,38 +1276,114 @@ between versions. If you are building a different release, cross-check the in-tr
 
 ## Appendix A, Command cheat sheet
 
+Replace `<REL>` throughout with your kernel release, e.g. `7.2.0-mykernel`
+(`uname -r` after boot).
+
+### Configure
+
 ```text
-## Configure
-make mrproper                          # pristine tree (kills .config!)
-cp /boot/config-$(uname -r) .config    # clone running kernel's config
-zcat /proc/config.gz > .config 2>/dev/null || true  # alternative if available
-make olddefconfig                      # reconcile imported config
-make nconfig                           # curses UI ('/' searches)
-./scripts/config -e SYM / -d SYM / -m SYM / --set-str SYM "val"
-make savedefconfig                     # minimal delta dump
-## Build
-make -j$(nproc)                        # full build
-make O=out -j$(nproc)                  # out-of-tree objects
-make LLVM=1 -j$(nproc)                 # clang toolchain
-make CC="ccache gcc" -j$(nproc)
-## Install (pick ONE route)
-sudo make modules_install              # A: modules
-sudo cp arch/x86/boot/bzImage /boot/vmlinuz-<REL>
-sudo update-initramfs -c -k <REL>      # A: initramfs (Debian)
-sudo update-grub                       # A: bootloader (Debian)
-make bindeb-pkg -j$(nproc)             # B: .debs -> parent dir
-sudo dpkg -i ../linux-image-*_<REL>_*.deb ../linux-headers-*_<REL>_*.deb
-## Inspect / operate
-uname -r ; dmesg ; journalctl -b ; lspci -k ; lsmod
-modinfo <mod> ; sudo modprobe <mod> ; systool -m <mod> -v
-cat /proc/cmdline ; cat /config 2>/dev/null || zcat /proc/config.gz
-## Test fast
-sudo kexec -l bzImage --initrd=... --command-line="$(cat /proc/cmdline)" \
+make mrproper                           # pristine tree (kills .config!)
+cp /boot/config-$(uname -r) .config     # clone running kernel's config
+zcat /proc/config.gz > .config 2>/dev/null || true  # alternative, if available
+
+make olddefconfig                       # reconcile imported config (silent defaults)
+make nconfig                            # curses UI ('/' searches)
+
+./scripts/config -e SYM                 # enable SYM (=y)
+./scripts/config -m SYM                 # as module (=m)
+./scripts/config -d SYM                 # disable SYM (=n)
+./scripts/config --set-str SYM "val"    # set string/int value
+
+make savedefconfig                      # minimal delta dump -> defconfig
+cp .config ~/kernel-configs/<REL>.cfg   # BACK UP before experiments
+```
+
+### Build
+
+```text
+make -j$(nproc)                         # full in-tree build
+make O=out -j$(nproc)                   # out-of-tree objects (pass O= to EVERY make)
+make LLVM=1 -j$(nproc)                  # clang / lld toolchain
+make CC="ccache gcc" -j$(nproc)         # ccache-accelerated rebuild
+```
+
+Build products stay in-tree:
+
+```text
+arch/x86/boot/bzImage                   # -> /boot/vmlinuz-<REL>
+System.map                              # -> /boot/System.map-<REL>
+.config                                 # -> /boot/config-<REL>
+drivers/**/*.ko                         # -> /lib/modules/<REL>/
+```
+
+### Install — Route A: manual (in this exact order)
+
+```text
+sudo make modules_install                               # 1. modules -> /lib/modules/<REL>/ (+ depmod)
+
+sudo cp arch/x86/boot/bzImage /boot/vmlinuz-<REL>       # 2. kernel image
+sudo cp System.map            /boot/System.map-<REL>    #    symbol table (for oops traces)
+sudo cp .config               /boot/config-<REL>        #    frozen config (reproducibility)
+
+sudo update-initramfs -c -k <REL>                       # 3. create initramfs -> /boot/initrd.img-<REL>
+sudo update-initramfs -u -k <REL>                       #    regenerate after later changes
+
+sudo update-grub                                        # 4. rebuild GRUB menu
+grep menuentry /boot/grub/grub.cfg                      #    verify your kernel was found
+```
+
+### Install — Route B: Debian packages (recommended)
+
+```text
+make bindeb-pkg -j$(nproc) KDEB_PKGVERSION=$(make kernelversion)-1
+                                                        # .debs land in parent dir
+sudo dpkg -i ../linux-image-<REL>_*.deb ../linux-headers-<REL>_*.deb
+                                                        # postinst does modules + initramfs + grub
+sudo apt purge linux-image-<REL> linux-headers-<REL>    # clean uninstall later
+```
+
+### Verify first boot
+
+```text
+uname -r                                                # should print <REL>
+sudo dmesg | less
+journalctl -b -p err..alert
+lspci -k                                                # drivers-in-use correct?
+lsmod | grep -E 'nouveau|i915|e1000e'
+cat /proc/cmdline
+zcat /proc/config.gz | grep -E 'DEVTMPFS|CGROUPS|AHCI|EXT4_FS|EFI'
+systemctl --failed
+```
+
+### Operate modules
+
+```text
+modinfo <mod>
+sudo modprobe <mod> / sudo modprobe -r <mod>
+systool -m <mod> -v
+```
+
+### Test without rebooting
+
+```text
+sudo kexec -l arch/x86/boot/bzImage \
+  --initrd=/boot/initrd.img-<REL> \
+  --command-line="$(cat /proc/cmdline)" \
   && sudo systemctl kexec
-qemu-system-x86_64 -enable-kvm -kernel bzImage -initrd rd.img -append "..."
-## Maintain
-make clean / mrproper / distclean
-cp .config ~/kernel-configs/...        # BACK UP BEFORE EXPERIMENTS
+
+qemu-system-x86_64 -enable-kvm -m 2G -smp 4 \
+  -kernel arch/x86/boot/bzImage \
+  -initrd /boot/initrd.img-<REL> \
+  -append "root=/dev/vda rw console=ttyS0" \
+  -drive file=testdisk.qcow2,if=virtio -nographic
+```
+
+### Maintain / clean
+
+```text
+make clean        # drop objects/images, keep .config (fast incremental rebuild)
+make mrproper     # + delete .config (pristine tarball state)
+make distclean    # + delete *.orig/*.rej editor leftovers
 ```
 
 ## Appendix B, References
