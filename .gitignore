@@ -1,8 +1,13 @@
-_site/
-.jekyll-cache/
-.jekyll-metadata
-.sass-cache/
-vendor/
-Gemfile.lock
+# Astro build output
+dist/
+.astro/
+
+# dependencies
 node_modules/
-.bundle/
+
+# logs
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db

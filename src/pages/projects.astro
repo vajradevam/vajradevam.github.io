@@ -1,0 +1,36 @@
+---
+import Page from '../layouts/Page.astro';
+import { categories } from '../data/categories';
+import { projects } from '../data/projects';
+import { site } from '../data/site';
+---
+
+<Page
+  nav="projects"
+  title="Projects"
+  heading="Projects"
+  sub={`<a href="${site.github}?tab=repositories">github.com/vajradevam</a>`}
+  description="Open-source projects - container runtimes, TCP/IP stacks, emulators, compilers, ML, databases, web apps."
+>
+  {categories.map((cat) => {
+    const items = projects.filter((p) => p.category === cat.slug);
+    return (
+      <section class="section project-section">
+        <div class="section-heading">
+          {cat.label} <span class="project-count">{items.length}</span>
+        </div>
+        <div class="project-list">
+          {items.map((p) => (
+            <div class="project-row">
+              <span class="p-nm">
+                <a href={`${site.github}/${p.repo}`} target="_blank" rel="noopener">{p.name}</a>
+              </span>
+              <span class="p-lg">{p.lang ?? ''}</span>
+              <span class="p-desc">{p.desc ?? ''}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  })}
+</Page>

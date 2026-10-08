@@ -1,0 +1,36 @@
+---
+import Base from './Base.astro';
+import { formatLongDate, slugify } from '../lib/posts';
+
+interface Props {
+  title: string;
+  description?: string;
+  pubDate: Date;
+  tags?: string[];
+  math?: boolean;
+}
+
+const { title, description, pubDate, tags = [], math = false } = Astro.props;
+---
+
+<Base title={title} description={description} nav="blog" math={math}>
+  <article class="post">
+    <a class="post-back" href="/blog/">all posts</a>
+    <h1 class="post-title">{title}</h1>
+    <div class="post-meta">
+      <time datetime={pubDate.toISOString()}>{formatLongDate(pubDate)}</time>
+      {tags.length > 0 && (
+        <span class="post-tags">
+          {tags.map((tag) => (
+            <a class="tag" href={`/tags/#${slugify(tag)}`}>#{tag}</a>
+          ))}
+        </span>
+      )}
+    </div>
+    <div class="post-body">
+      <slot />
+    </div>
+    <hr class="post-rule" />
+    <a class="post-back" href="/blog/">all posts</a>
+  </article>
+</Base>

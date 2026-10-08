@@ -1,0 +1,41 @@
+---
+import Page from '../layouts/Page.astro';
+import { getSortedPosts, getAllTags, formatDate, slugify } from '../lib/posts';
+
+const posts = await getSortedPosts();
+const tags = await getAllTags();
+
+const postsByTag = new Map<string, typeof posts>();
+for (const { tag } of tags) {
+  postsByTag.set(tag, posts.filter((p) => (p.data.tags ?? []).includes(tag)));
+}
+---
+
+<Page nav="blog" title="Tags" heading="Tags" sub="Browse posts by topic.">
+  {tags.length === 0 ? (
+    <p class="gh-loading">No tags yet.</p>
+  ) : (
+    <>
+      <div class="tag-cloud">
+        {tags.map(({ tag, count }) => (
+          <a class="tag" href={`#${slugify(tag)}`}>#{tag} <span style="color:var(--muted)">({count})</span></a>
+        ))}
+      </div>
+
+      {tags.map(({ tag }) => (
+        <section class="section" id={slugify(tag)}>
+          <h2 class="year">#{tag}</h2>
+          {(postsByTag.get(tag) ?? []).map((post) => (
+            <div class="post-entry">
+              <div class="post-entry-head">
+                <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+                <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+              </div>
+              {post.data.description && <p class="post-entry-desc">{post.data.description}</p>}
+            </div>
+          ))}
+        </section>
+      ))}
+    </>
+  )}
+</Page>

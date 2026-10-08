@@ -1,0 +1,57 @@
+---
+import Page from '../layouts/Page.astro';
+import { now } from '../data/now';
+import { skills } from '../data/skills';
+---
+
+<Page nav="home" title={null} description="PhD Scholar in computer architecture, hardware security, and low-level systems. RISC-V, side-channel attacks, formal verification.">
+  <section class="hero">
+    <div class="greeting">Hi, I'm</div>
+    <h1>Aman Pathak</h1>
+    <div class="subtitle">PhD Scholar working on hardware security, RISC-V, and low-level software.</div>
+    <p>
+      I'm a PhD Scholar in the Department of Computer Science and Information Systems at
+      BITS Pilani KK Birla Goa Campus, working at the intersection of hardware security,
+      RISC-V architectures, and low-level software. My current work spans side-channel
+      mitigation, formal verification of cache coherency, and ML-based malware analysis on
+      embedded binaries. Earlier, I designed Ku/X-band antennas at KIIT, and I have six
+      patents filed in the RISC-V space covering data-flow integrity, crypto engines, and
+      on-chip ML.
+    </p>
+    <p>
+      Outside of research, I spend a lot of time building things close to the metal. I've written
+      a TCP/IP stack from scratch, a malloc replacement, a cycle-accurate 6502 emulator, a
+      container runtime using raw namespaces and seccomp, a bytecode VM in Go, and neural networks
+      built purely from matrix operations. This is not an exhaustive list, I keep adding projects
+      to my profile as a hobby. I also write about these topics on my blog, where I've published
+      posts on architecture, compilers, and C. And I teach sometimes.
+    </p>
+    <p>
+      Low-level stuff intrigues me. A C program is nothing but bytes in memory, there is no
+      abstraction beyond that. Sure, memory is made of transistors and semiconductors, and VLSI
+      gives us gates and voltages and whatnot, but C, and the assembly it compiles to, is quite
+      magical. I know exactly what it is going to do, and nothing is hidden. It is the naked, and
+      quite often the bitter, truth. More than low levels <em>per se</em>, to borrow from
+      category theory, I am interested in the stripped-down, non-abstracted, naked-truth stuff.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">Now</div>
+    <ul class="dash-list">
+      {now.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">Skills</div>
+    {skills.map((row) => (
+      <div class="skill-row">
+        <span class="label">{row.label}</span>
+        <span class="items">
+          {row.items.map((item) => <span class="skill-chip">{item}</span>)}
+        </span>
+      </div>
+    ))}
+  </section>
+</Page>

@@ -1,0 +1,61 @@
+---
+import Page from '../layouts/Page.astro';
+import { experience } from '../data/experience';
+import { patents } from '../data/patents';
+import { publications } from '../data/publications';
+---
+
+<Page
+  nav="research"
+  title="Research"
+  heading="Research"
+  description="PhD Scholar - hardware security, RISC-V, formal verification, side-channel attacks, 14 publications, 6 patents."
+>
+  <section class="section">
+    <div class="section-heading">Experience</div>
+    <div class="timeline">
+      {experience.map((item) => (
+        <div class="timeline-item">
+          <div class="role">{item.role} <span class="date">· {item.date}</span></div>
+          <div class="org">{item.org}</div>
+          <ul>
+            {(item.bullets ?? []).map((bullet) => <li>{bullet}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">Patents</div>
+    <div class="pub-list">
+      {patents.map((patent) => (
+        <div class="pub-item">
+          <div class="title">{patent.title}</div>
+          <div class="venue">{patent.desc}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">Publications</div>
+    <div class="pub-list">
+      {publications.map((pub) => (
+        <div class="pub-item">
+          <div class="title">{pub.title}</div>
+          <div class="venue">
+            {(pub.authors ?? []).map((author, i) => (
+              <>
+                {author === 'A. Pathak' ? <strong>{author}</strong> : <span>{author}</span>}
+                {i < (pub.authors?.length ?? 0) - 1 ? ', ' : ''}
+              </>
+            ))}
+            {' '}· {pub.venue}{pub.year ? `, ${pub.year}` : ''}{pub.note && <span class="pub-note">{pub.note}</span>}
+          </div>
+          {pub.abstract && <div class="abstract">{pub.abstract}</div>}
+        </div>
+      ))}
+    </div>
+  </section>
+</Page>

@@ -1,0 +1,76 @@
+---
+import Page from '../layouts/Page.astro';
+import fs from 'node:fs';
+import path from 'node:path';
+
+function titleFromName(name: string): string {
+  return name
+    .replace(/\.pdf$/i, '')
+    .replace(/[-_]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// Build-time directory read — no list.json, no GitHub Action, no API fallback.
+const writingsDir = path.join(process.cwd(), 'public', 'writings');
+let writings: { file: string; title: string }[] = [];
+try {
+  writings = fs
+    .readdirSync(writingsDir)
+    .filter((f) => f.toLowerCase().endsWith('.pdf'))
+    .sort((a, b) => a.localeCompare(b))
+    .map((file) => ({ file, title: titleFromName(file) }));
+} catch {
+  writings = [];
+}
+---
+
+<Page
+  nav="writings"
+  title="Writings"
+  heading="Writings"
+  sub={`${writings.length} writing${writings.length !== 1 ? 's' : ''}`}
+  description="Publications, books, and writings by Aman Pathak."
+>
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="search writings…" autocomplete="off" />
+  </div>
+
+  <div class="writings-list" id="writingsList">
+    {writings.map((w) => (
+      <div class="writing-item" data-title={w.title.toLowerCase()}>
+        <div class="writing-title">
+          <a href={`/writings/${encodeURIComponent(w.file)}`} target="_blank">{w.title}</a>
+        </div>
+        <a class="writing-link" href={`/writings/${encodeURIComponent(w.file)}`} target="_blank">open PDF</a>
+      </div>
+    ))}
+  </div>
+
+  <div class="writings-empty" id="writingsEmpty">
+    <p>no writings match your search</p>
+  </div>
+
+  <script is:inline>
+    (function () {
+      var input = document.getElementById('searchInput');
+      var items = [].slice.call(document.querySelectorAll('#writingsList .writing-item'));
+      var empty = document.getElementById('writingsEmpty');
+      var countEl = document.querySelector('.page-header .sub');
+      if (!input) return;
+      function render() {
+        var q = (input.value || '').toLowerCase().trim();
+        var visible = 0;
+        items.forEach(function (el) {
+          var t = el.getAttribute('data-title') || '';
+          var match = !q || t.indexOf(q) > -1;
+          el.style.display = match ? '' : 'none';
+          if (match) visible++;
+        });
+        if (empty) empty.style.display = visible === 0 ? 'block' : 'none';
+        if (countEl) countEl.textContent = visible + ' writing' + (visible !== 1 ? 's' : '');
+      }
+      input.addEventListener('input', render);
+    })();
+  </script>
+</Page>

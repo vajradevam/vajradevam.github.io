@@ -1,0 +1,25 @@
+---
+import Base from './Base.astro';
+import type { NavKey } from '../data/site';
+
+interface Props {
+  title?: string | null;
+  heading?: string;
+  sub?: string;
+  description?: string;
+  nav?: NavKey;
+  math?: boolean;
+}
+
+const { title, heading, sub, description, nav = 'home', math = false } = Astro.props;
+---
+
+<Base title={title} description={description} nav={nav} math={math}>
+  {heading && (
+    <header class="page-header">
+      <h1>{heading}</h1>
+      {sub && <div class="sub" set:html={sub} />}
+    </header>
+  )}
+  <slot />
+</Base>
