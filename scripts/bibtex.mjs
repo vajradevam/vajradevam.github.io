@@ -6,7 +6,7 @@ const bib = pubs
   .map((p) => {
     const key = `pathak${p.year ?? 'nd'}${String(p.n).padStart(2, '0')}`;
     const author = p.authors.join(' and ');
-    return `@misc{${key},\n  author = {${author}},\n  title = {{${p.title}}},\n  howpublished = {${p.venue}${p.year ? `, ${p.year}` : ''}},\n  year = {${p.year ?? ''}},\n  note = {${p.note}}\n}`;
+    return `@misc{${key},\n  author = {${author}},\n  title = {{${p.title}}},\n  howpublished = {${p.venue}${p.year ? `, ${p.year}` : ''}},\n  year = {${p.year ?? ''}},${p.url ? `\n  url = {${p.url}},` : ''}\n  note = {${p.note}}\n}`;
   })
   .join('\n\n');
 writeFileSync(new URL('../public/research.bib', import.meta.url), bib + '\n');
