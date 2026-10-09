@@ -1,0 +1,80 @@
+/* Design tokens · "The Datasheet". 4px base spacing. */
+:root {
+  /* palette: warm paper, ink, silicon-etch blue, fuse orange */
+  --paper: #f4f1ea;
+  --paper-sink: #eae6d9;
+  --paper-raise: #faf8f2;
+  --ink: #14130f;
+  --ink-soft: #3d3b34;
+  --muted: #6e6a5e;
+  --accent: #1f4fd8;
+  --accent-ink: #12307e;
+  --signal: #b34a0a; /* darkened fuse orange for AA on paper */
+  --signal-bright: #e8590c;
+  --rule: #c9c3b2;
+  --rule-strong: #14130f;
+  --sel: #1f4fd826;
+  --code-bg: #eae6d9;
+  --code-fg: #14130f;
+
+  /* data hues · resistor-code categorical palette (all AA on paper) */
+  --h-brown: #7c4a12;
+  --h-red: #b91c1c;
+  --h-orange: #b34a0a;
+  --h-yellow: #7a6200;
+  --h-green: #166534;
+  --h-blue: #1f4fd8;
+  --h-violet: #6d28d9;
+  --h-teal: #0f766e;
+  --h-gray: #6e6a5e;
+  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --body-size: 1.125rem; /* 18px */
+  --body-lh: 1.65;
+  --measure: 68ch;
+  --label-size: 0.78rem;
+
+  /* spacing (4px base) */
+  --s1: 0.25rem; --s2: 0.5rem; --s3: 0.75rem; --s4: 1rem;
+  --s6: 1.5rem; --s8: 2rem; --s12: 3rem; --s16: 4rem;
+
+  /* grid */
+  --margin-col: 220px;
+  --main-col: min(68ch, 100%);
+  --page-max: 1200px;
+
+  /* motion: mechanical step/snap, 120–200ms */
+  --ease-mech: cubic-bezier(0.3, 0, 0.2, 1);
+  --t-fast: 120ms;
+  --t-med: 200ms;
+}
+
+html[data-theme="dark"] {
+  /* oscilloscope inversion */
+  --paper: #0c0e12;
+  --paper-sink: #060709;
+  --paper-raise: #14171d;
+  --ink: #e6e3da;
+  --ink-soft: #c9c5b8;
+  --muted: #9a9587;
+  --accent: #7fa2ff;
+  --accent-ink: #b9ccff;
+  --signal: #ff9f5a;
+  --signal-bright: #ff9f5a;
+  --rule: #2c313b;
+  --rule-strong: #e6e3da;
+  --sel: #7fa2ff33;
+  --code-bg: #14171d;
+  --code-fg: #e6e3da;
+
+  /* data hues · oscilloscope variants (all AA on dark) */
+  --h-brown: #d9a05b;
+  --h-red: #fca5a5;
+  --h-orange: #ff9f5a;
+  --h-yellow: #e8c547;
+  --h-green: #6ee7a0;
+  --h-blue: #7fa2ff;
+  --h-violet: #c4b5fd;
+  --h-teal: #5eead4;
+  --h-gray: #9a9587;
+}

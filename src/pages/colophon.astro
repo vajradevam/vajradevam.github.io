@@ -1,0 +1,66 @@
+---
+import Page from '../layouts/Page.astro';
+---
+
+<Page
+  nav="colophon"
+  title="Colophon"
+  heading="Colophon"
+  sub="About this site · the datasheet concept, fonts, build, and numbers."
+  description="How this site is built · Astro, datasheet concept, self-hosted fonts, performance budget."
+  ogImage="/og/colophon.png"
+>
+  <h2 class="sec-head" id="concept">§1 · Concept <a class="anchor" href="#concept" aria-label="Link">§</a></h2>
+  <p>
+    This site is set as a <strong>technical reference manual for a person</strong> · in the visual
+    language of the RISC-V ISA specification, a vendor datasheet, and a Tufte-style book.
+    The brief, in the owner's words: <em>“A C program is nothing but bytes in memory. I'm
+    interested in the stripped-down, non-abstracted, naked-truth stuff.”</em> The site
+    embodies that idea in section numbers, figure captions, bit-fields, register tables,
+    and a “view the bytes” mode that hex-dumps any page's own text.
+  </p>
+
+  <h2 class="sec-head" id="reading">§2 · How to read it <a class="anchor" href="#reading" aria-label="Link">§</a></h2>
+  <p>
+    The header is a 32-bit RISC-V R-type instruction word
+    (<code>funct7 | rs2 | rs1 | funct3 | rd | opcode</code>). Each field is a navigation
+    link; the current page's field is filled and its bits read as set. Hovering a field
+    shows the decoded mnemonic (e.g. <code>LOAD research</code>). The footer is a revision
+    block. Margin notes carry section numbers and tables of contents; dotted leaders
+    connect entries to their numbers, as in a printed manual.
+  </p>
+
+  <h2 class="sec-head" id="type">§3 · Type &amp; colour <a class="anchor" href="#type" aria-label="Link">§</a></h2>
+  <p>
+    Body text is <strong>Source Serif 4</strong> at 18px / 1.65, max 68 characters per line;
+    labels, code, tables, and navigation are <strong>JetBrains Mono</strong>. Both are
+    self-hosted as subset WOFF2 with <code>font-display: swap</code> · no CDN, no trackers.
+    Paper is <code>#F4F1EA</code>, ink <code>#14130F</code>, links silicon-etch blue
+    <code>#1F4FD8</code>; fuse orange <code>#E8590C</code> appears only for live, changed,
+    or warning states. Dark mode is a true oscilloscope inversion. All text pairs meet
+    WCAG 2.2 AA.
+  </p>
+
+  <h2 class="sec-head" id="build">§4 · Build <a class="anchor" href="#build" aria-label="Link">§</a></h2>
+  <p>
+    Built with <a href="https://astro.build/">Astro</a> (static output), content in
+    Markdown content collections plus JSON data files, math rendered at build time with
+    KaTeX (no client JS), syntax highlighting with Shiki, feeds via <code>@astrojs/rss</code>,
+    sitemap via <code>@astrojs/sitemap</code>. Interactions are standalone modules under
+    3&nbsp;KB gzip, loaded only where needed; every page reads fully with JavaScript disabled.
+    Deployed to GitHub Pages by a GitHub Actions workflow on push to <code>master</code>.
+  </p>
+
+  <h2 class="sec-head" id="perf">§5 · Performance <a class="anchor" href="#perf" aria-label="Link">§</a></h2>
+  <p>
+    Budget · home page ≤ 150&nbsp;KB transferred (excluding fonts), Lighthouse ≥ 95 across
+    Performance, Accessibility, Best Practices, and SEO. Numbers are measured in CI on every
+    build · see the pull request that shipped this redesign for the recorded figures.
+  </p>
+
+  <h2 class="sec-head" id="egg">§6 · Errata <a class="anchor" href="#egg" aria-label="Link">§</a></h2>
+  <p>
+    Typing <code>0xDEADBEEF</code> anywhere flashes the navigation word. This is the only
+    undocumented behaviour on the site, documented here.
+  </p>
+</Page>

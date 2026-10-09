@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Post from '../../layouts/Post.astro';
+import { getSortedPosts } from '../../lib/posts';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -12,14 +13,22 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+const sorted = await getSortedPosts();
+const i = sorted.findIndex((p) => p.id === post.id);
+const newer = i > 0 ? sorted[i - 1] : undefined;
+const older = i < sorted.length - 1 ? sorted[i + 1] : undefined;
 ---
 
 <Post
   title={post.data.title}
   description={post.data.description}
   pubDate={post.data.pubDate}
+  updated={post.data.updated}
   tags={post.data.tags}
   math={post.data.math}
+  body={post.body ?? ''}
+  prev={older ? { id: older.id, title: older.data.title } : undefined}
+  next={newer ? { id: newer.id, title: newer.data.title } : undefined}
 >
   <Content />
 </Post>

@@ -1,36 +1,67 @@
 ---
 import Base from './Base.astro';
-import { formatLongDate, slugify } from '../lib/posts';
+import Tag from '../components/Tag.astro';
+import Arrow from '../components/Arrow.astro';
+import { formatLongDate, formatRev, readingTime, tocFromBody } from '../lib/posts';
 
 interface Props {
   title: string;
   description?: string;
   pubDate: Date;
+  updated?: Date;
   tags?: string[];
   math?: boolean;
+  body?: string;
+  prev?: { id: string; title: string };
+  next?: { id: string; title: string };
 }
 
-const { title, description, pubDate, tags = [], math = false } = Astro.props;
+const { title, description, pubDate, updated, tags = [], math = false, body = '', prev, next } = Astro.props;
+const toc = tocFromBody(body);
+const mins = readingTime(body);
 ---
 
-<Base title={title} description={description} nav="blog" math={math}>
-  <article class="post">
-    <a class="post-back" href="/blog/">all posts</a>
-    <h1 class="post-title">{title}</h1>
-    <div class="post-meta">
-      <time datetime={pubDate.toISOString()}>{formatLongDate(pubDate)}</time>
-      {tags.length > 0 && (
-        <span class="post-tags">
-          {tags.map((tag) => (
-            <a class="tag" href={`/tags/#${slugify(tag)}`}>#{tag}</a>
-          ))}
-        </span>
-      )}
+<Base title={title} description={description} nav="blog" ogImage={`/og/blog-${title.length % 3}.png`}>
+  {math && <link rel="stylesheet" href="/katex.css" slot="head" />}
+  <article>
+    <div class="spec-header">
+      <h1 class="spec-title">{title}</h1>
+      <table>
+        <tbody>
+          <tr><td class="k">Document</td><td>/blog/ · journal entry</td></tr>
+          <tr><td class="k">Rev</td><td>{formatRev(pubDate)}{updated ? ` · last revised ${formatRev(updated)}` : ''}</td></tr>
+          <tr><td class="k">Date</td><td><time datetime={pubDate.toISOString()}>{formatLongDate(pubDate)}</time></td></tr>
+          <tr><td class="k">Reading</td><td>{mins} min</td></tr>
+          {tags.length > 0 && (
+            <tr><td class="k">Tags</td><td>{tags.map((t, i) => <>{i > 0 ? ', ' : ''}<Tag tag={t} /></>)}</td></tr>
+          )}
+        </tbody>
+      </table>
     </div>
-    <div class="post-body">
-      <slot />
+    <div class="with-margin">
+      <aside class="margin-col" aria-label="Table of contents">
+        {toc.length > 0 ? (
+          <nav aria-label="Contents">
+            <div class="sec-label" style="margin-bottom:0.5rem">Contents</div>
+            <ul class="toc" id="toc">
+              {toc.map((h) => <li><a href={`#${h.id}`} data-target={h.id}>{h.text}</a></li>)}
+            </ul>
+          </nav>
+        ) : (
+          <div><span class="sec-no">§</span> journal entry</div>
+        )}
+        <div style="margin-top:1rem"><a href="/blog/"><Arrow dir="left" /> all posts</a></div>
+      </aside>
+      <div class="prose post-body">
+        <slot />
+      </div>
     </div>
-    <hr class="post-rule" />
-    <a class="post-back" href="/blog/">all posts</a>
+    <nav class="pager" aria-label="More posts">
+      <span>{prev ? <a href={`/blog/${prev.id}/`}><Arrow dir="left" /> {prev.title}</a> : ''}</span>
+      <span>{next ? <a href={`/blog/${next.id}/`}>{next.title} <Arrow dir="right" /></a> : ''}</span>
+    </nav>
   </article>
+  <script>
+    import '../scripts/post.ts';
+  </script>
 </Base>

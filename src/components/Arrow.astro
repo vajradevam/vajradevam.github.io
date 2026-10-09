@@ -1,0 +1,15 @@
+---
+/* Directional arrow drawn as SVG (no typed arrow characters). */
+interface Props { dir: 'left' | 'right' | 'up-right'; }
+const { dir } = Astro.props;
+---
+
+{dir === 'left' && (
+  <svg class="arr" viewBox="0 0 12 12" width="0.85em" height="0.85em" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><line x1="11" y1="6" x2="1" y2="6" /><polyline points="5,2 1,6 5,10" /></svg>
+)}
+{dir === 'right' && (
+  <svg class="arr" viewBox="0 0 12 12" width="0.85em" height="0.85em" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><line x1="1" y1="6" x2="11" y2="6" /><polyline points="7,2 11,6 7,10" /></svg>
+)}
+{dir === 'up-right' && (
+  <svg class="arr" viewBox="0 0 12 12" width="0.85em" height="0.85em" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><line x1="2" y1="10" x2="10" y2="2" /><polyline points="4,2 10,2 10,8" /></svg>
+)}

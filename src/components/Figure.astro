@@ -1,0 +1,14 @@
+---
+interface Props {
+  no: string;
+  caption: string;
+  id?: string;
+  label?: string;
+}
+const { no, caption, id, label = 'Fig.' } = Astro.props;
+---
+
+<figure class="fig" {...(id ? { id } : {})} role="figure" aria-label={`${label} ${no} · ${caption}`}>
+  <slot />
+  <figcaption><span class="fig-no">{label} {no}</span> · {caption}</figcaption>
+</figure>

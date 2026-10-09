@@ -1,0 +1,32 @@
+[
+  {
+    "short": "DFI Monitor",
+    "application": "202631036811",
+    "title": "Hardware Data-Flow Integrity Monitor with Register-File Provenance Tagging for RISC-V IoT Processors"
+  },
+  {
+    "short": "Fusion Engine",
+    "application": "202631036816",
+    "title": "Programmable Instruction Fusion Engine with SRAM-Based Rules Table for RISC-V IoT Processors"
+  },
+  {
+    "short": "HPC Malware",
+    "application": "202631036812",
+    "title": "Hardware-Accelerated Microarchitectural Event Classifier with Programmable Feature Extraction Pipeline and On-Chip Ensemble Inference Engine for Real-Time Malware Detection in RISC-V Processors"
+  },
+  {
+    "short": "Crypto Engine",
+    "application": "202631036813",
+    "title": "Per-Peripheral Cryptographic Session Engine with Hardware Key Rotation for RISC-V IoT System-on-Chip"
+  },
+  {
+    "short": "NUMA",
+    "application": "202631036815",
+    "title": "RISC-V Processor Architecture with Tiered-Memory ISA Extension, Tier-Aware TLB, and Thunderbolt-Attached External DRAM Expansion with RISC-V Bridge Controller for Linux-Based Heterogeneous Memory Systems"
+  },
+  {
+    "short": "Trace BDT",
+    "application": "202631036814",
+    "title": "On-Chip Binary Decision Tree Inference Engine Integrated with RISC-V Trace Encoder for Real-Time IoT Security Monitoring"
+  }
+]

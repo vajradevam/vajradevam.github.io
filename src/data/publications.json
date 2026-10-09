@@ -1,5 +1,6 @@
-export const publications = [
+[
   {
+    "n": 1,
     "title": "ARCHER: A Cycle-Accurate RISC-V Emulator for Microarchitectural Side-Channel and Memory-Encryption Research",
     "authors": [
       "J. Mishra",
@@ -9,9 +10,11 @@ export const publications = [
     ],
     "venue": "Computers (MDPI), Vol. 15, Issue 8, p. 479",
     "year": 2026,
+    "status": "SCI-Q1",
     "note": "SCI-Q1"
   },
   {
+    "n": 2,
     "title": "PACE: A Page-Adaptive, Cache-Anchored Memory-Encryption Engine for RISC-V with Formally-Verified nth-Order DPA Resistance",
     "authors": [
       "J. Mishra",
@@ -21,9 +24,11 @@ export const publications = [
     ],
     "venue": "Chips (MDPI), Vol. 5, Issue 3, p. 26",
     "year": 2026,
+    "status": "SCI-Q2",
     "note": "SCI-Q2"
   },
   {
+    "n": 3,
     "title": "Novel Microarchitectural Side-Channel Attacks on Open-Source RISC-V Cores",
     "authors": [
       "J. Mishra",
@@ -32,9 +37,12 @@ export const publications = [
       "A. Pathak"
     ],
     "venue": "Chips (MDPI)",
+    "year": null,
+    "status": "under review",
     "note": "under review; revised after first round"
   },
   {
+    "n": 4,
     "title": "A Hardware Security Review of RISC-V",
     "authors": [
       "J. Mishra",
@@ -43,9 +51,11 @@ export const publications = [
     ],
     "venue": "Lecture Notes in Networks and Systems (ICT4SD), Vol. 2, pp. 409–422, Springer",
     "year": 2025,
+    "status": "Scopus",
     "note": "Scopus"
   },
   {
+    "n": 5,
     "title": "Cache and Speculative Side-Channel Attacks: A Comprehensive Review",
     "authors": [
       "J. Mishra",
@@ -54,9 +64,11 @@ export const publications = [
     ],
     "venue": "Lecture Notes in Networks and Systems (ICT4SD), Vol. 2, pp. 219–233, Springer",
     "year": 2025,
+    "status": "Scopus",
     "note": "Scopus"
   },
   {
+    "n": 6,
     "title": "Memory Security: From Cold Boot Attacks to Side-Channel Defenses",
     "authors": [
       "J. Mishra",
@@ -66,9 +78,11 @@ export const publications = [
     ],
     "venue": "Lecture Notes in Networks and Systems (11th ICTIS), Springer",
     "year": 2026,
+    "status": "accepted",
     "note": "accepted · Scopus"
   },
   {
+    "n": 7,
     "title": "Formal Verification of Software-Managed Cache Coherency for RISC-V Heterogeneous Embedded Systems",
     "authors": [
       "J. Mishra",
@@ -78,9 +92,11 @@ export const publications = [
     ],
     "venue": "Lecture Notes in Networks and Systems, Vol. 1997, pp. 430–442, Springer",
     "year": 2026,
+    "status": "Scopus",
     "note": "Scopus"
   },
   {
+    "n": 8,
     "title": "RV-JOSH: A Hardened Operating System for RISC-V based on Java",
     "authors": [
       "J. Mishra",
@@ -90,9 +106,11 @@ export const publications = [
     ],
     "venue": "Lecture Notes in Networks and Systems (SmartCom), Springer",
     "year": 2026,
+    "status": "accepted",
     "note": "accepted · Scopus"
   },
   {
+    "n": 9,
     "title": "Catching the Set Builder: Hardware Detection of Eviction-Set Construction at the Shared LLC on RISC-V",
     "authors": [
       "J. Mishra",
@@ -103,9 +121,11 @@ export const publications = [
     ],
     "venue": "Communications in Computer and Information Science (COCOLE), Springer",
     "year": 2026,
+    "status": "accepted",
     "note": "accepted · Scopus"
   },
   {
+    "n": 10,
     "title": "The Replacement Policy Is a Side Channel: Closing the Reload+Refresh Leak at the Policy Level on RISC-V",
     "authors": [
       "J. Mishra",
@@ -116,9 +136,11 @@ export const publications = [
     ],
     "venue": "Communications in Computer and Information Science (COCOLE), Springer",
     "year": 2026,
+    "status": "accepted",
     "note": "accepted · Scopus"
   },
   {
+    "n": 11,
     "title": "The Walk Is the Channel: Page-Table-Walker Cache Partitioning for Deterministic Domain Isolation on Out-of-Order RISC-V",
     "authors": [
       "J. Mishra",
@@ -128,9 +150,12 @@ export const publications = [
       "A. Pathak"
     ],
     "venue": "ISED 2026",
+    "year": null,
+    "status": "under review",
     "note": "under review"
   },
   {
+    "n": 12,
     "title": "History Is the Channel: Why Index Coloring Cannot Isolate a History-Based Branch Predictor, and a Warm Per-Domain Fix on Open RISC-V RTL",
     "authors": [
       "J. Mishra",
@@ -140,9 +165,12 @@ export const publications = [
       "A. Pathak"
     ],
     "venue": "ISED 2026",
+    "year": null,
+    "status": "under review",
     "note": "under review"
   },
   {
+    "n": 13,
     "title": "Closing a Spectre-v1 Cache Leak on BOOM with a Per-Domain Guard",
     "authors": [
       "J. Mishra",
@@ -152,9 +180,12 @@ export const publications = [
       "A. Pathak"
     ],
     "venue": "ISED 2026",
+    "year": null,
+    "status": "under review",
     "note": "under review"
   },
   {
+    "n": 14,
     "title": "No-Op or No Security? A Backward-Compatible, Discoverable, Fail-Closed Contract for Security Directives in the RISC-V HINT Encoding Space",
     "authors": [
       "J. Mishra",
@@ -164,6 +195,8 @@ export const publications = [
       "A. Pathak"
     ],
     "venue": "ISED 2026",
+    "year": null,
+    "status": "under review",
     "note": "under review"
   }
-];
+]

@@ -11,3 +11,7 @@ node_modules/
 # OS / editor
 .DS_Store
 Thumbs.db
+
+# generated at build time
+public/og/
+public/research.bib
