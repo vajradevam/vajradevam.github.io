@@ -10,8 +10,8 @@
     ],
     "venue": "Computers (MDPI), Vol. 15, Issue 8, p. 479",
     "year": 2026,
-    "status": "SCI-Q1",
-    "note": "SCI-Q1",
+    "status": "Scopus-Q1",
+    "note": "ESCI (WoS) · JCR Q2, IF 5.2 · Scopus CiteScore Q1 (9.1)",
     "url": "https://www.mdpi.com/2073-431X/15/8/479"
   },
   {
@@ -23,10 +23,10 @@
       "S. Mishra",
       "A. Pathak"
     ],
-    "venue": "Chips (MDPI), Vol. 5, Issue 3, p. 26",
+    "venue": "Chips (MDPI), Vol. 5, Issue 3, p. 25",
     "year": 2026,
-    "status": "SCI-Q2",
-    "note": "SCI-Q2",
+    "status": "Scopus-Q2",
+    "note": "Scopus · ESCI (WoS) · CiteScore Q2 (2.8); no JIF yet",
     "url": "https://www.mdpi.com/2674-0729/5/3/25"
   },
   {
@@ -40,8 +40,8 @@
     ],
     "venue": "Chips (MDPI), Vol. 5, Issue 3, p. 29",
     "year": 2026,
-    "status": "SCI-Q2",
-    "note": "SCI-Q2",
+    "status": "Scopus-Q2",
+    "note": "Scopus · ESCI (WoS) · CiteScore Q2 (2.8); no JIF yet",
     "url": "https://www.mdpi.com/2674-0729/5/3/29"
   },
   {
@@ -55,7 +55,7 @@
     "venue": "Lecture Notes in Networks and Systems (ICT4SD), Vol. 2, pp. 409–422, Springer",
     "year": 2025,
     "status": "Scopus",
-    "note": "Scopus",
+    "note": "Scopus (via Springer LNNS)",
     "url": "https://link.springer.com/chapter/10.1007/978-3-032-06665-7_38"
   },
   {
@@ -69,7 +69,7 @@
     "venue": "Lecture Notes in Networks and Systems (ICT4SD), Vol. 2, pp. 219–233, Springer",
     "year": 2025,
     "status": "Scopus",
-    "note": "Scopus",
+    "note": "Scopus (via Springer LNNS)",
     "url": "https://link.springer.com/chapter/10.1007/978-3-032-06665-7_21"
   },
   {
@@ -84,7 +84,7 @@
     "venue": "Lecture Notes in Networks and Systems (11th ICTIS), Springer",
     "year": 2026,
     "status": "accepted",
-    "note": "accepted · Scopus"
+    "note": "accepted · to appear in Springer LNNS (11th ICTIS)"
   },
   {
     "n": 7,
@@ -98,7 +98,7 @@
     "venue": "Lecture Notes in Networks and Systems, Vol. 1997, pp. 430–442, Springer",
     "year": 2026,
     "status": "Scopus",
-    "note": "Scopus",
+    "note": "Scopus (via Springer LNNS)",
     "url": "https://link.springer.com/chapter/10.1007/978-3-032-27563-9_40"
   },
   {
@@ -113,7 +113,7 @@
     "venue": "Lecture Notes in Networks and Systems (SmartCom), Springer",
     "year": 2026,
     "status": "accepted",
-    "note": "accepted · Scopus",
+    "note": "accepted · to appear in Springer LNNS (SmartCom)",
     "url": "https://link.springer.com/chapter/10.1007/978-3-032-27754-1_36"
   },
   {
@@ -129,7 +129,7 @@
     "venue": "Communications in Computer and Information Science (COCOLE), Springer",
     "year": 2026,
     "status": "accepted",
-    "note": "accepted · Scopus"
+    "note": "accepted · to appear in Springer CCIS (CoCoLe)"
   },
   {
     "n": 10,
@@ -144,7 +144,7 @@
     "venue": "Communications in Computer and Information Science (COCOLE), Springer",
     "year": 2026,
     "status": "accepted",
-    "note": "accepted · Scopus"
+    "note": "accepted · to appear in Springer CCIS (CoCoLe)"
   },
   {
     "n": 11,
@@ -156,10 +156,10 @@
       "L.K. Vashishtha",
       "A. Pathak"
     ],
-    "venue": "ISED 2026",
+    "venue": "ISED 2026 (IEEE)",
     "year": 2026,
     "status": "accepted",
-    "note": "accepted"
+    "note": "accepted · 14th Int. Conf. on Intelligent Systems and Embedded Design; proceedings by IEEE, submitted to IEEE Xplore"
   },
   {
     "n": 12,
@@ -171,10 +171,10 @@
       "L.K. Vashishtha",
       "A. Pathak"
     ],
-    "venue": "ISED 2026",
+    "venue": "ISED 2026 (IEEE)",
     "year": 2026,
     "status": "accepted",
-    "note": "accepted"
+    "note": "accepted · 14th Int. Conf. on Intelligent Systems and Embedded Design; proceedings by IEEE, submitted to IEEE Xplore"
   },
   {
     "n": 13,
@@ -186,10 +186,10 @@
       "L.K. Vashishtha",
       "A. Pathak"
     ],
-    "venue": "ISED 2026",
+    "venue": "ISED 2026 (IEEE)",
     "year": 2026,
     "status": "accepted",
-    "note": "accepted"
+    "note": "accepted · 14th Int. Conf. on Intelligent Systems and Embedded Design; proceedings by IEEE, submitted to IEEE Xplore"
   },
   {
     "n": 14,
@@ -201,10 +201,10 @@
       "L.K. Vashishtha",
       "A. Pathak"
     ],
-    "venue": "ISED 2026",
+    "venue": "ISED 2026 (IEEE)",
     "year": 2026,
     "status": "accepted",
-    "note": "accepted"
+    "note": "accepted · 14th Int. Conf. on Intelligent Systems and Embedded Design; proceedings by IEEE, submitted to IEEE Xplore"
   },
   {
     "n": 15,

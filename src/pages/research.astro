@@ -5,7 +5,7 @@ import patents from '../data/patents.json';
 import publications from '../data/publications.json';
 
 const statuses = [...new Set(publications.map((p) => p.status))];
-const badge = (s: string) => s === 'SCI-Q1' ? 'b-q1' : s === 'SCI-Q2' ? 'b-q2' : /^accepted/i.test(s) ? 'b-acc' : /^under review/i.test(s) ? 'b-rev live' : 'b-scopus';
+const badge = (s: string) => s === 'SCI-Q1' || s === 'Scopus-Q1' ? 'b-q1' : s === 'SCI-Q2' || s === 'Scopus-Q2' ? 'b-q2' : /^accepted/i.test(s) ? 'b-acc' : /^under review/i.test(s) ? 'b-rev live' : 'b-scopus';
 ---
 
 <Page
