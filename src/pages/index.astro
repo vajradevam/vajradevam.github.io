@@ -3,7 +3,6 @@ import Page from '../layouts/Page.astro';
 import Figure from '../components/Figure.astro';
 import Arrow from '../components/Arrow.astro';
 import now from '../data/now.json';
-import skills from '../data/skills.json';
 import projects from '../data/projects.json';
 import publications from '../data/publications.json';
 import patents from '../data/patents.json';
@@ -23,8 +22,6 @@ const layers = [
   { name: 'Transistors', depth: 'L8 · silicon', href: '/research/#experience', hue: 'gray' },
 ];
 
-let pin = 0;
-const pins = skills.flatMap((g) => g.items.map((item) => ({ n: ++pin, group: g.label, item })));
 ---
 <Page nav="home" title={null} description="Aman Pathak - PhD Scholar in computer architecture, hardware security, and low-level systems. RISC-V, side-channel attacks, formal verification." ogImage="/og/home.png">
   <p class="sec-label">VAJRADEVAM-01 · §0 identity</p>
@@ -101,29 +98,7 @@ const pins = skills.flatMap((g) => g.items.map((item) => ({ n: ++pin, group: g.l
     </p>
     <p style="margin-top:1rem">At silicon level · <a href="/research/#publications">{publications.length} publications</a>, <a href="/research/#patents">{patents.length} patents filed</a>, <a href="/research/#experience">full record</a>.</p>
 
-    <h3 class="sec-head" id="skills" style="font-size:1.2rem">Skills · pin-out <a class="anchor" href="#skills" aria-label="Link to Skills">§</a></h3>
-    <Figure no="2" caption="SKILLS-01 · illustrated 36-pin pinout, banks Languages / Systems and Tools / Tools / Core Domains / Advanced Domains.">
-      <picture>
-        <source srcset="/images/skills-pinout.webp" type="image/webp" />
-        <img src="/images/skills-pinout.jpg" alt="Illustrated SKILLS-01 36-pin chip pinout. Left column pins P-01 to P-18, right column P-19 to P-36, grouped into Languages, Systems and Tools, Tools, Core Domains, and Advanced Domains." width="1280" height="853" loading="lazy" style="border:1px solid var(--rule-strong)" />
-      </picture>
-    </Figure>
-    <details>
-      <summary>Tabular listing of all 36 pins</summary>
-      <table class="spec responsive">
-        <caption>Table 4 · Pin listing by bank.</caption>
-        <thead><tr><th scope="col">Pin</th><th scope="col">Bank</th><th scope="col">Signal</th></tr></thead>
-        <tbody>
-          {pins.map((p) => (
-            <tr>
-              <td data-th="Pin" class="addr">P-{String(p.n).padStart(2, '0')}</td>
-              <td data-th="Bank">{p.group}</td>
-              <td data-th="Signal">{p.item}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </details>
+
   </section>
 
   <section aria-label="Latest journal entries">
