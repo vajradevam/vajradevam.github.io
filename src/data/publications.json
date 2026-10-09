@@ -199,5 +199,65 @@
     "year": 2026,
     "status": "accepted",
     "note": "accepted"
+  },
+  {
+    "n": 15,
+    "title": "Near-Miss Retrieval: Contrastive Case Retrieval for Entity Disambiguation in Retrieval-Augmented Generation",
+    "authors": [
+      "J. Mishra",
+      "L.K. Vashishtha",
+      "S.K. Sahay",
+      "S. Mishra",
+      "A. Pathak"
+    ],
+    "venue": "MIKE 2026",
+    "year": null,
+    "status": "under review",
+    "note": "under review"
+  },
+  {
+    "n": 16,
+    "title": "Surprisal Is a Time Series: Prequential Calibration Auditing of Language Models with Zero-Shot Forecasting Foundation Models",
+    "authors": [
+      "J. Mishra",
+      "A. Pathak",
+      "S.K. Sahay",
+      "L.K. Vashishtha",
+      "S. Mishra"
+    ],
+    "venue": "MIKE 2026",
+    "year": null,
+    "status": "under review",
+    "note": "under review"
+  },
+  {
+    "n": 17,
+    "title": "Parametric Knowledge Delta: Measuring, Compressing and Retrieving Knowledge Graphs Against a Language Model's Prior",
+    "authors": [
+      "J. Mishra",
+      "L.K. Vashishtha",
+      "S.K. Sahay",
+      "S. Mishra",
+      "A. Pathak"
+    ],
+    "venue": "MIKE 2026",
+    "year": null,
+    "status": "under review",
+    "note": "under review"
+  },
+  {
+    "n": 18,
+    "title": "Knowledge Certificates: Distribution-Free Guarantees on Which Facts Survive Quantization",
+    "authors": [
+      "J. Mishra",
+      "A. Pathak",
+      "L.K. Vashishtha",
+      "S.K. Sahay",
+      "S. Mishra"
+    ],
+    "venue": "MIKE 2026",
+    "year": null,
+    "status": "under review",
+    "note": "under review"
   }
 ]
