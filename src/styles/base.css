@@ -58,7 +58,7 @@ a:hover { text-decoration-thickness: 2px; }
   font-family: var(--font-mono);
 }
 .doc-bar {
-  max-width: var(--page-max); margin: 0 auto; padding: var(--s2) var(--s4);
+  max-width: var(--page-max); margin: 0 auto; padding: var(--s2) clamp(var(--s4), 5vw, var(--s16));
   display: flex; gap: var(--s4); align-items: baseline; flex-wrap: wrap;
   font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--muted);
@@ -70,7 +70,7 @@ a:hover { text-decoration-thickness: 2px; }
 
 /* ---------- instruction-word navigation ---------- */
 .instr-nav { border-bottom: 1px solid var(--rule-strong); background: var(--paper); }
-.instr-inner { max-width: var(--page-max); margin: 0 auto; padding: var(--s4) var(--s4) var(--s3); }
+.instr-inner { max-width: var(--page-max); margin: 0 auto; padding: var(--s4) clamp(var(--s4), 5vw, var(--s16)) var(--s3); }
 .instr-title {
   font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.14em;
   text-transform: uppercase; color: var(--muted); margin-bottom: var(--s2);
@@ -118,7 +118,7 @@ html[data-theme="dark"] .instr-word li[aria-current="page"] .f-mnemonic { color:
 .instr-word.flash { outline: 2px solid var(--signal-bright); outline-offset: 2px; }
 
 /* ---------- page grid: margin column + main ---------- */
-.page { flex: 1; width: 100%; max-width: var(--page-max); margin: 0 auto; padding: var(--s8) var(--s4) var(--s16); }
+.page { flex: 1; width: 100%; max-width: var(--page-max); margin: 0 auto; padding: var(--s12) clamp(var(--s4), 5vw, var(--s16)) var(--s16); }
 .with-margin { display: grid; grid-template-columns: var(--margin-col) minmax(0, 1fr); gap: var(--s8); align-items: start; }
 .margin-col {
   font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted);
@@ -321,7 +321,7 @@ html[data-theme="dark"] .stack-layer.is-live a, html[data-theme="dark"] .stack-l
 
 /* footer revision block */
 .rev-block { border-top: 1px solid var(--rule-strong); font-family: var(--font-mono); font-size: 0.78rem; }
-.rev-inner { max-width: var(--page-max); margin: 0 auto; padding: var(--s4); display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4); align-items: baseline; }
+.rev-inner { max-width: var(--page-max); margin: 0 auto; padding: var(--s4) clamp(var(--s4), 5vw, var(--s16)); display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4); align-items: baseline; }
 .rev-inner a { color: var(--ink-soft); text-decoration: none; }
 .rev-inner a:hover { color: var(--accent); }
 .rev-inner .rev { color: var(--signal); font-weight: 700; }
