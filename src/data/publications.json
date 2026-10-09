@@ -12,7 +12,8 @@
     "year": 2026,
     "status": "JCR-Q2",
     "note": "ESCI (WoS) · JCR Q2, IF 5.2 (Computers) · Scopus CiteScore Q1 (9.1)",
-    "url": "https://www.mdpi.com/2073-431X/15/8/479"
+    "url": "https://www.mdpi.com/2073-431X/15/8/479",
+    "indexed": "Scopus, ESCI"
   },
   {
     "n": 2,
@@ -27,7 +28,8 @@
     "year": 2026,
     "status": "Scopus-Q2",
     "note": "Scopus · ESCI (WoS) · CiteScore Q2 (2.8); no JIF yet",
-    "url": "https://www.mdpi.com/2674-0729/5/3/25"
+    "url": "https://www.mdpi.com/2674-0729/5/3/25",
+    "indexed": "Scopus, ESCI"
   },
   {
     "n": 3,
@@ -42,7 +44,8 @@
     "year": 2026,
     "status": "Scopus-Q2",
     "note": "Scopus · ESCI (WoS) · CiteScore Q2 (2.8); no JIF yet",
-    "url": "https://www.mdpi.com/2674-0729/5/3/29"
+    "url": "https://www.mdpi.com/2674-0729/5/3/29",
+    "indexed": "Scopus, ESCI"
   },
   {
     "n": 4,
@@ -56,7 +59,8 @@
     "year": 2025,
     "status": "Scopus",
     "note": "Scopus (via Springer LNNS)",
-    "url": "https://link.springer.com/chapter/10.1007/978-3-032-06665-7_38"
+    "url": "https://link.springer.com/chapter/10.1007/978-3-032-06665-7_38",
+    "indexed": "Scopus"
   },
   {
     "n": 5,
@@ -70,7 +74,8 @@
     "year": 2025,
     "status": "Scopus",
     "note": "Scopus (via Springer LNNS)",
-    "url": "https://link.springer.com/chapter/10.1007/978-3-032-06665-7_21"
+    "url": "https://link.springer.com/chapter/10.1007/978-3-032-06665-7_21",
+    "indexed": "Scopus"
   },
   {
     "n": 6,
@@ -84,7 +89,8 @@
     "venue": "Lecture Notes in Networks and Systems (11th ICTIS), Springer",
     "year": 2026,
     "status": "accepted",
-    "note": "accepted · to appear in Springer LNNS (11th ICTIS)"
+    "note": "accepted · to appear in Springer LNNS (11th ICTIS)",
+    "indexed": "To appear, Springer LNNS"
   },
   {
     "n": 7,
@@ -99,7 +105,8 @@
     "year": 2026,
     "status": "Scopus",
     "note": "Scopus (via Springer LNNS)",
-    "url": "https://link.springer.com/chapter/10.1007/978-3-032-27563-9_40"
+    "url": "https://link.springer.com/chapter/10.1007/978-3-032-27563-9_40",
+    "indexed": "Scopus"
   },
   {
     "n": 8,
@@ -114,7 +121,8 @@
     "year": 2026,
     "status": "accepted",
     "note": "accepted · to appear in Springer LNNS (SmartCom)",
-    "url": "https://link.springer.com/chapter/10.1007/978-3-032-27754-1_36"
+    "url": "https://link.springer.com/chapter/10.1007/978-3-032-27754-1_36",
+    "indexed": "To appear, Springer LNNS"
   },
   {
     "n": 9,
@@ -129,7 +137,8 @@
     "venue": "Communications in Computer and Information Science (COCOLE), Springer",
     "year": 2026,
     "status": "accepted",
-    "note": "accepted · to appear in Springer CCIS (CoCoLe)"
+    "note": "accepted · to appear in Springer CCIS (CoCoLe)",
+    "indexed": "To appear, Springer CCIS"
   },
   {
     "n": 10,
@@ -144,7 +153,8 @@
     "venue": "Communications in Computer and Information Science (COCOLE), Springer",
     "year": 2026,
     "status": "accepted",
-    "note": "accepted · to appear in Springer CCIS (CoCoLe)"
+    "note": "accepted · to appear in Springer CCIS (CoCoLe)",
+    "indexed": "To appear, Springer CCIS"
   },
   {
     "n": 11,
@@ -159,7 +169,8 @@
     "venue": "ISED 2026 (IEEE)",
     "year": 2026,
     "status": "accepted",
-    "note": "accepted · 14th Int. Conf. on Intelligent Systems and Embedded Design; proceedings by IEEE, submitted to IEEE Xplore"
+    "note": "accepted · 14th Int. Conf. on Intelligent Systems and Embedded Design; proceedings by IEEE, submitted to IEEE Xplore",
+    "indexed": "To appear, IEEE Xplore"
   },
   {
     "n": 12,
@@ -174,7 +185,8 @@
     "venue": "ISED 2026 (IEEE)",
     "year": 2026,
     "status": "accepted",
-    "note": "accepted · 14th Int. Conf. on Intelligent Systems and Embedded Design; proceedings by IEEE, submitted to IEEE Xplore"
+    "note": "accepted · 14th Int. Conf. on Intelligent Systems and Embedded Design; proceedings by IEEE, submitted to IEEE Xplore",
+    "indexed": "To appear, IEEE Xplore"
   },
   {
     "n": 13,
@@ -189,7 +201,8 @@
     "venue": "ISED 2026 (IEEE)",
     "year": 2026,
     "status": "accepted",
-    "note": "accepted · 14th Int. Conf. on Intelligent Systems and Embedded Design; proceedings by IEEE, submitted to IEEE Xplore"
+    "note": "accepted · 14th Int. Conf. on Intelligent Systems and Embedded Design; proceedings by IEEE, submitted to IEEE Xplore",
+    "indexed": "To appear, IEEE Xplore"
   },
   {
     "n": 14,
@@ -204,7 +217,8 @@
     "venue": "ISED 2026 (IEEE)",
     "year": 2026,
     "status": "accepted",
-    "note": "accepted · 14th Int. Conf. on Intelligent Systems and Embedded Design; proceedings by IEEE, submitted to IEEE Xplore"
+    "note": "accepted · 14th Int. Conf. on Intelligent Systems and Embedded Design; proceedings by IEEE, submitted to IEEE Xplore",
+    "indexed": "To appear, IEEE Xplore"
   },
   {
     "n": 15,
@@ -219,7 +233,8 @@
     "venue": "MIKE 2026",
     "year": null,
     "status": "under review",
-    "note": "under review"
+    "note": "under review",
+    "indexed": "Not yet indexed"
   },
   {
     "n": 16,
@@ -234,7 +249,8 @@
     "venue": "MIKE 2026",
     "year": null,
     "status": "under review",
-    "note": "under review"
+    "note": "under review",
+    "indexed": "Not yet indexed"
   },
   {
     "n": 17,
@@ -249,7 +265,8 @@
     "venue": "MIKE 2026",
     "year": null,
     "status": "under review",
-    "note": "under review"
+    "note": "under review",
+    "indexed": "Not yet indexed"
   },
   {
     "n": 18,
@@ -264,6 +281,7 @@
     "venue": "MIKE 2026",
     "year": null,
     "status": "under review",
-    "note": "under review"
+    "note": "under review",
+    "indexed": "Not yet indexed"
   }
 ]

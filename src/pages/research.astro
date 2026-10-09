@@ -66,7 +66,7 @@ const badge = (s: string) => s === 'SCI-Q1' || s === 'Scopus-Q1' ? 'b-q1' : s ==
       <li data-status={pub.status}>
         <span>
           <span class="rtitle">{pub.url ? <a href={pub.url}>{pub.title}</a> : pub.title}</span><br />
-          <span>{(pub.authors ?? []).map((a, i) => <>{i > 0 ? ', ' : ''}{a === 'A. Pathak' ? <strong>{a}</strong> : <span>{a}</span>}</>)} · {pub.venue}{pub.year ? `, ${pub.year}` : ''}</span>
+          <span>{(pub.authors ?? []).map((a, i) => <>{i > 0 ? ', ' : ''}{a === 'A. Pathak' ? <strong>{a}</strong> : <span>{a}</span>}</>)} · {pub.venue}{pub.year ? `, ${pub.year}` : ''} · Indexing: {pub.indexed}</span>
           {' '}<span class={`badge ${badge(pub.status)}`}>{pub.status}</span>
         </span>
       </li>
