@@ -33,6 +33,6 @@ const { title, heading, sub, description, nav = 'home', ogImage, noindex, margin
       <div class="prose"><slot /></div>
     </div>
   ) : (
-    <div class="prose" style="max-width:var(--measure)"><slot /></div>
+    <div class="prose"><slot /></div>
   )}
 </Base>

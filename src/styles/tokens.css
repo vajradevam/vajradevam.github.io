@@ -31,7 +31,6 @@
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --body-size: 1.125rem; /* 18px */
   --body-lh: 1.65;
-  --measure: 68ch;
   --label-size: 0.78rem;
 
   /* spacing (4px base) */
@@ -40,8 +39,7 @@
 
   /* grid */
   --margin-col: 220px;
-  --main-col: min(68ch, 100%);
-  --page-max: 1200px;
+  --page-max: none;
 
   /* motion: mechanical step/snap, 120–200ms */
   --ease-mech: cubic-bezier(0.3, 0, 0.2, 1);

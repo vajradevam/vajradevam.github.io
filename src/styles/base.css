@@ -125,7 +125,7 @@ html[data-theme="dark"] .instr-word li[aria-current="page"] .f-mnemonic { color:
   position: sticky; top: var(--s4);
 }
 .margin-col .sec-no { color: var(--accent); font-weight: 700; }
-.prose { max-width: var(--measure); min-width: 0; }
+.prose { max-width: none; min-width: 0; }
 .prose > * + * { margin-top: 1.15em; }
 .prose p, .prose li { color: var(--ink); }
 
