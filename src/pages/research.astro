@@ -5,7 +5,7 @@ import patents from '../data/patents.json';
 import publications from '../data/publications.json';
 
 const statuses = [...new Set(publications.map((p) => p.status))];
-const badge = (s: string) => s === 'SCI-Q1' || s === 'Scopus-Q1' ? 'b-q1' : s === 'SCI-Q2' || s === 'Scopus-Q2' || s === 'JCR-Q2' ? 'b-q2' : /^accepted/i.test(s) ? 'b-acc' : /^under review/i.test(s) ? 'b-rev live' : 'b-scopus';
+const badge = (s: string) => /Q1/.test(s) ? 'b-q1' : /Q2/.test(s) ? 'b-q2' : /^to appear/i.test(s) ? 'b-acc' : /^under review/i.test(s) ? 'b-rev live' : 'b-scopus';
 ---
 
 <Page
@@ -66,8 +66,8 @@ const badge = (s: string) => s === 'SCI-Q1' || s === 'Scopus-Q1' ? 'b-q1' : s ==
       <li data-status={pub.status}>
         <span>
           <span class="rtitle">{pub.url ? <a href={pub.url}>{pub.title}</a> : pub.title}</span><br />
-          <span>{(pub.authors ?? []).map((a, i) => <>{i > 0 ? ', ' : ''}{a === 'A. Pathak' ? <strong>{a}</strong> : <span>{a}</span>}</>)} · {pub.venue}{pub.year ? `, ${pub.year}` : ''} · Indexing: {pub.indexed}</span>
-          {' '}<span class={`badge ${badge(pub.status)}`}>{pub.status}</span>
+          <span>{(pub.authors ?? []).map((a, i) => <>{i > 0 ? ', ' : ''}{a === 'A. Pathak' ? <strong>{a}</strong> : <span>{a}</span>}</>)} · {pub.venue}{pub.year ? `, ${pub.year}` : ''}</span>
+          {' '}<span class={`badge ${badge(pub.indexed)}`}>{pub.indexed}</span>
         </span>
       </li>
     ))}

@@ -13,7 +13,7 @@
     "status": "JCR-Q2",
     "note": "ESCI (WoS) · JCR Q2, IF 5.2 (Computers) · Scopus CiteScore Q1 (9.1)",
     "url": "https://www.mdpi.com/2073-431X/15/8/479",
-    "indexed": "Scopus, ESCI"
+    "indexed": "Scopus Q1, ESCI Q2"
   },
   {
     "n": 2,
@@ -29,7 +29,7 @@
     "status": "Scopus-Q2",
     "note": "Scopus · ESCI (WoS) · CiteScore Q2 (2.8); no JIF yet",
     "url": "https://www.mdpi.com/2674-0729/5/3/25",
-    "indexed": "Scopus, ESCI"
+    "indexed": "Scopus Q2, ESCI"
   },
   {
     "n": 3,
@@ -45,7 +45,7 @@
     "status": "Scopus-Q2",
     "note": "Scopus · ESCI (WoS) · CiteScore Q2 (2.8); no JIF yet",
     "url": "https://www.mdpi.com/2674-0729/5/3/29",
-    "indexed": "Scopus, ESCI"
+    "indexed": "Scopus Q2, ESCI"
   },
   {
     "n": 4,
@@ -90,7 +90,7 @@
     "year": 2026,
     "status": "accepted",
     "note": "accepted · to appear in Springer LNNS (11th ICTIS)",
-    "indexed": "To appear, Springer LNNS"
+    "indexed": "To appear · LNNS"
   },
   {
     "n": 7,
@@ -122,7 +122,7 @@
     "status": "accepted",
     "note": "accepted · to appear in Springer LNNS (SmartCom)",
     "url": "https://link.springer.com/chapter/10.1007/978-3-032-27754-1_36",
-    "indexed": "To appear, Springer LNNS"
+    "indexed": "To appear · LNNS"
   },
   {
     "n": 9,
@@ -138,7 +138,7 @@
     "year": 2026,
     "status": "accepted",
     "note": "accepted · to appear in Springer CCIS (CoCoLe)",
-    "indexed": "To appear, Springer CCIS"
+    "indexed": "To appear · CCIS"
   },
   {
     "n": 10,
@@ -154,7 +154,7 @@
     "year": 2026,
     "status": "accepted",
     "note": "accepted · to appear in Springer CCIS (CoCoLe)",
-    "indexed": "To appear, Springer CCIS"
+    "indexed": "To appear · CCIS"
   },
   {
     "n": 11,
@@ -170,7 +170,7 @@
     "year": 2026,
     "status": "accepted",
     "note": "accepted · 14th Int. Conf. on Intelligent Systems and Embedded Design; proceedings by IEEE, submitted to IEEE Xplore",
-    "indexed": "To appear, IEEE Xplore"
+    "indexed": "To appear · IEEE Xplore"
   },
   {
     "n": 12,
@@ -186,7 +186,7 @@
     "year": 2026,
     "status": "accepted",
     "note": "accepted · 14th Int. Conf. on Intelligent Systems and Embedded Design; proceedings by IEEE, submitted to IEEE Xplore",
-    "indexed": "To appear, IEEE Xplore"
+    "indexed": "To appear · IEEE Xplore"
   },
   {
     "n": 13,
@@ -202,7 +202,7 @@
     "year": 2026,
     "status": "accepted",
     "note": "accepted · 14th Int. Conf. on Intelligent Systems and Embedded Design; proceedings by IEEE, submitted to IEEE Xplore",
-    "indexed": "To appear, IEEE Xplore"
+    "indexed": "To appear · IEEE Xplore"
   },
   {
     "n": 14,
@@ -218,7 +218,7 @@
     "year": 2026,
     "status": "accepted",
     "note": "accepted · 14th Int. Conf. on Intelligent Systems and Embedded Design; proceedings by IEEE, submitted to IEEE Xplore",
-    "indexed": "To appear, IEEE Xplore"
+    "indexed": "To appear · IEEE Xplore"
   },
   {
     "n": 15,
@@ -234,7 +234,7 @@
     "year": null,
     "status": "under review",
     "note": "under review",
-    "indexed": "Not yet indexed"
+    "indexed": "Under review"
   },
   {
     "n": 16,
@@ -250,7 +250,7 @@
     "year": null,
     "status": "under review",
     "note": "under review",
-    "indexed": "Not yet indexed"
+    "indexed": "Under review"
   },
   {
     "n": 17,
@@ -266,7 +266,7 @@
     "year": null,
     "status": "under review",
     "note": "under review",
-    "indexed": "Not yet indexed"
+    "indexed": "Under review"
   },
   {
     "n": 18,
@@ -282,6 +282,6 @@
     "year": null,
     "status": "under review",
     "note": "under review",
-    "indexed": "Not yet indexed"
+    "indexed": "Under review"
   }
 ]
