@@ -11,7 +11,8 @@
     "venue": "Computers (MDPI), Vol. 15, Issue 8, p. 479",
     "year": 2026,
     "status": "SCI-Q1",
-    "note": "SCI-Q1"
+    "note": "SCI-Q1",
+    "url": "https://www.mdpi.com/2073-431X/15/8/479"
   },
   {
     "n": 2,
@@ -25,7 +26,8 @@
     "venue": "Chips (MDPI), Vol. 5, Issue 3, p. 26",
     "year": 2026,
     "status": "SCI-Q2",
-    "note": "SCI-Q2"
+    "note": "SCI-Q2",
+    "url": "https://www.mdpi.com/2674-0729/5/3/25"
   },
   {
     "n": 3,
@@ -53,7 +55,8 @@
     "venue": "Lecture Notes in Networks and Systems (ICT4SD), Vol. 2, pp. 409–422, Springer",
     "year": 2025,
     "status": "Scopus",
-    "note": "Scopus"
+    "note": "Scopus",
+    "url": "https://link.springer.com/chapter/10.1007/978-3-032-06665-7_38"
   },
   {
     "n": 5,
@@ -66,7 +69,8 @@
     "venue": "Lecture Notes in Networks and Systems (ICT4SD), Vol. 2, pp. 219–233, Springer",
     "year": 2025,
     "status": "Scopus",
-    "note": "Scopus"
+    "note": "Scopus",
+    "url": "https://link.springer.com/chapter/10.1007/978-3-032-06665-7_21"
   },
   {
     "n": 6,
@@ -94,7 +98,8 @@
     "venue": "Lecture Notes in Networks and Systems, Vol. 1997, pp. 430–442, Springer",
     "year": 2026,
     "status": "Scopus",
-    "note": "Scopus"
+    "note": "Scopus",
+    "url": "https://link.springer.com/chapter/10.1007/978-3-032-27563-9_40"
   },
   {
     "n": 8,
@@ -108,7 +113,8 @@
     "venue": "Lecture Notes in Networks and Systems (SmartCom), Springer",
     "year": 2026,
     "status": "accepted",
-    "note": "accepted · Scopus"
+    "note": "accepted · Scopus",
+    "url": "https://link.springer.com/chapter/10.1007/978-3-032-27754-1_36"
   },
   {
     "n": 9,
