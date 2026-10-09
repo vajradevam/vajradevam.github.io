@@ -277,8 +277,8 @@ html.js .tabset { display: flex; gap: 0; font-family: var(--font-mono); font-siz
 .layer-row .litems a { margin-right: var(--s3); }
 
 /* timing diagram */
-.timing { border: 1px solid var(--rule-strong); padding: var(--s4); overflow-x: auto; }
-.timing svg { min-width: 34rem; width: 100%; height: auto; }
+.timing { border: 1px solid var(--rule-strong); padding: var(--s4); }
+.timing svg { display: block; width: 100%; height: auto; }
 
 /* references */
 .ref-list { list-style: none; counter-reset: ref; font-size: 1rem; }
