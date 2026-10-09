@@ -8,8 +8,38 @@ import projects from '../data/projects.json';
 import publications from '../data/publications.json';
 import patents from '../data/patents.json';
 import { getSortedPosts, formatDate } from '../lib/posts';
+import katex from 'katex';
 
 const latest = (await getSortedPosts()).slice(0, 3);
+
+// SKILLS-01 pinout: 36 signals in bank order, left column P-01..P-18,
+// right column P-19..P-36, rendered from LaTeX at build time (no client JS).
+const texEsc = (s: string) => s.replace(/([\\{}$&%#_^~])/g, '\\$1');
+const flat = skills.flatMap((g) => g.items.map((item) => ({ group: g.label, item })));
+const pinId = (n: number) => `P-${String(n).padStart(2, '0')}`;
+function pinArray(items: { group: string; item: string }[], start: number, flip: boolean) {
+  return items
+    .map((p, i) => {
+      const cells = flip
+        ? `\\text{${texEsc(p.item)}} & \\text{${pinId(start + i)}}`
+        : `\\text{${pinId(start + i)}} & \\text{${texEsc(p.item)}}`;
+      const rule = i > 0 && p.group !== items[i - 1].group ? ' \\hline' : '';
+      return `${cells} \\\\${rule}`;
+    })
+    .join('\n');
+}
+const leftHalf = flat.slice(0, 18);
+const rightHalf = flat.slice(18);
+const pinoutTex = `\\begin{array}{rl}
+${pinArray(leftHalf, 1, false)}
+\\end{array}
+\\qquad
+\\boxed{\\begin{array}{c} \\text{SKILLS-01} \\\\ \\text{36-pin} \\\\ \\text{VAJRADEVAM} \\end{array}}
+\\qquad
+\\begin{array}{lr}
+${pinArray(rightHalf, 19, true)}
+\\end{array}`;
+const pinoutHtml = katex.renderToString(pinoutTex, { displayMode: true, throwOnError: false });
 
 const layers = [
   { name: 'Web apps', depth: 'L0 · user', href: '/projects/#web', hue: 'yellow' },
@@ -26,7 +56,6 @@ const layers = [
 let pin = 0;
 const pins = skills.flatMap((g) => g.items.map((item) => ({ n: ++pin, group: g.label, item })));
 ---
-
 <Page nav="home" title={null} description="Aman Pathak - PhD Scholar in computer architecture, hardware security, and low-level systems. RISC-V, side-channel attacks, formal verification." ogImage="/og/home.png">
   <p class="sec-label">VAJRADEVAM-01 · §0 identity</p>
   <h1 style="font-size:1.35rem;max-width:40ch;font-weight:700">Aman Pathak · PhD Scholar, hardware security · RISC-V · low-level software.</h1>
@@ -103,19 +132,26 @@ const pins = skills.flatMap((g) => g.items.map((item) => ({ n: ++pin, group: g.l
     <p style="margin-top:1rem">At silicon level · <a href="/research/#publications">{publications.length} publications</a>, <a href="/research/#patents">{patents.length} patents filed</a>, <a href="/research/#experience">full record</a>.</p>
 
     <h3 class="sec-head" id="skills" style="font-size:1.2rem">Skills · pin-out <a class="anchor" href="#skills" aria-label="Link to Skills">§</a></h3>
-    <table class="spec responsive">
-      <caption>Table 4 · Pin-out, grouped by bank · Languages / Systems / Domains.</caption>
-      <thead><tr><th scope="col">Pin</th><th scope="col">Bank</th><th scope="col">Signal</th></tr></thead>
-      <tbody>
-        {pins.map((p) => (
-          <tr>
-            <td data-th="Pin" class="addr">P-{String(p.n).padStart(2, '0')}</td>
-            <td data-th="Bank">{p.group}</td>
-            <td data-th="Signal">{p.item}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <link rel="stylesheet" href="/katex.css" slot="head" />
+    <Figure no="2" caption="SKILLS-01 · 36-pin pinout, banks Languages / Systems / Domains. Typeset from LaTeX at build time.">
+      <div set:html={pinoutHtml} role="img" aria-label="Pinout diagram SKILLS-01. Left column pins P-01 to P-18, right column P-19 to P-36, grouped by bank." />
+    </Figure>
+    <details>
+      <summary>Tabular listing of all 36 pins</summary>
+      <table class="spec responsive">
+        <caption>Table 4 · Pin listing by bank.</caption>
+        <thead><tr><th scope="col">Pin</th><th scope="col">Bank</th><th scope="col">Signal</th></tr></thead>
+        <tbody>
+          {pins.map((p) => (
+            <tr>
+              <td data-th="Pin" class="addr">P-{String(p.n).padStart(2, '0')}</td>
+              <td data-th="Bank">{p.group}</td>
+              <td data-th="Signal">{p.item}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </details>
   </section>
 
   <section aria-label="Latest journal entries">

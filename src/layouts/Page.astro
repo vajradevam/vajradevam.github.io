@@ -17,6 +17,7 @@ const { title, heading, sub, description, nav = 'home', ogImage, noindex, margin
 ---
 
 <Base title={title} description={description} nav={nav} ogImage={ogImage} noindex={noindex}>
+  <slot name="head" slot="head" />
   {heading && (
     <header style="margin-bottom:2rem">
       <div class="sec-label">§ {heading}</div>
