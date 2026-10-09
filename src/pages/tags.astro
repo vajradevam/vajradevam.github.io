@@ -1,6 +1,7 @@
 ---
 import Page from '../layouts/Page.astro';
-import { getSortedPosts, getAllTags, formatDate, slugify } from '../lib/posts';
+import Tag from '../components/Tag.astro';
+import { getSortedPosts, getAllTags, formatDate } from '../lib/posts';
 
 const posts = await getSortedPosts();
 const tags = await getAllTags();
@@ -11,31 +12,22 @@ for (const { tag } of tags) {
 }
 ---
 
-<Page nav="blog" title="Tags" heading="Tags" sub="Browse posts by topic.">
-  {tags.length === 0 ? (
-    <p class="gh-loading">No tags yet.</p>
-  ) : (
-    <>
-      <div class="tag-cloud">
-        {tags.map(({ tag, count }) => (
-          <a class="tag" href={`#${slugify(tag)}`}>#{tag} <span style="color:var(--muted)">({count})</span></a>
-        ))}
-      </div>
-
-      {tags.map(({ tag }) => (
-        <section class="section" id={slugify(tag)}>
-          <h2 class="year">#{tag}</h2>
-          {(postsByTag.get(tag) ?? []).map((post) => (
-            <div class="post-entry">
-              <div class="post-entry-head">
-                <a href={`/blog/${post.id}/`}>{post.data.title}</a>
-                <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
-              </div>
-              {post.data.description && <p class="post-entry-desc">{post.data.description}</p>}
-            </div>
-          ))}
-        </section>
+<Page nav="blog" title="Tags" heading="Tags" sub="Index of topics. Anchors (#tag) from the old site keep working.">
+  <div class="controls" style="font-size:0.85rem">
+    {tags.map(({ tag }) => <Tag tag={tag} />)}
+  </div>
+  {tags.map(({ tag, count }) => (
+    <section id={tag.toLowerCase().replace(/[^a-z0-9]+/g, '-')} aria-label={`Posts tagged ${tag}`}>
+      <h2 class="year-rule">#{tag} · {count}</h2>
+      {(postsByTag.get(tag) ?? []).map((post) => (
+        <div class="entry">
+          <span class="eno"><time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time></span>
+          <div>
+            <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
+            {post.data.description && <p class="esummary">{post.data.description}</p>}
+          </div>
+        </div>
       ))}
-    </>
-  )}
+    </section>
+  ))}
 </Page>

@@ -1,0 +1,287 @@
+[
+  {
+    "n": 1,
+    "title": "ARCHER: A Cycle-Accurate RISC-V Emulator for Microarchitectural Side-Channel and Memory-Encryption Research",
+    "authors": [
+      "J. Mishra",
+      "S.K. Sahay",
+      "S. Mishra",
+      "A. Pathak"
+    ],
+    "venue": "Computers (MDPI), Vol. 15, Issue 8, p. 479",
+    "year": 2026,
+    "status": "JCR-Q2",
+    "note": "ESCI (WoS) · JCR Q2, IF 5.2 (Computers) · Scopus CiteScore Q1 (9.1)",
+    "url": "https://www.mdpi.com/2073-431X/15/8/479",
+    "indexed": "Scopus Q1, ESCI Q2"
+  },
+  {
+    "n": 2,
+    "title": "PACE: A Page-Adaptive, Cache-Anchored Memory-Encryption Engine for RISC-V with Formally-Verified nth-Order DPA Resistance",
+    "authors": [
+      "J. Mishra",
+      "S.K. Sahay",
+      "S. Mishra",
+      "A. Pathak"
+    ],
+    "venue": "Chips (MDPI), Vol. 5, Issue 3, p. 25",
+    "year": 2026,
+    "status": "Scopus-Q2",
+    "note": "Scopus · ESCI (WoS) · CiteScore Q2 (2.8); no JIF yet",
+    "url": "https://www.mdpi.com/2674-0729/5/3/25",
+    "indexed": "Scopus Q2, ESCI"
+  },
+  {
+    "n": 3,
+    "title": "Novel Microarchitectural Side-Channel Attacks on Open-Source RISC-V Cores",
+    "authors": [
+      "J. Mishra",
+      "S.K. Sahay",
+      "S. Mishra",
+      "A. Pathak"
+    ],
+    "venue": "Chips (MDPI), Vol. 5, Issue 3, p. 29",
+    "year": 2026,
+    "status": "Scopus-Q2",
+    "note": "Scopus · ESCI (WoS) · CiteScore Q2 (2.8); no JIF yet",
+    "url": "https://www.mdpi.com/2674-0729/5/3/29",
+    "indexed": "Scopus Q2, ESCI"
+  },
+  {
+    "n": 4,
+    "title": "A Hardware Security Review of RISC-V",
+    "authors": [
+      "J. Mishra",
+      "S.K. Sahay",
+      "A. Pathak"
+    ],
+    "venue": "Lecture Notes in Networks and Systems (ICT4SD), Vol. 2, pp. 409–422, Springer",
+    "year": 2025,
+    "status": "Scopus",
+    "note": "Scopus (via Springer LNNS)",
+    "url": "https://link.springer.com/chapter/10.1007/978-3-032-06665-7_38",
+    "indexed": "Scopus"
+  },
+  {
+    "n": 5,
+    "title": "Cache and Speculative Side-Channel Attacks: A Comprehensive Review",
+    "authors": [
+      "J. Mishra",
+      "S.K. Sahay",
+      "A. Pathak"
+    ],
+    "venue": "Lecture Notes in Networks and Systems (ICT4SD), Vol. 2, pp. 219–233, Springer",
+    "year": 2025,
+    "status": "Scopus",
+    "note": "Scopus (via Springer LNNS)",
+    "url": "https://link.springer.com/chapter/10.1007/978-3-032-06665-7_21",
+    "indexed": "Scopus"
+  },
+  {
+    "n": 6,
+    "title": "Memory Security: From Cold Boot Attacks to Side-Channel Defenses",
+    "authors": [
+      "J. Mishra",
+      "S.K. Sahay",
+      "S. Mishra",
+      "A. Pathak"
+    ],
+    "venue": "Lecture Notes in Networks and Systems (11th ICTIS), Springer",
+    "year": 2026,
+    "status": "accepted",
+    "note": "accepted · to appear in Springer LNNS (11th ICTIS)",
+    "indexed": "To appear · LNNS"
+  },
+  {
+    "n": 7,
+    "title": "Formal Verification of Software-Managed Cache Coherency for RISC-V Heterogeneous Embedded Systems",
+    "authors": [
+      "J. Mishra",
+      "S.K. Sahay",
+      "S. Mishra",
+      "A. Pathak"
+    ],
+    "venue": "Lecture Notes in Networks and Systems, Vol. 1997, pp. 430–442, Springer",
+    "year": 2026,
+    "status": "Scopus",
+    "note": "Scopus (via Springer LNNS)",
+    "url": "https://link.springer.com/chapter/10.1007/978-3-032-27563-9_40",
+    "indexed": "Scopus"
+  },
+  {
+    "n": 8,
+    "title": "RV-JOSH: A Hardened Operating System for RISC-V based on Java",
+    "authors": [
+      "J. Mishra",
+      "S.K. Sahay",
+      "S. Mishra",
+      "A. Pathak"
+    ],
+    "venue": "Lecture Notes in Networks and Systems (SmartCom), Springer",
+    "year": 2026,
+    "status": "accepted",
+    "note": "accepted · to appear in Springer LNNS (SmartCom)",
+    "url": "https://link.springer.com/chapter/10.1007/978-3-032-27754-1_36",
+    "indexed": "To appear · LNNS"
+  },
+  {
+    "n": 9,
+    "title": "Catching the Set Builder: Hardware Detection of Eviction-Set Construction at the Shared LLC on RISC-V",
+    "authors": [
+      "J. Mishra",
+      "S.K. Sahay",
+      "S. Mishra",
+      "L.K. Vashishtha",
+      "A. Pathak"
+    ],
+    "venue": "Communications in Computer and Information Science (COCOLE), Springer",
+    "year": 2026,
+    "status": "accepted",
+    "note": "accepted · to appear in Springer CCIS (CoCoLe)",
+    "indexed": "To appear · CCIS"
+  },
+  {
+    "n": 10,
+    "title": "The Replacement Policy Is a Side Channel: Closing the Reload+Refresh Leak at the Policy Level on RISC-V",
+    "authors": [
+      "J. Mishra",
+      "S.K. Sahay",
+      "S. Mishra",
+      "L.K. Vashishtha",
+      "A. Pathak"
+    ],
+    "venue": "Communications in Computer and Information Science (COCOLE), Springer",
+    "year": 2026,
+    "status": "accepted",
+    "note": "accepted · to appear in Springer CCIS (CoCoLe)",
+    "indexed": "To appear · CCIS"
+  },
+  {
+    "n": 11,
+    "title": "The Walk Is the Channel: Page-Table-Walker Cache Partitioning for Deterministic Domain Isolation on Out-of-Order RISC-V",
+    "authors": [
+      "J. Mishra",
+      "S.K. Sahay",
+      "S. Mishra",
+      "L.K. Vashishtha",
+      "A. Pathak"
+    ],
+    "venue": "ISED 2026 (IEEE)",
+    "year": 2026,
+    "status": "accepted",
+    "note": "accepted · 14th Int. Conf. on Intelligent Systems and Embedded Design; proceedings by IEEE, submitted to IEEE Xplore",
+    "indexed": "To appear · IEEE Xplore"
+  },
+  {
+    "n": 12,
+    "title": "History Is the Channel: Why Index Coloring Cannot Isolate a History-Based Branch Predictor, and a Warm Per-Domain Fix on Open RISC-V RTL",
+    "authors": [
+      "J. Mishra",
+      "S.K. Sahay",
+      "S. Mishra",
+      "L.K. Vashishtha",
+      "A. Pathak"
+    ],
+    "venue": "ISED 2026 (IEEE)",
+    "year": 2026,
+    "status": "accepted",
+    "note": "accepted · 14th Int. Conf. on Intelligent Systems and Embedded Design; proceedings by IEEE, submitted to IEEE Xplore",
+    "indexed": "To appear · IEEE Xplore"
+  },
+  {
+    "n": 13,
+    "title": "Closing a Spectre-v1 Cache Leak on BOOM with a Per-Domain Guard",
+    "authors": [
+      "J. Mishra",
+      "S.K. Sahay",
+      "S. Mishra",
+      "L.K. Vashishtha",
+      "A. Pathak"
+    ],
+    "venue": "ISED 2026 (IEEE)",
+    "year": 2026,
+    "status": "accepted",
+    "note": "accepted · 14th Int. Conf. on Intelligent Systems and Embedded Design; proceedings by IEEE, submitted to IEEE Xplore",
+    "indexed": "To appear · IEEE Xplore"
+  },
+  {
+    "n": 14,
+    "title": "No-Op or No Security? A Backward-Compatible, Discoverable, Fail-Closed Contract for Security Directives in the RISC-V HINT Encoding Space",
+    "authors": [
+      "J. Mishra",
+      "S.K. Sahay",
+      "S. Mishra",
+      "L.K. Vashishtha",
+      "A. Pathak"
+    ],
+    "venue": "ISED 2026 (IEEE)",
+    "year": 2026,
+    "status": "accepted",
+    "note": "accepted · 14th Int. Conf. on Intelligent Systems and Embedded Design; proceedings by IEEE, submitted to IEEE Xplore",
+    "indexed": "To appear · IEEE Xplore"
+  },
+  {
+    "n": 15,
+    "title": "Near-Miss Retrieval: Contrastive Case Retrieval for Entity Disambiguation in Retrieval-Augmented Generation",
+    "authors": [
+      "J. Mishra",
+      "L.K. Vashishtha",
+      "S.K. Sahay",
+      "S. Mishra",
+      "A. Pathak"
+    ],
+    "venue": "MIKE 2026",
+    "year": null,
+    "status": "under review",
+    "note": "under review",
+    "indexed": "Under review"
+  },
+  {
+    "n": 16,
+    "title": "Surprisal Is a Time Series: Prequential Calibration Auditing of Language Models with Zero-Shot Forecasting Foundation Models",
+    "authors": [
+      "J. Mishra",
+      "A. Pathak",
+      "S.K. Sahay",
+      "L.K. Vashishtha",
+      "S. Mishra"
+    ],
+    "venue": "MIKE 2026",
+    "year": null,
+    "status": "under review",
+    "note": "under review",
+    "indexed": "Under review"
+  },
+  {
+    "n": 17,
+    "title": "Parametric Knowledge Delta: Measuring, Compressing and Retrieving Knowledge Graphs Against a Language Model's Prior",
+    "authors": [
+      "J. Mishra",
+      "L.K. Vashishtha",
+      "S.K. Sahay",
+      "S. Mishra",
+      "A. Pathak"
+    ],
+    "venue": "MIKE 2026",
+    "year": null,
+    "status": "under review",
+    "note": "under review",
+    "indexed": "Under review"
+  },
+  {
+    "n": 18,
+    "title": "Knowledge Certificates: Distribution-Free Guarantees on Which Facts Survive Quantization",
+    "authors": [
+      "J. Mishra",
+      "A. Pathak",
+      "L.K. Vashishtha",
+      "S.K. Sahay",
+      "S. Mishra"
+    ],
+    "venue": "MIKE 2026",
+    "year": null,
+    "status": "under review",
+    "note": "under review",
+    "indexed": "Under review"
+  }
+]

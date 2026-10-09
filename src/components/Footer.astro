@@ -1,14 +1,20 @@
 ---
 import { site } from '../data/site';
-const year = new Date().getFullYear();
 ---
 
-<footer class="site-footer">
-  <div class="footer-inner">
-    <a href="/blog/">blog</a>
-    <a href={site.github} target="_blank" rel="noopener">github</a>
-    <a href={site.email}>email</a>
+<footer class="rev-block">
+  <div class="rev-inner">
+    <span class="rev">Rev 2026.10</span>
+    <span>built with Astro</span>
+    <a href={site.github} target="_blank" rel="noopener">source on GitHub</a>
     <a href="/rss.xml">rss</a>
-    <span class="footer-meta">built by {site.author} · © {year}</span>
+    <a href={site.email}>email</a>
+    <a href="/colophon/">colophon</a>
+    <span class="meta">Aman Pathak · PhD Scholar, BITS Pilani Goa · CC BY 4.0 prose · MIT code · © 2026</span>
   </div>
+  <div class="corner-controls" role="group" aria-label="Display controls">
+    <button type="button" id="themeToggle" aria-label="Toggle theme, currently following system" title="Toggle theme">theme</button>
+    <button type="button" id="bytesToggle" aria-pressed="false" aria-label="View the bytes (hex dump)" title="View the bytes · Shift+B">bytes</button>
+  </div>
+  <p id="bytesStatus" aria-live="polite" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden"></p>
 </footer>

@@ -1,0 +1,10 @@
+---
+interface Props { n: string | number; id: string; }
+const { n, id } = Astro.props;
+---
+
+<span class="sidenote-wrap">
+  <label class="sn-label" for={id} aria-hidden="true"><sup>[{n}]</sup></label>
+  <input class="sn-toggle" type="checkbox" id={id} />
+  <span class="sn-inline" role="note"><span class="sn-no">[{n}]</span> <slot /></span>
+</span>

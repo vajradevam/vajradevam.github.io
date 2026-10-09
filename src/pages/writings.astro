@@ -1,25 +1,30 @@
 ---
 import Page from '../layouts/Page.astro';
+import Arrow from '../components/Arrow.astro';
 import fs from 'node:fs';
 import path from 'node:path';
 
 function titleFromName(name: string): string {
-  return name
-    .replace(/\.pdf$/i, '')
-    .replace(/[-_]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+  return name.replace(/\.pdf$/i, '').replace(/[-_]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+function fmtSize(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
+  return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 }
 
-// Build-time directory read — no list.json, no GitHub Action, no API fallback.
 const writingsDir = path.join(process.cwd(), 'public', 'writings');
-let writings: { file: string; title: string }[] = [];
+let writings: { file: string; title: string; size: string }[] = [];
 try {
   writings = fs
     .readdirSync(writingsDir)
     .filter((f) => f.toLowerCase().endsWith('.pdf'))
     .sort((a, b) => a.localeCompare(b))
-    .map((file) => ({ file, title: titleFromName(file) }));
+    .map((file) => ({
+      file,
+      title: titleFromName(file),
+      size: fmtSize(fs.statSync(path.join(writingsDir, file)).size),
+    }));
 } catch {
   writings = [];
 }
@@ -29,48 +34,20 @@ try {
   nav="writings"
   title="Writings"
   heading="Writings"
-  sub={`${writings.length} writing${writings.length !== 1 ? 's' : ''}`}
-  description="Publications, books, and writings by Aman Pathak."
+  sub={`Library shelf · ${writings.length} volume${writings.length !== 1 ? 's' : ''}`}
+  description="Longer writings by Aman Pathak - systems, thesis, models."
+  ogImage="/og/writings.png"
 >
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="search writings…" autocomplete="off" />
-  </div>
-
-  <div class="writings-list" id="writingsList">
-    {writings.map((w) => (
-      <div class="writing-item" data-title={w.title.toLowerCase()}>
-        <div class="writing-title">
-          <a href={`/writings/${encodeURIComponent(w.file)}`} target="_blank">{w.title}</a>
-        </div>
-        <a class="writing-link" href={`/writings/${encodeURIComponent(w.file)}`} target="_blank">open PDF</a>
-      </div>
+  <div class="shelf">
+    {writings.map((w, i) => (
+      <article class="spine vertical" aria-label={`${w.title}, PDF, ${w.size}`}>
+        <div class="stitle">{w.title}</div>
+        <div class="smeta">Vol. {String(i + 1).padStart(2, '0')} · PDF · {w.size}</div>
+        <a href={`/writings/${encodeURIComponent(w.file)}`} target="_blank" rel="noopener">open PDF <Arrow dir="up-right" /></a>
+      </article>
     ))}
   </div>
-
-  <div class="writings-empty" id="writingsEmpty">
-    <p>no writings match your search</p>
-  </div>
-
-  <script is:inline>
-    (function () {
-      var input = document.getElementById('searchInput');
-      var items = [].slice.call(document.querySelectorAll('#writingsList .writing-item'));
-      var empty = document.getElementById('writingsEmpty');
-      var countEl = document.querySelector('.page-header .sub');
-      if (!input) return;
-      function render() {
-        var q = (input.value || '').toLowerCase().trim();
-        var visible = 0;
-        items.forEach(function (el) {
-          var t = el.getAttribute('data-title') || '';
-          var match = !q || t.indexOf(q) > -1;
-          el.style.display = match ? '' : 'none';
-          if (match) visible++;
-        });
-        if (empty) empty.style.display = visible === 0 ? 'block' : 'none';
-        if (countEl) countEl.textContent = visible + ' writing' + (visible !== 1 ? 's' : '');
-      }
-      input.addEventListener('input', render);
-    })();
-  </script>
+  <p style="margin-top:2rem;font-family:var(--font-mono);font-size:0.78rem;color:var(--muted)">
+    Shelf order is alphabetical by filename. New PDFs dropped into <code>public/writings/</code> appear here automatically at build time.
+  </p>
 </Page>

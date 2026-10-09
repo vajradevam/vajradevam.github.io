@@ -1,7 +1,9 @@
-export const experience = [
+[
   {
     "role": "PhD Scholar",
-    "date": "2026-present",
+    "date": "2026–present",
+    "start": 2026.0,
+    "end": null,
     "org": "BITS Pilani KK Birla Goa Campus - CSIS Dept, Hardware Security & Computer Architecture",
     "bullets": [
       "Hardware security of RISC-V architectures, side-channel attack mitigation, and formal verification of cache coherency protocols",
@@ -11,7 +13,9 @@ export const experience = [
   },
   {
     "role": "Undergraduate Researcher",
-    "date": "May-Aug 2025",
+    "date": "May–Aug 2025",
+    "start": 2025.33,
+    "end": 2025.62,
     "org": "BITS Pilani / ENineHQ Technologies - Hardware Security & Malware Analysis",
     "bullets": [
       "Hardware security of RISC-V architectures, side-channel attack mitigation (masking, hiding, dual-rail logic), cryptographic implementations",
@@ -21,11 +25,13 @@ export const experience = [
   },
   {
     "role": "Undergraduate Researcher",
-    "date": "Feb 2023-Aug 2024",
+    "date": "Feb 2023–Aug 2024",
+    "start": 2023.08,
+    "end": 2024.62,
     "org": "KIIT University - RF & Antenna Systems",
     "bullets": [
       "Designed Ku/X-band microstrip patch antennas in CST Studio for THz/GHz RF communication",
       "Built Python-based GUI for ASCII data preprocessing; deep learning for antenna parameter optimisation"
     ]
   }
-];
+]

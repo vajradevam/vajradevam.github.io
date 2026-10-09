@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import Figure from '../components/Figure.astro';
+import Tag from '../components/Tag.astro';
+import Arrow from '../components/Arrow.astro';
+---
+
+<Base title="Styleguide" nav="home" noindex={true}>
+  <p class="sec-label">Internal · excluded from sitemap and nav</p>
+  <h1>Styleguide</h1>
+
+  <h2 class="sec-head">Palette</h2>
+  <div style="display:flex;gap:0.5rem;flex-wrap:wrap;font-family:var(--font-mono);font-size:0.75rem;margin-bottom:1rem">
+    {['brown', 'red', 'orange', 'yellow', 'green', 'blue', 'violet', 'teal'].map((h) => (
+      <div style="border:1px solid var(--rule-strong);padding:0.5rem">
+        <div style={`width:5rem;height:3rem;background:var(--h-${h});border:1px solid var(--rule)`}></div>
+        <div style="margin-top:0.25rem">--h-{h}</div>
+      </div>
+    ))}
+  </div>
+  <h2 class="sec-head">Base</h2>
+  <div style="display:flex;gap:0.5rem;flex-wrap:wrap;font-family:var(--font-mono);font-size:0.75rem">
+    {['--paper', '--ink', '--accent', '--signal', '--muted', '--rule'].map((v) => (
+      <div style="border:1px solid var(--rule-strong);padding:0.5rem">
+        <div style={`width:5rem;height:3rem;background:var(${v});border:1px solid var(--rule)`}></div>
+        <div style="margin-top:0.25rem">{v}</div>
+      </div>
+    ))}
+  </div>
+
+  <h2 class="sec-head">Type</h2>
+  <p>Serif body at 18px, line-height 1.65. <a href="#">A silicon-etch link</a>. <code>Mono data 0x1F4FD8</code>.</p>
+  <p class="sec-label">Small-caps tracked section label · tabular 1234567890</p>
+
+  <h2 class="sec-head">Tags &amp; badges</h2>
+  <p><Tag tag="risc-v" /> <Tag tag="side-channels" count={4} /> <span class="badge">SCI-Q1</span> <span class="badge live">under review</span></p>
+
+  <h2 class="sec-head">Table</h2>
+  <table class="spec responsive">
+    <caption>Table 0 · Specimen.</caption>
+    <thead><tr><th scope="col">Address</th><th scope="col">Name</th><th scope="col">Description</th></tr></thead>
+    <tbody>
+      <tr><td data-th="Address" class="addr">0x0000</td><td data-th="Name">specimen</td><td data-th="Description">Reads in light and dark.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sec-head">Figure</h2>
+  <Figure no="0" caption="Specimen diagram. Stroke-only, currentColor.">
+    <svg viewBox="0 0 300 60" stroke="currentColor" fill="none" stroke-width="1.5" role="img" aria-label="Specimen waveform">
+      <polyline points="0,45 40,45 40,15 80,15 80,45 120,45 120,15 200,15" />
+    </svg>
+  </Figure>
+
+  <h2 class="sec-head">Journal entry</h2>
+  <div class="entry"><span class="eno">#001</span><div><h3><a href="#">Specimen entry</a></h3><p class="esummary">Summary line.</p></div></div>
+
+  <h2 class="sec-head">Shelf</h2>
+  <div class="shelf">
+    <article class="spine vertical"><div class="stitle">Specimen Volume</div><div class="smeta">Vol. 00 · PDF · 1 KB</div><a href="#">open PDF <Arrow dir="up-right" /></a></article>
+  </div>
+
+  <h2 class="sec-head">Code</h2>
+  <pre><code>int main(void) &#123; return 0; &#125;</code></pre>
+  <pre class="hexdump"><span class="off">00000000</span>  68 65 6c 6c 6f  |hello|</pre>
+</Base>

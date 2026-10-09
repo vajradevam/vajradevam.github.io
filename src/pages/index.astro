@@ -1,14 +1,45 @@
 ---
 import Page from '../layouts/Page.astro';
-import { now } from '../data/now';
-import { skills } from '../data/skills';
----
+import Figure from '../components/Figure.astro';
+import Arrow from '../components/Arrow.astro';
+import now from '../data/now.json';
+import projects from '../data/projects.json';
+import publications from '../data/publications.json';
+import patents from '../data/patents.json';
+import { getSortedPosts, formatDate } from '../lib/posts';
 
-<Page nav="home" title={null} description="PhD Scholar in computer architecture, hardware security, and low-level systems. RISC-V, side-channel attacks, formal verification.">
-  <section class="hero">
-    <div class="greeting">Hi, I'm</div>
-    <h1>Aman Pathak</h1>
-    <div class="subtitle">PhD Scholar working on hardware security, RISC-V, and low-level software.</div>
+const latest = (await getSortedPosts()).slice(0, 3);
+
+const layers = [
+  { name: 'Web apps', depth: 'L0 · user', href: '/projects/#web', hue: 'yellow' },
+  { name: 'Languages · Go, Java, Python', depth: 'L1 · lang', href: '/projects/#compilers', hue: 'orange' },
+  { name: 'C', depth: 'L2 · lang', href: '/projects/#systems', hue: 'red' },
+  { name: 'Assembly', depth: 'L3 · asm', href: '/blog/bytes-in-memory/', hue: 'brown' },
+  { name: 'ISA · RISC-V', depth: 'L4 · isa', href: '/research/#publications', hue: 'violet' },
+  { name: 'Microarchitecture', depth: 'L5 · uarch', href: '/research/#publications', hue: 'blue' },
+  { name: 'RTL / Verilog', depth: 'L6 · rtl', href: '/projects/#compilers', hue: 'teal' },
+  { name: 'Gates', depth: 'L7 · gates', href: '/research/#experience', hue: 'green' },
+  { name: 'Transistors', depth: 'L8 · silicon', href: '/research/#experience', hue: 'gray' },
+];
+
+---
+<Page nav="home" title={null} description="Aman Pathak - PhD Scholar in computer architecture, hardware security, and low-level systems. RISC-V, side-channel attacks, formal verification." ogImage="/og/home.png">
+  <p class="sec-label">VAJRADEVAM-01 · §0 identity</p>
+  <h1 style="font-size:1.35rem;max-width:40ch;font-weight:700">Aman Pathak · PhD Scholar, hardware security · RISC-V · low-level software.</h1>
+
+  <Figure no="1" caption="Abstraction stack, top to bottom. Scroll to peel away layers; each label links to the relevant section. Without motion or script, the stack reads as a static figure.">
+    <div class="stack-fig stack-peel" id="stackFig" role="list" aria-label="Abstraction stack from web apps down to transistors">
+      {layers.map((l, i) => (
+        <div class="stack-layer" role="listitem" data-depth={i} id={`layer-${i}`} style={`--band:var(--h-${l.hue})`}>
+          <a href={l.href}>{l.name}</a>
+          <span class="depth">{l.depth}</span>
+        </div>
+      ))}
+    </div>
+  </Figure>
+
+  <section data-layer="0" aria-label="Top layers">
+    <h2 class="sec-head" id="about">§1 · At the top of the stack <a class="anchor" href="#about" aria-label="Link to section">§</a></h2>
     <p>
       I'm a PhD Scholar in the Department of Computer Science and Information Systems at
       BITS Pilani KK Birla Goa Campus, working at the intersection of hardware security,
@@ -18,6 +49,11 @@ import { skills } from '../data/skills';
       patents filed in the RISC-V space covering data-flow integrity, crypto engines, and
       on-chip ML.
     </p>
+    <p style="margin-top:1rem">Field notes from the upper layers · <a href="/projects/">{projects.length} projects</a> on record, <a href="/blog/">journal entries</a> on architecture, compilers, and C.</p>
+  </section>
+
+  <section data-layer="3" aria-label="Middle layers">
+    <h2 class="sec-head" id="middle">§2 · Mid-stack: C, assembly, ISA <a class="anchor" href="#middle" aria-label="Link to section">§</a></h2>
     <p>
       Outside of research, I spend a lot of time building things close to the metal. I've written
       a TCP/IP stack from scratch, a malloc replacement, a cycle-accurate 6502 emulator, a
@@ -26,6 +62,32 @@ import { skills } from '../data/skills';
       to my profile as a hobby. I also write about these topics on my blog, where I've published
       posts on architecture, compilers, and C. And I teach sometimes.
     </p>
+    <p style="margin-top:1rem">Probes at this depth ·
+      <a href="https://github.com/vajradevam/vajrip">vajrip</a> ·
+      <a href="https://github.com/vajradevam/memoria">memoria</a> ·
+      <a href="https://github.com/vajradevam/whale">whale</a> ·
+      <a href="https://github.com/vajradevam/commodore64">commodore64</a> ·
+      <a href="https://github.com/vajradevam/rv32i-SingleBus-emulator">rv32i-emulator</a>
+    </p>
+
+    <h3 class="sec-head" id="now" style="font-size:1.2rem">Now · register file <a class="anchor" href="#now" aria-label="Link to Now">§</a></h3>
+    <table class="spec responsive">
+      <caption>Table 3 · Currently live registers. Contents change without notice.</caption>
+      <thead><tr><th scope="col">Address</th><th scope="col">Name</th><th scope="col">Description</th></tr></thead>
+      <tbody>
+        {now.map((item, i) => (
+          <tr>
+            <td data-th="Address" class="addr">0x{(i * 4).toString(16).padStart(4, '0').toUpperCase()}</td>
+            <td data-th="Name">now+{i}</td>
+            <td data-th="Description">{item}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </section>
+
+  <section data-layer="6" aria-label="Bottom layers">
+    <h2 class="sec-head" id="bottom">§3 · Bottom of the stack <a class="anchor" href="#bottom" aria-label="Link to section">§</a></h2>
     <p>
       Low-level stuff intrigues me. A C program is nothing but bytes in memory, there is no
       abstraction beyond that. Sure, memory is made of transistors and semiconductors, and VLSI
@@ -34,24 +96,26 @@ import { skills } from '../data/skills';
       quite often the bitter, truth. More than low levels <em>per se</em>, to borrow from
       category theory, I am interested in the stripped-down, non-abstracted, naked-truth stuff.
     </p>
+    <p style="margin-top:1rem">At silicon level · <a href="/research/#publications">{publications.length} publications</a>, <a href="/research/#patents">{patents.length} patents filed</a>, <a href="/research/#experience">full record</a>.</p>
+
+
   </section>
 
-  <section class="section">
-    <div class="section-heading">Now</div>
-    <ul class="dash-list">
-      {now.map((item) => <li>{item}</li>)}
-    </ul>
-  </section>
-
-  <section class="section">
-    <div class="section-heading">Skills</div>
-    {skills.map((row) => (
-      <div class="skill-row">
-        <span class="label">{row.label}</span>
-        <span class="items">
-          {row.items.map((item) => <span class="skill-chip">{item}</span>)}
-        </span>
+  <section aria-label="Latest journal entries">
+    <h2 class="sec-head" id="latest">§4 · Latest entries <a class="anchor" href="#latest" aria-label="Link to section">§</a></h2>
+    {latest.map((post) => (
+      <div class="entry">
+        <span class="eno"><time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time></span>
+        <div>
+          <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
+          {post.data.description && <p class="esummary">{post.data.description}</p>}
+        </div>
       </div>
     ))}
+    <p style="margin-top:1rem"><a href="/blog/">All entries <Arrow dir="right" /></a></p>
   </section>
+
+  <script>
+    import '../scripts/home.ts';
+  </script>
 </Page>

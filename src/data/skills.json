@@ -1,4 +1,4 @@
-export const skills = [
+[
   {
     "label": "Languages",
     "items": [
@@ -50,4 +50,4 @@ export const skills = [
       "VLSI"
     ]
   }
-];
+]

@@ -1,0 +1,7 @@
+---
+import { slugify } from '../lib/posts';
+interface Props { tag: string; count?: number; }
+const { tag, count } = Astro.props;
+---
+
+<a class="tag" href={`/tags/#${slugify(tag)}`}>#{tag}{count !== undefined ? ` (${count})` : ''}</a>

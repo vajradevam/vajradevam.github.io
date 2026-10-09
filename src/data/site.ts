@@ -10,7 +10,7 @@ export const site = {
   email: 'mailto:vajradevam@gmail.com',
 };
 
-export type NavKey = 'home' | 'blog' | 'projects' | 'research' | 'writings';
+export type NavKey = 'home' | 'blog' | 'projects' | 'research' | 'writings' | 'colophon';
 
 export const navItems: { href: string; label: string; key: NavKey | 'github' }[] = [
   { href: '/', label: 'home', key: 'home' },

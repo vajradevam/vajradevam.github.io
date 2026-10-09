@@ -1,36 +1,113 @@
 ---
 import Page from '../layouts/Page.astro';
+import Arrow from '../components/Arrow.astro';
 import { categories } from '../data/categories';
-import { projects } from '../data/projects';
-import { site } from '../data/site';
+import projects from '../data/projects.json';
+
+const langs = [...new Set(projects.map((p) => p.lang))].sort();
+const featured = projects.filter((p) => p.featured);
+const layers = ['apps', 'language', 'c', 'os', 'network', 'isa', 'rtl', 'gates'];
+const layerLabel: Record<string, string> = {
+  apps: 'Web apps', language: 'Languages', c: 'C', os: 'OS / runtime',
+  network: 'Network', isa: 'ISA (RISC-V)', rtl: 'RTL / Verilog', gates: 'Gates',
+};
+const layerHue: Record<string, string> = {
+  apps: 'yellow', language: 'orange', c: 'red', os: 'blue',
+  network: 'teal', isa: 'violet', rtl: 'teal', gates: 'green',
+};
 ---
 
 <Page
   nav="projects"
   title="Projects"
   heading="Projects"
-  sub={`<a href="${site.github}?tab=repositories">github.com/vajradevam</a>`}
-  description="Open-source projects - container runtimes, TCP/IP stacks, emulators, compilers, ML, databases, web apps."
+  sub={`Component catalog · ${projects.length} parts · <a href="https://github.com/vajradevam?tab=repositories">github.com/vajradevam</a>`}
+  description="Open-source component catalog - container runtimes, TCP/IP stacks, emulators, compilers, ML, databases."
+  ogImage="/og/projects.png"
+  margin={categories.map((c, i) => ({ no: `§${i + 1}`, label: c.label }))}
 >
-  {categories.map((cat) => {
+  <h2 class="sec-head" id="featured">Featured parts <a class="anchor" href="#featured" aria-label="Link to Featured">§</a></h2>
+  <div class="featured-strip">
+    {featured.map((p) => (
+      <details>
+        <summary><span class={`cat-${p.category}`}>{p.ref}</span> · {p.name} <span class="fl">{p.lang}</span></summary>
+        <p style="margin-top:0.5rem">{p.description}</p>
+        <p style="margin-top:0.5rem"><a href={p.repo} target="_blank" rel="noopener">Repo <Arrow dir="up-right" /></a></p>
+      </details>
+    ))}
+  </div>
+
+  <h2 class="sec-head" id="catalog">Full catalog <a class="anchor" href="#catalog" aria-label="Link to Catalog">§</a></h2>
+  <div class="tabset" role="tablist" aria-label="Catalog view">
+    <button type="button" role="tab" aria-selected="true" id="tabTable">Table view</button>
+    <button type="button" role="tab" aria-selected="false" id="tabLayer">Layer view</button>
+  </div>
+
+  <div id="tableView" role="tabpanel" aria-labelledby="tabTable">
+    <div class="controls">
+      <input type="search" id="q" placeholder="search name or description…" aria-label="Search projects" autocomplete="off" />
+      <select id="fLang" aria-label="Filter by language">
+        <option value="">Language · all</option>
+        {langs.map((l) => <option value={l}>{l}</option>)}
+      </select>
+      <select id="fCat" aria-label="Filter by category">
+        <option value="">Category · all</option>
+        {categories.map((c) => <option value={c.slug}>{c.label}</option>)}
+      </select>
+      <select id="fSort" aria-label="Sort projects">
+        <option value="ref">Sort · ref</option>
+        <option value="name">Sort · name</option>
+        <option value="lang">Sort · lang</option>
+      </select>
+    </div>
+    <p class="sec-label" id="partCount" aria-live="polite">{projects.length} parts</p>
+    <table class="spec responsive catalog">
+      <caption>Table 2 · Component catalog. Ref · Name · Lang · Description · Layer · Repo.</caption>
+      <thead><tr><th scope="col">Ref</th><th scope="col">Name</th><th scope="col">Lang</th><th scope="col">Description</th><th scope="col">Layer</th><th scope="col">Repo</th></tr></thead>
+      <tbody id="catalogBody">
+        {projects.map((p) => (
+          <tr data-name={p.name.toLowerCase()} data-desc={p.description.toLowerCase()} data-lang={p.lang} data-cat={p.category} data-ref={p.ref}>
+            <td data-th="Ref" class={`ref cat-${p.category}`}>{p.ref}</td>
+            <td data-th="Name"><strong>{p.name}</strong></td>
+            <td data-th="Lang">{p.lang}</td>
+            <td data-th="Description">{p.description || <em style="color:var(--muted)">· see repo</em>}</td>
+            <td data-th="Layer">{p.layer}</td>
+            <td data-th="Repo"><a href={p.repo} target="_blank" rel="noopener" aria-label={`Open ${p.name} repository`}><Arrow dir="up-right" /></a></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <p class="empty-note" id="catalogEmpty">no parts match</p>
+  </div>
+
+  <div id="layerView" role="tabpanel" aria-labelledby="tabLayer" hidden>
+    <div class="layer-map" role="img" aria-label="Projects plotted on the abstraction stack, from web apps down to gates.">
+      {layers.map((l) => {
+        const items = projects.filter((p) => p.layer === l);
+        return (
+          <div class="layer-row" style={`--band:var(--h-${layerHue[l]})`}>
+            <span class="lname">{layerLabel[l]}</span>
+            <span class="litems">
+              {items.length === 0 ? <em style="color:var(--muted)">·</em> : items.map((p) => <a href={p.repo} target="_blank" rel="noopener" title={`${p.ref} · ${p.description}`}>{p.name}</a>)}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+    <p style="margin-top:1rem;font-family:var(--font-mono);font-size:0.78rem;color:var(--muted)">Same {projects.length} parts, plotted by abstraction layer. Hover a name for its ref.</p>
+  </div>
+
+  {categories.map((cat, i) => {
     const items = projects.filter((p) => p.category === cat.slug);
     return (
-      <section class="section project-section">
-        <div class="section-heading">
-          {cat.label} <span class="project-count">{items.length}</span>
-        </div>
-        <div class="project-list">
-          {items.map((p) => (
-            <div class="project-row">
-              <span class="p-nm">
-                <a href={`${site.github}/${p.repo}`} target="_blank" rel="noopener">{p.name}</a>
-              </span>
-              <span class="p-lg">{p.lang ?? ''}</span>
-              <span class="p-desc">{p.desc ?? ''}</span>
-            </div>
-          ))}
-        </div>
-      </section>
+      <h2 class="sec-head" id={cat.slug}>§{i + 1} · {cat.label} ({items.length}) <a class="anchor" href={`#${cat.slug}`} aria-label={`Link to ${cat.label}`}>§</a></h2>
+      <p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--muted)">
+        {items.map((p, j) => <span>{j > 0 ? ' · ' : ''}<a href={p.repo} target="_blank" rel="noopener">{p.name}</a></span>)}
+      </p>
     );
   })}
+
+  <script>
+    import '../scripts/catalog.ts';
+  </script>
 </Page>

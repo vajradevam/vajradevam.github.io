@@ -8,18 +8,32 @@ interface Props {
   sub?: string;
   description?: string;
   nav?: NavKey;
-  math?: boolean;
+  ogImage?: string;
+  noindex?: boolean;
+  margin?: { no: string; label: string }[];
 }
 
-const { title, heading, sub, description, nav = 'home', math = false } = Astro.props;
+const { title, heading, sub, description, nav = 'home', ogImage, noindex, margin = [] } = Astro.props;
 ---
 
-<Base title={title} description={description} nav={nav} math={math}>
+<Base title={title} description={description} nav={nav} ogImage={ogImage} noindex={noindex}>
+  <slot name="head" slot="head" />
   {heading && (
-    <header class="page-header">
-      <h1>{heading}</h1>
-      {sub && <div class="sub" set:html={sub} />}
+    <header style="margin-bottom:2rem">
+      <div class="sec-label">§ {heading}</div>
+      <h1 style="font-size:clamp(2rem,5vw,2.8rem)">{heading}</h1>
+      {sub && <div style="color:var(--muted);font-family:var(--font-mono);font-size:0.85rem" set:html={sub} />}
     </header>
   )}
-  <slot />
+  {margin.length > 0 ? (
+    <div class="with-margin">
+      <aside class="margin-col" aria-label="Section contents">
+        {margin.map((m) => <div><span class="sec-no">{m.no}</span> {m.label}</div>)}
+        <slot name="margin" />
+      </aside>
+      <div class="prose"><slot /></div>
+    </div>
+  ) : (
+    <div class="prose"><slot /></div>
+  )}
 </Base>

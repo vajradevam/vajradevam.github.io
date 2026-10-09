@@ -1,61 +1,80 @@
 ---
 import Page from '../layouts/Page.astro';
-import { experience } from '../data/experience';
-import { patents } from '../data/patents';
-import { publications } from '../data/publications';
+import experience from '../data/experience.json';
+import patents from '../data/patents.json';
+import publications from '../data/publications.json';
+
+const statuses = [...new Set(publications.map((p) => p.status))];
+const badge = (s: string) => /Q1/.test(s) ? 'b-q1' : /Q2/.test(s) ? 'b-q2' : /^to appear/i.test(s) ? 'b-acc' : /^under review/i.test(s) ? 'b-rev live' : 'b-scopus';
 ---
 
 <Page
   nav="research"
   title="Research"
   heading="Research"
-  description="PhD Scholar - hardware security, RISC-V, formal verification, side-channel attacks, 14 publications, 6 patents."
+  sub="Hardware security · RISC-V · side channels · formal verification"
+  description="PhD Scholar - hardware security, RISC-V, formal verification, side-channel attacks, 18 publications, 6 patents."
+  ogImage="/og/research.png"
+  margin={[{ no: '1', label: 'Experience' }, { no: '2', label: 'Patents' }, { no: '3', label: 'Publications' }]}
 >
-  <section class="section">
-    <div class="section-heading">Experience</div>
-    <div class="timeline">
+  <h2 class="sec-head" id="experience">1 · Experience <a class="anchor" href="#experience" aria-label="Link to Experience">§</a></h2>
+
+  <table class="spec responsive">
+    <caption>Experience record · role, period, organisation.</caption>
+    <thead><tr><th scope="col">Role</th><th scope="col">Period</th><th scope="col">Organisation &amp; work</th></tr></thead>
+    <tbody>
       {experience.map((item) => (
-        <div class="timeline-item">
-          <div class="role">{item.role} <span class="date">· {item.date}</span></div>
-          <div class="org">{item.org}</div>
-          <ul>
-            {(item.bullets ?? []).map((bullet) => <li>{bullet}</li>)}
-          </ul>
-        </div>
+        <tr>
+          <td data-th="Role"><strong>{item.role}</strong></td>
+          <td data-th="Period" style="white-space:nowrap">{item.date}</td>
+          <td data-th="Organisation & work">{item.org}
+            <ul style="margin-top:0.5rem;padding-left:1.2rem">
+              {(item.bullets ?? []).map((b) => <li>{b}</li>)}
+            </ul>
+          </td>
+        </tr>
       ))}
-    </div>
-  </section>
+    </tbody>
+  </table>
 
-  <section class="section">
-    <div class="section-heading">Patents</div>
-    <div class="pub-list">
-      {patents.map((patent) => (
-        <div class="pub-item">
-          <div class="title">{patent.title}</div>
-          <div class="venue">{patent.desc}</div>
-        </div>
+  <h2 class="sec-head" id="patents">2 · Patents <a class="anchor" href="#patents" aria-label="Link to Patents">§</a></h2>
+  <table class="spec responsive">
+    <caption>Table 1 · Patents filed (6).</caption>
+    <thead><tr><th scope="col">Short name</th><th scope="col">Application No.</th><th scope="col">Title</th></tr></thead>
+    <tbody>
+      {patents.map((p) => (
+        <tr>
+          <td data-th="Short name"><strong>{p.short}</strong></td>
+          <td data-th="Application No." class="addr">{p.application}</td>
+          <td data-th="Title">{p.title}</td>
+        </tr>
       ))}
-    </div>
-  </section>
+    </tbody>
+  </table>
 
-  <section class="section">
-    <div class="section-heading">Publications</div>
-    <div class="pub-list">
-      {publications.map((pub) => (
-        <div class="pub-item">
-          <div class="title">{pub.title}</div>
-          <div class="venue">
-            {(pub.authors ?? []).map((author, i) => (
-              <>
-                {author === 'A. Pathak' ? <strong>{author}</strong> : <span>{author}</span>}
-                {i < (pub.authors?.length ?? 0) - 1 ? ', ' : ''}
-              </>
-            ))}
-            {' '}· {pub.venue}{pub.year ? `, ${pub.year}` : ''}{pub.note && <span class="pub-note">{pub.note}</span>}
-          </div>
-          {pub.abstract && <div class="abstract">{pub.abstract}</div>}
-        </div>
-      ))}
-    </div>
-  </section>
+  <h2 class="sec-head" id="publications">3 · Publications <a class="anchor" href="#publications" aria-label="Link to Publications">§</a></h2>
+  <div class="controls">
+    <label for="statusFilter" style="align-self:center">Status</label>
+    <select id="statusFilter">
+      <option value="">all ({publications.length})</option>
+      {statuses.map((s) => <option value={s}>{s}</option>)}
+    </select>
+    <a href="/research.bib" download style="align-self:center">Download BibTeX</a>
+  </div>
+  <ol class="ref-list" id="refList">
+    {publications.map((pub) => (
+      <li data-status={pub.status}>
+        <span>
+          <span class="rtitle">{pub.url ? <a href={pub.url}>{pub.title}</a> : pub.title}</span><br />
+          <span>{(pub.authors ?? []).map((a, i) => <>{i > 0 ? ', ' : ''}{a === 'A. Pathak' ? <strong>{a}</strong> : <span>{a}</span>}</>)} · {pub.venue}{pub.year ? `, ${pub.year}` : ''}</span>
+          {' '}<span class={`badge ${badge(pub.indexed)}`}>{pub.indexed}</span>
+        </span>
+      </li>
+    ))}
+  </ol>
+  <p class="empty-note" id="refEmpty">no publications with this status</p>
+
+  <script>
+    import '../scripts/research.ts';
+  </script>
 </Page>
