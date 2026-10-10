@@ -283,5 +283,21 @@
     "status": "under review",
     "note": "under review",
     "indexed": "Under review"
+  },
+  {
+    "n": 19,
+    "title": "KRAIT: Kernel Real-Time Attention-Based Intrusion Tracker via Cross-Layer Feature Fusion and In-Kernel Neural Inference with the extended Berkeley Packet Filter",
+    "authors": [
+      "J. Mishra",
+      "S.K. Sahay",
+      "S. Mishra",
+      "L.K. Vashishtha",
+      "A. Pathak"
+    ],
+    "venue": "Engineering Applications of Artificial Intelligence (Elsevier)",
+    "year": null,
+    "status": "under review",
+    "note": "under review",
+    "indexed": "Under review"
   }
 ]
