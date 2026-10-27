@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Compiling the Linux kernel, then testing it in QEMU &middot; vajradevam</title>
+<meta name="description" content="Build a kernel on Arch or Debian, install it, boot it safely in QEMU, and automate the whole loop with the kernel’s own tests.">
+<meta name="author" content="Aman Pathak">
+<link rel="canonical" href="https://vajradevam.in/blog/compiling-and-testing-the-linux-kernel/">
+<meta property="og:title" content="Compiling the Linux kernel, then testing it in QEMU &middot; vajradevam">
+<meta property="og:description" content="Build a kernel on Arch or Debian, install it, boot it safely in QEMU, and automate the whole loop with the kernel’s own tests.">
+<meta property="og:url" content="https://vajradevam.in/blog/compiling-and-testing-the-linux-kernel/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#11100f">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="alternate" type="application/rss+xml" title="vajradevam rss" href="/rss.xml">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<nav class="tabline" aria-label="Site"><a href="/"><span class="tab-no">1</span>home</a><a href="/about/"><span class="tab-no">2</span>about</a><a href="/research/"><span class="tab-no">3</span>research</a><a href="/projects/"><span class="tab-no">4</span>projects</a><a href="/blog/" aria-current="page"><span class="tab-no">5</span>blog</a><a href="/writings/"><span class="tab-no">6</span>writings</a><span class="tab-fill"></span><a class="tab-ext" href="https://github.com/vajradevam" rel="me">github&#8599;</a><a class="tab-ext" href="/rss.xml">rss</a></nav>
+<main>
+<p class="sec-label">blog &middot; 2026-10-11 &middot; 9 min read</p>
+<h1>Compiling the Linux kernel, then testing it in QEMU</h1>
+<p class="etags"><span class="tag">linux</span> <span class="tag">kernel</span> <span class="tag">qemu</span></p>
+<p>I wanted to learn kernel programming, which meant I needed a loop I could run a dozen times a day: change some code, build, boot, see what broke. This post is that loop. Nothing here is about kernel internals. It is just the machinery that lets you touch the internals without reinstalling your machine every week.</p>
+<h2 id="why-build-your-own-kernel">Why build your own kernel</h2>
+<p>You cannot learn this stuff by reading alone. A kernel change means nothing until it boots or panics.</p>
+<p>So the goal is a tight edit, build, boot, test cycle. The first half of this post builds a full kernel you could install. The second half shows why you should rarely boot it on real hardware, and what to do instead.</p>
+<h2 id="get-the-source-and-build-dependencies">Get the source and build dependencies</h2>
+<p>I get the source from <a href="https://www.kernel.org/">kernel.org</a>. Pick the latest stable tag; I use <code>&lt;tag&gt;</code> below as a placeholder.</p>
+<div class="sourceCode" id="cb1"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">--depth</span> 1 <span class="at">--branch</span> <span class="op">&lt;</span>tag<span class="op">&gt;</span> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> linux</span></code></pre></div>
+<p>The tarball from kernel.org works the same way if you prefer it. Clone is just easier to update later.</p>
+<p>Dependencies differ by distro, but not by much. You need a compiler, <code>bc</code>, <code>flex</code>, <code>bison</code>, OpenSSL and ELF headers, ncurses for configuration, and <code>pahole</code> for debug-info encoding. The rest is plumbing for packaging and initramfs generation.</p>
+<p>On Debian:</p>
+<div class="sourceCode" id="cb2"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install build-essential bc bison flex libssl-dev libelf-dev libncurses-dev dwarves cpio kmod rsync</span></code></pre></div>
+<p>On Arch:</p>
+<div class="sourceCode" id="cb3"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-Syu</span> base-devel bc cpio perl tar xz pahole libelf ncurses openssl</span></code></pre></div>
+<p>These match the current <a href="https://kernel-team.pages.debian.net/kernel-handbook/ch-common-tasks.html">Debian kernel handbook</a> and the <a href="https://wiki.archlinux.org/title/Kernel/Arch_build_system">Arch kernel build</a> requirements. If a name has changed since I wrote this, trust your distro docs over me.</p>
+<h2 id="configure">Configure</h2>
+<p>The Arch and Debian paths differ here, but only in where you steal your starting config from. In both cases you start from the running kernel’s config, because it is the one config known to boot your machine.</p>
+<p>On Debian:</p>
+<div class="sourceCode" id="cb4"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /boot/config-<span class="va">$(</span><span class="fu">uname</span> <span class="at">-r</span><span class="va">)</span> .config</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> olddefconfig</span></code></pre></div>
+<p>On Arch:</p>
+<div class="sourceCode" id="cb5"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> /proc/config.gz <span class="op">&gt;</span> .config</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> olddefconfig</span></code></pre></div>
+<p><code>make olddefconfig</code> answers every new option with its default, so you get a working config for the new version without a hundred prompts.</p>
+<p>Two fixes before you build. First, the distro config points <code>SYSTEM_TRUSTED_KEYS</code> and <code>SYSTEM_REVOCATION_KEYS</code> at certificates you do not have, and the build fails looking for them:</p>
+<div class="sourceCode" id="cb6"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">scripts/config</span> <span class="at">--disable</span> SYSTEM_TRUSTED_KEYS <span class="at">--disable</span> SYSTEM_REVOCATION_KEYS</span></code></pre></div>
+<p>Second, debug info makes the build slow and the output enormous. Turn it off while you are learning:</p>
+<div class="sourceCode" id="cb7"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">scripts/config</span> <span class="at">--disable</span> DEBUG_INFO <span class="at">--disable</span> DEBUG_INFO_BTF</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> olddefconfig</span></code></pre></div>
+<p>Two more things worth knowing. <code>make localmodconfig</code> shrinks the build to just the modules you currently have loaded, which is much faster — but anything unplugged or unloaded at that moment gets left out, so skip it until your loop works. And set a local version so your modules never collide with the distro kernel’s:</p>
+<div class="sourceCode" id="cb8"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">scripts/config</span> <span class="at">--set-str</span> CONFIG_LOCALVERSION <span class="st">&quot;-custom&quot;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> olddefconfig</span></code></pre></div>
+<p>Your kernel will report itself as something like <code>vX.Y-custom</code>, with its modules safely under <code>/lib/modules/vX.Y-custom/</code>.</p>
+<h2 id="build">Build</h2>
+<p>The build itself is one line:</p>
+<div class="sourceCode" id="cb9"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> <span class="at">-j</span><span class="va">$(</span><span class="fu">nproc</span><span class="va">)</span></span></code></pre></div>
+<p>I build out of tree so the source stays clean and I can keep several configs around:</p>
+<div class="sourceCode" id="cb10"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> O=build <span class="at">-j</span><span class="va">$(</span><span class="fu">nproc</span><span class="va">)</span></span></code></pre></div>
+<p>The result is <code>build/arch/x86/boot/bzImage</code> plus modules. If you rebuild often, install <code>ccache</code> and add it to your <code>PATH</code>; the second build of the same tree gets much faster.</p>
+<p>This is the slow step the first time. Go make tea.</p>
+<h2 id="install-it-properly">Install it properly</h2>
+<p>Everything up to the initramfs is identical on both distros. Install the modules first:</p>
+<div class="sourceCode" id="cb11"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> make modules_install</span></code></pre></div>
+<p>This is where the paths split again.</p>
+<p><strong>Debian does it for you.</strong> <code>sudo make install</code> runs Debian’s <code>installkernel</code> hook, which copies the kernel, generates the initramfs, and updates GRUB. One command and you get a boot entry:</p>
+<div class="sourceCode" id="cb12"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> make install</span></code></pre></div>
+<p>If you want cleaner bookkeeping, <code>make bindeb-pkg</code> builds proper <code>.deb</code> files you install with <code>dpkg -i</code>. Same result, easier to remove later.</p>
+<p><strong>Arch needs a hand.</strong> <code>make install</code> copies the image but does not build the initramfs, so do it yourself:</p>
+<div class="sourceCode" id="cb13"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="va">KVER</span><span class="op">=</span><span class="va">$(</span><span class="fu">make</span> kernelrelease<span class="va">)</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp arch/x86/boot/bzImage /boot/vmlinuz-linux-custom</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mkinitcpio <span class="at">-k</span> <span class="st">&quot;</span><span class="va">$KVER</span><span class="st">&quot;</span> <span class="at">-g</span> /boot/initramfs-linux-custom.img</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> grub-mkconfig <span class="at">-o</span> /boot/grub/grub.cfg</span></code></pre></div>
+<p>If you use systemd-boot instead of GRUB, add an entry for <code>/boot/vmlinuz-linux-custom</code> and the new initramfs by hand; the <code>mkinitcpio</code> step is the same either way.</p>
+<p>One safety note before you reboot: keep the distro kernel as a fallback entry, and do not boot the custom kernel on hardware yet. Test it in QEMU first. That is next.</p>
+<h2 id="test-it-in-qemu-instead">Test it in QEMU instead</h2>
+<p>QEMU can boot a kernel image directly with <code>-kernel</code>. No disk image, no GRUB, no install step. A crash costs you a few seconds and a log file, not a rescue USB.</p>
+<p>There are three jobs: install the tools, build a small kernel plus a tiny initramfs, and boot them. Each is a few commands.</p>
+<p><strong>Install the tools.</strong> You need QEMU itself and a statically linked busybox. (<code>cpio</code> and <code>gzip</code> you already installed as build dependencies.)</p>
+<p>On Debian:</p>
+<div class="sourceCode" id="cb14"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install qemu-system-x86 busybox-static</span></code></pre></div>
+<p>On Arch:</p>
+<div class="sourceCode" id="cb15"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-S</span> qemu-system-x86</span></code></pre></div>
+<p>Arch needs no busybox package: mkinitcpio already installed a static busybox at <code>/usr/lib/initcpio/busybox</code>, and you will reuse that file below. On Debian, locate yours with <code>dpkg -L busybox-static</code>.</p>
+<p><strong>Check KVM.</strong> Hardware acceleration is what makes the guest feel instant. Your CPU must have virtualization extensions and the kernel must expose them:</p>
+<div class="sourceCode" id="cb16"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-E</span> <span class="at">-c</span> <span class="st">&#39;vmx|svm&#39;</span> /proc/cpuinfo</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> /dev/kvm</span></code></pre></div>
+<p>If the first number is zero or <code>/dev/kvm</code> is missing, drop <code>-enable-kvm</code> from the boot command below. Everything still works, just slowly.</p>
+<p><strong>1. Build a small guest kernel.</strong> You do not want your giant distro config here. Build a minimal one:</p>
+<div class="sourceCode" id="cb17"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> O=build defconfig</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> O=build kvm_guest.config</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> O=build <span class="at">-j</span><span class="va">$(</span><span class="fu">nproc</span><span class="va">)</span></span></code></pre></div>
+<p><code>defconfig</code> is the default x86 config. <code>kvm_guest.config</code> adds the paravirtual guest options QEMU likes. The result builds fast because it skips most drivers.</p>
+<p><strong>2. Build a tiny initramfs.</strong> Stay in the kernel source root — the same directory holding <code>build/</code> from step 1. The kernel needs something to run as PID 1, or it panics, so stage the guest filesystem in an <code>initramfs/</code> directory right there, next to the kernel output:</p>
+<pre class="text"><code>linux/                  # kernel source root, your working directory
+  build/arch/x86/boot/bzImage
+  initramfs/            # staging directory you are about to create
+    init
+    bin/busybox</code></pre>
+<p>Copy the binary in and confirm it is static — a dynamically linked one fails at boot with no libraries around it:</p>
+<div class="sourceCode" id="cb19"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> initramfs/bin</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /usr/lib/initcpio/busybox initramfs/bin/busybox   <span class="co"># Arch; on Debian use the path from dpkg -L busybox-static</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">file</span> initramfs/bin/busybox   <span class="co"># must say &quot;statically linked&quot;</span></span></code></pre></div>
+<p>Save this as <code>initramfs/init</code>. It is a plain shell script, and it must be executable since the kernel runs it directly:</p>
+<div class="sourceCode" id="cb20"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/sh</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mount</span> <span class="at">-t</span> proc none /proc</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mount</span> <span class="at">-t</span> sysfs none /sys</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;HELLO-FROM-INIT&quot;</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="ex">poweroff</span> <span class="at">-f</span></span></code></pre></div>
+<p>Then pack the staging directory into a single image. Run this from the source root, so <code>initramfs.cpio.gz</code> lands next to <code>build/</code>, exactly where the boot command below expects it. The <code>cpio</code> newc format plus gzip is what the kernel expects:</p>
+<div class="sourceCode" id="cb21"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> initramfs</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x init</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> . <span class="at">-print0</span> <span class="kw">|</span> <span class="fu">cpio</span> <span class="at">--format</span><span class="op">=</span>newc <span class="at">--create</span> <span class="at">--null</span> <span class="kw">|</span> <span class="fu">gzip</span> <span class="op">&gt;</span> ../initramfs.cpio.gz</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span></code></pre></div>
+<p>Note what QEMU actually reads: the packed <code>initramfs.cpio.gz</code>, never the <code>initramfs/</code> directory. The directory is just scaffolding — you can delete and recreate it freely. Its location is arbitrary, but keeping it in the source root means every relative path in this post works as written.</p>
+<p><strong>3. Boot it.</strong> One command, from the kernel source root:</p>
+<div class="sourceCode" id="cb22"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">qemu-system-x86_64</span> <span class="at">-enable-kvm</span> <span class="at">-m</span> 1G <span class="at">-nographic</span> <span class="dt">\</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-kernel</span> build/arch/x86/boot/bzImage <span class="dt">\</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-initrd</span> initramfs.cpio.gz <span class="dt">\</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-append</span> <span class="st">&quot;console=ttyS0 panic=-1&quot;</span></span></code></pre></div>
+<p><code>-nographic</code> sends the serial console to your terminal. <code>console=ttyS0</code> tells the kernel to log there. <code>panic=-1</code> reboots immediately on panic instead of hanging, which matters when this runs under a script.</p>
+<p>Success looks like your <code>HELLO-FROM-INIT</code> line scrolling by, then the guest powers off and QEMU exits. To quit a running guest by hand, press <code>Ctrl-a x</code>.</p>
+<p>When it breaks — and it will — add <code>-s -S</code> to the QEMU line. That makes QEMU listen on <code>localhost:1234</code> and freeze the guest at start. Then in another terminal:</p>
+<div class="sourceCode" id="cb23"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gdb</span> vmlinux</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span> <span class="ex">target</span> remote localhost:1234</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="fu">gdb</span><span class="kw">)</span> <span class="ex">c</span></span></code></pre></div>
+<p>You get source-level debugging of the running kernel against <code>vmlinux</code>.</p>
+<p>If even the initramfs feels like setup, use <a href="https://github.com/arighi/virtme-ng">virtme-ng</a>. It boots your freshly built kernel with the host filesystem, so there is no rootfs to build at all:</p>
+<div class="sourceCode" id="cb24"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install virtme-ng   <span class="co"># or: sudo pacman -S virtme-ng</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="ex">vng</span> <span class="at">--run</span> ./build/arch/x86/boot/bzImage</span></code></pre></div>
+<p>That is the zero-setup shortcut. I still keep the busybox initramfs around for scripted tests, because it boots in about a second and its output is trivial to grep.</p>
+<h2 id="automate-the-compile-and-test-loop">Automate the compile-and-test loop</h2>
+<p>Once QEMU boots in seconds, the whole loop fits in one script. Mine is called <code>ktest.sh</code>:</p>
+<div class="sourceCode" id="cb25"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> <span class="at">-euo</span> pipefail</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="va">BUILD_DIR</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${BUILD_DIR</span><span class="op">:-</span>build<span class="va">}</span><span class="st">&quot;</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="va">INITRD</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${INITRD</span><span class="op">:-</span>initramfs.cpio.gz<span class="va">}</span><span class="st">&quot;</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="va">LOG</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${LOG</span><span class="op">:-</span>ktest.log<span class="va">}</span><span class="st">&quot;</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="va">MARKER</span><span class="op">=</span><span class="st">&quot;HELLO-FROM-INIT&quot;</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="va">TIMEOUT</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${TIMEOUT</span><span class="op">:-</span>120<span class="va">}</span><span class="st">&quot;</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> O=<span class="st">&quot;</span><span class="va">$BUILD_DIR</span><span class="st">&quot;</span> <span class="at">-j</span><span class="st">&quot;</span><span class="va">$(</span><span class="fu">nproc</span><span class="va">)</span><span class="st">&quot;</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="va">KVERSION</span><span class="op">=</span><span class="va">$(</span><span class="fu">make</span> <span class="at">-s</span> O=<span class="st">&quot;</span><span class="va">$BUILD_DIR</span><span class="st">&quot;</span> kernelrelease<span class="va">)</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Built </span><span class="va">$KVERSION</span><span class="st">&quot;</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="fu">timeout</span> <span class="st">&quot;</span><span class="va">$TIMEOUT</span><span class="st">&quot;</span> qemu-system-x86_64 <span class="at">-enable-kvm</span> <span class="at">-m</span> 1G <span class="at">-nographic</span> <span class="dt">\</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">-kernel</span> <span class="st">&quot;</span><span class="va">$BUILD_DIR</span><span class="st">/arch/x86/boot/bzImage&quot;</span> <span class="dt">\</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">-initrd</span> <span class="st">&quot;</span><span class="va">$INITRD</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">-append</span> <span class="st">&quot;console=ttyS0 panic=-1&quot;</span> <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span> <span class="kw">|</span> <span class="fu">tee</span> <span class="st">&quot;</span><span class="va">$LOG</span><span class="st">&quot;</span> <span class="kw">||</span> <span class="fu">true</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="fu">grep</span> <span class="at">-q</span> <span class="st">&quot;Kernel panic&quot;</span> <span class="st">&quot;</span><span class="va">$LOG</span><span class="st">&quot;</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;FAIL: kernel panic&quot;</span></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>  <span class="bu">exit</span> 1</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="fu">grep</span> <span class="at">-q</span> <span class="st">&quot;</span><span class="va">$MARKER</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">$LOG</span><span class="st">&quot;</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;PASS: found marker </span><span class="va">$MARKER</span><span class="st"> (</span><span class="va">$KVERSION</span><span class="st">)&quot;</span></span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>  <span class="bu">exit</span> 0</span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;FAIL: marker not found, see </span><span class="va">$LOG</span><span class="st">&quot;</span></span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a><span class="bu">exit</span> 1</span></code></pre></div>
+<p>It builds incrementally, boots under <code>timeout</code>, saves the serial console to <code>ktest.log</code>, and fails on panics or a missing marker. The <code>|| true</code> after QEMU is deliberate: QEMU exits nonzero when the guest powers off, and I want the grep to decide pass or fail, not the exit code.</p>
+<p>That covers boot testing. For actual kernel code, use the kernel’s own suites.</p>
+<p><strong>KUnit is the fast one.</strong> It builds the kernel with unit tests and runs them under QEMU or UML. Start with everything:</p>
+<div class="sourceCode" id="cb26"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./tools/testing/kunit/kunit.py</span> run</span></code></pre></div>
+<p>Run one suite with a filter:</p>
+<div class="sourceCode" id="cb27"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./tools/testing/kunit/kunit.py</span> run <span class="at">--filter_glob</span><span class="op">=&lt;</span>suite-name<span class="op">&gt;</span></span></code></pre></div>
+<p>Add <code>--arch=x86_64</code> to force the QEMU backend instead of UML. The <a href="https://www.kernel.org/doc/html/latest/dev-tools/kunit/index.html">KUnit docs</a> have the full flag list; <code>--jobs=$(nproc)</code> helps on big runs.</p>
+<p><strong>kselftest is the userspace one.</strong> These live under <code>tools/testing/selftests/</code> and are meant to run inside a booted kernel — through the QEMU initramfs above, or inside <code>vng</code>. Build and run one target:</p>
+<div class="sourceCode" id="cb28"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> <span class="at">-C</span> tools/testing/selftests TARGETS=<span class="op">&lt;</span>name<span class="op">&gt;</span> run_tests</span></code></pre></div>
+<p>Use a real target name from <code>tools/testing/selftests/Makefile</code>, for example <code>TARGETS=net</code> or <code>TARGETS=timers</code>. Do not guess; the Makefile is the list.</p>
+<p>The learning loop is then concrete. A good first exercise is a hello-world module or a trivial KUnit test in <code>lib/kunit/</code>. Edit the file, run <code>./ktest.sh</code> or the KUnit command, read the log. When the marker says <code>PASS</code>, change something else. That is the whole habit.</p>
+<h2 id="closing">Closing</h2>
+<p>One script, one QEMU command, two test suites. Run the loop until booting a kernel you built feels boring.</p>
+<p>Same kernel, less fear.</p>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://www.kernel.org/">kernel.org source and docs</a></li>
+<li><a href="https://kernel-team.pages.debian.net/kernel-handbook/ch-common-tasks.html">Debian kernel handbook, common tasks</a></li>
+<li><a href="https://wiki.archlinux.org/title/Kernel/Traditional_compilation">ArchWiki: Kernel traditional compilation</a></li>
+<li><a href="https://wiki.archlinux.org/title/Mkinitcpio">ArchWiki: mkinitcpio</a></li>
+<li><a href="https://www.qemu.org/docs/master/system/linuxboot.html">QEMU direct Linux boot</a></li>
+<li><a href="https://www.qemu.org/docs/master/system/gdb.html">QEMU GDB usage</a></li>
+<li><a href="https://wiki.archlinux.org/title/QEMU">ArchWiki: QEMU</a></li>
+<li><a href="https://wiki.debian.org/QEMU">Debian Wiki: QEMU</a></li>
+<li><a href="https://www.kernel.org/doc/html/latest/dev-tools/kunit/index.html">KUnit unit testing</a></li>
+<li><a href="https://docs.kernel.org/dev-tools/kselftest.html">Linux kernel selftests</a></li>
+<li><a href="https://github.com/arighi/virtme-ng">virtme-ng</a></li>
+</ul>
+
+<hr><p class="dim" style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap"><a href="/blog/rebuilding-with-astro/">Rebuilding this site with Astro &rarr;</a></p>
+<div class="eob" aria-hidden="true">~<br>~<br>~<br>~</div>
+</main>
+<footer class="cmdline">:w &middot; "vajradevam.in" [unix] &copy; 2026 Aman Pathak &middot; <a href="/rss.xml">rss</a> &middot; <a href="https://github.com/vajradevam">github</a> &middot; <a href="mailto:vajradevam@gmail.com">mail</a> &middot; press <kbd>?</kbd> for keys</footer>
+<div class="float" id="keyhelp" hidden role="dialog" aria-label="Keyboard mappings">
+<h4>key mappings</h4>
+<table>
+<tr><td class="k">j / k</td><td>scroll down / up</td></tr>
+<tr><td class="k">d / u</td><td>half page down / up</td></tr>
+<tr><td class="k">gg / G</td><td>top / bottom</td></tr>
+<tr><td class="k">gt / gT</td><td>next / previous tab</td></tr>
+<tr><td class="k">?</td><td>toggle this help</td></tr>
+</table>
+</div>
+<div class="statusline" aria-hidden="true">
+  <span class="seg mode" id="sl-mode">NORMAL</span><span class="sep-r"></span>
+  <span class="seg branch">master</span><span class="sep-r2"></span>
+  <span class="seg file">~/vajradevam/blog/compiling-and-testing-the-linux-kernel.md</span>
+  <span class="fill"></span>
+  <span class="seg meta">unix &#9474; utf-8</span>
+  <span class="sep-l2"></span><span class="seg lncol" id="sl-lncol">1:1</span>
+  <span class="sep-l"></span><span class="seg pct" id="sl-pct">Top</span>
+</div>
+<script src="/js/vim.js"></script>
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>projects &middot; vajradevam</title>
+<meta name="description" content="Projects — container runtime, TCP/IP stack, malloc, emulators, compilers, and more, mostly from scratch.">
+<meta name="author" content="Aman Pathak">
+<link rel="canonical" href="https://vajradevam.in/projects/">
+<meta property="og:title" content="projects &middot; vajradevam">
+<meta property="og:description" content="Projects — container runtime, TCP/IP stack, malloc, emulators, compilers, and more, mostly from scratch.">
+<meta property="og:url" content="https://vajradevam.in/projects/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#11100f">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="alternate" type="application/rss+xml" title="vajradevam rss" href="/rss.xml">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<nav class="tabline" aria-label="Site"><a href="/"><span class="tab-no">1</span>home</a><a href="/about/"><span class="tab-no">2</span>about</a><a href="/research/"><span class="tab-no">3</span>research</a><a href="/projects/" aria-current="page"><span class="tab-no">4</span>projects</a><a href="/blog/"><span class="tab-no">5</span>blog</a><a href="/writings/"><span class="tab-no">6</span>writings</a><span class="tab-fill"></span><a class="tab-ext" href="https://github.com/vajradevam" rel="me">github&#8599;</a><a class="tab-ext" href="/rss.xml">rss</a></nav>
+<main>
+<p class="sec-label">~/vajradevam/projects &middot; ls -l --sort=depth</p>
+<h1>Projects</h1>
+<p class="dim">45 repositories, most built from scratch to see
+what the abstraction is hiding. <span class="chip c-yellow">*</span> marks
+the ones worth reading first. All on
+<a href="https://github.com/vajradevam">github.com/vajradevam</a>.</p>
+<h2 id="systems">systems <span class="muted" style="font-weight:400;font-size:0.8rem">&mdash; C, close to the metal (9)</span></h2><div class="proj">
+<span class="pname"><span class="star">*</span> <a href="https://github.com/vajradevam/whale">whale</a></span>
+<span class="plang">C</span>
+<span class="pdesc">Minimal container runtime using Linux namespaces, cgroups v2, seccomp-BPF, and overlayfs from scratch</span>
+</div><div class="proj">
+<span class="pname"><span class="star">*</span> <a href="https://github.com/vajradevam/vajrip">vajrip</a></span>
+<span class="plang">C</span>
+<span class="pdesc">Userspace TCP/IP stack: Ethernet, ARP, IP, ICMP, UDP, TCP from scratch, Linux TAP</span>
+</div><div class="proj">
+<span class="pname"><span class="star">*</span> <a href="https://github.com/vajradevam/memoria">memoria</a></span>
+<span class="plang">C</span>
+<span class="pdesc">malloc/free replacement, segregated free list, mmap heap, leak detection, 57 tests</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/slinep">slinep</a></span>
+<span class="plang">C</span>
+<span class="pdesc">Bezier rasterizer + 12 programs: fluid sim, cloth, metaballs, Fourier, terrain</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/lolfetch">lolfetch</a></span>
+<span class="plang">C</span>
+<span class="pdesc">System info fetch tool with ASCII art</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/ray-tracing-c">ray-tracing-c</a></span>
+<span class="plang">C</span>
+<span class="pdesc">2D raycasting, 360 rays, interactive shadows, SDL2</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/sell-shell">sell-shell</a></span>
+<span class="plang">C</span>
+<span class="pdesc">Minimal Unix shell, fork/exec, foreground/background processes</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/c-animation">c-animation</a></span>
+<span class="plang">C</span>
+<span class="pdesc">ASCII physics animation using raw ANSI escape sequences</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/RV-Sparse">RV-Sparse</a></span>
+<span class="plang">C</span>
+<span class="pdesc">&mdash;</span>
+</div><h2 id="emulators">emulators <span class="muted" style="font-weight:400;font-size:0.8rem">&mdash; other people's silicon, reimplemented (4)</span></h2><div class="proj">
+<span class="pname"><span class="star">*</span> <a href="https://github.com/vajradevam/commodore64">commodore64</a></span>
+<span class="plang">Java</span>
+<span class="pdesc">Cycle-accurate 6502 CPU, VIC-II text-mode graphics, PRG loading</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/chip8">chip8</a></span>
+<span class="plang">C</span>
+<span class="pdesc">CHIP-8 emulator, SDL2, 35 opcodes, 60Hz timers, sound, debug</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/schip">schip</a></span>
+<span class="plang">C</span>
+<span class="pdesc">Enhanced CHIP-8 emulator</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/rv32i-SingleBus-emulator">rv32i-emulator</a></span>
+<span class="plang">Java</span>
+<span class="pdesc">5-stage unpipelined RV32I, Swing GUI, step-through execution</span>
+</div><h2 id="compilers">compilers &amp; languages <span class="muted" style="font-weight:400;font-size:0.8rem">&mdash; lexers, parsers, codegen (3)</span></h2><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/Luma-Lang">Luma-Lang</a></span>
+<span class="plang">Java</span>
+<span class="pdesc">Toy programming language: lexer, parser, AST, semantic analysis</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/yasl">yasl</a></span>
+<span class="plang">Python</span>
+<span class="pdesc">&mdash;</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/riscc">riscc</a></span>
+<span class="plang">Asm/C/Verilog</span>
+<span class="pdesc">RISC-V testbench: standalone C programs validating processor cores</span>
+</div><h2 id="web">web &amp; tools <span class="muted" style="font-weight:400;font-size:0.8rem">&mdash; databases, VMs, daemons (10)</span></h2><div class="proj">
+<span class="pname"><span class="star">*</span> <a href="https://github.com/vajradevam/nook">nook</a></span>
+<span class="plang">Go</span>
+<span class="pdesc">Tiny embedded ordered key/value database with SQL and auth, built from scratch</span>
+</div><div class="proj">
+<span class="pname"><span class="star">*</span> <a href="https://github.com/vajradevam/mridu">mridu</a></span>
+<span class="plang">Go</span>
+<span class="pdesc">Bytecode VM interpreter in Go</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/urls">urls</a></span>
+<span class="plang">Astro</span>
+<span class="pdesc">URL shortener, custom slugs, analytics, QR codes, JWT auth, dark mode</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/alonzo">alonzo</a></span>
+<span class="plang">React/Node</span>
+<span class="pdesc">FaaS platform: upload &amp; execute JS functions via API, rate limiting</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/juice">juice</a></span>
+<span class="plang">Node.js</span>
+<span class="pdesc">VPS hardware monitor API: CPU, memory, disk, network over HTTP</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/Attendence-System">attendance-system</a></span>
+<span class="plang">Spring/React</span>
+<span class="pdesc">Role-based attendance tracking, timetable, real-time stats</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/LLM-Ping">LLM-Ping</a></span>
+<span class="plang">Python</span>
+<span class="pdesc">TUI tool pinging free LLM models across NIM, OpenRouter, Groq, Z.AI</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/deeptrace">deeptrace</a></span>
+<span class="plang">C++</span>
+<span class="pdesc">Deep Packet Inspection CLI tool</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/pit">pit</a></span>
+<span class="plang">Python</span>
+<span class="pdesc">Git implementation in Python</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/vectdb">vectdb</a></span>
+<span class="plang">C++</span>
+<span class="pdesc">Vector database</span>
+</div><h2 id="ml">machine learning <span class="muted" style="font-weight:400;font-size:0.8rem">&mdash; from matrix ops up (8)</span></h2><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/wthr">wthr</a></span>
+<span class="plang">Python</span>
+<span class="pdesc">Weather/AQI prediction, 109K observations, 25+ models benchmarked</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/slm-bench">slm-bench</a></span>
+<span class="plang">Python</span>
+<span class="pdesc">50+ quantized SLMs benchmarked across 5 quality domains, ROUGE scoring</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/advx">advx</a></span>
+<span class="plang">PyTorch</span>
+<span class="pdesc">Adversarial attacks on MNIST: FGSM, PGD, DeepFool, CW, ~98% accuracy</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/basic-lstm-weather-prediction">lstm-weather</a></span>
+<span class="plang">TF/Keras</span>
+<span class="pdesc">Multivariate LSTM, bidirectional, stacked, CNN-LSTM, ConvLSTM variants</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/ml-nanosensor-lab">ml-nanosensor</a></span>
+<span class="plang">Python</span>
+<span class="pdesc">ML for THz antenna design from CST Studio simulation data</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/vajranet">vajranet</a></span>
+<span class="plang">PyTorch</span>
+<span class="pdesc">Neural networks from scratch on MNIST (784-128-128-64-10)</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/takenizer">takenizer</a></span>
+<span class="plang">Python</span>
+<span class="pdesc">BPE tokenizer for LLMs trained on Shakespeare</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/smol">smol</a></span>
+<span class="plang">Python</span>
+<span class="pdesc">Fine-tuning Phi-3 to Yoda-speak with LoRA, BitsAndBytes, PEFT</span>
+</div><h2 id="games">games <span class="muted" style="font-weight:400;font-size:0.8rem">&mdash; JavaFX arcade (3)</span></h2><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/jetris">jetris</a></span>
+<span class="plang">JavaFX</span>
+<span class="pdesc">Tetris: 7 tetrominoes, ghost piece, wall-kicks, hold, 2-player mode</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/minejweeper">minejweeper</a></span>
+<span class="plang">JavaFX</span>
+<span class="pdesc">Minesweeper: 4 difficulty levels, flood-fill, Win95-style UI</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/judoku">judoku</a></span>
+<span class="plang">JavaFX</span>
+<span class="pdesc">Sudoku: backtracking generator, hints, solver, leaderboard</span>
+</div><h2 id="frontend">frontend <span class="muted" style="font-weight:400;font-size:0.8rem">&mdash; browser toys (3)</span></h2><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/2048">2048</a></span>
+<span class="plang">HTML/CSS/JS</span>
+<span class="pdesc">2048 game, touch support, CSS animations, Tailwind</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/game-of-life">game-of-life</a></span>
+<span class="plang">JS</span>
+<span class="pdesc">Conway&#x27;s Game of Life, 50x50 grid, start/stop controls</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/color-scheme-generator">color-scheme</a></span>
+<span class="plang">CSS/JS</span>
+<span class="pdesc">Upload image to generate 5-color palette via ColorThief</span>
+</div><h2 id="misc">misc <span class="muted" style="font-weight:400;font-size:0.8rem">&mdash; scripts that stuck around (5)</span></h2><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/DDownloader">DDownloader</a></span>
+<span class="plang">Python</span>
+<span class="pdesc">Discord bot: download all media from a specific user across an entire server</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/chatbot">chatbot</a></span>
+<span class="plang">Python</span>
+<span class="pdesc">Groq API chatbot with LLaMA, Gemma, Qwen, DeepSeek models</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/chatora">chatora</a></span>
+<span class="plang">Python</span>
+<span class="pdesc">Gemini API chatbot built with Streamlit</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/cst-studio-pipeline">cst-pipeline</a></span>
+<span class="plang">Python</span>
+<span class="pdesc">S11/gain extraction from CST Studio ASCII exports with GUI</span>
+</div><div class="proj">
+<span class="pname"><a href="https://github.com/vajradevam/cst-studio-plotter">cst-plotter</a></span>
+<span class="plang">Python</span>
+<span class="pdesc">Publication-quality graphs: S11, gain, VSWR, efficiency</span>
+</div>
+<div class="eob" aria-hidden="true">~<br>~<br>~<br>~</div>
+</main>
+<footer class="cmdline">:w &middot; "vajradevam.in" [unix] &copy; 2026 Aman Pathak &middot; <a href="/rss.xml">rss</a> &middot; <a href="https://github.com/vajradevam">github</a> &middot; <a href="mailto:vajradevam@gmail.com">mail</a> &middot; press <kbd>?</kbd> for keys</footer>
+<div class="float" id="keyhelp" hidden role="dialog" aria-label="Keyboard mappings">
+<h4>key mappings</h4>
+<table>
+<tr><td class="k">j / k</td><td>scroll down / up</td></tr>
+<tr><td class="k">d / u</td><td>half page down / up</td></tr>
+<tr><td class="k">gg / G</td><td>top / bottom</td></tr>
+<tr><td class="k">gt / gT</td><td>next / previous tab</td></tr>
+<tr><td class="k">?</td><td>toggle this help</td></tr>
+</table>
+</div>
+<div class="statusline" aria-hidden="true">
+  <span class="seg mode" id="sl-mode">NORMAL</span><span class="sep-r"></span>
+  <span class="seg branch">master</span><span class="sep-r2"></span>
+  <span class="seg file">~/vajradevam/projects/index.md</span>
+  <span class="fill"></span>
+  <span class="seg meta">unix &#9474; utf-8</span>
+  <span class="sep-l2"></span><span class="seg lncol" id="sl-lncol">1:1</span>
+  <span class="sep-l"></span><span class="seg pct" id="sl-pct">Top</span>
+</div>
+<script src="/js/vim.js"></script>
+</body>
+</html>

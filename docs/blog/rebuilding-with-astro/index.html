@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rebuilding this site with Astro &middot; vajradevam</title>
+<meta name="description" content="Why this site moved from Jekyll to Astro, what changed under the hood, and how posts work now.">
+<meta name="author" content="Aman Pathak">
+<link rel="canonical" href="https://vajradevam.in/blog/rebuilding-with-astro/">
+<meta property="og:title" content="Rebuilding this site with Astro &middot; vajradevam">
+<meta property="og:description" content="Why this site moved from Jekyll to Astro, what changed under the hood, and how posts work now.">
+<meta property="og:url" content="https://vajradevam.in/blog/rebuilding-with-astro/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#11100f">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="alternate" type="application/rss+xml" title="vajradevam rss" href="/rss.xml">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<nav class="tabline" aria-label="Site"><a href="/"><span class="tab-no">1</span>home</a><a href="/about/"><span class="tab-no">2</span>about</a><a href="/research/"><span class="tab-no">3</span>research</a><a href="/projects/"><span class="tab-no">4</span>projects</a><a href="/blog/" aria-current="page"><span class="tab-no">5</span>blog</a><a href="/writings/"><span class="tab-no">6</span>writings</a><span class="tab-fill"></span><a class="tab-ext" href="https://github.com/vajradevam" rel="me">github&#8599;</a><a class="tab-ext" href="/rss.xml">rss</a></nav>
+<main>
+<p class="sec-label">blog &middot; 2026-10-08 &middot; 2 min read</p>
+<h1>Rebuilding this site with Astro</h1>
+<p class="etags"><span class="tag">meta</span> <span class="tag">astro</span></p>
+<p>I rebuilt this site again. It looks the same — same typography-first theme, same pages — but everything underneath is different. Jekyll is out, <a href="https://astro.build/">Astro</a> is in. The output is still plain static HTML on GitHub Pages at <code>vajradevam.in</code>, just produced by a saner pipeline.</p>
+<h2 id="why-leave-jekyll">Why leave Jekyll?</h2>
+<p>Nothing was broken, exactly. But the project had accumulated the usual Jekyll cruft: <code>_layouts</code>, <code>_includes</code>, <code>_data</code>, root-level <code>blog.html</code> / <code>tags.html</code> / <code>projects.html</code>, a <code>Gemfile</code> with <code>vendor/bundle</code> weighing 84 MB locally, a one-off <code>generate.js</code> plus a GitHub Action just to list PDFs, and client-side fallbacks hitting the GitHub API. Layout and structure were the mess, not the design.</p>
+<p>Astro fits this site well: content collections for the blog, TypeScript data files instead of YAML sprawl, file-based routing, zero JavaScript by default, and static output that deploys to Pages via the official <code>deploy-pages</code> action. No Ruby toolchain, no <code>vendor/</code>, no <code>_site/</code> committed confusion.</p>
+<h2 id="what-changed">What changed</h2>
+<ul>
+<li><strong>Posts</strong> moved from <code>_posts/YYYY-MM-DD-slug.md</code> to <code>src/content/blog/slug.md</code>, with the date living in frontmatter as <code>pubDate</code>. A Zod schema in <code>src/content.config.ts</code> validates every post.</li>
+<li><strong>Data</strong> moved from <code>_data/*.yml</code> to typed <code>src/data/*.ts</code> — projects, publications, patents, experience, skills, now, categories.</li>
+<li><strong>Layouts</strong> are <code>src/layouts/Base.astro</code>, <code>Page.astro</code>, and <code>Post.astro</code> instead of Liquid templates. Components are just <code>Nav.astro</code> and <code>Footer.astro</code>.</li>
+<li><strong>Writings</strong> got the biggest simplification. PDFs live in <code>public/writings/</code> and the page reads that directory at build time with <code>node:fs</code>. No <code>list.json</code>, no extra workflow, no API fallback.</li>
+<li><strong>Highlighting</strong> switched from Rouge to Shiki (<code>github-dark</code>). Container styling stayed in <code>src/styles/global.css</code>.</li>
+<li><strong>Feeds</strong>: canonical <code>/rss.xml</code>, with <code>/feed.xml</code> kept as an alias so old subscribers don’t break. Sitemap is automatic.</li>
+</ul>
+<p>Old URLs are preserved: <code>/blog/&lt;slug&gt;/</code>, <code>/tags/#&lt;tag&gt;</code>, <code>/projects/</code>, <code>/research/</code>, <code>/writings/</code>.</p>
+<h2 id="writing-a-post-now">Writing a post now</h2>
+<p>Create <code>src/content/blog/&lt;slug&gt;.md</code>:</p>
+<div class="sourceCode" id="cb1"><pre data-lang="markdown" class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> &quot;Your title here&quot;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">pubDate:</span><span class="co"> 2026-10-08</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">tags:</span><span class="co"> [technical, c]</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> &quot;A one-line summary shown in the post list.&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>Your post body goes here, in Markdown.</span></code></pre></div>
+<p>Fenced code blocks get Shiki highlighting. Add <code>math: true</code> to the frontmatter on posts that need LaTeX, and MathJax loads only there.</p>
+<p>Push to <code>master</code> and the deploy action builds (<code>npm ci</code> + <code>npm run build</code>) and publishes <code>dist/</code>. Local preview is <code>npm run dev</code> at <code>http://localhost:4321</code> — note the port change from Jekyll’s <code>4000</code>.</p>
+<p>Same words, less machinery. That’s the whole point.</p>
+
+<hr><p class="dim" style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap"><a href="/blog/compiling-and-testing-the-linux-kernel/">&larr; Compiling the Linux kernel, then testing it in QEMU</a><a href="/blog/compiling-and-running-the-linux-kernel/">Compiling and Running the Linux Kernel &rarr;</a></p>
+<div class="eob" aria-hidden="true">~<br>~<br>~<br>~</div>
+</main>
+<footer class="cmdline">:w &middot; "vajradevam.in" [unix] &copy; 2026 Aman Pathak &middot; <a href="/rss.xml">rss</a> &middot; <a href="https://github.com/vajradevam">github</a> &middot; <a href="mailto:vajradevam@gmail.com">mail</a> &middot; press <kbd>?</kbd> for keys</footer>
+<div class="float" id="keyhelp" hidden role="dialog" aria-label="Keyboard mappings">
+<h4>key mappings</h4>
+<table>
+<tr><td class="k">j / k</td><td>scroll down / up</td></tr>
+<tr><td class="k">d / u</td><td>half page down / up</td></tr>
+<tr><td class="k">gg / G</td><td>top / bottom</td></tr>
+<tr><td class="k">gt / gT</td><td>next / previous tab</td></tr>
+<tr><td class="k">?</td><td>toggle this help</td></tr>
+</table>
+</div>
+<div class="statusline" aria-hidden="true">
+  <span class="seg mode" id="sl-mode">NORMAL</span><span class="sep-r"></span>
+  <span class="seg branch">master</span><span class="sep-r2"></span>
+  <span class="seg file">~/vajradevam/blog/rebuilding-with-astro.md</span>
+  <span class="fill"></span>
+  <span class="seg meta">unix &#9474; utf-8</span>
+  <span class="sep-l2"></span><span class="seg lncol" id="sl-lncol">1:1</span>
+  <span class="sep-l"></span><span class="seg pct" id="sl-pct">Top</span>
+</div>
+<script src="/js/vim.js"></script>
+</body>
+</html>

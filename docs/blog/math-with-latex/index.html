@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Writing math with LaTeX in Markdown &middot; vajradevam</title>
+<meta name="description" content="A demonstration of the blog’s LaTeX support: inline math, display equations, aligned derivations, matrices, and the syntax behind them.">
+<meta name="author" content="Aman Pathak">
+<link rel="canonical" href="https://vajradevam.in/blog/math-with-latex/">
+<meta property="og:title" content="Writing math with LaTeX in Markdown &middot; vajradevam">
+<meta property="og:description" content="A demonstration of the blog’s LaTeX support: inline math, display equations, aligned derivations, matrices, and the syntax behind them.">
+<meta property="og:url" content="https://vajradevam.in/blog/math-with-latex/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#11100f">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="alternate" type="application/rss+xml" title="vajradevam rss" href="/rss.xml">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" onload="document.querySelectorAll('.math').forEach(function(el){katex.render(el.textContent,el,{displayMode:el.classList.contains('display'),throwOnError:false})})"></script>
+</head>
+<body>
+<nav class="tabline" aria-label="Site"><a href="/"><span class="tab-no">1</span>home</a><a href="/about/"><span class="tab-no">2</span>about</a><a href="/research/"><span class="tab-no">3</span>research</a><a href="/projects/"><span class="tab-no">4</span>projects</a><a href="/blog/" aria-current="page"><span class="tab-no">5</span>blog</a><a href="/writings/"><span class="tab-no">6</span>writings</a><span class="tab-fill"></span><a class="tab-ext" href="https://github.com/vajradevam" rel="me">github&#8599;</a><a class="tab-ext" href="/rss.xml">rss</a></nav>
+<main>
+<p class="sec-label">blog &middot; 2026-06-10 &middot; 2 min read</p>
+<h1>Writing math with LaTeX in Markdown</h1>
+<p class="etags"><span class="tag">meta</span> <span class="tag">math</span></p>
+<p>This blog renders LaTeX math with <a href="https://www.mathjax.org/">MathJax</a>. Posts opt in with <code>math: true</code> in the front matter, and then you can write mathematics inline with the rest of your prose. This post doubles as a reference: every rendered equation is shown next to the Markdown that produced it.</p>
+<p>Kramdown (the Markdown engine GitHub Pages uses) treats <code>$$...$$</code> as math. It’s smart about context: <code>$$</code> in the middle of a sentence is rendered inline, while <code>$$</code> in its own paragraph is rendered as a centered display block. Crucially, kramdown protects what’s inside from Markdown processing, so subscripts like <code>x_i</code> won’t get mangled into emphasis.</p>
+<h2 id="inline-math">Inline math</h2>
+<p>You can drop symbols straight into a sentence. Euler’s identity, <span class="math inline">e^{i\pi} + 1 = 0</span>, is hard to beat; merge sort runs in <span class="math inline">O(n \log n)</span>; and a masked share might be written as <span class="math inline">x = x_1 \oplus x_2</span>.</p>
+<div class="sourceCode" id="cb1"><pre data-lang="markdown" class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Euler&#39;s identity, $$e^{i\pi} + 1 = 0$$, is hard to beat; merge sort runs in</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>$$O(n \log n)$$; and a masked share might be written as $$x = x_1 \oplus x_2$$.</span></code></pre></div>
+<h2 id="display-equations">Display equations</h2>
+<p>Put the math in its own paragraph to center it. Average memory access time:</p>
+<p><span class="math display">
+\text{AMAT} = t_{\text{hit}} + r_{\text{miss}} \times t_{\text{penalty}}
+</span></p>
+<div class="sourceCode" id="cb2"><pre data-lang="markdown" class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>\text{AMAT} = t_{\text{hit}} + r_{\text{miss}} \times t_{\text{penalty}}</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>$$</span></code></pre></div>
+<h2 id="fractions-roots-sums-and-integrals">Fractions, roots, sums, and integrals</h2>
+<p>The softmax used in a classifier’s output layer:</p>
+<p><span class="math display">
+\sigma(\mathbf{z})_i = \frac{e^{z_i}}{\sum_{j=1}^{K} e^{z_j}}
+</span></p>
+<p>The continuous Fourier transform:</p>
+<p><span class="math display">
+\hat{f}(\xi) = \int_{-\infty}^{\infty} f(x)\, e^{-2\pi i x \xi}\, dx
+</span></p>
+<p>A classic limit and a root for good measure:</p>
+<p><span class="math display">
+\lim_{x \to 0} \frac{\sin x}{x} = 1
+\qquad
+\lVert \mathbf{v} \rVert_2 = \sqrt{\sum_{k=1}^{n} v_k^2}
+</span></p>
+<h2 id="aligned-multi-step-derivations">Aligned, multi-step derivations</h2>
+<p>Use <code>\begin{aligned}</code> to line equations up on the <code>&amp;</code>. Closed form of a geometric series, the kind that shows up in amortized analysis:</p>
+<p><span class="math display">
+\begin{aligned}
+S &amp;= \sum_{k=0}^{n-1} a r^k \\
+  &amp;= a \left( 1 + r + r^2 + \cdots + r^{n-1} \right) \\
+  &amp;= a \, \frac{1 - r^n}{1 - r}, \qquad r \neq 1
+\end{aligned}
+</span></p>
+<div class="sourceCode" id="cb3"><pre data-lang="markdown" class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>S &amp;= \sum_{k=0}^{n-1} a r^k <span class="sc">\\</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  &amp;= a \, \frac{1 - r^n}{1 - r}, \qquad r \neq 1</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>$$</span></code></pre></div>
+<h2 id="matrices-and-vectors">Matrices and vectors</h2>
+<p>A <span class="math inline">2 \times 2</span> matrix and a matrix-vector product:</p>
+<p><span class="math display">
+A = \begin{bmatrix} a_{11} &amp; a_{12} \\ a_{21} &amp; a_{22} \end{bmatrix},
+\qquad
+A\mathbf{x} = \begin{bmatrix} a_{11} x_1 + a_{12} x_2 \\ a_{21} x_1 + a_{22} x_2 \end{bmatrix}
+</span></p>
+<h2 id="piecewise-definitions">Piecewise definitions</h2>
+<p>The <code>cases</code> environment is perfect for recurrences. Factorial, written recursively:</p>
+<p><span class="math display">
+f(n) =
+\begin{cases}
+1 &amp; \text{if } n = 0 \\
+n \cdot f(n - 1) &amp; \text{if } n &gt; 0
+\end{cases}
+</span></p>
+<h2 id="symbols-greek-and-operators">Symbols, Greek, and operators</h2>
+<p>A quick sampler of the things you’ll reach for most:</p>
+<p><span class="math display">
+\alpha, \beta, \gamma, \delta, \quad \Delta, \Sigma, \Omega, \quad
+\nabla, \partial, \infty, \quad \forall x \in \mathbb{R}, \ \exists\, \varepsilon &gt; 0
+</span></p>
+<p><span class="math display">
+\mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R} \subset \mathbb{C}, \qquad
+a \equiv b \pmod{m}, \qquad
+\binom{n}{k} = \frac{n!}{k!\,(n-k)!}
+</span></p>
+<p>That’s the whole toolkit. Anything LaTeX’s math mode can express, MathJax will render here. To use it in your own post, add <code>math: true</code> to the front matter and write away.</p>
+
+<hr><p class="dim" style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap"><a href="/blog/unrequited-love/">&larr; Unrequited Love</a><a href="/blog/welcome-to-the-blog/">Welcome to the new site &rarr;</a></p>
+<div class="eob" aria-hidden="true">~<br>~<br>~<br>~</div>
+</main>
+<footer class="cmdline">:w &middot; "vajradevam.in" [unix] &copy; 2026 Aman Pathak &middot; <a href="/rss.xml">rss</a> &middot; <a href="https://github.com/vajradevam">github</a> &middot; <a href="mailto:vajradevam@gmail.com">mail</a> &middot; press <kbd>?</kbd> for keys</footer>
+<div class="float" id="keyhelp" hidden role="dialog" aria-label="Keyboard mappings">
+<h4>key mappings</h4>
+<table>
+<tr><td class="k">j / k</td><td>scroll down / up</td></tr>
+<tr><td class="k">d / u</td><td>half page down / up</td></tr>
+<tr><td class="k">gg / G</td><td>top / bottom</td></tr>
+<tr><td class="k">gt / gT</td><td>next / previous tab</td></tr>
+<tr><td class="k">?</td><td>toggle this help</td></tr>
+</table>
+</div>
+<div class="statusline" aria-hidden="true">
+  <span class="seg mode" id="sl-mode">NORMAL</span><span class="sep-r"></span>
+  <span class="seg branch">master</span><span class="sep-r2"></span>
+  <span class="seg file">~/vajradevam/blog/math-with-latex.md</span>
+  <span class="fill"></span>
+  <span class="seg meta">unix &#9474; utf-8</span>
+  <span class="sep-l2"></span><span class="seg lncol" id="sl-lncol">1:1</span>
+  <span class="sep-l"></span><span class="seg pct" id="sl-pct">Top</span>
+</div>
+<script src="/js/vim.js"></script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>research &middot; vajradevam</title>
+<meta name="description" content="Publications, patents, and active research threads — RISC-V hardware security, side channels, formal verification.">
+<meta name="author" content="Aman Pathak">
+<link rel="canonical" href="https://vajradevam.in/research/">
+<meta property="og:title" content="research &middot; vajradevam">
+<meta property="og:description" content="Publications, patents, and active research threads — RISC-V hardware security, side channels, formal verification.">
+<meta property="og:url" content="https://vajradevam.in/research/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#11100f">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="alternate" type="application/rss+xml" title="vajradevam rss" href="/rss.xml">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<nav class="tabline" aria-label="Site"><a href="/"><span class="tab-no">1</span>home</a><a href="/about/"><span class="tab-no">2</span>about</a><a href="/research/" aria-current="page"><span class="tab-no">3</span>research</a><a href="/projects/"><span class="tab-no">4</span>projects</a><a href="/blog/"><span class="tab-no">5</span>blog</a><a href="/writings/"><span class="tab-no">6</span>writings</a><span class="tab-fill"></span><a class="tab-ext" href="https://github.com/vajradevam" rel="me">github&#8599;</a><a class="tab-ext" href="/rss.xml">rss</a></nav>
+<main>
+<p class="sec-label">~/vajradevam/research &middot; grep -r "side channel" /dev/silicon</p>
+<h1>Research</h1>
+<p class="dim">Hardware security of RISC-V architectures: microarchitectural
+side channels, memory encryption, cache coherency you can formally verify,
+and the certification gap between ISA spec and silicon.
+14 published or accepted &middot; 5 under review &middot;
+<a href="/research.bib">research.bib</a></p>
+
+<h2 id="threads">active threads</h2>
+<ul><li>Securing CXL memory fabrics: coherence directory poisoning, protocol-processor boundary attacks, compression side channels, and fabric-amplified Row Hammer</li><li>Security-aware architectural certification testing (SecACT) for RISC-V: PMP bypass via microarchitectural state, vendor extension validation, and the ACT security gap</li><li>Formalizing the Linux kernel shared-page mutation bug class: dirty invariant model, page-cache anti-forensics, zero-copy I/O abuse, and in-place crypto redesign</li><li>Fundamental side channels in LLM serving: SpecLeak, KV cache sharing isolation impossibility, and speculative decoding GPU microarchitectural leakage</li><li>Covert channels beyond cache timing: GPU coherence directory state as a cross-GPU communication primitive</li></ul>
+
+<h2 id="publications">publications</h2>
+<div class="pub" id="p1">
+<span class="no">[1]</span>
+<div>
+  <span class="ptitle"><a href="https://www.mdpi.com/2073-431X/15/8/479">ARCHER: A Cycle-Accurate RISC-V Emulator for Microarchitectural Side-Channel and Memory-Encryption Research</a></span> <span class="chip c-green">JCR Q2</span>
+  <p class="pmeta">J. Mishra, S.K. Sahay, S. Mishra, <span class="me">A. Pathak</span></p>
+  <p class="pvenue">Computers (MDPI), Vol. 15, Issue 8, p. 479 &middot; 2026 &middot; Scopus Q1, ESCI Q2</p>
+</div>
+</div><div class="pub" id="p2">
+<span class="no">[2]</span>
+<div>
+  <span class="ptitle"><a href="https://www.mdpi.com/2674-0729/5/3/25">PACE: A Page-Adaptive, Cache-Anchored Memory-Encryption Engine for RISC-V with Formally-Verified nth-Order DPA Resistance</a></span> <span class="chip c-cyan">Scopus Q2</span>
+  <p class="pmeta">J. Mishra, S.K. Sahay, S. Mishra, <span class="me">A. Pathak</span></p>
+  <p class="pvenue">Chips (MDPI), Vol. 5, Issue 3, p. 25 &middot; 2026 &middot; Scopus Q2, ESCI</p>
+</div>
+</div><div class="pub" id="p3">
+<span class="no">[3]</span>
+<div>
+  <span class="ptitle"><a href="https://www.mdpi.com/2674-0729/5/3/29">Novel Microarchitectural Side-Channel Attacks on Open-Source RISC-V Cores</a></span> <span class="chip c-cyan">Scopus Q2</span>
+  <p class="pmeta">J. Mishra, S.K. Sahay, S. Mishra, <span class="me">A. Pathak</span></p>
+  <p class="pvenue">Chips (MDPI), Vol. 5, Issue 3, p. 29 &middot; 2026 &middot; Scopus Q2, ESCI</p>
+</div>
+</div><div class="pub" id="p4">
+<span class="no">[4]</span>
+<div>
+  <span class="ptitle"><a href="https://link.springer.com/chapter/10.1007/978-3-032-06665-7_38">A Hardware Security Review of RISC-V</a></span> <span class="chip c-cyan">Scopus</span>
+  <p class="pmeta">J. Mishra, S.K. Sahay, <span class="me">A. Pathak</span></p>
+  <p class="pvenue">Lecture Notes in Networks and Systems (ICT4SD), Vol. 2, pp. 409–422, Springer &middot; 2025 &middot; Scopus</p>
+</div>
+</div><div class="pub" id="p5">
+<span class="no">[5]</span>
+<div>
+  <span class="ptitle"><a href="https://link.springer.com/chapter/10.1007/978-3-032-06665-7_21">Cache and Speculative Side-Channel Attacks: A Comprehensive Review</a></span> <span class="chip c-cyan">Scopus</span>
+  <p class="pmeta">J. Mishra, S.K. Sahay, <span class="me">A. Pathak</span></p>
+  <p class="pvenue">Lecture Notes in Networks and Systems (ICT4SD), Vol. 2, pp. 219–233, Springer &middot; 2025 &middot; Scopus</p>
+</div>
+</div><div class="pub" id="p6">
+<span class="no">[6]</span>
+<div>
+  <span class="ptitle">Memory Security: From Cold Boot Attacks to Side-Channel Defenses</span> <span class="chip c-yellow">accepted</span>
+  <p class="pmeta">J. Mishra, S.K. Sahay, S. Mishra, <span class="me">A. Pathak</span></p>
+  <p class="pvenue">Lecture Notes in Networks and Systems (11th ICTIS), Springer &middot; 2026 &middot; To appear · LNNS</p>
+</div>
+</div><div class="pub" id="p7">
+<span class="no">[7]</span>
+<div>
+  <span class="ptitle"><a href="https://link.springer.com/chapter/10.1007/978-3-032-27563-9_40">Formal Verification of Software-Managed Cache Coherency for RISC-V Heterogeneous Embedded Systems</a></span> <span class="chip c-cyan">Scopus</span>
+  <p class="pmeta">J. Mishra, S.K. Sahay, S. Mishra, <span class="me">A. Pathak</span></p>
+  <p class="pvenue">Lecture Notes in Networks and Systems, Vol. 1997, pp. 430–442, Springer &middot; 2026 &middot; Scopus</p>
+</div>
+</div><div class="pub" id="p8">
+<span class="no">[8]</span>
+<div>
+  <span class="ptitle"><a href="https://link.springer.com/chapter/10.1007/978-3-032-27754-1_36">RV-JOSH: A Hardened Operating System for RISC-V based on Java</a></span> <span class="chip c-yellow">accepted</span>
+  <p class="pmeta">J. Mishra, S.K. Sahay, S. Mishra, <span class="me">A. Pathak</span></p>
+  <p class="pvenue">Lecture Notes in Networks and Systems (SmartCom), Springer &middot; 2026 &middot; To appear · LNNS</p>
+</div>
+</div><div class="pub" id="p9">
+<span class="no">[9]</span>
+<div>
+  <span class="ptitle">Catching the Set Builder: Hardware Detection of Eviction-Set Construction at the Shared LLC on RISC-V</span> <span class="chip c-yellow">accepted</span>
+  <p class="pmeta">J. Mishra, S.K. Sahay, S. Mishra, L.K. Vashishtha, <span class="me">A. Pathak</span></p>
+  <p class="pvenue">Communications in Computer and Information Science (COCOLE), Springer &middot; 2026 &middot; To appear · CCIS</p>
+</div>
+</div><div class="pub" id="p10">
+<span class="no">[10]</span>
+<div>
+  <span class="ptitle">The Replacement Policy Is a Side Channel: Closing the Reload+Refresh Leak at the Policy Level on RISC-V</span> <span class="chip c-yellow">accepted</span>
+  <p class="pmeta">J. Mishra, S.K. Sahay, S. Mishra, L.K. Vashishtha, <span class="me">A. Pathak</span></p>
+  <p class="pvenue">Communications in Computer and Information Science (COCOLE), Springer &middot; 2026 &middot; To appear · CCIS</p>
+</div>
+</div><div class="pub" id="p11">
+<span class="no">[11]</span>
+<div>
+  <span class="ptitle">The Walk Is the Channel: Page-Table-Walker Cache Partitioning for Deterministic Domain Isolation on Out-of-Order RISC-V</span> <span class="chip c-yellow">accepted</span>
+  <p class="pmeta">J. Mishra, S.K. Sahay, S. Mishra, L.K. Vashishtha, <span class="me">A. Pathak</span></p>
+  <p class="pvenue">ISED 2026 (IEEE) &middot; 2026 &middot; To appear · IEEE Xplore</p>
+</div>
+</div><div class="pub" id="p12">
+<span class="no">[12]</span>
+<div>
+  <span class="ptitle">History Is the Channel: Why Index Coloring Cannot Isolate a History-Based Branch Predictor, and a Warm Per-Domain Fix on Open RISC-V RTL</span> <span class="chip c-yellow">accepted</span>
+  <p class="pmeta">J. Mishra, S.K. Sahay, S. Mishra, L.K. Vashishtha, <span class="me">A. Pathak</span></p>
+  <p class="pvenue">ISED 2026 (IEEE) &middot; 2026 &middot; To appear · IEEE Xplore</p>
+</div>
+</div><div class="pub" id="p13">
+<span class="no">[13]</span>
+<div>
+  <span class="ptitle">Closing a Spectre-v1 Cache Leak on BOOM with a Per-Domain Guard</span> <span class="chip c-yellow">accepted</span>
+  <p class="pmeta">J. Mishra, S.K. Sahay, S. Mishra, L.K. Vashishtha, <span class="me">A. Pathak</span></p>
+  <p class="pvenue">ISED 2026 (IEEE) &middot; 2026 &middot; To appear · IEEE Xplore</p>
+</div>
+</div><div class="pub" id="p14">
+<span class="no">[14]</span>
+<div>
+  <span class="ptitle">No-Op or No Security? A Backward-Compatible, Discoverable, Fail-Closed Contract for Security Directives in the RISC-V HINT Encoding Space</span> <span class="chip c-yellow">accepted</span>
+  <p class="pmeta">J. Mishra, S.K. Sahay, S. Mishra, L.K. Vashishtha, <span class="me">A. Pathak</span></p>
+  <p class="pvenue">ISED 2026 (IEEE) &middot; 2026 &middot; To appear · IEEE Xplore</p>
+</div>
+</div><div class="pub" id="p15">
+<span class="no">[15]</span>
+<div>
+  <span class="ptitle">Near-Miss Retrieval: Contrastive Case Retrieval for Entity Disambiguation in Retrieval-Augmented Generation</span> <span class="chip c-orange">under review</span>
+  <p class="pmeta">J. Mishra, L.K. Vashishtha, S.K. Sahay, S. Mishra, <span class="me">A. Pathak</span></p>
+  <p class="pvenue">MIKE 2026 &middot; Under review</p>
+</div>
+</div><div class="pub" id="p16">
+<span class="no">[16]</span>
+<div>
+  <span class="ptitle">Surprisal Is a Time Series: Prequential Calibration Auditing of Language Models with Zero-Shot Forecasting Foundation Models</span> <span class="chip c-orange">under review</span>
+  <p class="pmeta">J. Mishra, <span class="me">A. Pathak</span>, S.K. Sahay, L.K. Vashishtha, S. Mishra</p>
+  <p class="pvenue">MIKE 2026 &middot; Under review</p>
+</div>
+</div><div class="pub" id="p17">
+<span class="no">[17]</span>
+<div>
+  <span class="ptitle">Parametric Knowledge Delta: Measuring, Compressing and Retrieving Knowledge Graphs Against a Language Model&#x27;s Prior</span> <span class="chip c-orange">under review</span>
+  <p class="pmeta">J. Mishra, L.K. Vashishtha, S.K. Sahay, S. Mishra, <span class="me">A. Pathak</span></p>
+  <p class="pvenue">MIKE 2026 &middot; Under review</p>
+</div>
+</div><div class="pub" id="p18">
+<span class="no">[18]</span>
+<div>
+  <span class="ptitle">Knowledge Certificates: Distribution-Free Guarantees on Which Facts Survive Quantization</span> <span class="chip c-orange">under review</span>
+  <p class="pmeta">J. Mishra, <span class="me">A. Pathak</span>, L.K. Vashishtha, S.K. Sahay, S. Mishra</p>
+  <p class="pvenue">MIKE 2026 &middot; Under review</p>
+</div>
+</div><div class="pub" id="p19">
+<span class="no">[19]</span>
+<div>
+  <span class="ptitle">KRAIT: Kernel Real-Time Attention-Based Intrusion Tracker via Cross-Layer Feature Fusion and In-Kernel Neural Inference with the extended Berkeley Packet Filter</span> <span class="chip c-orange">under review</span>
+  <p class="pmeta">J. Mishra, S.K. Sahay, S. Mishra, L.K. Vashishtha, <span class="me">A. Pathak</span></p>
+  <p class="pvenue">Engineering Applications of Artificial Intelligence (Elsevier) &middot; Under review</p>
+</div>
+</div>
+
+<h2 id="patents">patents</h2>
+<p class="dim">Six Indian patent applications filed in the RISC-V space.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>application</th><th>title</th></tr></thead>
+<tbody><tr><td><code>202631036811</code></td><td><strong>DFI Monitor</strong> &mdash; Hardware Data-Flow Integrity Monitor with Register-File Provenance Tagging for RISC-V IoT Processors</td></tr><tr><td><code>202631036816</code></td><td><strong>Fusion Engine</strong> &mdash; Programmable Instruction Fusion Engine with SRAM-Based Rules Table for RISC-V IoT Processors</td></tr><tr><td><code>202631036812</code></td><td><strong>HPC Malware</strong> &mdash; Hardware-Accelerated Microarchitectural Event Classifier with Programmable Feature Extraction Pipeline and On-Chip Ensemble Inference Engine for Real-Time Malware Detection in RISC-V Processors</td></tr><tr><td><code>202631036813</code></td><td><strong>Crypto Engine</strong> &mdash; Per-Peripheral Cryptographic Session Engine with Hardware Key Rotation for RISC-V IoT System-on-Chip</td></tr><tr><td><code>202631036815</code></td><td><strong>NUMA</strong> &mdash; RISC-V Processor Architecture with Tiered-Memory ISA Extension, Tier-Aware TLB, and Thunderbolt-Attached External DRAM Expansion with RISC-V Bridge Controller for Linux-Based Heterogeneous Memory Systems</td></tr><tr><td><code>202631036814</code></td><td><strong>Trace BDT</strong> &mdash; On-Chip Binary Decision Tree Inference Engine Integrated with RISC-V Trace Encoder for Real-Time IoT Security Monitoring</td></tr></tbody>
+</table></div>
+
+<p class="muted">Full experience record on the <a href="/about/#experience">about page</a>.</p>
+<div class="eob" aria-hidden="true">~<br>~<br>~<br>~</div>
+</main>
+<footer class="cmdline">:w &middot; "vajradevam.in" [unix] &copy; 2026 Aman Pathak &middot; <a href="/rss.xml">rss</a> &middot; <a href="https://github.com/vajradevam">github</a> &middot; <a href="mailto:vajradevam@gmail.com">mail</a> &middot; press <kbd>?</kbd> for keys</footer>
+<div class="float" id="keyhelp" hidden role="dialog" aria-label="Keyboard mappings">
+<h4>key mappings</h4>
+<table>
+<tr><td class="k">j / k</td><td>scroll down / up</td></tr>
+<tr><td class="k">d / u</td><td>half page down / up</td></tr>
+<tr><td class="k">gg / G</td><td>top / bottom</td></tr>
+<tr><td class="k">gt / gT</td><td>next / previous tab</td></tr>
+<tr><td class="k">?</td><td>toggle this help</td></tr>
+</table>
+</div>
+<div class="statusline" aria-hidden="true">
+  <span class="seg mode" id="sl-mode">NORMAL</span><span class="sep-r"></span>
+  <span class="seg branch">master</span><span class="sep-r2"></span>
+  <span class="seg file">~/vajradevam/research/index.md</span>
+  <span class="fill"></span>
+  <span class="seg meta">unix &#9474; utf-8</span>
+  <span class="sep-l2"></span><span class="seg lncol" id="sl-lncol">1:1</span>
+  <span class="sep-l"></span><span class="seg pct" id="sl-pct">Top</span>
+</div>
+<script src="/js/vim.js"></script>
+</body>
+</html>

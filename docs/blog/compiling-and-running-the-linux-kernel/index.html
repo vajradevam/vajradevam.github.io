@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Compiling and Running the Linux Kernel &middot; vajradevam</title>
+<meta name="description" content="Build and boot a vanilla Linux kernel from kernel.org on Arch and Debian-based systems. Exact commands only.">
+<meta name="author" content="Aman Pathak">
+<link rel="canonical" href="https://vajradevam.in/blog/compiling-and-running-the-linux-kernel/">
+<meta property="og:title" content="Compiling and Running the Linux Kernel &middot; vajradevam">
+<meta property="og:description" content="Build and boot a vanilla Linux kernel from kernel.org on Arch and Debian-based systems. Exact commands only.">
+<meta property="og:url" content="https://vajradevam.in/blog/compiling-and-running-the-linux-kernel/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#11100f">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="alternate" type="application/rss+xml" title="vajradevam rss" href="/rss.xml">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<nav class="tabline" aria-label="Site"><a href="/"><span class="tab-no">1</span>home</a><a href="/about/"><span class="tab-no">2</span>about</a><a href="/research/"><span class="tab-no">3</span>research</a><a href="/projects/"><span class="tab-no">4</span>projects</a><a href="/blog/" aria-current="page"><span class="tab-no">5</span>blog</a><a href="/writings/"><span class="tab-no">6</span>writings</a><span class="tab-fill"></span><a class="tab-ext" href="https://github.com/vajradevam" rel="me">github&#8599;</a><a class="tab-ext" href="/rss.xml">rss</a></nav>
+<main>
+<p class="sec-label">blog &middot; 2026-08-27 &middot; 3 min read</p>
+<h1>Compiling and Running the Linux Kernel</h1>
+<p class="etags"><span class="tag">linux</span> <span class="tag">kernel</span> <span class="tag">technical</span> <span class="tag">build-guide</span></p>
+<p>Building your own kernel is just: get source, use your distro config, build, install, boot. Do it on Arch or Debian the same way, only the install tools differ.</p>
+<p>Replace <code>X.Y.Z</code> below with the version you pick from <a href="https://kernel.org">kernel.org</a>, e.g. <code>6.12.10</code>. Never build as root. Only install steps need <code>sudo</code>. Keep your old distro kernel installed as fallback.</p>
+<h2 id="install-build-tools">1. Install build tools</h2>
+<p>Debian / Ubuntu / Mint:</p>
+<div class="sourceCode" id="cb1"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install build-essential libncurses-dev flex bison libssl-dev libelf-dev bc dwarves rsync xz-utils zstd cpio kmod pciutils fakeroot dpkg-dev git</span></code></pre></div>
+<p>Arch:</p>
+<div class="sourceCode" id="cb2"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman <span class="at">-Syu</span> base-devel bc cpio gettext libelf pahole perl tar xz zstd openssl python git kmod</span></code></pre></div>
+<h2 id="get-the-source">2. Get the source</h2>
+<p>Same on both:</p>
+<div class="sourceCode" id="cb3"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/kernelbuild <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> ~/kernelbuild</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-X.Y.Z.tar.xz</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xf</span> linux-X.Y.Z.tar.xz</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> linux-X.Y.Z</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> mrproper</span></code></pre></div>
+<h2 id="configure">3. Configure</h2>
+<p>Copy your running kernel’s proven config, then adapt it:</p>
+<p>Arch (use <code>zcat</code> — <code>/boot/config-*</code> is root-only, hence <code>Permission denied</code>):</p>
+<div class="sourceCode" id="cb4"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> /proc/config.gz <span class="op">&gt;</span> .config</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> olddefconfig</span></code></pre></div>
+<p>Debian / Ubuntu / Mint:</p>
+<div class="sourceCode" id="cb5"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /boot/config-<span class="va">$(</span><span class="fu">uname</span> <span class="at">-r</span><span class="va">)</span> .config</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> olddefconfig</span></code></pre></div>
+<p>Then set a unique name and fix the two things that break vanilla builds:</p>
+<div class="sourceCode" id="cb6"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./scripts/config</span> <span class="at">--set-str</span> LOCALVERSION <span class="st">&quot;-custom&quot;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./scripts/config</span> <span class="at">--disable</span> LOCALVERSION_AUTO</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./scripts/config</span> <span class="at">--set-str</span> SYSTEM_TRUSTED_KEYS <span class="st">&quot;&quot;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">./scripts/config</span> <span class="at">--set-str</span> SYSTEM_REVOCATION_KEYS <span class="st">&quot;&quot;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./scripts/config</span> <span class="at">--disable</span> DEBUG_INFO <span class="at">--disable</span> DEBUG_INFO_BTF <span class="at">--disable</span> GDB_SCRIPTS</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> olddefconfig</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> .config ~/kernelbuild/myconfig.cfg</span></code></pre></div>
+<p>This makes <code>uname -r</code> report <code>X.Y.Z-custom</code> so GRUB lists it next to your distro kernel, and disabling <code>DEBUG_INFO</code> cuts the build from hours / 15 GB to ~30 min / 2 GB.</p>
+<p>Skip <code>localmodconfig</code> and <code>menuconfig</code> on your first build.</p>
+<h2 id="build">4. Build</h2>
+<p>Same on both:</p>
+<div class="sourceCode" id="cb7"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> <span class="at">-j</span><span class="va">$(</span><span class="fu">nproc</span><span class="va">)</span></span></code></pre></div>
+<p>If you get <code>Killed</code> or error 137, you ran out of RAM. Retry with <code>make -j4</code> or <code>make -j2</code>. Result is <code>arch/x86/boot/bzImage</code> plus thousands of <code>*.ko</code> modules.</p>
+<h2 id="install">5. Install</h2>
+<p>Pick one per distro.</p>
+<h3 id="debian-.deb-packages-recommended">Debian: .deb packages (recommended)</h3>
+<div class="sourceCode" id="cb8"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> bindeb-pkg <span class="at">-j</span><span class="va">$(</span><span class="fu">nproc</span><span class="va">)</span> KDEB_PKGVERSION=<span class="va">$(</span><span class="fu">make</span> kernelversion<span class="va">)</span>-1</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dpkg <span class="at">-i</span> ../linux-image-<span class="pp">*</span>.deb ../linux-headers-<span class="pp">*</span>.deb</span></code></pre></div>
+<p>That already did modules + initramfs + GRUB. Skip to section 6.</p>
+<h3 id="arch-manual-install">Arch: manual install</h3>
+<div class="sourceCode" id="cb9"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> make modules_install</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp arch/x86/boot/bzImage /boot/vmlinuz-X.Y.Z-custom</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp System.map /boot/System.map-X.Y.Z-custom</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp .config /boot/config-X.Y.Z-custom</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mkinitcpio <span class="at">-k</span> X.Y.Z-custom <span class="at">-g</span> /boot/initramfs-X.Y.Z-custom.img</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> grub-mkconfig <span class="at">-o</span> /boot/grub/grub.cfg</span></code></pre></div>
+<p>Debian manual fallback, if you don’t want .debs:</p>
+<div class="sourceCode" id="cb10"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> make modules_install</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp arch/x86/boot/bzImage /boot/vmlinuz-X.Y.Z-custom</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp System.map /boot/System.map-X.Y.Z-custom</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cp .config /boot/config-X.Y.Z-custom</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> update-initramfs <span class="at">-c</span> <span class="at">-k</span> X.Y.Z-custom</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> update-grub</span></code></pre></div>
+<p>Order matters: <code>modules_install</code> first, then copy to <code>/boot</code>, then initramfs, then bootloader. <code>update-initramfs</code> reads from <code>/lib/modules/&lt;version&gt;/</code>, so running it before <code>modules_install</code> gives an empty initramfs.</p>
+<h2 id="boot-and-verify">6. Boot and verify</h2>
+<p>Reboot, pick <code>Advanced options -&gt; X.Y.Z-custom</code> in GRUB.</p>
+<div class="sourceCode" id="cb11"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">uname</span> <span class="at">-r</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dmesg <span class="kw">|</span> <span class="fu">less</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">journalctl</span> <span class="at">-b</span> <span class="at">-p</span> err..alert</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ex">lspci</span> <span class="at">-k</span></span></code></pre></div>
+<p>If graphics or network is missing, you pruned too much. Reboot into the old kernel, re-enable the driver, rebuild.</p>
+<h2 id="update-rebuild-remove">7. Update, rebuild, remove</h2>
+<div class="sourceCode" id="cb12"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> clean      <span class="co"># keeps .config, fast rebuild</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># make mrproper # deletes .config, only with backup</span></span></code></pre></div>
+<p>New version:</p>
+<div class="sourceCode" id="cb13"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> ~/kernelbuild/myconfig.cfg .config</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> olddefconfig</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> <span class="at">-j</span><span class="va">$(</span><span class="fu">nproc</span><span class="va">)</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># then repeat section 5</span></span></code></pre></div>
+<p>Remove on Debian:</p>
+<div class="sourceCode" id="cb14"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt purge linux-image-X.Y.Z-custom linux-headers-X.Y.Z-custom</span></code></pre></div>
+<p>Remove on Arch (manual):</p>
+<div class="sourceCode" id="cb15"><pre data-lang="bash" class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> rm /boot/vmlinuz-X.Y.Z-custom /boot/initramfs-X.Y.Z-custom.img /boot/System.map-X.Y.Z-custom /boot/config-X.Y.Z-custom</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> rm <span class="at">-rf</span> /lib/modules/X.Y.Z-custom</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> grub-mkconfig <span class="at">-o</span> /boot/grub/grub.cfg</span></code></pre></div>
+<p>Secure Boot: if it is off, ignore this. If on, either disable it in firmware while experimenting, or sign the kernel with your own MOK via <code>mokutil</code> + <code>sbsign</code>.</p>
+
+<hr><p class="dim" style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap"><a href="/blog/rebuilding-with-astro/">&larr; Rebuilding this site with Astro</a><a href="/blog/compiling-and-executing-a-java-program/">Compiling and Executing a Java Program &rarr;</a></p>
+<div class="eob" aria-hidden="true">~<br>~<br>~<br>~</div>
+</main>
+<footer class="cmdline">:w &middot; "vajradevam.in" [unix] &copy; 2026 Aman Pathak &middot; <a href="/rss.xml">rss</a> &middot; <a href="https://github.com/vajradevam">github</a> &middot; <a href="mailto:vajradevam@gmail.com">mail</a> &middot; press <kbd>?</kbd> for keys</footer>
+<div class="float" id="keyhelp" hidden role="dialog" aria-label="Keyboard mappings">
+<h4>key mappings</h4>
+<table>
+<tr><td class="k">j / k</td><td>scroll down / up</td></tr>
+<tr><td class="k">d / u</td><td>half page down / up</td></tr>
+<tr><td class="k">gg / G</td><td>top / bottom</td></tr>
+<tr><td class="k">gt / gT</td><td>next / previous tab</td></tr>
+<tr><td class="k">?</td><td>toggle this help</td></tr>
+</table>
+</div>
+<div class="statusline" aria-hidden="true">
+  <span class="seg mode" id="sl-mode">NORMAL</span><span class="sep-r"></span>
+  <span class="seg branch">master</span><span class="sep-r2"></span>
+  <span class="seg file">~/vajradevam/blog/compiling-and-running-the-linux-kernel.md</span>
+  <span class="fill"></span>
+  <span class="seg meta">unix &#9474; utf-8</span>
+  <span class="sep-l2"></span><span class="seg lncol" id="sl-lncol">1:1</span>
+  <span class="sep-l"></span><span class="seg pct" id="sl-pct">Top</span>
+</div>
+<script src="/js/vim.js"></script>
+</body>
+</html>

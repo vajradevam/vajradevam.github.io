@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Welcome to the new site &middot; vajradevam</title>
+<meta name="description" content="A fresh, typography-first redesign and a real blog. Here’s how it’s built and how new posts get published.">
+<meta name="author" content="Aman Pathak">
+<link rel="canonical" href="https://vajradevam.in/blog/welcome-to-the-blog/">
+<meta property="og:title" content="Welcome to the new site &middot; vajradevam">
+<meta property="og:description" content="A fresh, typography-first redesign and a real blog. Here’s how it’s built and how new posts get published.">
+<meta property="og:url" content="https://vajradevam.in/blog/welcome-to-the-blog/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#11100f">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="alternate" type="application/rss+xml" title="vajradevam rss" href="/rss.xml">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<nav class="tabline" aria-label="Site"><a href="/"><span class="tab-no">1</span>home</a><a href="/about/"><span class="tab-no">2</span>about</a><a href="/research/"><span class="tab-no">3</span>research</a><a href="/projects/"><span class="tab-no">4</span>projects</a><a href="/blog/" aria-current="page"><span class="tab-no">5</span>blog</a><a href="/writings/"><span class="tab-no">6</span>writings</a><span class="tab-fill"></span><a class="tab-ext" href="https://github.com/vajradevam" rel="me">github&#8599;</a><a class="tab-ext" href="/rss.xml">rss</a></nav>
+<main>
+<p class="sec-label">blog &middot; 2026-06-10 &middot; 1 min read</p>
+<h1>Welcome to the new site</h1>
+<p class="etags"><span class="tag">meta</span></p>
+<p>I rebuilt this site from the ground up. It’s lighter, faster, and reads better; the focus is on words and code rather than animated backgrounds.</p>
+<p>More importantly, it now has a proper blog. Posts live as plain Markdown files, get tagged by topic, and are listed by year on the <a href="/blog/">blog page</a>. You can browse everything by topic on the <a href="/tags/">tags page</a>.</p>
+<h2 id="writing-a-new-post">Writing a new post</h2>
+<p>Drop a Markdown file into the <code>_posts/</code> folder named <code>YYYY-MM-DD-some-title.md</code> with a small block of front matter at the top:</p>
+<div class="sourceCode" id="cb1"><pre data-lang="markdown" class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> &quot;Your title here&quot;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2026-06-10</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">tags:</span><span class="co"> [technical, c]</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> &quot;A one-line summary shown in the post list.&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>Your post body goes here, in Markdown.</span></code></pre></div>
+<p>Push it to <code>master</code> and GitHub Pages builds and deploys it automatically, no toolchain required on my end. Code blocks get syntax highlighting, and tags become clickable filters across the whole blog.</p>
+<p>That’s it. Expect posts on computer architecture, hardware security, compilers, and C.</p>
+
+<hr><p class="dim" style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap"><a href="/blog/math-with-latex/">&larr; Writing math with LaTeX in Markdown</a><a href="/blog/bytes-in-memory/">Everything is just bytes in memory &rarr;</a></p>
+<div class="eob" aria-hidden="true">~<br>~<br>~<br>~</div>
+</main>
+<footer class="cmdline">:w &middot; "vajradevam.in" [unix] &copy; 2026 Aman Pathak &middot; <a href="/rss.xml">rss</a> &middot; <a href="https://github.com/vajradevam">github</a> &middot; <a href="mailto:vajradevam@gmail.com">mail</a> &middot; press <kbd>?</kbd> for keys</footer>
+<div class="float" id="keyhelp" hidden role="dialog" aria-label="Keyboard mappings">
+<h4>key mappings</h4>
+<table>
+<tr><td class="k">j / k</td><td>scroll down / up</td></tr>
+<tr><td class="k">d / u</td><td>half page down / up</td></tr>
+<tr><td class="k">gg / G</td><td>top / bottom</td></tr>
+<tr><td class="k">gt / gT</td><td>next / previous tab</td></tr>
+<tr><td class="k">?</td><td>toggle this help</td></tr>
+</table>
+</div>
+<div class="statusline" aria-hidden="true">
+  <span class="seg mode" id="sl-mode">NORMAL</span><span class="sep-r"></span>
+  <span class="seg branch">master</span><span class="sep-r2"></span>
+  <span class="seg file">~/vajradevam/blog/welcome-to-the-blog.md</span>
+  <span class="fill"></span>
+  <span class="seg meta">unix &#9474; utf-8</span>
+  <span class="sep-l2"></span><span class="seg lncol" id="sl-lncol">1:1</span>
+  <span class="sep-l"></span><span class="seg pct" id="sl-pct">Top</span>
+</div>
+<script src="/js/vim.js"></script>
+</body>
+</html>

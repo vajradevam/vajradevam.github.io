@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"><channel>
+<title>Aman Pathak &#183; vajradevam</title>
+<link>https://vajradevam.in</link>
+<description>PhD scholar in computer architecture, hardware security, and low-level systems. RISC-V, side-channel attacks, formal verification.</description>
+<language>en</language>
+<item>
+<title>Compiling the Linux kernel, then testing it in QEMU</title>
+<link>https://vajradevam.in/blog/compiling-and-testing-the-linux-kernel/</link>
+<guid>https://vajradevam.in/blog/compiling-and-testing-the-linux-kernel/</guid>
+<pubDate>Sun, 11 Oct 2026 12:00:00 +0000</pubDate>
+<description>Build a kernel on Arch or Debian, install it, boot it safely in QEMU, and automate the whole loop with the kernel’s own tests.</description>
+</item><item>
+<title>Rebuilding this site with Astro</title>
+<link>https://vajradevam.in/blog/rebuilding-with-astro/</link>
+<guid>https://vajradevam.in/blog/rebuilding-with-astro/</guid>
+<pubDate>Thu, 08 Oct 2026 12:00:00 +0000</pubDate>
+<description>Why this site moved from Jekyll to Astro, what changed under the hood, and how posts work now.</description>
+</item><item>
+<title>Compiling and Running the Linux Kernel</title>
+<link>https://vajradevam.in/blog/compiling-and-running-the-linux-kernel/</link>
+<guid>https://vajradevam.in/blog/compiling-and-running-the-linux-kernel/</guid>
+<pubDate>Thu, 27 Aug 2026 12:00:00 +0000</pubDate>
+<description>Build and boot a vanilla Linux kernel from kernel.org on Arch and Debian-based systems. Exact commands only.</description>
+</item><item>
+<title>Compiling and Executing a Java Program</title>
+<link>https://vajradevam.in/blog/compiling-and-executing-a-java-program/</link>
+<guid>https://vajradevam.in/blog/compiling-and-executing-a-java-program/</guid>
+<pubDate>Wed, 19 Aug 2026 12:00:00 +0000</pubDate>
+<description>How javac and java build and run a Java program</description>
+</item><item>
+<title>Escape</title>
+<link>https://vajradevam.in/blog/escape/</link>
+<guid>https://vajradevam.in/blog/escape/</guid>
+<pubDate>Tue, 04 Aug 2026 12:00:00 +0000</pubDate>
+<description>I do not know</description>
+</item><item>
+<title>Unrequited Love</title>
+<link>https://vajradevam.in/blog/unrequited-love/</link>
+<guid>https://vajradevam.in/blog/unrequited-love/</guid>
+<pubDate>Fri, 17 Jul 2026 12:00:00 +0000</pubDate>
+<description>On loving yourself but not loving yourself back, the silence of voices from the stars, and why being a kingmaker is not enough.</description>
+</item><item>
+<title>Writing math with LaTeX in Markdown</title>
+<link>https://vajradevam.in/blog/math-with-latex/</link>
+<guid>https://vajradevam.in/blog/math-with-latex/</guid>
+<pubDate>Wed, 10 Jun 2026 12:00:00 +0000</pubDate>
+<description>A demonstration of the blog’s LaTeX support: inline math, display equations, aligned derivations, matrices, and the syntax behind them.</description>
+</item><item>
+<title>Welcome to the new site</title>
+<link>https://vajradevam.in/blog/welcome-to-the-blog/</link>
+<guid>https://vajradevam.in/blog/welcome-to-the-blog/</guid>
+<pubDate>Wed, 10 Jun 2026 12:00:00 +0000</pubDate>
+<description>A fresh, typography-first redesign and a real blog. Here’s how it’s built and how new posts get published.</description>
+</item><item>
+<title>Everything is just bytes in memory</title>
+<link>https://vajradevam.in/blog/bytes-in-memory/</link>
+<guid>https://vajradevam.in/blog/bytes-in-memory/</guid>
+<pubDate>Wed, 20 May 2026 12:00:00 +0000</pubDate>
+<description>A short musing on why C feels honest: there’s no abstraction hiding underneath the bytes.</description>
+</item>
+</channel></rss>

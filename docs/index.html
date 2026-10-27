@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aman Pathak &middot; vajradevam</title>
+<meta name="description" content="PhD scholar in computer architecture, hardware security, and low-level systems. RISC-V, side-channel attacks, formal verification.">
+<meta name="author" content="Aman Pathak">
+<link rel="canonical" href="https://vajradevam.in/">
+<meta property="og:title" content="Aman Pathak &middot; vajradevam">
+<meta property="og:description" content="PhD scholar in computer architecture, hardware security, and low-level systems. RISC-V, side-channel attacks, formal verification.">
+<meta property="og:url" content="https://vajradevam.in/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#11100f">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="alternate" type="application/rss+xml" title="vajradevam rss" href="/rss.xml">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<nav class="tabline" aria-label="Site"><a href="/" aria-current="page"><span class="tab-no">1</span>home</a><a href="/about/"><span class="tab-no">2</span>about</a><a href="/research/"><span class="tab-no">3</span>research</a><a href="/projects/"><span class="tab-no">4</span>projects</a><a href="/blog/"><span class="tab-no">5</span>blog</a><a href="/writings/"><span class="tab-no">6</span>writings</a><span class="tab-fill"></span><a class="tab-ext" href="https://github.com/vajradevam" rel="me">github&#8599;</a><a class="tab-ext" href="/rss.xml">rss</a></nav>
+<main>
+<p class="sec-label">~/vajradevam &middot; NORMAL &middot; writing, building, and all things close to the metal</p>
+<h1>Aman Pathak &mdash; PhD scholar, hardware security. RISC-V, side channels, low-level software.</h1>
+
+<div class="term"><p><span class="ps1"><span class="cwd">~/vajradevam</span> &#10095;</span> cat build.rs</p>
+<pre><code><span class="tok-co">// Tells cargo where the researcher is.</span>
+<span class="tok-kw">pub struct</span> <span class="tok-ty">Vajradevam</span> <span class="tok-fg">{
+    name:   </span><span class="tok-st">"Aman Pathak"</span><span class="tok-fg">,
+    role:   </span><span class="tok-st">"PhD scholar &middot; hardware security"</span><span class="tok-fg">,
+    place:  </span><span class="tok-st">"BITS Pilani, KK Birla Goa Campus"</span><span class="tok-fg">,
+    focus:  [</span><span class="tok-st">"RISC-V"</span><span class="tok-fg">, </span><span class="tok-st">"side channels"</span><span class="tok-fg">, </span><span class="tok-st">"formal verification"</span><span class="tok-fg">],
+    editor: </span><span class="tok-st">"vim"</span><span class="tok-fg">,  </span><span class="tok-co">// non-negotiable</span><span class="tok-fg">
+}</span>
+
+<span class="tok-kw">fn</span> <span class="tok-fn">main</span><span class="tok-fg">() {
+    </span><span class="tok-fn">println!</span><span class="tok-fg">(</span><span class="tok-st">"cargo:rustc-link-lib=static=metal"</span><span class="tok-fg">);
+}</span><span class="cursor"></span></code></pre></div>
+
+<div class="stats">
+  <span class="n-pink"><b>19</b> publications</span>
+  <span class="n-yellow"><b>6</b> patents filed</span>
+  <span class="n-green"><b>45</b> projects</span>
+  <span class="n-cyan"><b>9</b> journal entries</span>
+</div>
+
+<p>I break processors for a living and build things from scratch for fun.
+Day job: microarchitectural side channels, cache coherency you can prove
+things about, and security-aware certification for RISC-V. After hours:
+a TCP/IP stack, a malloc, a container runtime, a 6502 &mdash; <a href="/projects/">no
+layer of the stack is safe</a>.</p>
+
+<div class="netrw">
+<p class="nhead">" ====================================<br>
+" Netrw Directory Listing &nbsp;(~/vajradevam)<br>
+" ====================================</p>
+<pre style="background:none;border:0;padding:0;margin:0;overflow-x:auto"><a href="/about/">about/       <span class="hint">" who, experience, skills</span></a>
+<a href="/research/">research/    <span class="hint">" 19 publications, 6 patents, active threads</span></a>
+<a href="/projects/">projects/    <span class="hint">" 45 things built from scratch</span></a>
+<a href="/blog/">blog/        <span class="hint">" 9 journal entries</span></a>
+<a href="/writings/">writings/    <span class="hint">" longer-form pdfs</span></a></pre>
+</div>
+
+<h2 id="latest">latest entries</h2>
+<div class="entry">
+<time datetime="2026-10-11">2026-10-11</time>
+<div>
+  <span class="etitle"><a href="/blog/compiling-and-testing-the-linux-kernel/">Compiling the Linux kernel, then testing it in QEMU</a></span>
+  <p class="edesc">Build a kernel on Arch or Debian, install it, boot it safely in QEMU, and automate the whole loop with the kernel’s own tests.</p><span class="etags"><span class="tag">linux</span> <span class="tag">kernel</span> <span class="tag">qemu</span></span>
+</div>
+</div>
+<div class="entry">
+<time datetime="2026-10-08">2026-10-08</time>
+<div>
+  <span class="etitle"><a href="/blog/rebuilding-with-astro/">Rebuilding this site with Astro</a></span>
+  <p class="edesc">Why this site moved from Jekyll to Astro, what changed under the hood, and how posts work now.</p><span class="etags"><span class="tag">meta</span> <span class="tag">astro</span></span>
+</div>
+</div>
+<div class="entry">
+<time datetime="2026-08-27">2026-08-27</time>
+<div>
+  <span class="etitle"><a href="/blog/compiling-and-running-the-linux-kernel/">Compiling and Running the Linux Kernel</a></span>
+  <p class="edesc">Build and boot a vanilla Linux kernel from kernel.org on Arch and Debian-based systems. Exact commands only.</p><span class="etags"><span class="tag">linux</span> <span class="tag">kernel</span> <span class="tag">technical</span> <span class="tag">build-guide</span></span>
+</div>
+</div>
+<p style="margin-top:1rem"><a href="/blog/">all entries &rarr;</a></p>
+
+<h2 id="featured">featured repos</h2>
+<p><a href="https://github.com/vajradevam/whale">whale</a> &middot; <a href="https://github.com/vajradevam/vajrip">vajrip</a> &middot; <a href="https://github.com/vajradevam/memoria">memoria</a> &middot; <a href="https://github.com/vajradevam/nook">nook</a> &middot; <a href="https://github.com/vajradevam/mridu">mridu</a> &middot; <a href="https://github.com/vajradevam/commodore64">commodore64</a> &mdash; <a href="/projects/">full listing</a>.</p>
+<div class="eob" aria-hidden="true">~<br>~<br>~<br>~</div>
+</main>
+<footer class="cmdline">:w &middot; "vajradevam.in" [unix] &copy; 2026 Aman Pathak &middot; <a href="/rss.xml">rss</a> &middot; <a href="https://github.com/vajradevam">github</a> &middot; <a href="mailto:vajradevam@gmail.com">mail</a> &middot; press <kbd>?</kbd> for keys</footer>
+<div class="float" id="keyhelp" hidden role="dialog" aria-label="Keyboard mappings">
+<h4>key mappings</h4>
+<table>
+<tr><td class="k">j / k</td><td>scroll down / up</td></tr>
+<tr><td class="k">d / u</td><td>half page down / up</td></tr>
+<tr><td class="k">gg / G</td><td>top / bottom</td></tr>
+<tr><td class="k">gt / gT</td><td>next / previous tab</td></tr>
+<tr><td class="k">?</td><td>toggle this help</td></tr>
+</table>
+</div>
+<div class="statusline" aria-hidden="true">
+  <span class="seg mode" id="sl-mode">NORMAL</span><span class="sep-r"></span>
+  <span class="seg branch">master</span><span class="sep-r2"></span>
+  <span class="seg file">~/vajradevam/index.html</span>
+  <span class="fill"></span>
+  <span class="seg meta">unix &#9474; utf-8</span>
+  <span class="sep-l2"></span><span class="seg lncol" id="sl-lncol">1:1</span>
+  <span class="sep-l"></span><span class="seg pct" id="sl-pct">Top</span>
+</div>
+<script src="/js/vim.js"></script>
+</body>
+</html>

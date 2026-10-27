@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Compiling and Executing a Java Program &middot; vajradevam</title>
+<meta name="description" content="How javac and java build and run a Java program">
+<meta name="author" content="Aman Pathak">
+<link rel="canonical" href="https://vajradevam.in/blog/compiling-and-executing-a-java-program/">
+<meta property="og:title" content="Compiling and Executing a Java Program &middot; vajradevam">
+<meta property="og:description" content="How javac and java build and run a Java program">
+<meta property="og:url" content="https://vajradevam.in/blog/compiling-and-executing-a-java-program/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#11100f">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="alternate" type="application/rss+xml" title="vajradevam rss" href="/rss.xml">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<nav class="tabline" aria-label="Site"><a href="/"><span class="tab-no">1</span>home</a><a href="/about/"><span class="tab-no">2</span>about</a><a href="/research/"><span class="tab-no">3</span>research</a><a href="/projects/"><span class="tab-no">4</span>projects</a><a href="/blog/" aria-current="page"><span class="tab-no">5</span>blog</a><a href="/writings/"><span class="tab-no">6</span>writings</a><span class="tab-fill"></span><a class="tab-ext" href="https://github.com/vajradevam" rel="me">github&#8599;</a><a class="tab-ext" href="/rss.xml">rss</a></nav>
+<main>
+<p class="sec-label">blog &middot; 2026-08-19 &middot; 15 min read</p>
+<h1>Compiling and Executing a Java Program</h1>
+<p class="etags"><span class="tag">java</span> <span class="tag">technical</span> <span class="tag">csf213</span></p>
+<p>Every Java project you will ever work with, whether it is built by an IDE, Code Runner, Maven, or Gradle, ultimately does two things with command-line tools. Learn to do them by hand and the abstractions become understandable.</p>
+<div class="table-wrap"><table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Role</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>javac</code></td>
+<td>the compiler</td>
+<td><code>.java</code> source → <code>.class</code> bytecode</td>
+</tr>
+<tr>
+<td><code>java</code></td>
+<td>the launcher</td>
+<td>loads <code>.class</code> files into the JVM and runs the program</td>
+</tr>
+</tbody>
+</table></div>
+<p>The two steps behave differently, and that difference is the source of most beginner errors. Compilation is a path-aware translation step. At runtime, classes are linked by name only. Everything below follows from that split.</p>
+<p>All outputs in this post are real. They were produced with OpenJDK 21, <code>javac 21.0.12</code>.</p>
+<pre class="text"><code>$ javac -version
+javac 21.0.12
+$ java -version
+openjdk version &quot;21.0.12&quot; 2026-07-21</code></pre>
+<h2 id="getting-the-code">Getting the code</h2>
+<p>Every example in this post lives in the repository <a href="https://github.com/vajradevam/java-cae">java-cae</a>. Clone it and run the commands side by side with the source files.</p>
+<pre class="text"><code>$ git clone https://github.com/vajradevam/java-cae.git
+$ cd java-cae</code></pre>
+<p>The repository has one directory per section. <code>flat/</code> contains the first example. <code>proj/</code> contains the packaged project used in Parts 2 through 8. <code>access/</code> contains the deliberately broken variant of Part 4. <code>oneway/</code> contains the default-package examples of Part 9. Commands are run from inside the directory each section names, and the output shown is exactly what those directories produce.</p>
+<h2 id="part-1.-a-simple-program-without-packages">Part 1. A simple program without packages</h2>
+<p>Before packages enter the picture, the two commands look trivial. The <code>flat/</code> directory contains two files in one folder.</p>
+<div class="sourceCode" id="cb3"><pre data-lang="java" class="sourceCode java"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// App.java</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> App <span class="op">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span><span class="op">(</span><span class="bu">String</span> args<span class="op">[])</span> <span class="op">{</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        Calculator calc <span class="op">=</span> <span class="kw">new</span> <span class="fu">Calculator</span><span class="op">();</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span>calc<span class="op">.</span><span class="fu">add</span><span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">));</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre data-lang="java" class="sourceCode java"><code class="sourceCode java"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Calculator.java</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Calculator <span class="op">{</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">int</span> <span class="fu">add</span><span class="op">(</span><span class="dt">int</span> x<span class="op">,</span> <span class="dt">int</span> y<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> x <span class="op">+</span> y<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">int</span> <span class="fu">sub</span><span class="op">(</span><span class="dt">int</span> x<span class="op">,</span> <span class="dt">int</span> y<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> x <span class="op">-</span> y<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">int</span> <span class="fu">mul</span><span class="op">(</span><span class="dt">int</span> x<span class="op">,</span> <span class="dt">int</span> y<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> x <span class="op">*</span> y<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">int</span> <span class="fu">div</span><span class="op">(</span><span class="dt">int</span> x<span class="op">,</span> <span class="dt">int</span> y<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> x <span class="op">/</span> y<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Compile both files and run the one that defines <code>main</code>.</p>
+<pre class="text"><code>$ ls
+App.java  Calculator.java
+$ javac App.java
+(exit 0)
+$ java App
+5
+$ ls
+App.class  App.java  Calculator.class  Calculator.java</code></pre>
+<p>Three details matter here. Each one changes in the next part.</p>
+<ol type="1">
+<li><code>javac App.java</code> found <code>Calculator</code> without any flags. Both classes live in the same default (unnamed) package, so javac needed no lookup configuration.</li>
+<li>Without <code>-d</code>, class files are written next to the sources. The final listing shows <code>App.class</code> and <code>Calculator.class</code> sitting beside the <code>.java</code> files. There is no build directory.</li>
+<li><code>java App</code> ran with the bare class name, because the class is not part of any package.</li>
+</ol>
+<p>A source file without a package statement belongs to the unnamed package, also called the default package. Everything above relies on that fact. Part 2 adds one package declaration and all three conveniences stop working.</p>
+<h2 id="part-2.-packages-and-fully-qualified-names">Part 2. Packages and fully qualified names</h2>
+<p>A package is a named namespace for classes. It does two jobs.</p>
+<ul>
+<li>Logical grouping. A package groups related classes and lets two classes with the same simple name exist in one program. <code>functions.Calculator</code> and <code>finance.Calculator</code> are different types even though both classes are named <code>Calculator</code>.</li>
+<li>Physical layout. The package name must mirror the directory structure. A class declared in package <code>a.b.C</code> must live in directory <code>a/b/</code> relative to the source root, and after compilation it must sit in <code>a/b/C.class</code> relative to the classpath root.</li>
+</ul>
+<p>Defining a package takes one statement at the top of the file.</p>
+<div class="sourceCode" id="cb6"><pre data-lang="java" class="sourceCode java"><code class="sourceCode java"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span><span class="im"> functions</span><span class="op">;</span>   <span class="co">// must be the very first statement in the file</span></span></code></pre></div>
+<p>Several rules apply.</p>
+<ul>
+<li>The <code>package</code> statement must be the first statement. Only comments and whitespace may precede it, and it applies to the whole file.</li>
+<li>One package per file. Two different package declarations cannot appear in a single compilation unit.</li>
+<li>Package names are conventionally written in lowercase and often use a reversed domain name, such as <code>com.example.calculator</code>.</li>
+</ul>
+<p>The <code>proj/</code> directory follows these rules. The list below shows its source files relative to the project root.</p>
+<pre class="text"><code>./src/calculator/App.java
+./src/functions/Calculator.java</code></pre>
+<p><code>App.java</code> declares <code>package calculator;</code>. <code>Calculator.java</code> declares <code>package functions;</code>.</p>
+<p>The full name of a class is the package name followed by the simple name, separated by a dot. <code>functions.Calculator</code> and <code>calculator.App</code> are the fully qualified names, and both work anywhere in code without an import.</p>
+<h2 id="part-3.-imports">Part 3. Imports</h2>
+<p><code>import</code> statements sit after the <code>package</code> statement and before the class declaration.</p>
+<div class="sourceCode" id="cb8"><pre data-lang="java" class="sourceCode java"><code class="sourceCode java"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span><span class="im"> calculator</span><span class="op">;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">functions</span><span class="op">.</span><span class="im">Calculator</span><span class="op">;</span>   <span class="co">// imports one class</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">// import functions.*;         // imports all classes in functions</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> App <span class="op">{</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ...</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>An import is not needed in three cases.</p>
+<ul>
+<li>The class you use is in your own package. Same-package classes see each other directly.</li>
+<li>The class lives in <code>java.lang</code>, such as <code>String</code>, <code>System</code>, or <code>Math</code>. That package is always available.</li>
+<li>You write the fully qualified name inline. <code>functions.Calculator calc = new functions.Calculator()</code> works without any import statement.</li>
+</ul>
+<p>One rule surprises most beginners. The default package cannot be imported by anyone. A class in a named package cannot write <code>import App;</code>, because the default package has no name to import. Part 9 shows what happens when a named package tries to use a default-package class.</p>
+<h2 id="part-4.-access-modifiers">Part 4. Access modifiers</h2>
+<p>The classes in Part 1 were declared without a modifier.</p>
+<div class="sourceCode" id="cb9"><pre data-lang="java" class="sourceCode java"><code class="sourceCode java"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Calculator <span class="op">{</span> <span class="kw">...</span> <span class="op">}</span></span></code></pre></div>
+<p>A class or member without a modifier is package-private, and that is the default. Within one package this is sufficient. The moment classes live in different packages, it ceases to be sufficient.</p>
+<p>The <code>access/</code> directory contains a variant of the same project in which <code>Calculator</code> lost its <code>public</code> modifier. Everything else is identical.</p>
+<div class="sourceCode" id="cb10"><pre data-lang="java" class="sourceCode java"><code class="sourceCode java"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">// access/src/functions/Calculator.java</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span><span class="im"> functions</span><span class="op">;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Calculator <span class="op">{</span>               <span class="co">// no public</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">int</span> <span class="fu">add</span><span class="op">(</span><span class="dt">int</span> x<span class="op">,</span> <span class="dt">int</span> y<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x <span class="op">+</span> y<span class="op">;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Compiling the entry class (<code>access/src/calculator/App.java</code>) gives the following result.</p>
+<pre class="text"><code>$ javac -d out -sourcepath src src/calculator/App.java
+src/calculator/App.java:3: error: Calculator is not public in functions; cannot be accessed from outside package
+import functions.Calculator;
+                ^
+src/calculator/App.java:7: error: Calculator is not public in functions; cannot be accessed from outside package
+        Calculator calc = new Calculator();
+        ^
+src/calculator/App.java:7: error: Calculator is not public in functions; cannot be accessed from outside package
+        Calculator calc = new Calculator();
+                              ^
+3 errors
+(exit 1)</code></pre>
+<p>The file does not compile because <code>Calculator</code> is package-private in <code>functions</code> and <code>App</code> lives in <code>calculator</code>. An <code>import</code> does not override access control. Visibility is enforced before anything can be linked.</p>
+<p>The same rule applies to members. A public class whose <code>add</code> method were private would produce an analogous error at the call site. If a class is meant to be used from another package, the class must be <code>public</code>, and so must every method the caller invokes.</p>
+<p>The full visibility ladder is shown below.</p>
+<div class="table-wrap"><table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>Modifier</th>
+<th>Same class</th>
+<th>Same package</th>
+<th>Subclass in another package</th>
+<th>Anywhere</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>public</code></td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>protected</code></td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td>none (package-private)</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>private</code></td>
+<td>yes</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>private</code> is the most restrictive level. It is visible only inside the enclosing class.</p>
+<h2 id="part-5.-compiling-one-file-is-not-enough">Part 5. Compiling one file is not enough</h2>
+<p>In Part 1 the commands ran from inside the <code>flat/</code> directory. Real projects keep sources below a root directory, as <code>proj/</code> does. The naive attempt compiles the entry file the way Part 1 did.</p>
+<pre class="text"><code>$ javac src/calculator/App.java
+src/calculator/App.java:3: error: package functions does not exist
+import functions.Calculator;
+                ^
+src/calculator/App.java:9: error: cannot find symbol
+        Calculator calc = new Calculator();
+        ^
+  symbol:   class Calculator
+  location: class App
+src/calculator/App.java:9: error: cannot find symbol
+        Calculator calc = new Calculator();
+                              ^
+  symbol:   class Calculator
+  location: class App
+3 errors
+(exit 1)</code></pre>
+<p><code>package functions does not exist</code>, and yet the directory <code>src/functions/</code> exists, and the file exists. What happened?</p>
+<p>Without <code>-sourcepath</code>, javac uses the classpath as its source search path, and the classpath defaults to the current directory. The command above runs from <code>proj/</code>. When javac resolves <code>import functions.Calculator</code> it looks for <code>functions/Calculator.java</code> relative to <code>.</code>, which resolves to <code>proj/functions/Calculator.java</code>. No such file exists, because the sources live under <code>src/</code>. javac does not guess where the source tree root is.</p>
+<p>The error is reported in stages. The <code>import</code> triggers a search for the package, which fails, so the compiler prints <code>package functions does not exist</code>. Every later reference to the class inside that package fails as well, once per use site. Two references to <code>Calculator</code> therefore produce two <code>cannot find symbol</code> errors. All three messages have one cause.</p>
+<h2 id="part-6.-the-compile-command-in-detail">Part 6. The compile command in detail</h2>
+<p>The command that works makes two things explicit. One option says where dependencies live. One positional argument says which file to compile. The two occurrences of <code>src</code> in the command are unrelated parts of the command line.</p>
+<pre class="text"><code>javac   -d out   -sourcepath src   src/calculator/App.java
+       option   option + value    positional argument</code></pre>
+<ul>
+<li><p><code>-sourcepath src</code> sets the source search root. When javac meets an import it is not already compiling, it appends the package path to this root and looks for the source there. <code>src</code> plus <code>/functions/Calculator.java</code> resolves to <code>src/functions/Calculator.java</code>. The file is found, loaded, and compiled as part of the same invocation. This is implicit compilation. The dependency was never named on the command line and it still gets compiled.</p></li>
+<li><p><code>src/calculator/App.java</code> is a positional argument. It names the entry file. The <code>-sourcepath</code> option compiles nothing by itself, so a source file must always be named explicitly.</p>
+<pre class="text"><code>$ javac -d out -sourcepath src
+error: no source files
+(exit 2)</code></pre></li>
+<li><p><code>-d out</code> selects the output directory. javac creates the package directories under <code>out/</code> automatically from the <code>package</code> declarations.</p>
+<pre class="text"><code>$ javac -d out -sourcepath src src/calculator/App.java
+(silent success)
+$ find out -type f
+out/calculator/App.class
+out/functions/Calculator.class</code></pre></li>
+</ul>
+<p>An alternative exists that avoids <code>-sourcepath</code> entirely. Name every file on the command line.</p>
+<pre class="text"><code>$ javac -d out src/calculator/App.java src/functions/Calculator.java</code></pre>
+<p>Like the previous command, this is silent on success. The <code>-sourcepath</code> form exists so the file list does not have to be maintained by hand. Projects grow, and the list eventually becomes <code>$(find src -name '*.java')</code>.</p>
+<h2 id="part-7.-inside-javac">Part 7. Inside javac</h2>
+<p>The <code>-verbose</code> flag makes the compiler narrate its phases. The listing below keeps the lines that concern this project and omits the JDK module files that javac also loads. The absolute path in the first line reflects the local copy of the repository and will differ on another machine.</p>
+<pre class="text"><code>$ javac -verbose -d outv -sourcepath src src/calculator/App.java
+[parsing started SimpleFileObject[/home/apathak/mycc/java/java-cae/proj/src/calculator/App.java]]
+[parsing completed 9ms]
+[search path for source files: src]
+[loading src/functions/Calculator.java]
+[parsing started DirectoryFileObject[src:functions/Calculator.java]]
+[parsing completed 1ms]
+[checking calculator.App]
+[wrote outv/calculator/App.class]
+[checking functions.Calculator]
+[wrote outv/functions/Calculator.class]
+[total 127ms]</code></pre>
+<p>The pipeline has five phases.</p>
+<ol type="1">
+<li>Parse. javac reads source and builds an abstract syntax tree. Syntax errors appear here.</li>
+<li>Resolve. javac meets <code>import functions.Calculator</code> and searches for the type. It checks the compilation units already in progress, then the sourcepath for a <code>.java</code> file, then the classpath for a <code>.class</code> file. The <code>cannot find symbol</code> and <code>package does not exist</code> messages come from this phase.</li>
+<li>Attribute and type-check. The compiler verifies that every expression is legal. Does <code>add(int, int)</code> exist on <code>Calculator</code>? Do the argument types match? Does each name resolve to exactly one declaration? Access rules are enforced here. Most compile errors are reported in this phase.</li>
+<li>Flow analysis. The compiler checks definite assignment, unreachable code, and methods that fail to return on every path.</li>
+<li>Write bytecode. Generics are erased, inner classes become files named <code>Outer$Inner.class</code>, and the <code>.class</code> files are written.</li>
+</ol>
+<p>The order in the log matters. <code>App.java</code> is parsed first. <code>Calculator.java</code> is then loaded, and both files are type-checked together. The unit of compilation is not one file. It is the closure of dependencies that javac assembles, possibly across packages.</p>
+<p>The <code>.class</code> files do not contain native machine code. The <code>javap</code> tool prints bytecode in a readable form.</p>
+<pre class="text"><code>$ javap -c -p out/functions/Calculator.class
+Compiled from &quot;Calculator.java&quot;
+public class functions.Calculator {
+  public functions.Calculator();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V
+       4: return
+
+  public int add(int, int);
+    Code:
+       0: iload_1
+       1: iload_2
+       2: iadd
+       3: ireturn
+[output elided]</code></pre>
+<p>The bytecode for <code>add</code> is a stack-machine sequence. It pushes the two arguments, applies <code>iadd</code>, and returns the result. The class file refers to other types by name only, with constant-pool entries such as <code>functions/Calculator</code> and <code>add</code>. The JVM resolves those names at runtime using the classpath. That is why runtime lookup follows different rules than compile-time lookup, and why Part 8 spends so much time on names.</p>
+<h2 id="part-8.-running-the-program">Part 8. Running the program</h2>
+<p>Compilation produces the class files. A separate tool runs them.</p>
+<pre class="text"><code>$ java -cp out calculator.App
+5</code></pre>
+<p>The command has two requirements.</p>
+<ol type="1">
+<li>The classpath, set with <code>-cp out</code>, must point at the package root. The launcher resolves <code>calculator.App</code> by appending the package path to the classpath, which produces <code>out/calculator/App.class</code>. The classpath must never point at a package directory itself.</li>
+<li>The class name must be fully qualified, <code>calculator.App</code>. The simple name <code>App</code> is not acceptable.</li>
+</ol>
+<p>Two failures illustrate the rules. The first command omits the package part of the name.</p>
+<pre class="text"><code>$ java -cp out App
+Error: Could not find or load main class App
+Caused by: java.lang.ClassNotFoundException: App
+(exit 1)</code></pre>
+<p>There is no <code>out/App.class</code>. Only <code>out/calculator/App.class</code> exists, so the JVM cannot create the class that the name implies.</p>
+<p>The second failure comes from changing into the package directory before running.</p>
+<pre class="text"><code>$ cd out/calculator &amp;&amp; java App
+Error: Could not find or load main class App
+Caused by: java.lang.NoClassDefFoundError: App (wrong name: calculator/App)
+(exit 1)</code></pre>
+<p>The JVM finds the file this time. <code>out/calculator/App.class</code> exists on the classpath. But the class inside the file declares itself <code>calculator.App</code>, which does not match the name <code>App</code> that was requested. The verifier rejects the mismatch. The current directory plays no part in class resolution. Only the classpath and the fully qualified name matter.</p>
+<h2 id="part-9.-a-program-in-the-default-package">Part 9. A program in the default package</h2>
+<p>This section covers a layout that looks like a shortcut. The entry class sits directly under the source root, without a package statement, while its dependency stays packaged. The <code>oneway/</code> directory has that shape.</p>
+<pre class="text"><code>./src/App.java                 // no package statement
+./src/functions/Calculator.java
+./src/functions/UseApp.java</code></pre>
+<p><code>App.java</code> is a member of the default package. It imports a class from a named package.</p>
+<div class="sourceCode" id="cb23"><pre data-lang="java" class="sourceCode java"><code class="sourceCode java"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">// oneway/src/App.java</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">functions</span><span class="op">.</span><span class="im">Calculator</span><span class="op">;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> App <span class="op">{</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span><span class="op">(</span><span class="bu">String</span> args<span class="op">[])</span> <span class="op">{</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>        Calculator calc <span class="op">=</span> <span class="kw">new</span> <span class="fu">Calculator</span><span class="op">();</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span>calc<span class="op">.</span><span class="fu">add</span><span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">));</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Compile and run with the same commands as before, using <code>App</code> as the entry file.</p>
+<pre class="text"><code>$ javac -d out -sourcepath src src/App.java
+$ java -cp out App
+5</code></pre>
+<p>The layout works. A class in the default package may import from a named package, and the program runs using the simple name <code>App</code>. This is the structure that appears when a packaged <code>Calculator.java</code> is combined with an <code>App.java</code> that has no <code>package</code> statement. Note that compiling the entry file does not pull in <code>UseApp.java</code>; nothing referenced reaches it, and javac only compiles the closure of what the entry file depends on.</p>
+<p>The restriction is one-directional. A class in a named package cannot see the default package, because the default package has no name and therefore cannot be imported or referred to. The third file in the directory demonstrates the failure. <code>UseApp</code> lives in <code>functions</code> and returns an <code>App</code>.</p>
+<div class="sourceCode" id="cb25"><pre data-lang="java" class="sourceCode java"><code class="sourceCode java"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">// oneway/src/functions/UseApp.java</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span><span class="im"> functions</span><span class="op">;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> UseApp <span class="op">{</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> App <span class="fu">make</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">new</span> <span class="fu">App</span><span class="op">();</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Compiling <code>UseApp</code> fails.</p>
+<pre class="text"><code>$ javac -d out -sourcepath src src/functions/UseApp.java
+src/functions/UseApp.java:4: error: cannot find symbol
+    public App make() {
+           ^
+  symbol:   class App
+  location: class UseApp
+src/functions/UseApp.java:5: error: cannot find symbol
+        return new App();
+                   ^
+  symbol:   class App
+  location: class UseApp
+2 errors
+(exit 1)</code></pre>
+<p>The default package is a one-way street.</p>
+<pre class="text"><code>default package  -&gt;  named package   works
+named package    -&gt;  default package  fails</code></pre>
+<p>The layout in this section works today because nothing in <code>functions</code> needs <code>App</code>. The moment any packaged class references the default-package class, the build breaks. Java 9 modules impose the same restriction, since a module cannot export an unnamed package. The default package is a scratch space for short examples, not a place to keep application code.</p>
+<h2 id="why-this-matters">Why this matters</h2>
+<p>The compilation and launch steps above run inside every tool that builds Java programs.</p>
+<ul>
+<li>IDEs configure <code>-sourcepath</code> and the classpath from the project model and then run the same tools invisibly. When an IDE reports an error it is the raw output of this pipeline. <code>package does not exist</code> and <code>ClassNotFoundException</code> are compiler and launcher messages, not IDE messages.</li>
+<li>Maven and Gradle encode the same choices as convention. <code>src/main/java</code> is the source root, <code>target/classes</code> is the output directory, and dependency jars are added to the classpath. A build error that says <code>package X does not exist</code> means exactly what it meant in Part 5. The sources or jars of <code>X</code> are not on the configured lookup paths.</li>
+<li>Single-file launchers such as <code>java App.java</code> work only for self-contained files. Once a program spans packages, they need the explicit lookup configuration shown in Part 6.</li>
+<li>JAR deployment keeps the same model. A jar is a compressed classpath root. The manifest names the main class by its fully qualified name, and the runtime still resolves everything by name.</li>
+</ul>
+<p>Two questions cover the whole workflow.</p>
+<ol type="1">
+<li>During compilation, where are the sources of the classes I depend on, and where do the outputs go? The answers are <code>-sourcepath</code> and <code>-classpath</code> for lookup and <code>-d</code> for output.</li>
+<li>During execution, which class starts the program and where is the package root? The answers are the fully qualified name and <code>-cp</code>.</li>
+</ol>
+<h2 id="reference">Reference</h2>
+<pre class="text"><code># structure (source root is src/)
+src/calculator/App.java          -&gt;  package calculator;
+src/functions/Calculator.java    -&gt;  package functions;
+
+# compile. -sourcepath tells javac where to find sources of dependencies
+javac -d out -sourcepath src src/calculator/App.java
+
+# alternative. list every file, no -sourcepath
+javac -d out src/calculator/App.java src/functions/Calculator.java
+
+# run. classpath is the package root (out), never a subfolder.
+# the class name is the fully qualified one
+java -cp out calculator.App</code></pre>
+<div class="table-wrap"><table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Situation</th>
+<th>What you get</th>
+<th>Cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>javac src/calculator/App.java</code> without <code>-sourcepath</code></td>
+<td><code>package functions does not exist</code></td>
+<td>source lookup defaulted to <code>.</code> and never saw <code>src/</code></td>
+</tr>
+<tr>
+<td>No <code>public</code> on a cross-package class</td>
+<td><code>Calculator is not public in functions; cannot be accessed from outside package</code></td>
+<td>default access is package-private</td>
+</tr>
+<tr>
+<td><code>java -cp out App</code> with a packaged main class</td>
+<td><code>ClassNotFoundException: App</code></td>
+<td>no <code>out/App.class</code>; the class is <code>calculator.App</code></td>
+</tr>
+<tr>
+<td><code>cd out/calculator &amp;&amp; java App</code></td>
+<td><code>NoClassDefFoundError: App (wrong name: calculator/App)</code></td>
+<td>the internal name inside the file does not match the requested name</td>
+</tr>
+<tr>
+<td>named package references the default package</td>
+<td><code>cannot find symbol ... class App</code></td>
+<td>the unnamed package cannot be imported</td>
+</tr>
+</tbody>
+</table></div>
+<p>Java separates translation from execution. <code>javac</code> translates whatever is reachable from the sourcepath, type-checks the whole closure together, and writes bytecode into a mirror of the package tree. <code>java</code> links by name, and given a classpath root and a fully qualified class name it finds, verifies, and runs exactly the class that was named. The IDE button, the build tool, and the launcher all reduce to this.</p>
+
+<hr><p class="dim" style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap"><a href="/blog/compiling-and-running-the-linux-kernel/">&larr; Compiling and Running the Linux Kernel</a><a href="/blog/escape/">Escape &rarr;</a></p>
+<div class="eob" aria-hidden="true">~<br>~<br>~<br>~</div>
+</main>
+<footer class="cmdline">:w &middot; "vajradevam.in" [unix] &copy; 2026 Aman Pathak &middot; <a href="/rss.xml">rss</a> &middot; <a href="https://github.com/vajradevam">github</a> &middot; <a href="mailto:vajradevam@gmail.com">mail</a> &middot; press <kbd>?</kbd> for keys</footer>
+<div class="float" id="keyhelp" hidden role="dialog" aria-label="Keyboard mappings">
+<h4>key mappings</h4>
+<table>
+<tr><td class="k">j / k</td><td>scroll down / up</td></tr>
+<tr><td class="k">d / u</td><td>half page down / up</td></tr>
+<tr><td class="k">gg / G</td><td>top / bottom</td></tr>
+<tr><td class="k">gt / gT</td><td>next / previous tab</td></tr>
+<tr><td class="k">?</td><td>toggle this help</td></tr>
+</table>
+</div>
+<div class="statusline" aria-hidden="true">
+  <span class="seg mode" id="sl-mode">NORMAL</span><span class="sep-r"></span>
+  <span class="seg branch">master</span><span class="sep-r2"></span>
+  <span class="seg file">~/vajradevam/blog/compiling-and-executing-a-java-program.md</span>
+  <span class="fill"></span>
+  <span class="seg meta">unix &#9474; utf-8</span>
+  <span class="sep-l2"></span><span class="seg lncol" id="sl-lncol">1:1</span>
+  <span class="sep-l"></span><span class="seg pct" id="sl-pct">Top</span>
+</div>
+<script src="/js/vim.js"></script>
+</body>
+</html>

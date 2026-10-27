@@ -1,0 +1,608 @@
+/* ==========================================================================
+   vajradevam.in — Monokai Pro (Spectrum), as sampled from image.png
+   One theme, dark, deliberate. The editor is the interface.
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Hack';
+  src: url('/fonts/hack-regular.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Hack';
+  src: url('/fonts/hack-bold.woff2') format('woff2');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Hack';
+  src: url('/fonts/hack-italic.woff2') format('woff2');
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Hack';
+  src: url('/fonts/hack-bolditalic.woff2') format('woff2');
+  font-weight: 700; font-style: italic; font-display: swap;
+}
+
+:root {
+  /* surfaces, sampled from the screenshot */
+  --bg:      #11100f;   /* editor background      */
+  --bg-1:    #19181a;   /* panels, code blocks    */
+  --bg-2:    #221f22;   /* chips, inline code     */
+  --bg-3:    #2d2a2e;   /* statusline segments    */
+  --sel:     #403e41;   /* visual selection       */
+  --border:  #2a282b;
+
+  /* text */
+  --fg:      #fcfcfa;   /* bright foreground      */
+  --fg-dim:  #c1c0c0;   /* body text              */
+  --gray:    #939293;   /* secondary              */
+  --comment: #727072;   /* comments, gutter       */
+
+  /* syntax */
+  --pink:    #ff6188;
+  --orange:  #fc9867;
+  --yellow:  #ffd866;
+  --green:   #a9dc76;
+  --cyan:    #78dce8;
+  --purple:  #ab9df2;
+  --cursor:  #ff7700;   /* the orange cursor line number */
+
+  --mono: 'Hack Nerd Font', 'Hack Nerd Font Mono', 'Hack', 'JetBrains Mono',
+          ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  height: 100%;
+  background: var(--bg);
+  scrollbar-color: var(--bg-3) var(--bg);
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--fg-dim);
+  font-family: var(--mono);
+  font-size: 15px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--sel); color: var(--fg); }
+
+/* --------------------------------------------------------------------------
+   Tabline (top) — vim buffer tabs
+   -------------------------------------------------------------------------- */
+
+.tabline {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: stretch;
+  background: var(--bg-1);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+  font-size: 0.87rem;
+}
+.tabline::-webkit-scrollbar { display: none; }
+
+.tabline a {
+  display: flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.55rem 1rem;
+  color: var(--comment);
+  text-decoration: none;
+  border-right: 1px solid var(--border);
+  white-space: nowrap;
+}
+.tabline a .tab-no { color: var(--comment); font-size: 0.8em; }
+.tabline a:hover { color: var(--fg); background: var(--bg-2); }
+.tabline a[aria-current="page"] {
+  background: var(--bg);
+  color: var(--yellow);
+  box-shadow: inset 0 2px 0 var(--yellow);
+}
+.tabline a[aria-current="page"] .tab-no { color: var(--orange); }
+.tabline .tab-fill { flex: 1; border-right: none; pointer-events: none; }
+.tabline .tab-ext {
+  border-right: none;
+  border-left: 1px solid var(--border);
+  color: var(--comment);
+}
+.tabline .tab-ext:hover { color: var(--cyan); }
+
+/* --------------------------------------------------------------------------
+   Page body
+   -------------------------------------------------------------------------- */
+
+main {
+  max-width: 78ch;
+  margin: 0 auto;
+  padding-block: 3rem 2rem;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+
+/* end-of-buffer tildes */
+.eob {
+  color: var(--comment);
+  opacity: 0.6;
+  user-select: none;
+  line-height: 1.6;
+  margin-top: 3rem;
+}
+
+footer.cmdline {
+  max-width: 78ch;
+  margin: 0 auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+  padding-block: 0 4.5rem;
+  color: var(--comment);
+  font-size: 0.85rem;
+}
+footer.cmdline a { color: var(--gray); }
+footer.cmdline a:hover { color: var(--cyan); }
+
+/* --------------------------------------------------------------------------
+   Statusline (bottom, fixed) — powerline, pure CSS separators
+   -------------------------------------------------------------------------- */
+
+.statusline {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 60;
+  display: flex;
+  align-items: stretch;
+  height: calc(1.9rem + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  background: var(--bg-1);
+  border-top: 1px solid var(--border);
+  font-size: 0.8rem;
+  line-height: 1.9rem;
+  user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.statusline .seg { padding: 0 0.8em; }
+
+.statusline .mode {
+  background: var(--yellow);
+  color: var(--bg);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.statusline .mode.visual { background: var(--purple); }
+.statusline .sep-r {
+  width: 0; height: 0; align-self: center;
+  border-top: 0.95rem solid transparent;
+  border-bottom: 0.95rem solid transparent;
+  border-left: 0.65rem solid var(--yellow);
+}
+.statusline .mode.visual + .sep-r { border-left-color: var(--purple); }
+.statusline .branch { color: var(--gray); background: var(--bg-3); }
+.statusline .sep-r2 {
+  width: 0; height: 0; align-self: center;
+  border-top: 0.95rem solid transparent;
+  border-bottom: 0.95rem solid transparent;
+  border-left: 0.65rem solid var(--bg-3);
+}
+.statusline .file { color: var(--fg-dim); }
+.statusline .file .mod { color: var(--orange); }
+.statusline .fill { flex: 1; }
+.statusline .meta { color: var(--comment); }
+.statusline .pct  { color: var(--bg); background: var(--yellow); font-weight: 700; min-width: 4ch; text-align: center; }
+.statusline .sep-l {
+  width: 0; height: 0; align-self: center;
+  border-top: 0.95rem solid transparent;
+  border-bottom: 0.95rem solid transparent;
+  border-right: 0.65rem solid var(--yellow);
+}
+.statusline .lncol { color: var(--gray); background: var(--bg-3); }
+.statusline .sep-l2 {
+  width: 0; height: 0; align-self: center;
+  border-top: 0.95rem solid transparent;
+  border-bottom: 0.95rem solid transparent;
+  border-right: 0.65rem solid var(--bg-3);
+}
+
+@media (max-width: 560px) {
+  .statusline .meta, .statusline .branch, .statusline .sep-r2 { display: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Typography
+   -------------------------------------------------------------------------- */
+
+h1, h2, h3, h4 { color: var(--fg); line-height: 1.35; text-wrap: balance; }
+
+h1 {
+  font-size: 1.45rem;
+  margin: 0.3rem 0 1.6rem;
+}
+
+h2 {
+  font-size: 1.12rem;
+  color: var(--green);
+  margin: 2.8rem 0 1rem;
+}
+h2::before { content: '## '; color: var(--comment); font-weight: 400; }
+
+h3 {
+  font-size: 1rem;
+  color: var(--cyan);
+  margin: 2.2rem 0 0.8rem;
+}
+h3::before { content: '### '; color: var(--comment); font-weight: 400; }
+
+h4 { font-size: 0.95rem; color: var(--purple); }
+
+/* comment-styled kicker above h1 */
+.sec-label {
+  color: var(--comment);
+  font-style: italic;
+  margin: 0 0 0.4rem;
+  font-size: 0.85rem;
+}
+.sec-label::before { content: '// '; }
+
+p { margin: 0 0 1rem; }
+
+a {
+  color: var(--cyan);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--cyan) 35%, transparent);
+  text-underline-offset: 3px;
+}
+a:hover {
+  color: var(--fg);
+  background: var(--sel);
+  text-decoration-color: var(--cursor);
+}
+
+strong { color: var(--fg); }
+em { font-style: italic; }
+hr { border: 0; border-top: 1px dashed var(--border); margin: 2.5rem 0; }
+
+blockquote {
+  margin: 1.4rem 0;
+  padding: 0.2rem 0 0.2rem 1.1rem;
+  border-left: 2px solid var(--purple);
+  color: var(--gray);
+  font-style: italic;
+}
+
+ul, ol { padding-left: 1.6rem; margin: 0 0 1rem; }
+li { margin-bottom: 0.3rem; }
+ul { list-style: none; padding-left: 1.2rem; }
+ul > li::before { content: '-'; color: var(--pink); margin-right: 0.7em; margin-left: -1.2rem; }
+li::marker { color: var(--pink); }
+
+kbd {
+  font-family: inherit;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 3px;
+  padding: 0.05em 0.45em;
+  font-size: 0.85em;
+  color: var(--yellow);
+}
+
+/* --------------------------------------------------------------------------
+   Code
+   -------------------------------------------------------------------------- */
+
+code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  background: var(--bg-2);
+  color: var(--yellow);
+  padding: 0.12em 0.4em;
+  border-radius: 3px;
+}
+
+pre {
+  position: relative;
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem 1.2rem;
+  overflow-x: auto;
+  margin: 1.4rem 0;
+  line-height: 1.6;
+}
+pre code {
+  background: none;
+  color: var(--fg-dim);
+  padding: 0;
+  font-size: 0.85rem;
+}
+pre[data-lang]::after {
+  content: attr(data-lang);
+  position: absolute;
+  top: 0.45rem; right: 0.8rem;
+  color: var(--comment);
+  font-size: 0.72rem;
+  font-style: italic;
+}
+
+/* pandoc / skylighting token classes → Monokai Pro */
+code .kw, code .cf { color: var(--pink); font-style: italic; }  /* keyword, control flow */
+code .op { color: var(--pink); }                                /* operator   */
+code .dt { color: var(--cyan); font-style: italic; }            /* data type  */
+code .fu { color: var(--green); }                               /* function   */
+code .st, code .ss, code .vs { color: var(--yellow); }          /* strings    */
+code .sc { color: var(--purple); }                              /* special ch */
+code .dv, code .bn, code .fl, code .cn { color: var(--purple); }/* numbers    */
+code .co, code .do { color: var(--comment); font-style: italic; } /* comments */
+code .al { color: var(--pink); font-weight: 700; }              /* alert      */
+code .er { color: var(--pink); text-decoration: underline wavy; }
+code .va { color: var(--fg); }                                  /* variable   */
+code .at { color: var(--orange); }                              /* attribute  */
+code .im { color: var(--pink); font-style: italic; }            /* import     */
+code .pp { color: var(--purple); }                              /* preproc    */
+code .ot { color: var(--orange); }                              /* other      */
+code .ex { color: var(--green); }                               /* extension  */
+code .bu { color: var(--cyan); }                                /* builtin    */
+
+/* hand-written hero highlighting */
+.tok-kw { color: var(--pink); font-style: italic; }
+.tok-ty { color: var(--cyan); font-style: italic; }
+.tok-fn { color: var(--green); }
+.tok-st { color: var(--yellow); }
+.tok-nm { color: var(--purple); }
+.tok-co { color: var(--comment); font-style: italic; }
+.tok-op { color: var(--pink); }
+.tok-fg { color: var(--fg); }
+
+/* --------------------------------------------------------------------------
+   Tables
+   -------------------------------------------------------------------------- */
+
+.table-wrap { overflow-x: auto; margin: 1.4rem 0; }
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.88rem;
+  font-variant-numeric: tabular-nums;
+}
+th {
+  text-align: left;
+  color: var(--green);
+  font-weight: 700;
+  border-bottom: 1px solid var(--gray);
+  padding: 0.45rem 1rem 0.45rem 0;
+}
+td {
+  border-bottom: 1px solid var(--border);
+  padding: 0.45rem 1rem 0.45rem 0;
+  vertical-align: top;
+}
+tr:hover td { background: color-mix(in srgb, var(--sel) 30%, transparent); }
+
+/* --------------------------------------------------------------------------
+   Terminal / prompt hero
+   -------------------------------------------------------------------------- */
+
+.term {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.1rem 1.3rem;
+  margin: 1.6rem 0;
+  overflow-x: auto;
+  line-height: 1.65;
+  font-size: 0.88rem;
+}
+.term .ps1 { color: var(--green); font-weight: 700; }
+.term .ps1 .cwd { color: var(--cyan); }
+.term pre { border: 0; background: none; padding: 0; margin: 0.4rem 0 0; overflow: visible; }
+
+.cursor {
+  display: inline-block;
+  width: 0.6em; height: 1.15em;
+  background: var(--cursor);
+  vertical-align: text-bottom;
+  animation: blink 1.1s steps(1) infinite;
+}
+@media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* stats row */
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  margin: 1.8rem 0;
+  font-size: 0.9rem;
+}
+.stats b { font-size: 1.25rem; font-weight: 700; }
+.stats .n-pink   b { color: var(--pink); }
+.stats .n-green  b { color: var(--green); }
+.stats .n-yellow b { color: var(--yellow); }
+.stats .n-cyan   b { color: var(--cyan); }
+.stats span { color: var(--gray); }
+
+/* netrw-style directory listing */
+.netrw { margin: 1.2rem 0; line-height: 1.9; }
+.netrw .nhead { color: var(--comment); font-style: italic; }
+.netrw a { display: block; width: max-content; text-decoration: none; color: var(--cyan); }
+.netrw a:hover { background: var(--sel); color: var(--fg); }
+.netrw a .hint { color: var(--comment); font-style: italic; }
+.netrw a:hover .hint { color: var(--gray); }
+
+/* --------------------------------------------------------------------------
+   Entry lists (blog index, latest posts)
+   -------------------------------------------------------------------------- */
+
+.entry {
+  display: grid;
+  grid-template-columns: 11ch 1fr;
+  gap: 0 1.2rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px dashed var(--border);
+}
+.entry:last-of-type { border-bottom: none; }
+.entry time { color: var(--comment); font-size: 0.85rem; line-height: 2; }
+.entry .etitle a { text-decoration: none; }
+.entry .edesc { color: var(--gray); font-size: 0.86rem; margin: 0.1rem 0 0.2rem; }
+.entry .etags { font-size: 0.78rem; }
+@media (max-width: 560px) {
+  .entry { grid-template-columns: 1fr; }
+}
+
+.tag {
+  color: var(--purple);
+  text-decoration: none;
+  margin-right: 0.6em;
+}
+.tag::before { content: '#'; color: var(--comment); }
+a.tag:hover { color: var(--fg); }
+
+.year-head { color: var(--purple); margin-top: 2.4rem; }
+.year-head::before { content: '" '; color: var(--comment); }
+
+/* --------------------------------------------------------------------------
+   Publications / patents / projects
+   -------------------------------------------------------------------------- */
+
+.pub {
+  display: grid;
+  grid-template-columns: 4ch 1fr;
+  gap: 0 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.pub .no { color: var(--comment); font-variant-numeric: tabular-nums; }
+.pub .ptitle { color: var(--fg); }
+.pub .ptitle a { color: var(--fg); text-decoration-color: color-mix(in srgb, var(--cyan) 40%, transparent); }
+.pub .ptitle a:hover { color: var(--cyan); background: none; }
+.pub .pmeta { color: var(--gray); font-size: 0.84rem; margin-top: 0.15rem; }
+.pub .pmeta .me { color: var(--yellow); }
+.pub .pvenue { color: var(--comment); font-style: italic; font-size: 0.84rem; }
+
+.chip {
+  display: inline-block;
+  font-size: 0.72rem;
+  padding: 0 0.55em;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--bg-2);
+  color: var(--gray);
+  vertical-align: 0.1em;
+  white-space: nowrap;
+}
+.chip.c-green  { color: var(--green);  border-color: color-mix(in srgb, var(--green) 35%, transparent); }
+.chip.c-cyan   { color: var(--cyan);   border-color: color-mix(in srgb, var(--cyan) 35%, transparent); }
+.chip.c-yellow { color: var(--yellow); border-color: color-mix(in srgb, var(--yellow) 35%, transparent); }
+.chip.c-orange { color: var(--orange); border-color: color-mix(in srgb, var(--orange) 35%, transparent); }
+.chip.c-purple { color: var(--purple); border-color: color-mix(in srgb, var(--purple) 35%, transparent); }
+.chip.c-pink   { color: var(--pink);   border-color: color-mix(in srgb, var(--pink) 35%, transparent); }
+
+/* projects: ls -l style grid */
+.proj {
+  display: grid;
+  grid-template-columns: 16ch 10ch 1fr;
+  gap: 0 1.2rem;
+  align-items: baseline;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.proj .pname { white-space: nowrap; }
+.proj .pname a { text-decoration: none; }
+.proj .pname .star { color: var(--yellow); }
+.proj .plang { color: var(--orange); font-size: 0.8rem; white-space: nowrap; }
+.proj .pdesc { color: var(--gray); font-size: 0.86rem; min-width: 0; }
+@media (max-width: 640px) {
+  .proj { grid-template-columns: 1fr auto; }
+  .proj .pdesc { grid-column: 1 / -1; line-height: 1.6; padding-bottom: 0.3rem; }
+}
+
+/* experience log */
+.xp { margin: 1.5rem 0; padding-left: 1.3rem; border-left: 1px solid var(--border); position: relative; }
+.xp::before {
+  content: '●';
+  position: absolute; left: -0.34rem; top: 0.45rem;
+  color: var(--cursor); font-size: 0.6rem; background: var(--bg);
+}
+.xp .xrole { color: var(--fg); font-weight: 700; }
+.xp .xdate { color: var(--green); font-size: 0.84rem; }
+.xp .xorg { color: var(--gray); font-size: 0.88rem; font-style: italic; }
+.xp ul { margin-top: 0.5rem; font-size: 0.9rem; color: var(--fg-dim); }
+
+/* skills */
+.skillgroup { margin: 1rem 0; }
+.skillgroup .slabel { color: var(--green); }
+.skillgroup .slabel::after { content: ' = ['; color: var(--comment); }
+.skillgroup .sitems::after { content: ']'; color: var(--comment); }
+.skillgroup .sitem { color: var(--yellow); }
+.skillgroup .sitem::after { content: ', '; color: var(--comment); }
+.skillgroup .sitem:last-child::after { content: ''; }
+
+/* writings */
+.pdf-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.pdf-row .psize { color: var(--comment); font-size: 0.84rem; line-height: 2; }
+
+/* --------------------------------------------------------------------------
+   Help float (?) — vim popup window
+   -------------------------------------------------------------------------- */
+
+.float {
+  position: fixed;
+  right: 1.2rem; bottom: 3.4rem;
+  z-index: 70;
+  background: var(--bg-1);
+  border: 1px solid var(--sel);
+  border-radius: 4px;
+  padding: 0.9rem 1.2rem;
+  font-size: 0.82rem;
+  line-height: 1.9;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  max-width: min(21rem, calc(100vw - 2.4rem));
+}
+.float h4 { margin: 0 0 0.4rem; color: var(--yellow); }
+.float h4::before { content: '" '; color: var(--comment); }
+.float table { font-size: inherit; }
+.float td { border: none; padding: 0 1rem 0 0; }
+.float .k { color: var(--green); white-space: nowrap; }
+
+/* 404 */
+.e404 { color: var(--pink); font-weight: 700; }
+.e404-box {
+  background: var(--bg-1);
+  border: 1px solid color-mix(in srgb, var(--pink) 30%, transparent);
+  border-radius: 4px;
+  padding: 1.2rem 1.4rem;
+  margin: 2rem 0;
+}
+
+/* misc */
+.dim { color: var(--gray); }
+.muted { color: var(--comment); }
+img { max-width: 100%; border-radius: 4px; }
+:focus-visible { outline: 2px solid var(--cursor); outline-offset: 2px; }
+
+@media print {
+  .tabline, .statusline, .eob, .float { display: none; }
+}
