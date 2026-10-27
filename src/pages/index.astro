@@ -1,121 +1,151 @@
 ---
-import Page from '../layouts/Page.astro';
-import Figure from '../components/Figure.astro';
-import Arrow from '../components/Arrow.astro';
+import Base from '../layouts/Base.astro';
+import Circuit from '../components/Circuit.astro';
+import { site } from '../data/site';
 import now from '../data/now.json';
 import projects from '../data/projects.json';
 import publications from '../data/publications.json';
 import patents from '../data/patents.json';
 import { getSortedPosts, formatDate } from '../lib/posts';
 
-const latest = (await getSortedPosts()).slice(0, 3);
+const posts = await getSortedPosts();
+const latest = posts.slice(0, 3);
+const featured = projects.filter((p) => p.featured);
+const selectedPubs = publications.slice(0, 3);
 
 const layers = [
-  { name: 'Web apps', depth: 'L0 · user', href: '/projects/#web', hue: 'yellow' },
-  { name: 'Languages · Go, Java, Python', depth: 'L1 · lang', href: '/projects/#compilers', hue: 'orange' },
-  { name: 'C', depth: 'L2 · lang', href: '/projects/#systems', hue: 'red' },
-  { name: 'Assembly', depth: 'L3 · asm', href: '/blog/bytes-in-memory/', hue: 'brown' },
-  { name: 'ISA · RISC-V', depth: 'L4 · isa', href: '/research/#publications', hue: 'violet' },
-  { name: 'Microarchitecture', depth: 'L5 · uarch', href: '/research/#publications', hue: 'blue' },
-  { name: 'RTL / Verilog', depth: 'L6 · rtl', href: '/projects/#compilers', hue: 'teal' },
-  { name: 'Gates', depth: 'L7 · gates', href: '/research/#experience', hue: 'green' },
-  { name: 'Transistors', depth: 'L8 · silicon', href: '/research/#experience', hue: 'gray' },
+  { name: 'Web apps & services', depth: 'L0 · user', href: '/projects/#web', hue: '#e8c468' },
+  { name: 'Languages · Go, Java, Python', depth: 'L1 · lang', href: '/projects/#compilers', hue: '#e2a55e' },
+  { name: 'C and the runtime', depth: 'L2 · sys', href: '/projects/#systems', hue: '#d98052' },
+  { name: 'Assembly', depth: 'L3 · asm', href: '/blog/bytes-in-memory/', hue: '#c86058' },
+  { name: 'ISA · RISC-V', depth: 'L4 · isa', href: '/research/', hue: '#a06bd0' },
+  { name: 'Microarchitecture', depth: 'L5 · uarch', href: '/research/#publications', hue: '#5f8fe8' },
+  { name: 'RTL · Verilog, Chisel', depth: 'L6 · rtl', href: '/projects/#systems', hue: '#4bb8c9' },
+  { name: 'Gates', depth: 'L7 · gates', href: '/research/#patents', hue: '#43d195' },
+  { name: 'Transistors', depth: 'L8 · silicon', href: '/about/', hue: '#8d93a6' },
 ];
-
 ---
-<Page nav="home" title={null} description="Aman Pathak - PhD Scholar in computer architecture, hardware security, and low-level systems. RISC-V, side-channel attacks, formal verification." ogImage="/og/home.png">
-  <p class="sec-label">VAJRADEVAM-01 · §0 identity</p>
-  <h1 style="font-size:1.35rem;max-width:40ch;font-weight:700">Aman Pathak · PhD Scholar, hardware security · RISC-V · low-level software.</h1>
 
-  <Figure no="1" caption="Abstraction stack, top to bottom. Scroll to peel away layers; each label links to the relevant section. Without motion or script, the stack reads as a static figure.">
-    <div class="stack-fig stack-peel" id="stackFig" role="list" aria-label="Abstraction stack from web apps down to transistors">
-      {layers.map((l, i) => (
-        <div class="stack-layer" role="listitem" data-depth={i} id={`layer-${i}`} style={`--band:var(--h-${l.hue})`}>
-          <a href={l.href}>{l.name}</a>
-          <span class="depth">{l.depth}</span>
-        </div>
-      ))}
-    </div>
-  </Figure>
-
-  <section data-layer="0" aria-label="Top layers">
-    <h2 class="sec-head" id="about">§1 · At the top of the stack <a class="anchor" href="#about" aria-label="Link to section">§</a></h2>
-    <p>
-      I'm a PhD Scholar in the Department of Computer Science and Information Systems at
-      BITS Pilani KK Birla Goa Campus, working at the intersection of hardware security,
-      RISC-V architectures, and low-level software. My current work spans side-channel
-      mitigation, formal verification of cache coherency, and ML-based malware analysis on
-      embedded binaries. Earlier, I designed Ku/X-band antennas at KIIT, and I have six
-      patents filed in the RISC-V space covering data-flow integrity, crypto engines, and
-      on-chip ML.
-    </p>
-    <p style="margin-top:1rem">Field notes from the upper layers · <a href="/projects/">{projects.length} projects</a> on record, <a href="/blog/">journal entries</a> on architecture, compilers, and C.</p>
-  </section>
-
-  <section data-layer="3" aria-label="Middle layers">
-    <h2 class="sec-head" id="middle">§2 · Mid-stack: C, assembly, ISA <a class="anchor" href="#middle" aria-label="Link to section">§</a></h2>
-    <p>
-      Outside of research, I spend a lot of time building things close to the metal. I've written
-      a TCP/IP stack from scratch, a malloc replacement, a cycle-accurate 6502 emulator, a
-      container runtime using raw namespaces and seccomp, a bytecode VM in Go, and neural networks
-      built purely from matrix operations. This is not an exhaustive list, I keep adding projects
-      to my profile as a hobby. I also write about these topics on my blog, where I've published
-      posts on architecture, compilers, and C. And I teach sometimes.
-    </p>
-    <p style="margin-top:1rem">Probes at this depth ·
-      <a href="https://github.com/vajradevam/vajrip">vajrip</a> ·
-      <a href="https://github.com/vajradevam/memoria">memoria</a> ·
-      <a href="https://github.com/vajradevam/whale">whale</a> ·
-      <a href="https://github.com/vajradevam/commodore64">commodore64</a> ·
-      <a href="https://github.com/vajradevam/rv32i-SingleBus-emulator">rv32i-emulator</a>
-    </p>
-
-    <h3 class="sec-head" id="now" style="font-size:1.2rem">Now · register file <a class="anchor" href="#now" aria-label="Link to Now">§</a></h3>
-    <table class="spec responsive">
-      <caption>Table 3 · Currently live registers. Contents change without notice.</caption>
-      <thead><tr><th scope="col">Address</th><th scope="col">Name</th><th scope="col">Description</th></tr></thead>
-      <tbody>
-        {now.map((item, i) => (
-          <tr>
-            <td data-th="Address" class="addr">0x{(i * 4).toString(16).padStart(4, '0').toUpperCase()}</td>
-            <td data-th="Name">now+{i}</td>
-            <td data-th="Description">{item}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </section>
-
-  <section data-layer="6" aria-label="Bottom layers">
-    <h2 class="sec-head" id="bottom">§3 · Bottom of the stack <a class="anchor" href="#bottom" aria-label="Link to section">§</a></h2>
-    <p>
-      Low-level stuff intrigues me. A C program is nothing but bytes in memory, there is no
-      abstraction beyond that. Sure, memory is made of transistors and semiconductors, and VLSI
-      gives us gates and voltages and whatnot, but C, and the assembly it compiles to, is quite
-      magical. I know exactly what it is going to do, and nothing is hidden. It is the naked, and
-      quite often the bitter, truth. More than low levels <em>per se</em>, to borrow from
-      category theory, I am interested in the stripped-down, non-abstracted, naked-truth stuff.
-    </p>
-    <p style="margin-top:1rem">At silicon level · <a href="/research/#publications">{publications.length} publications</a>, <a href="/research/#patents">{patents.length} patents filed</a>, <a href="/research/#experience">full record</a>.</p>
-
-
-  </section>
-
-  <section aria-label="Latest journal entries">
-    <h2 class="sec-head" id="latest">§4 · Latest entries <a class="anchor" href="#latest" aria-label="Link to section">§</a></h2>
-    {latest.map((post) => (
-      <div class="entry">
-        <span class="eno"><time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time></span>
-        <div>
-          <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
-          {post.data.description && <p class="esummary">{post.data.description}</p>}
-        </div>
+<Base nav="home">
+  <div class="wrap">
+    <header class="hero">
+      <Circuit />
+      <p class="sec-label"><span class="addr">0x0000</span> identity</p>
+      <h1>Aman Pathak<br /><span class="dim">close to the metal.</span></h1>
+      <p class="lede">
+        PhD scholar in <strong>hardware security and computer architecture</strong> at
+        {site.affiliation.split(' · ').slice(0, 2).join(', ')} — breaking and defending
+        <strong>RISC-V</strong> microarchitecture: side channels, memory encryption,
+        formal verification, and the occasional TCP/IP stack written from scratch.
+      </p>
+      <div class="hero-actions">
+        <a class="btn solid" href="/research/">research record</a>
+        <a class="btn" href="/projects/">projects</a>
+        <a class="btn" href="/blog/">read the blog</a>
       </div>
-    ))}
-    <p style="margin-top:1rem"><a href="/blog/">All entries <Arrow dir="right" /></a></p>
-  </section>
 
-  <script>
-    import '../scripts/home.ts';
-  </script>
-</Page>
+      <div class="stats xh">
+        <a href="/research/#publications"><span class="n">{publications.length}</span><span class="l">publications</span></a>
+        <a href="/research/#patents"><span class="n">{patents.length}</span><span class="l">patents filed</span></a>
+        <a href="/projects/"><span class="n">{projects.length}</span><span class="l">projects</span></a>
+        <a href="/blog/"><span class="n">{posts.length}</span><span class="l">journal entries</span></a>
+      </div>
+    </header>
+
+    <section aria-labelledby="stack-head">
+      <p class="sec-label"><span class="addr">0x0001</span> the stack</p>
+      <h2 class="sec-head" id="stack-head">One stack, top to bottom</h2>
+      <p style="color:var(--muted);max-width:62ch;margin:0 0 1.4rem">
+        Most people pick a layer and stay there. I keep drilling down — each row below
+        links to work I've actually shipped at that depth, from web apps to the silicon
+        they ultimately run on.
+      </p>
+      <div class="stack xh" role="list" aria-label="Abstraction stack from web apps down to transistors">
+        {layers.map((l) => (
+          <div class="stack-layer" role="listitem" style={`--band:${l.hue}`}>
+            <a href={l.href}>{l.name}</a>
+            <span class="depth">{l.depth}</span>
+          </div>
+        ))}
+      </div>
+      <p class="stack-caption">FIG. 1 — abstraction stack, cross-section. Each layer links to work at that depth.</p>
+    </section>
+
+    <section aria-labelledby="research-head">
+      <p class="sec-label"><span class="addr">0x0002</span> selected research</p>
+      <h2 class="sec-head" id="research-head">Recent publications</h2>
+      {selectedPubs.map((p) => (
+        <article class="pub">
+          <div class="pno">[{String(p.n).padStart(2, '0')}]</div>
+          <div>
+            <h3>{p.url ? <a href={p.url} target="_blank" rel="noopener">{p.title}</a> : p.title}</h3>
+            <p class="meta"><span class="venue">{p.venue}</span> · {p.year}</p>
+            <div class="badges">
+              <span class={`badge ${p.status === 'under review' ? '' : 'hot'}`}>{p.status}</span>
+              {p.indexed && <span class="badge">{p.indexed}</span>}
+            </div>
+          </div>
+        </article>
+      ))}
+      <p style="margin-top:1.3rem"><a class="mono" style="font-size:.85rem" href="/research/">full record — {publications.length} publications, {patents.length} patents →</a></p>
+    </section>
+
+    <section aria-labelledby="proj-head">
+      <p class="sec-label"><span class="addr">0x0003</span> selected projects</p>
+      <h2 class="sec-head" id="proj-head">Built from scratch</h2>
+      <p style="color:var(--muted);max-width:62ch;margin:0 0 .5rem">
+        A TCP/IP stack, a malloc, a container runtime, a cycle-accurate 6502, a bytecode
+        VM — “from scratch” is the whole point.
+      </p>
+      <div class="proj-grid">
+        {featured.map((p) => (
+          <article class="proj">
+            <div class="top">
+              <h3><a href={p.repo} target="_blank" rel="noopener">{p.name}</a></h3>
+              <span class="ref">{p.ref}</span>
+            </div>
+            <p>{p.description}</p>
+            <div class="foot">
+              <span class="lang">{p.lang}</span>
+              <span class="star">{p.category}</span>
+            </div>
+          </article>
+        ))}
+      </div>
+      <p style="margin-top:1.3rem"><a class="mono" style="font-size:.85rem" href="/projects/">all {projects.length} projects →</a></p>
+    </section>
+
+    <section aria-labelledby="now-head">
+      <p class="sec-label"><span class="addr">0x0004</span> now</p>
+      <h2 class="sec-head" id="now-head">Currently in flight</h2>
+      <table class="spec responsive xh">
+        <caption>TABLE 1 — live registers. Contents change without notice.</caption>
+        <thead><tr><th scope="col">reg</th><th scope="col"></th><th scope="col">contents</th></tr></thead>
+        <tbody>
+          {now.map((item, i) => (
+            <tr>
+              <td data-th="reg" class="addr">now+{i}</td>
+              <td aria-hidden="true"><span class="led"></span></td>
+              <td data-th="contents">{item}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <section aria-labelledby="latest-head">
+      <p class="sec-label"><span class="addr">0x0005</span> journal</p>
+      <h2 class="sec-head" id="latest-head">Latest entries</h2>
+      {latest.map((post) => (
+        <article class="entry">
+          <span class="eno"><time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time></span>
+          <div>
+            <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
+            {post.data.description && <p class="esummary">{post.data.description}</p>}
+          </div>
+        </article>
+      ))}
+      <p style="margin-top:1.3rem"><a class="mono" style="font-size:.85rem" href="/blog/">all entries →</a></p>
+    </section>
+  </div>
+</Base>

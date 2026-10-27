@@ -1,80 +1,109 @@
 ---
-import Page from '../layouts/Page.astro';
-import experience from '../data/experience.json';
-import patents from '../data/patents.json';
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
 import publications from '../data/publications.json';
+import patents from '../data/patents.json';
+import now from '../data/now.json';
 
-const statuses = [...new Set(publications.map((p) => p.status))];
-const badge = (s: string) => /Q1/.test(s) ? 'b-q1' : /Q2/.test(s) ? 'b-q2' : /^to appear/i.test(s) ? 'b-acc' : /^under review/i.test(s) ? 'b-rev live' : 'b-scopus';
+const published = publications.filter((p) => !['under review'].includes(p.status));
+const underReview = publications.filter((p) => p.status === 'under review');
+
+function badgeClass(status: string): string {
+  if (status === 'under review') return '';
+  if (status === 'accepted') return 'live';
+  return 'hot';
+}
+
+function formatAuthors(authors: string[]): { text: string; me: boolean }[] {
+  return authors.map((a) => ({ text: a, me: a === 'A. Pathak' }));
+}
 ---
 
-<Page
-  nav="research"
-  title="Research"
-  heading="Research"
-  sub="Hardware security · RISC-V · side channels · formal verification"
-  description="PhD Scholar - hardware security, RISC-V, formal verification, side-channel attacks, 18 publications, 6 patents."
-  ogImage="/og/research.png"
-  margin={[{ no: '1', label: 'Experience' }, { no: '2', label: 'Patents' }, { no: '3', label: 'Publications' }]}
->
-  <h2 class="sec-head" id="experience">1 · Experience <a class="anchor" href="#experience" aria-label="Link to Experience">§</a></h2>
+<Base nav="research" title="Research" description="Publications, patents, and research interests of Aman Pathak — hardware security, RISC-V microarchitecture, side channels, formal verification.">
+  <div class="wrap-narrow">
+    <PageHead
+      label="research"
+      addr="0x0200"
+      title="Research"
+      sub={`${publications.length} publications · ${patents.length} patents filed · hardware security of RISC-V microarchitecture, side channels, memory encryption, and formal verification.`}
+    />
 
-  <table class="spec responsive">
-    <caption>Experience record · role, period, organisation.</caption>
-    <thead><tr><th scope="col">Role</th><th scope="col">Period</th><th scope="col">Organisation &amp; work</th></tr></thead>
-    <tbody>
-      {experience.map((item) => (
-        <tr>
-          <td data-th="Role"><strong>{item.role}</strong></td>
-          <td data-th="Period" style="white-space:nowrap">{item.date}</td>
-          <td data-th="Organisation & work">{item.org}
-            <ul style="margin-top:0.5rem;padding-left:1.2rem">
-              {(item.bullets ?? []).map((b) => <li>{b}</li>)}
-            </ul>
-          </td>
-        </tr>
+    <p style="margin-top:-.5rem">
+      <a class="btn" href="/research.bib" download>⤓ research.bib</a>
+    </p>
+
+    <section aria-labelledby="pub-head" id="publications">
+      <p class="sec-label"><span class="addr">0x0201</span> published &amp; accepted</p>
+      <h2 class="sec-head" id="pub-head">Publications</h2>
+      {published.map((p) => (
+        <article class="pub">
+          <div class="pno">[{String(p.n).padStart(2, '0')}]</div>
+          <div>
+            <h3>{p.url ? <a href={p.url} target="_blank" rel="noopener">{p.title}</a> : p.title}</h3>
+            <p class="meta">
+              {formatAuthors(p.authors).map((a, i) => (
+                <>{i > 0 && ', '}<span class={a.me ? 'me' : ''}>{a.text}</span></>
+              ))}
+            </p>
+            <p class="meta"><span class="venue">{p.venue}</span>{p.year && <> · {p.year}</>}</p>
+            <div class="badges">
+              <span class={`badge ${badgeClass(p.status)}`}>{p.status}</span>
+              {p.indexed && <span class="badge">{p.indexed}</span>}
+            </div>
+          </div>
+        </article>
       ))}
-    </tbody>
-  </table>
+    </section>
 
-  <h2 class="sec-head" id="patents">2 · Patents <a class="anchor" href="#patents" aria-label="Link to Patents">§</a></h2>
-  <table class="spec responsive">
-    <caption>Table 1 · Patents filed (6).</caption>
-    <thead><tr><th scope="col">Short name</th><th scope="col">Application No.</th><th scope="col">Title</th></tr></thead>
-    <tbody>
-      {patents.map((p) => (
-        <tr>
-          <td data-th="Short name"><strong>{p.short}</strong></td>
-          <td data-th="Application No." class="addr">{p.application}</td>
-          <td data-th="Title">{p.title}</td>
-        </tr>
+    <section aria-labelledby="rev-head" id="under-review">
+      <p class="sec-label"><span class="addr">0x0202</span> in the pipeline</p>
+      <h2 class="sec-head" id="rev-head">Under review</h2>
+      {underReview.map((p) => (
+        <article class="pub">
+          <div class="pno">[{String(p.n).padStart(2, '0')}]</div>
+          <div>
+            <h3>{p.url ? <a href={p.url} target="_blank" rel="noopener">{p.title}</a> : p.title}</h3>
+            <p class="meta">
+              {formatAuthors(p.authors).map((a, i) => (
+                <>{i > 0 && ', '}<span class={a.me ? 'me' : ''}>{a.text}</span></>
+              ))}
+            </p>
+            <p class="meta"><span class="venue">{p.venue}</span></p>
+            <div class="badges"><span class="badge">under review</span></div>
+          </div>
+        </article>
       ))}
-    </tbody>
-  </table>
+    </section>
 
-  <h2 class="sec-head" id="publications">3 · Publications <a class="anchor" href="#publications" aria-label="Link to Publications">§</a></h2>
-  <div class="controls">
-    <label for="statusFilter" style="align-self:center">Status</label>
-    <select id="statusFilter">
-      <option value="">all ({publications.length})</option>
-      {statuses.map((s) => <option value={s}>{s}</option>)}
-    </select>
-    <a href="/research.bib" download style="align-self:center">Download BibTeX</a>
+    <section aria-labelledby="pat-head" id="patents">
+      <p class="sec-label"><span class="addr">0x0203</span> filed with the patent office</p>
+      <h2 class="sec-head" id="pat-head">Patents</h2>
+      <table class="spec responsive xh">
+        <caption>TABLE 1 — Indian patent applications, all in the RISC-V space.</caption>
+        <thead><tr><th scope="col">application</th><th scope="col">codename</th><th scope="col">title</th></tr></thead>
+        <tbody>
+          {patents.map((p) => (
+            <tr>
+              <td data-th="application" class="addr">{p.application}</td>
+              <td data-th="codename"><span class="badge hot">{p.short}</span></td>
+              <td data-th="title">{p.title}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <section aria-labelledby="int-head" id="interests">
+      <p class="sec-label"><span class="addr">0x0204</span> open problems</p>
+      <h2 class="sec-head" id="int-head">Current threads</h2>
+      <ul style="list-style:none;padding:0;margin:0;display:grid;gap:.7rem">
+        {now.map((item) => (
+          <li class="card" style="display:flex;gap:.9rem;align-items:baseline">
+            <span class="led" style="position:relative;top:-1px"></span>
+            <span style="font-size:.97rem">{item}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
   </div>
-  <ol class="ref-list" id="refList">
-    {publications.map((pub) => (
-      <li data-status={pub.status}>
-        <span>
-          <span class="rtitle">{pub.url ? <a href={pub.url}>{pub.title}</a> : pub.title}</span><br />
-          <span>{(pub.authors ?? []).map((a, i) => <>{i > 0 ? ', ' : ''}{a === 'A. Pathak' ? <strong>{a}</strong> : <span>{a}</span>}</>)} · {pub.venue}{pub.year ? `, ${pub.year}` : ''}</span>
-          {' '}<span class={`badge ${badge(pub.indexed)}`}>{pub.indexed}</span>
-        </span>
-      </li>
-    ))}
-  </ol>
-  <p class="empty-note" id="refEmpty">no publications with this status</p>
-
-  <script>
-    import '../scripts/research.ts';
-  </script>
-</Page>
+</Base>

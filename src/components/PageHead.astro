@@ -1,0 +1,14 @@
+---
+interface Props {
+  label: string;
+  addr?: string;
+  title: string;
+  sub?: string;
+}
+const { label, addr, title, sub } = Astro.props;
+---
+<header class="page-head">
+  <p class="sec-label">{addr && <span class="addr">{addr}</span>}{label}</p>
+  <h1>{title}</h1>
+  {sub && <p class="sub">{sub}</p>}
+</header>

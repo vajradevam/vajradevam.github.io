@@ -1,17 +1,5 @@
-# Astro build output
+node_modules/
 dist/
 .astro/
-
-# dependencies
-node_modules/
-
-# logs
-*.log
-
-# OS / editor
 .DS_Store
-Thumbs.db
-
-# generated at build time
-public/og/
-public/research.bib
+npm-debug.log*

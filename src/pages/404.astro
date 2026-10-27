@@ -1,20 +1,15 @@
 ---
-import Page from '../layouts/Page.astro';
+import Base from '../layouts/Base.astro';
 ---
 
-<Page nav="home" title="Not found" heading="Segmentation fault" sub="Signal 11 (SIGSEGV) · core dumped" description="Page not found.">
-  <pre aria-label="Fault report">Program received signal SIGSEGV, Segmentation fault.
-0x00000000 in ?? ()
-(gdb) bt
-#0  0x00000000 in ?? ()
-#1  main () at router.c:404
-(gdb)</pre>
-  <p style="margin-top:2rem">The address you requested is not mapped. Valid segments ·</p>
-  <ul>
-    <li><a href="/">/ · home</a></li>
-    <li><a href="/blog/">/blog/ · journal</a></li>
-    <li><a href="/projects/">/projects/ · catalog</a></li>
-    <li><a href="/research/">/research/ · spec</a></li>
-    <li><a href="/writings/">/writings/ · shelf</a></li>
-  </ul>
-</Page>
+<Base title="404" description="Page not found.">
+  <div class="wrap err-wrap">
+    <p class="sec-label" style="justify-content:center">exception</p>
+    <div class="code">0x194</div>
+    <p class="msg">
+      SIGSEGV — page fault at this address.<br />
+      The pointer you followed is dangling.
+    </p>
+    <a class="btn solid" href="/">return to reset vector</a>
+  </div>
+</Base>

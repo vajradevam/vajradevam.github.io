@@ -84,7 +84,7 @@
     "name": "RV-Sparse",
     "category": "systems",
     "lang": "C",
-    "description": "",
+    "description": "CSR sparse matrix-vector multiply in C with zero dynamic allocation",
     "repo": "https://github.com/vajradevam/RV-Sparse",
     "layer": "isa",
     "featured": false
@@ -384,7 +384,7 @@
     "name": "yasl",
     "category": "compilers",
     "lang": "Python",
-    "description": "\\",
+    "description": "Yet another scripting language: hand-rolled single-file interpreter in Python",
     "repo": "https://github.com/vajradevam/yasl",
     "layer": "language",
     "featured": false

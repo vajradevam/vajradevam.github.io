@@ -1,6 +1,6 @@
 ---
-import Page from '../layouts/Page.astro';
-import Arrow from '../components/Arrow.astro';
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -30,24 +30,23 @@ try {
 }
 ---
 
-<Page
-  nav="writings"
-  title="Writings"
-  heading="Writings"
-  sub={`Library shelf · ${writings.length} volume${writings.length !== 1 ? 's' : ''}`}
-  description="Longer writings by Aman Pathak - systems, thesis, models."
-  ogImage="/og/writings.png"
->
-  <div class="shelf">
-    {writings.map((w, i) => (
-      <article class="spine vertical" aria-label={`${w.title}, PDF, ${w.size}`}>
-        <div class="stitle">{w.title}</div>
-        <div class="smeta">Vol. {String(i + 1).padStart(2, '0')} · PDF · {w.size}</div>
-        <a href={`/writings/${encodeURIComponent(w.file)}`} target="_blank" rel="noopener">open PDF <Arrow dir="up-right" /></a>
-      </article>
-    ))}
+<Base nav="writings" title="Writings" description="Longer writings by Aman Pathak — systems, theses, essays, as PDFs.">
+  <div class="wrap">
+    <PageHead
+      label="library"
+      addr="0x0500"
+      title="Writings"
+      sub={`Longer-form work, typeset and shelved — ${writings.length} volume${writings.length !== 1 ? 's' : ''}. New PDFs dropped into public/writings/ appear here at build time.`}
+    />
+
+    <div class="shelf">
+      {writings.map((w, i) => (
+        <article class="spine xh" aria-label={`${w.title}, PDF, ${w.size}`}>
+          <div class="smeta">VOL. {String(i + 1).padStart(2, '0')} · PDF · {w.size}</div>
+          <div class="stitle">{w.title}</div>
+          <a href={`/writings/${encodeURIComponent(w.file)}`} target="_blank" rel="noopener">open pdf ↗</a>
+        </article>
+      ))}
+    </div>
   </div>
-  <p style="margin-top:2rem;font-family:var(--font-mono);font-size:0.78rem;color:var(--muted)">
-    Shelf order is alphabetical by filename. New PDFs dropped into <code>public/writings/</code> appear here automatically at build time.
-  </p>
-</Page>
+</Base>

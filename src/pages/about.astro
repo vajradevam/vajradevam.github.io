@@ -1,0 +1,86 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { site } from '../data/site';
+import skills from '../data/skills.json';
+import experience from '../data/experience.json';
+---
+
+<Base nav="about" title="About" description="About Aman Pathak — PhD scholar in hardware security and computer architecture at BITS Pilani Goa. RISC-V, side channels, low-level systems.">
+  <div class="wrap-narrow">
+    <PageHead
+      label="about"
+      addr="0x0100"
+      title="About"
+      sub="PhD scholar, hardware security · RISC-V · low-level software. Also, I identify as a penguin. 🐧"
+    />
+
+    <section style="margin-top:0" class="prose">
+      <h2 class="sec-head" id="bio">Bio</h2>
+      <p>
+        I'm a PhD scholar in the Department of Computer Science and Information Systems at
+        BITS Pilani, KK Birla Goa Campus, working at the intersection of hardware security,
+        RISC-V architectures, and low-level software. My current work spans microarchitectural
+        side-channel attacks and their mitigation, memory encryption, formal verification of
+        cache coherency, and the security of CXL memory fabrics. I have six patents filed in
+        the RISC-V space covering data-flow integrity, crypto engines, and on-chip ML, and
+        earlier I designed Ku/X-band antennas at KIIT.
+      </p>
+      <p>
+        Outside of research I spend a lot of time building things close to the metal: a TCP/IP
+        stack from scratch, a malloc replacement, a cycle-accurate 6502 emulator, a container
+        runtime using raw namespaces and seccomp, a bytecode VM in Go, and neural networks
+        built purely from matrix operations. This is not an exhaustive list — I keep adding
+        projects to my <a href={site.github} target="_blank" rel="noopener">GitHub profile</a> as
+        a hobby. I also write about these topics on the <a href="/blog/">blog</a>, and I teach
+        sometimes.
+      </p>
+      <blockquote>
+        A C program is nothing but bytes in memory — there is no abstraction beyond that you
+        have to take on faith. More than low levels <em>per se</em>, I am interested in the
+        stripped-down, non-abstracted, naked-truth stuff.
+      </blockquote>
+    </section>
+
+    <section aria-labelledby="exp-head">
+      <p class="sec-label"><span class="addr">0x0101</span> record</p>
+      <h2 class="sec-head" id="exp-head">Experience</h2>
+      <div class="timeline">
+        {experience.map((e) => (
+          <div class={`tl-item${e.end === null ? ' current' : ''}`}>
+            <span class="date">{e.date}</span>
+            <h3>{e.role}</h3>
+            <p class="org">{e.org}</p>
+            <ul>{e.bullets.map((b) => <li>{b}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section aria-labelledby="skills-head">
+      <p class="sec-label"><span class="addr">0x0102</span> toolbox</p>
+      <h2 class="sec-head" id="skills-head">Skills</h2>
+      {skills.map((group) => (
+        <div class="skills-group">
+          <div class="glabel">{group.label}</div>
+          <div class="items">{group.items.map((s) => <span class="chip">{s}</span>)}</div>
+        </div>
+      ))}
+    </section>
+
+    <section aria-labelledby="contact-head">
+      <p class="sec-label"><span class="addr">0x0103</span> i/o ports</p>
+      <h2 class="sec-head" id="contact-head">Contact</h2>
+      <table class="spec responsive xh">
+        <caption>TABLE 1 — external interfaces.</caption>
+        <thead><tr><th scope="col">port</th><th scope="col">address</th></tr></thead>
+        <tbody>
+          <tr><td data-th="port" class="addr">email</td><td data-th="address"><a href={`mailto:${site.email}`}>{site.email}</a></td></tr>
+          <tr><td data-th="port" class="addr">github</td><td data-th="address"><a href={site.github} target="_blank" rel="noopener">github.com/vajradevam</a></td></tr>
+          <tr><td data-th="port" class="addr">web</td><td data-th="address"><a href="/">vajradevam.in</a></td></tr>
+          <tr><td data-th="port" class="addr">rss</td><td data-th="address"><a href="/rss.xml">/rss.xml</a></td></tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</Base>
