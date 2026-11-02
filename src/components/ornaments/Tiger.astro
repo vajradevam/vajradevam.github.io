@@ -4,8 +4,15 @@
 ---
 <div class="tiger" aria-hidden="true">
   <svg viewBox="0 0 120 120">
+    <defs>
+      <radialGradient id="cape-gold" cx="35%" cy="28%" r="80%">
+        <stop offset="0%" stop-color="var(--gold-hi)" />
+        <stop offset="55%" stop-color="var(--gold-deco)" />
+        <stop offset="100%" stop-color="var(--gold)" />
+      </radialGradient>
+    </defs>
     <!-- golden cape, rayed like a sun halo -->
-    <g fill="var(--gold-deco)">
+    <g fill="url(#cape-gold)">
       <circle cx="60" cy="60" r="46" opacity="0.92" />
       <g opacity="0.92">
         <path d="M60 4 L66 16 L54 16 Z" />

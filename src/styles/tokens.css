@@ -1,0 +1,54 @@
+:root {
+  /* parchment and ink */
+  --bg: #f7f0e1;
+  --sheet: #fffdf6;
+  --ink: #332a1f;
+  --ink-deco: #3a3126;
+  --muted: #84755f;
+  --faint: #a2937b;
+  --line: #e5d9bf;
+  --dot: #d6c6a2;
+  --soft: #f5eedd;
+
+  /* vermillion and gold */
+  --accent: #a62c21;
+  --accent-deep: #7e1f18;
+  --gold: #8f6a10;
+  --gold-deco: #c09b2d;
+  --gold-hi: #e8cf7a;
+  --gold-faint: rgba(192, 155, 45, 0.09);
+
+  /* landscape */
+  --peak-haze: #f3ead6;
+  --peak-far: #ecdfc2;
+  --peak-near: #dfcda3;
+  --peak-snow: #fdfbf4;
+
+  /* prayer flags */
+  --flag-blue: #39648f;
+  --flag-white: #f2ecdc;
+  --flag-red: #a62c21;
+  --flag-green: #3f7d5c;
+  --flag-yellow: #d9a52b;
+
+  /* depth: warm shadows over parchment */
+  --shadow-sheet:
+    0 1px 2px rgba(92, 70, 28, 0.07),
+    0 12px 32px -12px rgba(92, 70, 28, 0.22),
+    0 40px 80px -40px rgba(92, 70, 28, 0.30);
+  --shadow-seal:
+    0 1px 1px rgba(92, 70, 28, 0.35),
+    0 2px 5px rgba(92, 70, 28, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.28);
+  --shadow-medallion:
+    0 2px 3px rgba(92, 70, 28, 0.25),
+    0 10px 24px -6px rgba(92, 70, 28, 0.35),
+    0 24px 48px -18px rgba(92, 70, 28, 0.30);
+
+  /* type */
+  --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua',
+    Georgia, 'Noto Serif', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  --sans: "Helvetica Neue", Arial, "Hiragino Sans", "Noto Sans JP", Meiryo, system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}

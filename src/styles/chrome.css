@@ -1,0 +1,82 @@
+/* ---------- header ---------- */
+.site-header { background: linear-gradient(rgba(222, 178, 77, 0.14), transparent); }
+.site-header .inner {
+  max-width: 760px; margin: 0 auto; padding: 1rem 1.25rem 0.8rem;
+  display: flex; align-items: baseline; gap: 1.25rem; flex-wrap: wrap;
+}
+.site-title { color: var(--ink); line-height: 1.3; }
+.site-title .deva {
+  font-size: 1.05rem; font-weight: 600; letter-spacing: 0.02em;
+  background: linear-gradient(170deg, var(--gold-hi) 10%, var(--gold) 45%, #6e5208 85%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.site-title .roman { font-size: 0.8rem; color: var(--muted); font-family: var(--sans); letter-spacing: 0.12em; text-transform: uppercase; margin-left: 0.5em; }
+.site-title:hover { text-decoration: none; }
+.site-nav { margin-left: auto; display: flex; gap: 1.1rem; flex-wrap: wrap; font-size: 0.84rem; font-family: var(--sans); }
+.site-nav a { color: var(--muted); }
+.site-nav a:hover { color: var(--accent); text-decoration: none; }
+.site-nav a[aria-current='page'] { color: var(--accent); font-weight: 600; }
+
+/* prayer-flag strip: a gold line with flags hanging beneath it */
+.flags {
+  height: 7px;
+  border-top: 1px solid var(--gold-deco);
+  background: repeating-linear-gradient(
+    90deg,
+    var(--flag-blue) 0 44px,
+    var(--flag-white) 44px 88px,
+    var(--flag-red) 88px 132px,
+    var(--flag-green) 132px 176px,
+    var(--flag-yellow) 176px 220px
+  );
+  box-shadow: 0 2px 4px rgba(92, 70, 28, 0.18);
+  opacity: 0.85;
+}
+
+/* ---------- the floating manuscript sheet ---------- */
+main {
+  flex: 1;
+  width: calc(100% - 2rem);
+  max-width: 760px;
+  margin: 1.6rem auto 0.5rem;
+  padding: 2.4rem clamp(1.25rem, 5vw, 3rem) 2.8rem;
+  background:
+    linear-gradient(rgba(222, 178, 77, 0.05), transparent 120px),
+    var(--sheet);
+  border: 1px solid #eadfc4;
+  border-radius: 10px;
+  box-shadow: var(--shadow-sheet);
+  position: relative;
+  overflow: hidden; /* keeps the hero god-rays and watermark inside the sheet */
+}
+/* gilded top edge of the sheet */
+main::before {
+  content: '';
+  position: absolute; top: 0; left: 10%; right: 10%;
+  height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-deco), transparent);
+  opacity: 0.6;
+}
+
+/* ---------- peaks and footer ---------- */
+.peaks { line-height: 0; margin-top: 2.2rem; position: relative; }
+.peaks svg { width: 100%; height: 88px; display: block; }
+.peaks::after {
+  /* valley mist between the peaks and the footer */
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: 0; height: 36px;
+  background: linear-gradient(transparent, rgba(253, 251, 244, 0.85));
+  pointer-events: none;
+}
+.site-footer { background: linear-gradient(var(--peak-haze), var(--soft)); border-top: 1px solid var(--line); }
+.site-footer .inner {
+  max-width: 760px; margin: 0 auto; padding: 1.1rem 1.25rem 1.4rem;
+  text-align: center;
+}
+.site-footer .mantra { font-size: 0.85rem; margin-bottom: 0.3rem; }
+.site-footer .links {
+  display: flex; gap: 1.1rem; flex-wrap: wrap; justify-content: center;
+  font-size: 0.78rem; color: var(--faint); font-family: var(--sans);
+}
+.site-footer .links a { color: var(--faint); }
+.site-footer .links a:hover { color: var(--accent); }

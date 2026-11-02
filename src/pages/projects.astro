@@ -37,7 +37,7 @@ const cats = [...new Set(projects.map((p) => p.category))];
 
   {cats.map((c) => (
     <>
-      <h2 id={c} data-kanji={catKanji[c] ?? "作"}>{catNames[c] ?? c} <small>({projects.filter((p) => p.category === c).length})</small></h2>
+      <h2 id={c} data-kanji={catKanji[c] ?? "作"}>{catNames[c] ?? c} ({projects.filter((p) => p.category === c).length})</h2>
       <ul class="plain">
         {projects.filter((p) => p.category === c).map((p) => (
           <li class="entry">
