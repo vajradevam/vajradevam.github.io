@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Welcome to the new site - Aman Pathak</title>
+<meta name="description" content="A fresh, typography-first redesign and a real blog. Here's how it's built and how new posts get published.">
+<link rel="alternate" type="application/rss+xml" title="Aman Pathak" href="/rss.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+body { margin: 1em auto; max-width: 46em; padding: 0 1em; line-height: 1.5; }
+pre { overflow-x: auto; padding: 0.5em; background: #8881; }
+img { max-width: 100%; }
+table { border-collapse: collapse; }
+td, th { border: 1px solid #888; padding: 0.2em 0.5em; text-align: left; }
+blockquote { margin-left: 1em; padding-left: 1em; border-left: 2px solid #888; }
+</style>
+</head>
+<body>
+<p><a href="/">Home</a> |
+<a href="/about/">About</a> |
+<a href="/research/">Research</a> |
+<a href="/projects/">Projects</a> |
+<a href="/blog/">Blog</a> |
+<a href="/writings/">Writings</a></p>
+<hr>
+<h1>Welcome to the new site</h1>
+<p><small>10 Jun 2026</small></p>
+<p>I rebuilt this site from the ground up. It's lighter, faster, and reads better; the
+focus is on words and code rather than animated backgrounds.</p>
+<p>More importantly, it now has a proper blog. Posts live as plain Markdown files, get
+tagged by topic, and are listed by year on the <a href="/blog/">blog page</a>. You can browse
+everything by topic on the <a href="/tags/">tags page</a>.</p>
+<h2>Writing a new post</h2>
+<p>Drop a Markdown file into the <code>_posts/</code> folder named <code>YYYY-MM-DD-some-title.md</code> with a
+small block of front matter at the top:</p>
+<pre><code class="language-markdown">---
+title: "Your title here"
+date: 2026-06-10
+tags: [technical, c]
+description: "A one-line summary shown in the post list."
+---
+
+Your post body goes here, in Markdown.
+</code></pre>
+<p>Push it to <code>master</code> and GitHub Pages builds and deploys it automatically, no toolchain
+required on my end. Code blocks get syntax highlighting, and tags become clickable
+filters across the whole blog.</p>
+<p>That's it. Expect posts on computer architecture, hardware security, compilers, and C.</p>
+<p><a href="/blog/">&larr; All posts</a></p>
+<hr>
+<p><small>Aman Pathak &middot;
+<a href="mailto:vajradevam@gmail.com">email</a> &middot;
+<a href="https://github.com/vajradevam">GitHub</a> &middot;
+<a href="/rss.xml">RSS</a></small></p>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Compiling and Running the Linux Kernel - Aman Pathak</title>
+<meta name="description" content="Build and boot a vanilla Linux kernel from kernel.org on Arch and Debian-based systems. Exact commands only.">
+<link rel="alternate" type="application/rss+xml" title="Aman Pathak" href="/rss.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+body { margin: 1em auto; max-width: 46em; padding: 0 1em; line-height: 1.5; }
+pre { overflow-x: auto; padding: 0.5em; background: #8881; }
+img { max-width: 100%; }
+table { border-collapse: collapse; }
+td, th { border: 1px solid #888; padding: 0.2em 0.5em; text-align: left; }
+blockquote { margin-left: 1em; padding-left: 1em; border-left: 2px solid #888; }
+</style>
+</head>
+<body>
+<p><a href="/">Home</a> |
+<a href="/about/">About</a> |
+<a href="/research/">Research</a> |
+<a href="/projects/">Projects</a> |
+<a href="/blog/">Blog</a> |
+<a href="/writings/">Writings</a></p>
+<hr>
+<h1>Compiling and Running the Linux Kernel</h1>
+<p><small>27 Aug 2026</small></p>
+<p>Building your own kernel is just: get source, use your distro config, build, install, boot. Do it on Arch or Debian the same way, only the install tools differ.</p>
+<p>Replace <code>X.Y.Z</code> below with the version you pick from <a href="https://kernel.org">kernel.org</a>, e.g. <code>6.12.10</code>. Never build as root. Only install steps need <code>sudo</code>. Keep your old distro kernel installed as fallback.</p>
+<h2>1. Install build tools</h2>
+<p>Debian / Ubuntu / Mint:</p>
+<pre><code class="language-bash">sudo apt update
+sudo apt install build-essential libncurses-dev flex bison libssl-dev libelf-dev bc dwarves rsync xz-utils zstd cpio kmod pciutils fakeroot dpkg-dev git
+</code></pre>
+<p>Arch:</p>
+<pre><code class="language-bash">sudo pacman -Syu base-devel bc cpio gettext libelf pahole perl tar xz zstd openssl python git kmod
+</code></pre>
+<h2>2. Get the source</h2>
+<p>Same on both:</p>
+<pre><code class="language-bash">mkdir -p ~/kernelbuild &#x26;&#x26; cd ~/kernelbuild
+wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-X.Y.Z.tar.xz
+tar -xf linux-X.Y.Z.tar.xz
+cd linux-X.Y.Z
+make mrproper
+</code></pre>
+<h2>3. Configure</h2>
+<p>Copy your running kernel's proven config, then adapt it:</p>
+<p>Arch (use <code>zcat</code> — <code>/boot/config-*</code> is root-only, hence <code>Permission denied</code>):</p>
+<pre><code class="language-bash">zcat /proc/config.gz > .config
+make olddefconfig
+</code></pre>
+<p>Debian / Ubuntu / Mint:</p>
+<pre><code class="language-bash">cp /boot/config-$(uname -r) .config
+make olddefconfig
+</code></pre>
+<p>Then set a unique name and fix the two things that break vanilla builds:</p>
+<pre><code class="language-bash">./scripts/config --set-str LOCALVERSION "-custom"
+./scripts/config --disable LOCALVERSION_AUTO
+./scripts/config --set-str SYSTEM_TRUSTED_KEYS ""
+./scripts/config --set-str SYSTEM_REVOCATION_KEYS ""
+./scripts/config --disable DEBUG_INFO --disable DEBUG_INFO_BTF --disable GDB_SCRIPTS
+make olddefconfig
+cp .config ~/kernelbuild/myconfig.cfg
+</code></pre>
+<p>This makes <code>uname -r</code> report <code>X.Y.Z-custom</code> so GRUB lists it next to your distro kernel, and disabling <code>DEBUG_INFO</code> cuts the build from hours / 15 GB to ~30 min / 2 GB.</p>
+<p>Skip <code>localmodconfig</code> and <code>menuconfig</code> on your first build.</p>
+<h2>4. Build</h2>
+<p>Same on both:</p>
+<pre><code class="language-bash">make -j$(nproc)
+</code></pre>
+<p>If you get <code>Killed</code> or error 137, you ran out of RAM. Retry with <code>make -j4</code> or <code>make -j2</code>. Result is <code>arch/x86/boot/bzImage</code> plus thousands of <code>*.ko</code> modules.</p>
+<h2>5. Install</h2>
+<p>Pick one per distro.</p>
+<h3>Debian: .deb packages (recommended)</h3>
+<pre><code class="language-bash">make bindeb-pkg -j$(nproc) KDEB_PKGVERSION=$(make kernelversion)-1
+sudo dpkg -i ../linux-image-*.deb ../linux-headers-*.deb
+</code></pre>
+<p>That already did modules + initramfs + GRUB. Skip to section 6.</p>
+<h3>Arch: manual install</h3>
+<pre><code class="language-bash">sudo make modules_install
+sudo cp arch/x86/boot/bzImage /boot/vmlinuz-X.Y.Z-custom
+sudo cp System.map /boot/System.map-X.Y.Z-custom
+sudo cp .config /boot/config-X.Y.Z-custom
+sudo mkinitcpio -k X.Y.Z-custom -g /boot/initramfs-X.Y.Z-custom.img
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+</code></pre>
+<p>Debian manual fallback, if you don't want .debs:</p>
+<pre><code class="language-bash">sudo make modules_install
+sudo cp arch/x86/boot/bzImage /boot/vmlinuz-X.Y.Z-custom
+sudo cp System.map /boot/System.map-X.Y.Z-custom
+sudo cp .config /boot/config-X.Y.Z-custom
+sudo update-initramfs -c -k X.Y.Z-custom
+sudo update-grub
+</code></pre>
+<p>Order matters: <code>modules_install</code> first, then copy to <code>/boot</code>, then initramfs, then bootloader. <code>update-initramfs</code> reads from <code>/lib/modules/&#x3C;version>/</code>, so running it before <code>modules_install</code> gives an empty initramfs.</p>
+<h2>6. Boot and verify</h2>
+<p>Reboot, pick <code>Advanced options -> X.Y.Z-custom</code> in GRUB.</p>
+<pre><code class="language-bash">uname -r
+sudo dmesg | less
+journalctl -b -p err..alert
+lspci -k
+</code></pre>
+<p>If graphics or network is missing, you pruned too much. Reboot into the old kernel, re-enable the driver, rebuild.</p>
+<h2>7. Update, rebuild, remove</h2>
+<pre><code class="language-bash">make clean      # keeps .config, fast rebuild
+# make mrproper # deletes .config, only with backup
+</code></pre>
+<p>New version:</p>
+<pre><code class="language-bash">cp ~/kernelbuild/myconfig.cfg .config
+make olddefconfig
+make -j$(nproc)
+# then repeat section 5
+</code></pre>
+<p>Remove on Debian:</p>
+<pre><code class="language-bash">sudo apt purge linux-image-X.Y.Z-custom linux-headers-X.Y.Z-custom
+</code></pre>
+<p>Remove on Arch (manual):</p>
+<pre><code class="language-bash">sudo rm /boot/vmlinuz-X.Y.Z-custom /boot/initramfs-X.Y.Z-custom.img /boot/System.map-X.Y.Z-custom /boot/config-X.Y.Z-custom
+sudo rm -rf /lib/modules/X.Y.Z-custom
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+</code></pre>
+<p>Secure Boot: if it is off, ignore this. If on, either disable it in firmware while experimenting, or sign the kernel with your own MOK via <code>mokutil</code> + <code>sbsign</code>.</p>
+<p><a href="/blog/">&larr; All posts</a></p>
+<hr>
+<p><small>Aman Pathak &middot;
+<a href="mailto:vajradevam@gmail.com">email</a> &middot;
+<a href="https://github.com/vajradevam">GitHub</a> &middot;
+<a href="/rss.xml">RSS</a></small></p>
+</body>
+</html>

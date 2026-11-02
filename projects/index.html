@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Projects - Aman Pathak</title>
+<meta name="description" content="45 projects: TCP/IP stacks, allocators, emulators, VMs, compilers, mostly from scratch.">
+<link rel="alternate" type="application/rss+xml" title="Aman Pathak" href="/rss.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+body { margin: 1em auto; max-width: 46em; padding: 0 1em; line-height: 1.5; }
+pre { overflow-x: auto; padding: 0.5em; background: #8881; }
+img { max-width: 100%; }
+table { border-collapse: collapse; }
+td, th { border: 1px solid #888; padding: 0.2em 0.5em; text-align: left; }
+blockquote { margin-left: 1em; padding-left: 1em; border-left: 2px solid #888; }
+</style>
+</head>
+<body>
+<p><a href="/">Home</a> |
+<a href="/about/">About</a> |
+<a href="/research/">Research</a> |
+<a href="/projects/">Projects</a> |
+<a href="/blog/">Blog</a> |
+<a href="/writings/">Writings</a></p>
+<hr>
+<h1>Projects</h1>
+<p>45 projects, mostly built from scratch. All code is on
+<a href="https://github.com/vajradevam">GitHub</a>.</p>
+<h2>Systems (C)</h2>
+<ul>
+<li><a href="https://github.com/vajradevam/whale">whale</a> (C) &mdash; Minimal container runtime using Linux namespaces, cgroups v2, seccomp-BPF, and overlayfs from scratch</li>
+<li><a href="https://github.com/vajradevam/vajrip">vajrip</a> (C) &mdash; Userspace TCP/IP stack: Ethernet, ARP, IP, ICMP, UDP, TCP from scratch, Linux TAP</li>
+<li><a href="https://github.com/vajradevam/memoria">memoria</a> (C) &mdash; malloc/free replacement, segregated free list, mmap heap, leak detection, 57 tests</li>
+<li><a href="https://github.com/vajradevam/slinep">slinep</a> (C) &mdash; Bezier rasterizer + 12 programs: fluid sim, cloth, metaballs, Fourier, terrain</li>
+<li><a href="https://github.com/vajradevam/lolfetch">lolfetch</a> (C) &mdash; System info fetch tool with ASCII art</li>
+<li><a href="https://github.com/vajradevam/ray-tracing-c">ray-tracing-c</a> (C) &mdash; 2D raycasting, 360 rays, interactive shadows, SDL2</li>
+<li><a href="https://github.com/vajradevam/sell-shell">sell-shell</a> (C) &mdash; Minimal Unix shell, fork/exec, foreground/background processes</li>
+<li><a href="https://github.com/vajradevam/c-animation">c-animation</a> (C) &mdash; ASCII physics animation using raw ANSI escape sequences</li>
+<li><a href="https://github.com/vajradevam/RV-Sparse">RV-Sparse</a> (C) &mdash; CSR sparse matrix-vector multiply in C with zero dynamic allocation</li>
+</ul>
+<h2>Web and backends</h2>
+<ul>
+<li><a href="https://github.com/vajradevam/nook">nook</a> (Go) &mdash; Tiny embedded ordered key/value database with SQL and auth, built from scratch</li>
+<li><a href="https://github.com/vajradevam/mridu">mridu</a> (Go) &mdash; Bytecode VM interpreter in Go</li>
+<li><a href="https://github.com/vajradevam/urls">urls</a> (Astro) &mdash; URL shortener, custom slugs, analytics, QR codes, JWT auth, dark mode</li>
+<li><a href="https://github.com/vajradevam/alonzo">alonzo</a> (React/Node) &mdash; FaaS platform: upload &amp; execute JS functions via API, rate limiting</li>
+<li><a href="https://github.com/vajradevam/juice">juice</a> (Node.js) &mdash; VPS hardware monitor API: CPU, memory, disk, network over HTTP</li>
+<li><a href="https://github.com/vajradevam/Attendence-System">attendance-system</a> (Spring/React) &mdash; Role-based attendance tracking, timetable, real-time stats</li>
+<li><a href="https://github.com/vajradevam/LLM-Ping">LLM-Ping</a> (Python) &mdash; TUI tool pinging free LLM models across NIM, OpenRouter, Groq, Z.AI</li>
+<li><a href="https://github.com/vajradevam/deeptrace">deeptrace</a> (C++) &mdash; Deep Packet Inspection CLI tool</li>
+<li><a href="https://github.com/vajradevam/pit">pit</a> (Python) &mdash; Git implementation in Python</li>
+<li><a href="https://github.com/vajradevam/vectdb">vectdb</a> (C++) &mdash; Vector database</li>
+</ul>
+<h2>Emulators</h2>
+<ul>
+<li><a href="https://github.com/vajradevam/chip8">chip8</a> (C) &mdash; CHIP-8 emulator, SDL2, 35 opcodes, 60Hz timers, sound, debug</li>
+<li><a href="https://github.com/vajradevam/schip">schip</a> (C) &mdash; Enhanced CHIP-8 emulator</li>
+<li><a href="https://github.com/vajradevam/commodore64">commodore64</a> (Java) &mdash; Cycle-accurate 6502 CPU, VIC-II text-mode graphics, PRG loading</li>
+<li><a href="https://github.com/vajradevam/rv32i-SingleBus-emulator">rv32i-emulator</a> (Java) &mdash; 5-stage unpipelined RV32I, Swing GUI, step-through execution</li>
+</ul>
+<h2>Machine learning</h2>
+<ul>
+<li><a href="https://github.com/vajradevam/wthr">wthr</a> (Python) &mdash; Weather/AQI prediction, 109K observations, 25+ models benchmarked</li>
+<li><a href="https://github.com/vajradevam/slm-bench">slm-bench</a> (Python) &mdash; 50+ quantized SLMs benchmarked across 5 quality domains, ROUGE scoring</li>
+<li><a href="https://github.com/vajradevam/advx">advx</a> (PyTorch) &mdash; Adversarial attacks on MNIST: FGSM, PGD, DeepFool, CW, ~98% accuracy</li>
+<li><a href="https://github.com/vajradevam/basic-lstm-weather-prediction">lstm-weather</a> (TF/Keras) &mdash; Multivariate LSTM, bidirectional, stacked, CNN-LSTM, ConvLSTM variants</li>
+<li><a href="https://github.com/vajradevam/ml-nanosensor-lab">ml-nanosensor</a> (Python) &mdash; ML for THz antenna design from CST Studio simulation data</li>
+<li><a href="https://github.com/vajradevam/vajranet">vajranet</a> (PyTorch) &mdash; Neural networks from scratch on MNIST (784-128-128-64-10)</li>
+<li><a href="https://github.com/vajradevam/takenizer">takenizer</a> (Python) &mdash; BPE tokenizer for LLMs trained on Shakespeare</li>
+<li><a href="https://github.com/vajradevam/smol">smol</a> (Python) &mdash; Fine-tuning Phi-3 to Yoda-speak with LoRA, BitsAndBytes, PEFT</li>
+</ul>
+<h2>Games</h2>
+<ul>
+<li><a href="https://github.com/vajradevam/jetris">jetris</a> (JavaFX) &mdash; Tetris: 7 tetrominoes, ghost piece, wall-kicks, hold, 2-player mode</li>
+<li><a href="https://github.com/vajradevam/minejweeper">minejweeper</a> (JavaFX) &mdash; Minesweeper: 4 difficulty levels, flood-fill, Win95-style UI</li>
+<li><a href="https://github.com/vajradevam/judoku">judoku</a> (JavaFX) &mdash; Sudoku: backtracking generator, hints, solver, leaderboard</li>
+</ul>
+<h2>Frontend</h2>
+<ul>
+<li><a href="https://github.com/vajradevam/2048">2048</a> (HTML/CSS/JS) &mdash; 2048 game, touch support, CSS animations, Tailwind</li>
+<li><a href="https://github.com/vajradevam/game-of-life">game-of-life</a> (JS) &mdash; Conway's Game of Life, 50x50 grid, start/stop controls</li>
+<li><a href="https://github.com/vajradevam/color-scheme-generator">color-scheme</a> (CSS/JS) &mdash; Upload image to generate 5-color palette via ColorThief</li>
+</ul>
+<h2>Compilers and languages</h2>
+<ul>
+<li><a href="https://github.com/vajradevam/Luma-Lang">Luma-Lang</a> (Java) &mdash; Toy programming language: lexer, parser, AST, semantic analysis</li>
+<li><a href="https://github.com/vajradevam/yasl">yasl</a> (Python) &mdash; Yet another scripting language: hand-rolled single-file interpreter in Python</li>
+<li><a href="https://github.com/vajradevam/riscc">riscc</a> (Asm/C/Verilog) &mdash; RISC-V testbench: standalone C programs validating processor cores</li>
+</ul>
+<h2>Miscellaneous</h2>
+<ul>
+<li><a href="https://github.com/vajradevam/DDownloader">DDownloader</a> (Python) &mdash; Discord bot: download all media from a specific user across an entire server</li>
+<li><a href="https://github.com/vajradevam/chatbot">chatbot</a> (Python) &mdash; Groq API chatbot with LLaMA, Gemma, Qwen, DeepSeek models</li>
+<li><a href="https://github.com/vajradevam/chatora">chatora</a> (Python) &mdash; Gemini API chatbot built with Streamlit</li>
+<li><a href="https://github.com/vajradevam/cst-studio-pipeline">cst-pipeline</a> (Python) &mdash; S11/gain extraction from CST Studio ASCII exports with GUI</li>
+<li><a href="https://github.com/vajradevam/cst-studio-plotter">cst-plotter</a> (Python) &mdash; Publication-quality graphs: S11, gain, VSWR, efficiency</li>
+</ul>
+<hr>
+<p><small>Aman Pathak &middot;
+<a href="mailto:vajradevam@gmail.com">email</a> &middot;
+<a href="https://github.com/vajradevam">GitHub</a> &middot;
+<a href="/rss.xml">RSS</a></small></p>
+</body>
+</html>
