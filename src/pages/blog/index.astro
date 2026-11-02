@@ -1,0 +1,27 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import { getSortedPosts, formatDate } from '../../lib/posts';
+
+const posts = await getSortedPosts();
+---
+
+<Base nav="blog" title="Blog" description="Blog of Aman Pathak — posts on computer architecture, the Linux kernel, C, compilers.">
+  <PageHead
+    title="Blog"
+    sub={`${posts.length} posts — architecture, kernels, C, compilers. Also as an RSS feed.`}
+  />
+
+  <ul class="plain">
+    {posts.map((post) => (
+      <li>
+        <div class="entry">
+          <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+          <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+          <span class="tags">{post.data.tags.join(' · ')}</span>
+        </div>
+        {post.data.description && <p class="entry-desc">{post.data.description}</p>}
+      </li>
+    ))}
+  </ul>
+</Base>

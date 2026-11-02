@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import fs from 'node:fs';
+import path from 'node:path';
+
+function titleFromName(name: string): string {
+  return name.replace(/\.pdf$/i, '').replace(/[-_]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+const writingsDir = path.join(process.cwd(), 'public', 'writings');
+let writings: { file: string; title: string; kb: number }[] = [];
+try {
+  writings = fs
+    .readdirSync(writingsDir)
+    .filter((f) => f.toLowerCase().endsWith('.pdf'))
+    .sort((a, b) => a.localeCompare(b))
+    .map((file) => ({
+      file,
+      title: titleFromName(file),
+      kb: Math.round(fs.statSync(path.join(writingsDir, file)).size / 1024),
+    }));
+} catch {
+  writings = [];
+}
+---
+
+<Base nav="writings" title="Writings" description="Longer writings by Aman Pathak, as PDFs.">
+  <PageHead title="Writings" sub="Longer-form work, typeset as PDF. New files dropped into public/writings/ appear here at build time." />
+
+  <ul class="plain">
+    {writings.map((w) => (
+      <li class="entry">
+        <a href={`/writings/${encodeURIComponent(w.file)}`}>{w.title}</a>
+        <span class="tags">PDF · {w.kb} KB</span>
+      </li>
+    ))}
+  </ul>
+</Base>

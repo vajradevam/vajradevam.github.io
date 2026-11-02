@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import projects from '../data/projects.json';
+import publications from '../data/publications.json';
+import patents from '../data/patents.json';
+import { getSortedPosts, formatDate } from '../lib/posts';
+
+const posts = await getSortedPosts();
+const featured = projects.filter((p) => p.featured);
+---
+
+<Base nav="home">
+  <h1>Aman Pathak</h1>
+  <p>
+    PhD scholar in hardware security and computer architecture at BITS Pilani,
+    KK Birla Goa Campus. I break and defend RISC-V microarchitecture: side channels,
+    memory encryption, formal verification. <a href="/about/">More about me →</a>
+  </p>
+
+  <h2>Research</h2>
+  <p class="meta">{publications.length} publications · {patents.length} patents filed · <a href="/research/">full record</a></p>
+  <ul class="plain">
+    {publications.slice(0, 3).map((p) => (
+      <li>
+        {p.url ? <a href={p.url}>{p.title}</a> : p.title}
+        <p class="entry-desc"><i>{p.venue}</i>{p.year && <>, {p.year}</>}</p>
+      </li>
+    ))}
+  </ul>
+
+  <h2>Selected projects</h2>
+  <p class="meta">Mostly built from scratch · <a href="/projects/">all {projects.length}</a></p>
+  <ul class="plain">
+    {featured.map((p) => (
+      <li class="entry">
+        <a href={p.repo}>{p.name}</a>
+        <span class="entry-desc" style="margin:0">{p.description}</span>
+      </li>
+    ))}
+  </ul>
+
+  <h2>Recent posts</h2>
+  <ul class="plain">
+    {posts.slice(0, 5).map((post) => (
+      <li class="entry">
+        <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+        <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+      </li>
+    ))}
+  </ul>
+  <p class="backlink" style="margin-top:1em"><a href="/blog/">All posts →</a></p>
+</Base>

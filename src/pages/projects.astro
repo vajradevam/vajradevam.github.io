@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import projects from '../data/projects.json';
+
+const catNames: Record<string, string> = {
+  systems: 'Systems',
+  web: 'Web and backends',
+  emulators: 'Emulators',
+  ml: 'Machine learning',
+  games: 'Games',
+  frontend: 'Frontend',
+  compilers: 'Compilers and languages',
+  misc: 'Miscellaneous',
+};
+const cats = [...new Set(projects.map((p) => p.category))];
+---
+
+<Base nav="projects" title="Projects" description={`${projects.length} projects by Aman Pathak — systems programming in C, emulators, compilers, ML, and web, mostly built from scratch.`}>
+  <PageHead title="Projects" sub={`${projects.length} projects, mostly built from scratch. All code on GitHub.`} />
+
+  <p class="meta">
+    {cats.map((c, i) => (
+      <>{i > 0 && ' · '}<a href={`#${c}`}>{catNames[c] ?? c}</a></>
+    ))}
+  </p>
+
+  {cats.map((c) => (
+    <>
+      <h2 id={c}>{catNames[c] ?? c} <small>({projects.filter((p) => p.category === c).length})</small></h2>
+      <ul class="plain">
+        {projects.filter((p) => p.category === c).map((p) => (
+          <li class="entry">
+            <a href={p.repo}>{p.name}</a>
+            <span class="entry-desc" style="margin:0">{p.description}</span>
+            <span class="tags">{p.lang}</span>
+          </li>
+        ))}
+      </ul>
+    </>
+  ))}
+</Base>

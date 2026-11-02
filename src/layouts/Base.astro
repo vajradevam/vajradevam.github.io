@@ -1,0 +1,63 @@
+---
+import { site, navItems, type NavKey } from '../data/site';
+import '../styles/global.css';
+
+interface Props {
+  title?: string | null;
+  description?: string;
+  nav?: NavKey | null;
+  math?: boolean;
+  type?: 'website' | 'article';
+}
+
+const { title = null, description = site.description, nav = null, math = false, type = 'website' } = Astro.props;
+const pageTitle = title ? `${title} - ${site.title}` : site.title;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={site.author} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title={site.title} href="/rss.xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonical} />
+    {math && <link rel="stylesheet" href="/katex.css" />}
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="inner">
+        <a class="site-title" href="/">Aman Pathak</a>
+        <nav class="site-nav" aria-label="Site">
+          {navItems.map((item) => (
+            <a href={item.href} aria-current={nav === item.key ? 'page' : undefined}>{item.label}</a>
+          ))}
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="inner">
+        <span class="copy">© {year} {site.author}</span>
+        <a href={`mailto:${site.email}`}>email</a>
+        <a href={site.github}>github</a>
+        <a href="/rss.xml">rss</a>
+        <a href="/research.bib">bibtex</a>
+      </div>
+    </footer>
+  </body>
+</html>

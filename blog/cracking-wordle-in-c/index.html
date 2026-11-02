@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Cracking Wordle in C - Aman Pathak</title>
+<meta name="description" content="Reproducing the proven-optimal Wordle policy in C, and then finding out that the published answer list no longer matches the game.">
+<link rel="alternate" type="application/rss+xml" title="Aman Pathak" href="/rss.xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+body { margin: 1em auto; max-width: 46em; padding: 0 1em; line-height: 1.5; }
+pre { overflow-x: auto; padding: 0.5em; background: #8881; }
+img { max-width: 100%; }
+table { border-collapse: collapse; }
+td, th { border: 1px solid #888; padding: 0.2em 0.5em; text-align: left; }
+blockquote { margin-left: 1em; padding-left: 1em; border-left: 2px solid #888; }
+</style>
+</head>
+<body>
+<p><a href="/">Home</a> |
+<a href="/about/">About</a> |
+<a href="/research/">Research</a> |
+<a href="/projects/">Projects</a> |
+<a href="/blog/">Blog</a> |
+<a href="/writings/">Writings</a></p>
+<hr>
+<h1>Cracking Wordle in C</h1>
+<p><small>2 Nov 2026</small></p>
+
+<p>Wordle is a solved game, in the strict sense: somebody has computed the globally optimal
+policy and proved that it's optimal. So writing a solver should be a weekend of
+transcription, and that's what I expected going in.</p>
+
+<p>It mostly was. The part I didn't expect was that the hardest problem had nothing to do
+with the search.</p>
+
+<h2>What was already solved</h2>
+
+<p>Dimitris Bertsimas and Alex Paskov published <i>An Exact Solution to Wordle</i> in
+<i>Operations Research</i> (73(3):1384-1394, 2025). They model the game as a Markov decision
+process, write down the Bellman equation, and solve it by exact dynamic programming. The
+result is that <code>SALET</code> is the optimal opening word, the optimal policy averages
+3.4212 guesses, and it never needs more than five. Alex Selby reached the same answer
+independently by exhaustive search in January 2022.</p>
+
+<p>I should be clear that this is the part of my program that works best, and none of it is
+mine. The recurrence my solver computes is their Bellman equation. On the canonical lists
+(2315 answers plus 10657 extra legal guesses, 12972 total) my C version returns 7920 total
+guesses, 3.4212 average, worst case 5. That isn't an improvement on the paper. It's the
+ceiling the paper proved, and matching it exactly is the best available outcome.</p>
+
+<p>I take <code>salet</code> on faith too. Deriving the opener needs a full-width search
+over all 12972 possible first guesses, which is hours of compute, not milliseconds. Every
+guess after the first one is searched for real at runtime.</p>
+
+<h2>Encoding the game as bytes</h2>
+
+<p>A Wordle clue is five trits (grey 0, yellow 1, green 2), so there are 3^5 = 243 possible
+colourings and all of them fit in a byte. Pack it base-3 and the game becomes integer
+arithmetic:</p>
+
+<pre><code class="language-c">/* colour of `answer` when you guess `guess`, one byte; 242 == all green */
+uint8_t PAT [NGUESS][NANS];    /* 12972 x  2315  =  30 MB */
+uint8_t PATW[NGUESS][NGUESS];  /* 12972 x 12972  = 168 MB */
+</code></pre>
+
+<p>Both tables get built once across threads and then mmap'd from a cache directory, keyed
+by an FNV hash of the word list, so changing the words rebuilds them automatically. After
+that, scoring a guess against a candidate is a single array load. Nothing in the hot path
+touches a string.</p>
+
+<p>Filtering is just as crude. When you tell the solver <code>ybbbg</code>, that parses to a
+byte, and it keeps the candidates whose table entry equals that byte. There's no per-letter
+constraint bookkeeping anywhere, and the duplicate-letter cases come out right for free,
+because the table was built with the real rule: a green claims the answer's copy of a letter
+first, and only leftover copies can turn a later repeat yellow. So <code>geese</code> against
+<code>these</code> is <code>bbggg</code>, not <code>ygggg</code>. A lot of solvers get this
+wrong, and precomputing it means you can only get it wrong once.</p>
+
+<p>The search is the Bellman recurrence with the usual load-bearing tricks. A
+<code>2n-1</code> lower bound on any candidate set, since you pay one guess per candidate
+plus a second for all but the one you might luckily name this turn. Alpha/beta-style budget
+propagation across sibling buckets. A Zobrist-hashed transposition table over candidate
+sets. A beam over a cheap one-ply ranking, wide enough that from turn two onward the result
+is the true optimum.</p>
+
+<p>It worked, it matched the paper, and I thought I was done.</p>
+
+<h2>The game it got wrong</h2>
+
+<p>I played a real puzzle through it. It opened <code>salet</code>, I fed it colours, it
+narrowed down to one candidate and guessed <code>wrist</code>. I entered <code>bgggg</code>,
+meaning the first letter was wrong and the rest were correct, and it said:</p>
+
+<blockquote>
+<p>those colours rule out every word, they can't all be right.</p>
+</blockquote>
+
+<p>I had entered everything correctly. The answer was <code>grist</code>. My solver was
+telling me a true thing was impossible, with complete confidence, because
+<code>grist</code> wasn't in its answer list.</p>
+
+<p>That's the whole project in one error message. The 2315-word list was accurate for Wordle
+as it existed when the list was scraped, and then the New York Times bought the game and
+started editing the answers. The proof is still a proof. It's just a proof about a slightly
+different game than the one on my screen.</p>
+
+<p>The failure mode is what bothers me. A solver that treats "not in my list" as
+"impossible" doesn't degrade gracefully when the list drifts. It becomes confidently wrong,
+and it sounds exactly as sure of itself as it did when it was right.</p>
+
+<h2>A prior instead of a list</h2>
+
+<p>The fix is to stop pretending I know the answer set. Rather than a binary
+possible/impossible, every word carries a prior weight, and the objective becomes</p>
+
+<pre><code>minimize  sum over words of  weight(word) x guesses-to-find-it
+</code></pre>
+
+<p>where <code>--prior P</code> is P(the answer is on the official list) and derives the
+weight ratio between list words and the other 10657. At <code>--prior 1</code> the extras
+weigh nothing and you recover the paper's problem exactly, which is useful: it means every
+later change can be checked against a certified number. At the default of 0.95 the extras
+stay alive as candidates, just cheap. Nothing legal is ever pruned, so the contradiction I
+hit can't happen at all, rather than merely being unlikely.</p>
+
+<p>That created a second problem, which turned out to be more interesting than the first.</p>
+
+<h2>Pricing a loss</h2>
+
+<p>With all 12972 words alive, some positions genuinely can't be won in the turns remaining.
+My search reported those as <code>INF</code>, infeasible. That's true and completely
+useless, because once a value is infinite every losing line looks exactly as bad as every
+other losing line. The search couldn't tell them apart, so it threw away the whole six-guess
+budget and started losing games it could have won.</p>
+
+<p>So I stopped calling it infeasible and charged for it instead. A candidate you fail to
+pin down costs <code>LOSS = 16</code> guess-equivalents per unit of weight. Now the search
+can see that one disaster is worse than another, and it does what I wanted without being
+told: it sacrifices improbable words to keep likely ones inside six guesses. It chooses
+which games to lose.</p>
+
+<p>I tried <code>LOSS</code> at 48 and at 128. Both were worse. Too large a penalty and the
+lower bound stops pruning effectively, so the search gets slower and plays worse at the same
+time. 16 is what I settled on. At <code>--prior 1</code> nothing is ever over budget, so the
+term never fires and the certified result is untouched.</p>
+
+<p>Something smaller fell out of the same thinking. On the last allowed turn, a clever
+splitting guess wins with probability zero, so however bad the position is you should name
+the likeliest remaining candidate and take the chance. My solver had been playing the
+splitter. That was free wins I'd been giving away by not noticing an obvious thing.</p>
+
+<h2>What it costs</h2>
+
+<table>
+<tr><th></th><th>answer list: avg</th><th>worst</th><th>all 12972: avg</th><th>unsolved</th></tr>
+<tr><td><code>--prior 1</code> (the paper)</td><td>3.4212</td><td>5</td><td>4.3585</td><td>117 (0.90%)</td></tr>
+<tr><td><code>--prior 0.95</code> (default)</td><td>3.4233</td><td>5</td><td>4.2696</td><td>37 (0.29%)</td></tr>
+<tr><td>flat prior</td><td>3.7819</td><td>6</td><td>4.0660</td><td>1 (0.01%)</td></tr>
+</table>
+
+<p>The default gives up 0.0021 guesses of average performance on the official list, keeps
+the never-more-than-five guarantee, and cuts failures on arbitrary English words by two
+thirds. Stated plainly: my default is worse than the paper on the paper's own metric, and
+better on an axis the paper doesn't measure. That's a reasonable trade when the answer list
+is a moving target, and a bad one if you trust the list.</p>
+
+<p>None of this is novel. 3Blue1Brown weighted words by frequency years ago, just paired
+with an entropy heuristic rather than exact DP, and replacing a hard constraint with a
+penalty is a first-week trick. I'd assume the combination has been written up somewhere I
+haven't read.</p>
+
+<h2>The bug Python found</h2>
+
+<p>This is the part I'd most want someone else to take away.</p>
+
+<p>In hard mode, where every guess has to be consistent with all the clues so far, the
+solver reported that <code>vaunt</code> took seven guesses. It walks
+<code>daunt</code>, <code>gaunt</code>, <code>haunt</code>, <code>jaunt</code> one at a time
+instead of playing a splitter that separates them in a single move. I looked at that,
+reasoned about the constraints, concluded the position was genuinely unwinnable, and said so
+out loud with some confidence.</p>
+
+<p>Then I wrote an independent brute force in Python, from scratch, sharing no code with the
+C version, and it found a six-guess line.</p>
+
+<p>Two real bugs, both of which had been there the entire time:</p>
+
+<ul>
+<li>The per-guess evaluator passed its children the parent's legal-guess pool in hard mode
+instead of narrowing it. So it valued every guess as though later turns were unconstrained,
+which rates losing lines as winning ones. <code>vaunt</code> went from 7 to 4 once I fixed
+it.</li>
+<li>The transposition table keyed only on the candidate set. In hard mode the legal-guess
+pool is part of the position, because the same set of surviving candidates reached through
+different clue histories has a different optimal value once your future guesses are
+constrained. That one looked harmless right up until I started writing those values to
+disk.</li>
+</ul>
+
+<p>Both were invisible at <code>--prior 1</code>. My headline benchmark, the one that
+matched a certified published result to four decimal places, exercised neither of them. I
+had the most reassuring evidence of correctness available and two live bugs sitting behind
+it.</p>
+
+<p>I also had to retract a number I'd already stated. I measured hard mode in an
+intermediate state, with one bug fixed and the other still there, decided the previously
+documented figure had been an artifact, and announced the new one as the honest value. The
+original was right. Reproducing a published optimum tells you one configuration is correct
+and nothing at all about the others, and I'd been treating it as a character reference for
+the whole program.</p>
+
+<p>Write the second implementation. Not a second test, a second implementation, in a
+different language, ideally without reference to how you did it the first time. It's the
+only thing that caught this.</p>
+
+<h2>Where it still loses</h2>
+
+<p>Thirty-seven words out of 12972 still go unsolved, and the list is embarrassing:
+<code>fixed</code> and <code>fazed</code> sit in it next to <code>fuffy</code>,
+<code>poovy</code> and <code>zills</code>. The reason is that my prior is uniform across all
+10657 non-list words, so the solver can't tell <code>fixed</code> from <code>fuffy</code>,
+and when it decides which games to sacrifice it's spending the budget blind.</p>
+
+<p>I tried to fix this with a plausibility model built from letter and bigram statistics
+over the answer list, and then threw it out. It put <code>fixed</code> in the 4.7th
+percentile, because <code>x</code> is rare and an ordinary word ends up looking like noise,
+and <code>crore</code> in the 99.8th. It measures orthographic typicality, which isn't the
+same thing as being a word people use, and shipping it would have made the exact failure
+worse.</p>
+
+<p>The real fix is word-frequency data, which means a new external dependency with
+licensing questions attached, so it isn't in there. The cheap fix is one line: drop today's
+answer list into <code>data/answers.txt</code> and rebuild. The cache keys hash the word
+list, so everything downstream regenerates itself.</p>
+
+<h2>Closing</h2>
+
+<p>Between the persistent book of solved positions and the mmap'd tables, a full game went
+from 11 seconds to 56 milliseconds. That felt like the point of the project while I was
+chasing it, and it wasn't.</p>
+
+<p>The search was the easy half, and it was easy because someone had already proved what
+the answer was. The actual difficulty was all in the gap between the problem in the paper
+and the problem on my screen: a word list that had quietly changed underneath me, an
+infinity that destroyed information I needed, and a benchmark that agreed with a published
+proof while two bugs sat under it.</p>
+
+<p>Optimal is a property of a model, and the model is the part nobody publishes a proof
+for.</p>
+
+<p><a href="/blog/">&larr; All posts</a></p>
+<hr>
+<p><small>Aman Pathak &middot;
+<a href="mailto:vajradevam@gmail.com">email</a> &middot;
+<a href="https://github.com/vajradevam">GitHub</a> &middot;
+<a href="/rss.xml">RSS</a></small></p>
+</body>
+</html>
