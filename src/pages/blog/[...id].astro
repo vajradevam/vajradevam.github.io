@@ -23,7 +23,7 @@ const mins = readingTime(post.body);
 <Base
   nav="blog"
   title={post.data.title}
-  description={post.data.description ?? `${post.data.title} — a post by Aman Pathak.`}
+  description={post.data.description ?? `${post.data.title}, a post by Aman Pathak.`}
   math={post.data.math}
   type="article"
 >
@@ -40,7 +40,7 @@ const mins = readingTime(post.body);
   </article>
 
   <nav class="post-nav" aria-label="Adjacent posts">
-    {older && <span>← <a href={`/blog/${older.id}/`}>{older.data.title}</a></span>}
-    {newer && <span class="next"><a href={`/blog/${newer.id}/`}>{newer.data.title}</a> →</span>}
+    {older && <span><small>Older:</small> <a href={`/blog/${older.id}/`}>{older.data.title}</a></span>}
+    {newer && <span class="next"><small>Newer:</small> <a href={`/blog/${newer.id}/`}>{newer.data.title}</a></span>}
   </nav>
 </Base>

@@ -6,10 +6,10 @@ import { getSortedPosts, formatDate } from '../../lib/posts';
 const posts = await getSortedPosts();
 ---
 
-<Base nav="blog" title="Blog" description="Blog of Aman Pathak — posts on computer architecture, the Linux kernel, C, compilers.">
+<Base nav="blog" title="Blog" description="Blog of Aman Pathak: posts on computer architecture, the Linux kernel, C, compilers.">
   <PageHead
     title="Blog"
-    sub={`${posts.length} posts — architecture, kernels, C, compilers. Also as an RSS feed.`}
+    sub={`${posts.length} posts on architecture, kernels, C, and compilers. Also as an RSS feed.`}
   />
 
   <ul class="plain">

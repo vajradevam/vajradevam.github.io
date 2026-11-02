@@ -3,7 +3,7 @@ export const site = {
   brand: 'vajradevam',
   tagline: 'Hardware security · RISC-V · low-level systems',
   description:
-    'Aman Pathak — PhD scholar in computer architecture, hardware security, and low-level systems. RISC-V, side-channel attacks, formal verification.',
+    'Aman Pathak: PhD scholar in computer architecture, hardware security, and low-level systems. RISC-V, side-channel attacks, formal verification.',
   url: 'https://vajradevam.in',
   author: 'Aman Pathak',
   github: 'https://github.com/vajradevam',

@@ -1,6 +1,6 @@
 # vajradevam.in
 
-Personal site and blog of **Aman Pathak** — PhD scholar in hardware security and
+Personal site and blog of **Aman Pathak**, PhD scholar in hardware security and
 computer architecture at BITS Pilani, KK Birla Goa Campus.
 
 Static [Astro](https://astro.build/) site in the style of Japanese web minimalism:
