@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" fill="#ffffff"/>
-  <circle cx="16" cy="16" r="9" fill="#c73e3a"/>
+  <rect width="32" height="32" rx="6" fill="#a62c21"/>
+  <rect x="2.5" y="2.5" width="27" height="27" rx="4.5" fill="none" stroke="#fdfbf4" stroke-width="1.5"/>
+  <text x="16" y="23" text-anchor="middle" font-size="17" font-family="serif" font-weight="bold" fill="#fdfbf4">天</text>
 </svg>

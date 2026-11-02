@@ -7,7 +7,7 @@ import experience from '../data/experience.json';
 ---
 
 <Base nav="about" title="About" description="About Aman Pathak: PhD scholar in hardware security and computer architecture at BITS Pilani Goa.">
-  <PageHead title="About" sub="PhD scholar · hardware security · RISC-V · low-level software" />
+  <PageHead title="About" kanji="人" sub="PhD scholar · hardware security · RISC-V · low-level software" />
 
   <p>
     I'm a PhD scholar in the Department of Computer Science and Information Systems at
@@ -32,7 +32,7 @@ import experience from '../data/experience.json';
     stripped-down, non-abstracted, naked-truth stuff.
   </p>
 
-  <h2>Experience</h2>
+  <h2 data-kanji="歴">Experience</h2>
   {experience.map((e) => (
     <>
       <h3>{e.role} <small>({e.date})</small></h3>
@@ -43,7 +43,7 @@ import experience from '../data/experience.json';
     </>
   ))}
 
-  <h2>Skills</h2>
+  <h2 data-kanji="技">Skills</h2>
   <dl class="rows">
     {skills.map((group) => (
       <div>
@@ -53,7 +53,7 @@ import experience from '../data/experience.json';
     ))}
   </dl>
 
-  <h2>Contact</h2>
+  <h2 data-kanji="信">Contact</h2>
   <dl class="rows">
     <div><dt>Email</dt><dd><a href={`mailto:${site.email}`}>{site.email}</a></dd></div>
     <div><dt>GitHub</dt><dd><a href={site.github}>github.com/vajradevam</a></dd></div>

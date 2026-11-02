@@ -3,6 +3,16 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import projects from '../data/projects.json';
 
+const catKanji: Record<string, string> = {
+  systems: '核',
+  web: '網',
+  emulators: '擬',
+  ml: '学',
+  games: '遊',
+  frontend: '面',
+  compilers: '言',
+  misc: '雑',
+};
 const catNames: Record<string, string> = {
   systems: 'Systems',
   web: 'Web and backends',
@@ -17,7 +27,7 @@ const cats = [...new Set(projects.map((p) => p.category))];
 ---
 
 <Base nav="projects" title="Projects" description={`${projects.length} projects by Aman Pathak: systems programming in C, emulators, compilers, ML, and web, mostly built from scratch.`}>
-  <PageHead title="Projects" sub={`${projects.length} projects, mostly built from scratch. All code on GitHub.`} />
+  <PageHead title="Projects" kanji="作" sub={`${projects.length} projects, mostly built from scratch. All code on GitHub.`} />
 
   <p class="meta">
     {cats.map((c, i) => (
@@ -27,7 +37,7 @@ const cats = [...new Set(projects.map((p) => p.category))];
 
   {cats.map((c) => (
     <>
-      <h2 id={c}>{catNames[c] ?? c} <small>({projects.filter((p) => p.category === c).length})</small></h2>
+      <h2 id={c} data-kanji={catKanji[c] ?? "作"}>{catNames[c] ?? c} <small>({projects.filter((p) => p.category === c).length})</small></h2>
       <ul class="plain">
         {projects.filter((p) => p.category === c).map((p) => (
           <li class="entry">

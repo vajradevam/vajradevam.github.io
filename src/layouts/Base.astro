@@ -1,5 +1,6 @@
 ---
 import { site, navItems, type NavKey } from '../data/site';
+import Peaks from '../components/Peaks.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -37,26 +38,34 @@ const year = new Date().getFullYear();
   <body>
     <header class="site-header">
       <div class="inner">
-        <a class="site-title" href="/">Aman Pathak</a>
+        <a class="site-title" href="/">
+          <span class="deva" lang="sa">वज्रदेवम्</span>
+          <span class="roman">Aman Pathak</span>
+        </a>
         <nav class="site-nav" aria-label="Site">
           {navItems.map((item) => (
             <a href={item.href} aria-current={nav === item.key ? 'page' : undefined}>{item.label}</a>
           ))}
         </nav>
       </div>
+      <div class="flags" aria-hidden="true"></div>
     </header>
 
     <main>
       <slot />
     </main>
 
+    <Peaks />
     <footer class="site-footer">
       <div class="inner">
-        <span class="copy">© {year} {site.author}</span>
-        <a href={`mailto:${site.email}`}>email</a>
-        <a href={site.github}>github</a>
-        <a href="/rss.xml">rss</a>
-        <a href="/research.bib">bibtex</a>
+        <p class="mantra" lang="sa" aria-hidden="true">ॐ मणि पद्मे हूँ</p>
+        <div class="links">
+          <span>© {year} {site.author}</span>
+          <a href={`mailto:${site.email}`}>email</a>
+          <a href={site.github}>github</a>
+          <a href="/rss.xml">rss</a>
+          <a href="/research.bib">bibtex</a>
+        </div>
       </div>
     </footer>
   </body>

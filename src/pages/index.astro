@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+import Tiger from '../components/Tiger.astro';
+import Serpent from '../components/Serpent.astro';
 import projects from '../data/projects.json';
 import publications from '../data/publications.json';
 import patents from '../data/patents.json';
@@ -10,14 +12,22 @@ const featured = projects.filter((p) => p.featured);
 ---
 
 <Base nav="home">
-  <h1>Aman Pathak</h1>
-  <p>
-    PhD scholar in hardware security and computer architecture at BITS Pilani,
-    KK Birla Goa Campus. I break and defend RISC-V microarchitecture: side channels,
-    memory encryption, formal verification. <a href="/about/">More about me</a>.
-  </p>
+  <header class="hero">
+    <span class="watermark" lang="sa" aria-hidden="true">वज्र</span>
+    <Tiger />
+    <p class="mantra" lang="sa" aria-hidden="true">ॐ मणि पद्मे हूँ</p>
+    <h1>Aman Pathak</h1>
+    <p class="deva-sub"><span lang="sa">वज्रदेवम्</span> · vajradevam</p>
+    <p class="intro">
+      PhD scholar in hardware security and computer architecture at BITS Pilani,
+      KK Birla Goa Campus. I break and defend RISC-V microarchitecture: side channels,
+      memory encryption, formal verification. <a href="/about/">More about me</a>.
+    </p>
+  </header>
 
-  <h2>Research</h2>
+  <Serpent />
+
+  <h2 data-kanji="研">Research</h2>
   <p class="meta">{publications.length} publications · {patents.length} patents filed · <a href="/research/">full record</a></p>
   <ul class="plain">
     {publications.slice(0, 3).map((p) => (
@@ -28,7 +38,7 @@ const featured = projects.filter((p) => p.featured);
     ))}
   </ul>
 
-  <h2>Selected projects</h2>
+  <h2 data-kanji="作">Selected projects</h2>
   <p class="meta">Mostly built from scratch · <a href="/projects/">all {projects.length}</a></p>
   <ul class="plain">
     {featured.map((p) => (
@@ -39,7 +49,7 @@ const featured = projects.filter((p) => p.featured);
     ))}
   </ul>
 
-  <h2>Recent posts</h2>
+  <h2 data-kanji="記">Recent posts</h2>
   <ul class="plain">
     {posts.slice(0, 5).map((post) => (
       <li class="entry">
@@ -48,5 +58,5 @@ const featured = projects.filter((p) => p.featured);
       </li>
     ))}
   </ul>
-  <p class="backlink" style="margin-top:1em"><a href="/blog/">All posts</a></p>
+  <p class="meta" style="margin-top:1em"><a href="/blog/">All posts</a> · <a href="/writings/">longer writings</a></p>
 </Base>

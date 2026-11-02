@@ -12,6 +12,7 @@ const underReview = publications.filter((p) => p.status === 'under review');
 <Base nav="research" title="Research" description="Publications and patents of Aman Pathak: hardware security, RISC-V microarchitecture, side channels, formal verification.">
   <PageHead
     title="Research"
+    kanji="研"
     sub={`${publications.length} publications · ${patents.length} patents filed`}
   />
   <p>
@@ -19,7 +20,7 @@ const underReview = publications.filter((p) => p.status === 'under review');
     and formal verification. BibTeX for everything below: <a href="/research.bib">research.bib</a>.
   </p>
 
-  <h2 id="publications">Publications</h2>
+  <h2 id="publications" data-kanji="論">Publications</h2>
   <ol class="pubs">
     {published.map((p) => (
       <li>
@@ -34,7 +35,7 @@ const underReview = publications.filter((p) => p.status === 'under review');
     ))}
   </ol>
 
-  <h2 id="under-review">Under review</h2>
+  <h2 id="under-review" data-kanji="審">Under review</h2>
   <ol class="pubs" start={published.length + 1}>
     {underReview.map((p) => (
       <li>
@@ -48,7 +49,7 @@ const underReview = publications.filter((p) => p.status === 'under review');
     ))}
   </ol>
 
-  <h2 id="patents">Patents</h2>
+  <h2 id="patents" data-kanji="特">Patents</h2>
   <p class="meta">Indian patent applications, all in the RISC-V space.</p>
   <table>
     <thead><tr><th>Application</th><th>Title</th></tr></thead>
@@ -59,7 +60,7 @@ const underReview = publications.filter((p) => p.status === 'under review');
     </tbody>
   </table>
 
-  <h2 id="now">Current work</h2>
+  <h2 id="now" data-kanji="今">Current work</h2>
   <ul class="plain">
     {now.map((item) => <li>{item}</li>)}
   </ul>
