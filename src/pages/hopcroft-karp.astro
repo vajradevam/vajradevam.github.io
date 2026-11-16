@@ -1,0 +1,457 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+---
+
+<Base title="Hopcroft-Karp, step by step" description="An animated walk through the Hopcroft-Karp bipartite matching algorithm on a five-by-five example: BFS levels, DFS with deletion, and the matching update, phase by phase.">
+  <PageHead title="Hopcroft-Karp, step by step" kanji="道" sub="Five workers, five jobs, three phases. Press play, or step through at your own pace." />
+
+  <p>
+    A <em>matching</em> pairs workers with jobs so nobody is used twice. Hopcroft and Karp (1973) find the biggest
+    one in <code>O(m√n)</code> time by flipping a whole batch of shortest augmenting paths in each <em>phase</em>.
+    Each phase is three passes: a BFS that builds levels, a DFS that walks back up and deletes what it uses, and an update.
+  </p>
+
+  <section class="hk" id="hk" aria-label="Hopcroft-Karp animation">
+    <div class="hk-phases" id="hk-phases" role="tablist" aria-label="Phases"></div>
+
+    <div class="hk-stage">
+      <figure class="hk-panel">
+        <figcaption>The graph and the matching <span id="hk-msize"></span></figcaption>
+        <svg id="hk-graph" viewBox="0 0 300 340" role="img" aria-label="The example graph with the current matching"></svg>
+      </figure>
+      <figure class="hk-panel">
+        <figcaption id="hk-view-cap">The search, level by level</figcaption>
+        <svg id="hk-levels" viewBox="0 0 380 340" role="img" aria-label="The levels built by the BFS and the paths found by the DFS"></svg>
+      </figure>
+    </div>
+
+    <div class="hk-caption" aria-live="polite">
+      <p class="hk-step-kind" id="hk-kind"></p>
+      <h2 id="hk-title"></h2>
+      <p id="hk-text"></p>
+    </div>
+
+    <div class="hk-controls">
+      <button id="hk-first" aria-label="Back to the start" title="Start">«</button>
+      <button id="hk-prev" aria-label="Previous step" title="Previous (left arrow)">‹</button>
+      <button id="hk-play" class="hk-primary" aria-label="Play" title="Play or pause (space)">Play</button>
+      <button id="hk-next" aria-label="Next step" title="Next (right arrow)">›</button>
+      <button id="hk-last" aria-label="Jump to the end" title="End">»</button>
+      <label class="hk-speed">speed
+        <select id="hk-speed">
+          <option value="6500">slow</option>
+          <option value="4500" selected>normal</option>
+          <option value="2500">fast</option>
+        </select>
+      </label>
+    </div>
+    <div class="hk-bar" id="hk-bar" aria-hidden="true"><span id="hk-fill"></span></div>
+    <p class="hk-count" id="hk-count"></p>
+
+    <ul class="hk-legend" aria-label="Legend">
+      <li><svg viewBox="0 0 34 20"><circle cx="17" cy="10" r="8" class="lg-free"/></svg>free vertex</li>
+      <li><svg viewBox="0 0 34 20"><line x1="2" y1="10" x2="32" y2="10" class="lg-m"/></svg>matched edge</li>
+      <li><svg viewBox="0 0 34 20"><line x1="2" y1="10" x2="32" y2="10" class="lg-red"/></svg>augmenting path found</li>
+      <li><svg viewBox="0 0 34 20"><line x1="2" y1="10" x2="32" y2="10" class="lg-probe"/></svg>search in progress</li>
+      <li><svg viewBox="0 0 34 20"><path d="M10 3 L24 17 M24 3 L10 17" class="lg-dead"/></svg>dead end</li>
+    </ul>
+  </section>
+
+  <noscript><p>This page needs JavaScript for the animation. The algorithm is described in the lecture notes.</p></noscript>
+
+  <h2 data-kanji="要">What to take away</h2>
+  <ul>
+    <li>Each phase finds a <em>maximal</em> set of vertex-disjoint shortest augmenting paths, then flips them all at once.</li>
+    <li>The shortest length strictly grows from phase to phase: here 1, then 3, then 5.</li>
+    <li>There are only about <code>√n</code> phases, and one phase costs <code>O(m+n)</code>, which gives <code>O(m√n)</code>.</li>
+  </ul>
+  <p class="meta">Source: J. E. Hopcroft and R. M. Karp, <em>An n<sup>5/2</sup> algorithm for maximum matchings in bipartite graphs</em>, SIAM J. Comput. 2(4):225-231, 1973.</p>
+</Base>
+
+<style is:global>
+  /* The animation uses the site's tokens; classes are prefixed hk- */
+  .hk { margin: 1.8rem 0 2.2rem; }
+  .hk-phases { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+  .hk-phases button {
+    font: 600 0.78rem var(--sans); letter-spacing: 0.04em; color: var(--muted);
+    background: var(--soft); border: 1px solid var(--line); border-radius: 999px;
+    padding: 0.3rem 0.85rem; cursor: pointer; transition: all 0.25s;
+  }
+  .hk-phases button:hover { border-color: var(--gold-deco); color: var(--ink); }
+  .hk-phases button[aria-selected="true"] {
+    color: #fff; background: linear-gradient(180deg, var(--accent), var(--accent-deep));
+    border-color: var(--accent-deep); box-shadow: 0 2px 8px -2px rgba(126, 31, 24, 0.5);
+  }
+  .hk-stage { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+  .hk-panel {
+    flex: 1 1 300px; margin: 0; background: var(--sheet); border: 1px solid var(--line);
+    border-radius: 6px; box-shadow: var(--shadow-sheet); padding: 0.5rem 0.6rem 0.4rem;
+    background-image: radial-gradient(ellipse 90% 40% at 50% 0%, rgba(232, 207, 122, 0.22), transparent 70%);
+  }
+  .hk-panel figcaption {
+    font: 600 0.72rem var(--sans); letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold); text-align: center; padding: 0.15rem 0 0.1rem;
+  }
+  .hk-panel svg { width: 100%; height: auto; display: block; }
+
+  /* nodes */
+  .hk-node circle.body { stroke-width: 2; transition: opacity 0.5s, fill 0.4s, stroke 0.4s; }
+  .hk-node.w circle.body { fill: #dfe8f3; stroke: var(--flag-blue); }
+  .hk-node.j circle.body { fill: #f6e8bd; stroke: var(--gold-deco); }
+  .hk-node text { font: 600 13px var(--serif); text-anchor: middle; dominant-baseline: central; fill: var(--ink); pointer-events: none; }
+  .hk-node .ring { fill: none; stroke: var(--flag-green); stroke-width: 2.4; opacity: 0; transition: opacity 0.45s; }
+  .hk-node.free .ring { opacity: 1; }
+  .hk-node .halo { fill: none; stroke: var(--gold-deco); stroke-width: 2; opacity: 0; }
+  .hk-node.probe .halo { opacity: 1; animation: hk-pulse 1.1s ease-in-out infinite; }
+  .hk-node.onpath circle.body { stroke: var(--accent); }
+  .hk-node.used circle.body { opacity: 0.8; }
+  .hk-node.dead circle.body { opacity: 0.4; }
+  .hk-node.dead text { opacity: 0.5; }
+  .hk-node .x { stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; opacity: 0; transition: opacity 0.4s; }
+  .hk-node.dead .x { opacity: 1; }
+  .hk-node.hide { opacity: 0; }
+  .hk-node { transition: opacity 0.6s, transform 0.6s; }
+  @keyframes hk-pulse { 0%,100% { opacity: 0.2; } 50% { opacity: 1; } }
+
+  /* edges */
+  .hk-edge { stroke: #b9aa8c; stroke-width: 1.4; fill: none; stroke-linecap: round;
+    transition: stroke 0.45s, stroke-width 0.45s, opacity 0.5s; }
+  .hk-edge.m { stroke: var(--ink-deco); stroke-width: 4.2; }
+  .hk-edge.red { stroke: var(--accent); stroke-width: 4.6; }
+  .hk-edge.cancel { stroke: var(--accent); stroke-width: 2.4; stroke-dasharray: 5 4; }
+  .hk-edge.probe { stroke: var(--gold-deco); stroke-width: 3.4; stroke-dasharray: 6 4; animation: hk-dash 0.8s linear infinite; }
+  .hk-edge.hide { opacity: 0; }
+  .hk-edge.fade { opacity: 0.3; }
+  @keyframes hk-dash { to { stroke-dashoffset: -20; } }
+
+  .hk-lvl { font: 600 9.5px var(--sans); letter-spacing: 0.06em; fill: var(--gold); text-transform: uppercase; transition: opacity 0.5s; }
+  .hk-lvl.hide { opacity: 0; }
+  .hk-bracket { fill: none; stroke: var(--flag-green); stroke-width: 1.6; stroke-dasharray: 3 3; opacity: 0; transition: opacity 0.5s; }
+  .hk-bracket.on { opacity: 0.9; }
+  .hk-flabel { font: 600 11px var(--sans); fill: var(--flag-green); opacity: 0; transition: opacity 0.5s; }
+  .hk-flabel.on { opacity: 1; }
+  .hk-empty { font: italic 14px var(--serif); fill: var(--faint); text-anchor: middle; }
+
+  /* caption */
+  .hk-caption {
+    margin: 0.9rem 0 0.7rem; padding: 0.9rem 1.1rem 0.5rem; min-height: 9.2rem;
+    background: var(--sheet); border: 1px solid var(--line); border-left: 3px solid var(--accent);
+    border-radius: 4px; box-shadow: var(--shadow-sheet);
+  }
+  .hk-caption h2 { margin: 0 0 0.35rem; font-size: 1.12rem; }
+  .hk-caption p { margin: 0 0 0.5em; font-size: 0.95rem; line-height: 1.7; }
+  .hk-caption .hk-step-kind { font: 600 0.7rem var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin: 0 0 0.15rem; }
+  .hk-caption strong { color: var(--accent-deep); }
+  .hk-caption .mono { font-family: var(--mono); font-size: 0.86em; background: var(--soft); border: 1px solid var(--line); border-radius: 2px; padding: 0.04em 0.35em; }
+  .hk-caption.swap { animation: hk-in 0.45s ease; }
+  @keyframes hk-in { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+
+  /* controls */
+  .hk-controls { display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; }
+  .hk-controls button {
+    font: 600 1.05rem var(--sans); min-width: 2.5rem; height: 2.4rem; padding: 0 0.8rem;
+    color: var(--ink); background: var(--sheet); border: 1px solid var(--dot); border-radius: 4px; cursor: pointer;
+    box-shadow: 0 1px 2px rgba(92, 70, 28, 0.12); transition: all 0.2s;
+  }
+  .hk-controls button:hover { border-color: var(--gold-deco); background: var(--gold-faint); }
+  .hk-controls button:active { transform: translateY(1px); }
+  .hk-controls button:disabled { opacity: 0.35; cursor: default; }
+  .hk-controls button.hk-primary {
+    min-width: 5.2rem; font-size: 0.9rem; letter-spacing: 0.06em; color: #fff;
+    background: linear-gradient(180deg, var(--accent), var(--accent-deep)); border-color: var(--accent-deep);
+  }
+  .hk-controls button.hk-primary:hover { filter: brightness(1.1); }
+  .hk-speed { margin-left: auto; font: 0.75rem var(--sans); color: var(--muted); display: flex; align-items: center; gap: 0.4rem; }
+  .hk-speed select { font: inherit; color: var(--ink); background: var(--sheet); border: 1px solid var(--dot); border-radius: 3px; padding: 0.2rem 0.3rem; }
+  .hk-bar { height: 4px; background: var(--line); border-radius: 2px; margin: 0.8rem 0 0.3rem; overflow: hidden; }
+  .hk-bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--gold-deco), var(--accent)); transition: width 0.4s; }
+  .hk-count { font: 0.75rem var(--sans); color: var(--faint); margin: 0; text-align: right; }
+
+  .hk-legend { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; padding: 0; margin: 1rem 0 0; font: 0.74rem var(--sans); color: var(--muted); }
+  .hk-legend li { display: flex; align-items: center; gap: 0.35rem; }
+  .hk-legend svg { width: 34px; height: 20px; }
+  .lg-free { fill: #dfe8f3; stroke: var(--flag-green); stroke-width: 2.4; }
+  .lg-m { stroke: var(--ink-deco); stroke-width: 4; }
+  .lg-red { stroke: var(--accent); stroke-width: 4; }
+  .lg-probe { stroke: var(--gold-deco); stroke-width: 3; stroke-dasharray: 5 3; }
+  .lg-dead { stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; fill: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hk-node.probe .halo, .hk-edge.probe { animation: none; }
+    .hk-caption.swap { animation: none; }
+  }
+</style>
+
+<script is:inline>
+(function () {
+  var NS = 'http://www.w3.org/2000/svg';
+  var W = ['a', 'e', 'd', 'b', 'c'], J = ['3', '1', '2', '5', '4'];
+  var GY = { a: 50, e: 110, d: 170, b: 230, c: 290, '3': 50, '1': 110, '2': 170, '5': 230, '4': 290 };
+  var EDGES = ['a1', 'a3', 'b2', 'b5', 'c4', 'c5', 'd1', 'd2', 'e1'];
+  var isW = function (v) { return /[a-e]/.test(v); };
+  var ekey = function (u, v) { return isW(u) ? u + v : v + u; };   // worker first
+
+  var M0 = [], M1 = ['a1', 'b2', 'c4'], M2 = ['d1', 'a3', 'b2', 'c4'], M3 = ['e1', 'd2', 'b5', 'a3', 'c4'];
+
+  /* level pictures, one per phase: levels (top to bottom), the edges that exist, and which of them are matched */
+  var VIEWS = {
+    1: { lv: [['a', 'e', 'd', 'b', 'c'], ['3', '1', '2', '5', '4']],
+         edges: ['a1', 'a3', 'b2', 'b5', 'c4', 'c5', 'd1', 'd2', 'e1'] },
+    2: { lv: [['d', 'e'], ['1', '2'], ['a', 'b'], ['3', '5']],
+         edges: ['d1', 'e1', 'd2', 'a1', 'b2', 'a3', 'b5'] },
+    3: { lv: [['e'], ['1'], ['d'], ['2'], ['b'], ['5']],
+         edges: ['e1', 'd1', 'd2', 'b2', 'b5'] }
+  };
+  var VMATCH = { 1: [], 2: ['a1', 'b2'], 3: ['d1', 'b2'] };
+
+  function path(a) { var r = []; for (var i = 0; i + 1 < a.length; i++) r.push(ekey(a[i], a[i + 1])); return r; }
+
+  /* the script: each step lists the matching shown, how many levels are revealed, and what the DFS has found so far */
+  var STEPS = [
+    { ph: 0, kind: 'The problem', title: 'Five workers, five jobs',
+      text: 'Each worker can do only some jobs: <span class="mono">a:1,3</span> <span class="mono">b:2,5</span> <span class="mono">c:4,5</span> <span class="mono">d:1,2</span> <span class="mono">e:1</span>. We want the most pairs, nobody used twice. We start with nothing matched, so every vertex is <strong>free</strong>, shown with a green ring.',
+      M: M0 },
+
+    /* ---- phase 1 ---- */
+    { ph: 1, kind: 'Phase 1 / BFS', title: 'Level 0: the free workers', reveal: 0, M: M0,
+      text: 'A phase starts with a BFS. The free workers are the sources, <strong>level 0</strong>. Nothing is matched, so all five workers are free.' },
+    { ph: 1, kind: 'Phase 1 / BFS', title: 'Level 1 already has free jobs', reveal: 1, M: M0, F: ['3', '1', '2', '5', '4'],
+      text: 'One unmatched edge away is <strong>level 1</strong>: all five jobs, and every one of them is free. We stop at the first level that holds a free job. Call those jobs <strong>F</strong>. So the shortest augmenting paths have length 1.' },
+    { ph: 1, kind: 'Phase 1 / DFS', title: 'Walk back up from job 1', reveal: 1, M: M0, F: ['3', '1', '2', '5', '4'],
+      paths: [['a', '1']],
+      text: 'The DFS starts from each job in F and walks back up the levels. Job 1 looks up and finds worker <strong>a</strong>, who is free. Path found: <span class="mono">a-1</span>. We <strong>delete</strong> a and 1 so no other path uses them.' },
+    { ph: 1, kind: 'Phase 1 / DFS', title: 'Job 2 finds b', reveal: 1, M: M0, F: ['3', '1', '2', '5', '4'],
+      paths: [['a', '1'], ['b', '2']],
+      text: 'Job 2 looks up and finds the free worker <strong>b</strong>. Path found: <span class="mono">b-2</span>. Delete b and 2.' },
+    { ph: 1, kind: 'Phase 1 / DFS', title: 'Job 3 hits a dead end', reveal: 1, M: M0, F: ['3', '1', '2', '5', '4'],
+      paths: [['a', '1'], ['b', '2']], probe: [['3', 'a']], dead: ['3'],
+      text: 'Job 3 looks up: its only neighbour is <strong>a</strong>, already deleted. <strong>Dead end</strong>. We cross out 3 and never visit it again.' },
+    { ph: 1, kind: 'Phase 1 / DFS', title: 'Job 4 finds c', reveal: 1, M: M0, F: ['3', '1', '2', '5', '4'],
+      paths: [['a', '1'], ['b', '2'], ['c', '4']], dead: ['3'],
+      text: 'Job 4 looks up and finds the free worker <strong>c</strong>. Path found: <span class="mono">c-4</span>.' },
+    { ph: 1, kind: 'Phase 1 / DFS', title: 'Job 5 hits a dead end', reveal: 1, M: M0, F: ['3', '1', '2', '5', '4'],
+      paths: [['a', '1'], ['b', '2'], ['c', '4']], probe: [['5', 'b'], ['5', 'c']], dead: ['3', '5'],
+      text: 'Job 5 looks up: its neighbours <strong>b</strong> and <strong>c</strong> are both deleted. Dead end. The DFS is finished: three disjoint paths, and no more can be added (the set is <em>maximal</em>).' },
+    { ph: 1, kind: 'Phase 1 / Update', title: 'Flip: M becomes M xor P', reveal: 1, M: M1, F: ['3', '1', '2', '5', '4'],
+      paths: [['a', '1'], ['b', '2'], ['c', '4']], dead: ['3', '5'], red: ['a1', 'b2', 'c4'],
+      text: 'Now we flip all the paths. Nothing was matched, so nothing cancels and all three edges are added: <span class="mono">M = {a1, b2, c4}</span>. Three pairs, and only <strong>d, e, 3, 5</strong> are still free.' },
+
+    /* ---- phase 2 ---- */
+    { ph: 2, kind: 'Phase 2 / BFS', title: 'Levels 0 and 1', reveal: 1, M: M1,
+      text: 'Free workers are now <strong>d</strong> and <strong>e</strong>: level 0. Their unmatched edges reach jobs <strong>1</strong> and <strong>2</strong>: level 1. Both are matched, so no free job yet and we must keep going.' },
+    { ph: 2, kind: 'Phase 2 / BFS', title: 'Levels 2 and 3: free jobs at last', reveal: 3, M: M1, F: ['3', '5'],
+      text: 'From a matched job we must follow its matched edge: 1 leads to <strong>a</strong>, 2 leads to <strong>b</strong> (level 2). Their unmatched edges reach jobs <strong>3</strong> and <strong>5</strong> (level 3), both free. So <strong>F = {3, 5}</strong> and the shortest augmenting paths now have length 3.' },
+    { ph: 2, kind: 'Phase 2 / DFS', title: 'From job 3: a path d-1-a-3', reveal: 3, M: M1, F: ['3', '5'],
+      paths: [['d', '1', 'a', '3']],
+      text: 'Job 3 looks up to <strong>a</strong>. a is matched, so the next step is forced along its matched edge to job 1. Job 1 looks up and finds <strong>d</strong>, who is free. Path found: <span class="mono">d-1-a-3</span>. Delete all four.' },
+    { ph: 2, kind: 'Phase 2 / DFS', title: 'From job 5: dead end', reveal: 3, M: M1, F: ['3', '5'],
+      paths: [['d', '1', 'a', '3']], probe: [['5', 'b', '2', 'd']], dead: ['5', 'b', '2'],
+      text: 'Job 5 looks up to <strong>b</strong>, forced along the matched edge to job 2, and job 2 looks up to <strong>d</strong>, which is already deleted. Dead end, so 5, b and 2 are crossed out. One path in this phase.' },
+    { ph: 2, kind: 'Phase 2 / Update', title: 'Flip d-1-a-3', reveal: 3, M: M2, F: ['3', '5'],
+      paths: [['d', '1', 'a', '3']], dead: ['5', 'b', '2'], red: ['d1', 'a3'], cancel: ['a1'],
+      text: 'The path has the edges <span class="mono">d1, a1, a3</span>. The edge <strong>a1</strong> was in M, so it <strong>cancels</strong>; <span class="mono">d1</span> and <span class="mono">a3</span> are added; b2 and c4 stay. <span class="mono">M = {d1, a3, b2, c4}</span>: four pairs, and only e and 5 are free.' },
+
+    /* ---- phase 3 ---- */
+    { ph: 3, kind: 'Phase 3 / BFS', title: 'Only e is free', reveal: 2, M: M2,
+      text: 'The only free worker is <strong>e</strong> (level 0). Its unmatched edge reaches job 1 (level 1), and 1 is matched to <strong>d</strong> (level 2).' },
+    { ph: 3, kind: 'Phase 3 / BFS', title: 'A free job at level 5', reveal: 5, M: M2, F: ['5'],
+      text: 'd reaches job 2, 2 is matched to <strong>b</strong>, and b reaches job <strong>5</strong>, which is free. <strong>F = {5}</strong>, and the shortest augmenting path now has length 5: the lengths so far are 1, 3, 5.' },
+    { ph: 3, kind: 'Phase 3 / DFS', title: 'From job 5, all the way up', reveal: 5, M: M2, F: ['5'],
+      paths: [['e', '1', 'd', '2', 'b', '5']],
+      text: 'Job 5 looks up to b, forced along the matched edge to 2, 2 looks up to d, forced to 1, and 1 looks up to <strong>e</strong>, who is free. Path found: <span class="mono">e-1-d-2-b-5</span>.' },
+    { ph: 3, kind: 'Phase 3 / Update', title: 'Flip e-1-d-2-b-5', reveal: 5, M: M3, F: ['5'],
+      paths: [['e', '1', 'd', '2', 'b', '5']], red: ['e1', 'd2', 'b5'], cancel: ['d1', 'b2'],
+      text: 'The path has the edges <span class="mono">e1, d1, d2, b2, b5</span>. <strong>d1</strong> and <strong>b2</strong> were in M, so they cancel; <span class="mono">e1, d2, b5</span> are added; a3 and c4 stay. <span class="mono">M = {e1, d2, b5, a3, c4}</span>.' },
+
+    { ph: 4, kind: 'Done', title: 'A perfect matching, in three phases', M: M3,
+      text: 'No worker is free, so the next BFS finds nothing and the algorithm <strong>stops</strong>: five pairs, a maximum matching. The shortest path lengths were <strong>1, 3, 5</strong>, strictly increasing each phase, which is why there are only about <span class="mono">√n</span> phases. Each phase costs <span class="mono">O(m+n)</span>, giving <span class="mono">O(m√n)</span> in total.' }
+  ];
+
+  /* ---------- build the graph panel ---------- */
+  function el(tag, attrs, parent) {
+    var e = document.createElementNS(NS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function makeNode(parent, id, x, y, extra) {
+    var g = el('g', { 'class': 'hk-node ' + (isW(id) ? 'w' : 'j') + (extra || ''), transform: 'translate(' + x + ',' + y + ')' }, parent);
+    el('circle', { 'class': 'halo', r: 21 }, g);
+    el('circle', { 'class': 'ring', r: 19 }, g);
+    el('circle', { 'class': 'body', r: 15 }, g);
+    var t = el('text', {}, g); t.textContent = id;
+    el('path', { 'class': 'x', d: 'M-9 -9 L9 9 M9 -9 L-9 9' }, g);
+    return g;
+  }
+
+  var gsvg = document.getElementById('hk-graph');
+  var gEdges = {}, gNodes = {};
+  var gx = function (v) { return isW(v) ? 58 : 242; };
+  el('text', { x: 58, y: 18, 'class': 'hk-lvl', 'text-anchor': 'middle' }, gsvg).textContent = 'workers';
+  el('text', { x: 242, y: 18, 'class': 'hk-lvl', 'text-anchor': 'middle' }, gsvg).textContent = 'jobs';
+  var gEdgeLayer = el('g', {}, gsvg), gNodeLayer = el('g', {}, gsvg);
+  EDGES.forEach(function (k) {
+    var w = k[0], j = k[1];
+    gEdges[k] = el('line', { 'class': 'hk-edge', x1: gx(w), y1: GY[w], x2: gx(j), y2: GY[j] }, gEdgeLayer);
+  });
+  W.concat(J).forEach(function (v) { gNodes[v] = makeNode(gNodeLayer, v, gx(v), GY[v]); });
+
+  /* ---------- build the three level pictures ---------- */
+  var lsvg = document.getElementById('hk-levels');
+  var VW = {};
+  [1, 2, 3].forEach(function (p) {
+    var def = VIEWS[p], L = def.lv.length;
+    var step = L === 2 ? 120 : Math.min(78, 270 / Math.max(1, L - 1));
+    var top = L === 2 ? 105 : (340 - step * (L - 1)) / 2 + 6;
+    var pos = {}, level = {};
+    var root = el('g', { 'class': 'hk-viewgroup', style: 'display:none' }, lsvg);
+    var lblLayer = el('g', {}, root), edgeLayer = el('g', {}, root), nodeLayer = el('g', {}, root);
+    var labels = [];
+    def.lv.forEach(function (row, i) {
+      var y = top + i * step, n = row.length;
+      var gap = p === 1 ? 64 : 84;
+      row.forEach(function (v, k) { pos[v] = [218 + (k - (n - 1) / 2) * gap, y]; level[v] = i; });
+      var t = el('text', { x: 6, y: y + 4, 'class': 'hk-lvl hide' }, lblLayer); t.textContent = 'level ' + i;
+      labels.push(t);
+    });
+    var edges = {};
+    def.edges.forEach(function (k) {
+      var u = k[0], v = k[1];
+      edges[k] = el('line', { 'class': 'hk-edge hide', x1: pos[u][0], y1: pos[u][1], x2: pos[v][0], y2: pos[v][1] }, edgeLayer);
+    });
+    var nodes = {};
+    Object.keys(pos).forEach(function (v) { nodes[v] = makeNode(nodeLayer, v, pos[v][0], pos[v][1], ' hide'); });
+    var last = def.lv[L - 1], ly = top + (L - 1) * step;
+    var bx0 = 218 + (-(last.length - 1) / 2) * (p === 1 ? 64 : 84) - 28, bw = (last.length - 1) * (p === 1 ? 64 : 84) + 56;
+    var br = el('rect', { 'class': 'hk-bracket', x: bx0, y: ly - 24, width: bw, height: 48, rx: 24 }, root);
+    var fl = el('text', { x: bx0 + bw + 8, y: ly + 4, 'class': 'hk-flabel' }, root); fl.textContent = 'F';
+    VW[p] = { root: root, pos: pos, level: level, edges: edges, nodes: nodes, labels: labels, L: L, bracket: br, flabel: fl, last: last };
+  });
+  var emptyMsg = el('text', { x: 190, y: 175, 'class': 'hk-empty' }, lsvg);
+
+  /* ---------- rendering ---------- */
+  var cur = 0, playing = false, timer = null;
+  var phasesEl = document.getElementById('hk-phases');
+  var PH = [[0, 'Start'], [1, 'Phase 1'], [2, 'Phase 2'], [3, 'Phase 3'], [4, 'Done']];
+  PH.forEach(function (p) {
+    var b = document.createElement('button');
+    b.textContent = p[1]; b.setAttribute('role', 'tab'); b.dataset.ph = p[0];
+    b.addEventListener('click', function () {
+      for (var i = 0; i < STEPS.length; i++) if (STEPS[i].ph === p[0]) { stop(); go(i); return; }
+    });
+    phasesEl.appendChild(b);
+  });
+
+  function setCls(node, cls, on) { node.classList[on ? 'add' : 'remove'](cls); }
+
+  function render(s, animate) {
+    var M = s.M, matched = {};
+    M.forEach(function (k) { matched[k[0]] = matched[k[0]] || 0; matched[k[0]]++; matched[k[1]] = 1; });
+    var redSet = {}, cancelSet = {}, onPath = {}, used = {}, dead = {}, probeN = {}, probeE = {};
+    (s.red || []).forEach(function (k) { redSet[k] = 1; });
+    (s.cancel || []).forEach(function (k) { cancelSet[k] = 1; });
+    var foundE = {};
+    (s.paths || []).forEach(function (p) { p.forEach(function (v) { used[v] = 1; }); path(p).forEach(function (k) { foundE[k] = 1; }); });
+    (s.dead || []).forEach(function (v) { dead[v] = 1; });
+    (s.probe || []).forEach(function (p) { p.forEach(function (v) { probeN[v] = 1; }); path(p).forEach(function (k) { probeE[k] = 1; }); });
+    var isUpdate = !!s.red;
+
+    /* graph panel */
+    EDGES.forEach(function (k) {
+      var e = gEdges[k], c = 'hk-edge';
+      if (redSet[k]) c += ' red';
+      else if (cancelSet[k]) c += ' cancel';
+      else if (M.indexOf(k) >= 0) c += ' m';
+      else if (!isUpdate && foundE[k]) c += ' red';
+      else if (probeE[k]) c += ' probe';
+      e.setAttribute('class', c);
+    });
+    W.concat(J).forEach(function (v) {
+      var n = gNodes[v];
+      setCls(n, 'free', !matched[v]);
+    });
+    document.getElementById('hk-msize').textContent = '(' + M.length + ' pair' + (M.length === 1 ? '' : 's') + ')';
+
+    /* level panel */
+    [1, 2, 3].forEach(function (p) { VW[p].root.style.display = (s.ph === p ? '' : 'none'); });
+    emptyMsg.textContent = '';
+    document.getElementById('hk-view-cap').textContent = s.ph >= 1 && s.ph <= 3 ? 'The search, level by level' : 'The search';
+    if (s.ph === 0) emptyMsg.textContent = 'The search starts in phase 1';
+    if (s.ph === 4) emptyMsg.textContent = 'No free worker left: nothing to search';
+    if (s.ph >= 1 && s.ph <= 3) {
+      var V = VW[s.ph], reveal = s.reveal;
+      V.labels.forEach(function (t, i) { setCls(t, 'hide', i > reveal); });
+      Object.keys(V.edges).forEach(function (k) {
+        var u = k[0], v = k[1], e = V.edges[k];
+        var vis = V.level[u] <= reveal && V.level[v] <= reveal;
+        var c = 'hk-edge' + (vis ? '' : ' hide');
+        var isM = VMATCH[s.ph].indexOf(k) >= 0;
+        if (vis) {
+          if (isM) c += ' m';
+          if (foundE[k]) c += ' red';
+          else if (probeE[k]) c += ' probe';
+        }
+        e.setAttribute('class', c);
+      });
+      Object.keys(V.nodes).forEach(function (v) {
+        var n = V.nodes[v];
+        setCls(n, 'hide', V.level[v] > reveal);
+        setCls(n, 'used', !!used[v]);
+        setCls(n, 'onpath', !!used[v]);
+        setCls(n, 'dead', !!dead[v]);
+        setCls(n, 'probe', !!probeN[v] && !dead[v] || (!!probeN[v] && !!dead[v] && false));
+        setCls(n, 'free', (isW(v) && V.level[v] === 0) || (!isW(v) && s.F && s.F.indexOf(v) >= 0 && V.level[v] === V.L - 1 ? true : false));
+      });
+      var showF = !!s.F && reveal === V.L - 1;
+      setCls(V.bracket, 'on', showF); setCls(V.flabel, 'on', showF);
+    }
+
+    /* caption */
+    var cap = document.querySelector('.hk-caption');
+    document.getElementById('hk-kind').textContent = s.kind;
+    document.getElementById('hk-title').textContent = s.title;
+    document.getElementById('hk-text').innerHTML = s.text;
+    if (animate) { cap.classList.remove('swap'); void cap.offsetWidth; cap.classList.add('swap'); }
+
+    /* chrome */
+    Array.prototype.forEach.call(phasesEl.children, function (b) { b.setAttribute('aria-selected', String(+b.dataset.ph === s.ph)); });
+    document.getElementById('hk-fill').style.width = (cur / (STEPS.length - 1) * 100) + '%';
+    document.getElementById('hk-count').textContent = 'step ' + (cur + 1) + ' of ' + STEPS.length;
+    document.getElementById('hk-first').disabled = document.getElementById('hk-prev').disabled = cur === 0;
+    document.getElementById('hk-last').disabled = document.getElementById('hk-next').disabled = cur === STEPS.length - 1;
+  }
+
+  function go(i, animate) { cur = Math.max(0, Math.min(STEPS.length - 1, i)); render(STEPS[cur], animate !== false); }
+  function stop() { playing = false; clearTimeout(timer); var b = document.getElementById('hk-play'); b.textContent = 'Play'; b.setAttribute('aria-label', 'Play'); }
+  function tick() {
+    if (!playing) return;
+    if (cur >= STEPS.length - 1) { stop(); return; }
+    go(cur + 1);
+    if (cur >= STEPS.length - 1) { stop(); return; }
+    timer = setTimeout(tick, +document.getElementById('hk-speed').value);
+  }
+  function start() {
+    if (cur >= STEPS.length - 1) go(0);
+    playing = true;
+    var b = document.getElementById('hk-play'); b.textContent = 'Pause'; b.setAttribute('aria-label', 'Pause');
+    clearTimeout(timer); timer = setTimeout(tick, +document.getElementById('hk-speed').value * 0.6);
+  }
+
+  document.getElementById('hk-play').addEventListener('click', function () { playing ? stop() : start(); });
+  document.getElementById('hk-next').addEventListener('click', function () { stop(); go(cur + 1); });
+  document.getElementById('hk-prev').addEventListener('click', function () { stop(); go(cur - 1); });
+  document.getElementById('hk-first').addEventListener('click', function () { stop(); go(0); });
+  document.getElementById('hk-last').addEventListener('click', function () { stop(); go(STEPS.length - 1); });
+  document.addEventListener('keydown', function (e) {
+    var t = e.target && e.target.tagName;
+    if (t === 'SELECT' || t === 'INPUT' || t === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight') { stop(); go(cur + 1); }
+    else if (e.key === 'ArrowLeft') { stop(); go(cur - 1); }
+    else if (e.key === ' ' && t !== 'BUTTON') { e.preventDefault(); playing ? stop() : start(); }
+  });
+
+  var h = /^#step(\d+)$/.exec(location.hash);
+  go(h ? +h[1] - 1 : 0, false);
+})();
+</script>

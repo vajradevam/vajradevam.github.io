@@ -6,7 +6,7 @@ computer architecture at BITS Pilani, KK Birla Goa Campus.
 Static [Astro](https://astro.build/) site in a Shangri-La theme: ivory parchment
 under a golden radiance, vermillion and gold, hanko kanji seals, a prayer-flag strip,
 a golden serpent between sections, snow peaks above the footer, and a white tiger
-crest on the home page. All ornament is inline SVG and CSS. No JavaScript anywhere,
+crest on the home page. All ornament is inline SVG and CSS. No JavaScript except the one interactive demo at `/hopcroft-karp/`,
 no web fonts, no trackers. Math renders at build time with KaTeX.
 
 ## Structure
