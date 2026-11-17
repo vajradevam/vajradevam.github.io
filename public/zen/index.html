@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>zen — a text editor with nothing in it but a cursor</title>
+<meta name="description" content="zen is a terminal text editor for Linux with no status bar, no line numbers and no shortcuts. Commands are short sequences of ordinary keys. One static binary, no dependencies.">
+<meta name="color-scheme" content="dark light">
+<meta property="og:title" content="zen">
+<meta property="og:description" content="A text editor with nothing in it but a cursor.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vajradevam.in/zen/">
+<link rel="canonical" href="https://vajradevam.in/zen/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230d0d0c'/%3E%3Crect x='7' y='3' width='2' height='10' fill='%23d6d2c6'/%3E%3C/svg%3E">
+<style>
+:root {
+  --bg: #0d0d0c;
+  --ink: #d6d2c6;
+  --soft: #8f8b80;
+  --faint: #5c5a53;
+  --line: #262521;
+  --mono: ui-monospace, "JetBrains Mono", "SF Mono", "Cascadia Mono", "DejaVu Sans Mono", Menlo, Consolas, monospace;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", "URW Palladio L", P052, Georgia, serif;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f5f3ec;
+    --ink: #1d1c19;
+    --soft: #6b685f;
+    --faint: #a09c90;
+    --line: #dedbd0;
+  }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.7 var(--mono);
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--ink); color: var(--bg); }
+a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--faint); }
+a:hover { border-bottom-color: var(--ink); }
+a:focus-visible, button:focus-visible { outline: 1px solid var(--ink); outline-offset: 4px; }
+
+.page { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 28px 0;
+  color: var(--soft);
+}
+header .name { color: var(--ink); border: 0; }
+header nav { display: flex; gap: 28px; }
+header nav a { border: 0; }
+header nav a:hover { color: var(--ink); }
+
+.hero { padding: clamp(72px, 16vh, 150px) 0 clamp(48px, 9vh, 84px); }
+h1 {
+  font: 400 clamp(40px, 8vw, 68px)/1.08 var(--serif);
+  letter-spacing: -0.02em;
+}
+.lede { max-width: 54ch; margin-top: 28px; color: var(--soft); }
+.lede kbd { color: var(--ink); }
+kbd { font: inherit; }
+
+/* The editor. No frame furniture: a hairline and what you type. */
+.editor {
+  position: relative;
+  height: 340px;
+  border: 1px solid var(--line);
+  cursor: text;
+}
+.editor pre {
+  position: absolute; inset: 0;
+  padding: 28px 32px 44px;
+  font: inherit; line-height: 1.7;
+  white-space: pre-wrap; overflow-wrap: break-word;
+  overflow: hidden;
+}
+.editor .cur {
+  display: inline-block; width: 0; height: 1.25em;
+  vertical-align: text-bottom;
+  outline: 1px solid var(--ink);
+}
+.editor .note {
+  position: absolute; left: 32px; right: 32px; bottom: 14px;
+  color: var(--soft);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.editor textarea {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  opacity: 0; border: 0; resize: none;
+  font: 16px var(--mono); cursor: text;
+}
+.try { margin-top: 14px; color: var(--faint); }
+.try kbd { color: var(--soft); }
+
+section { padding: clamp(80px, 12vh, 120px) 0 0; }
+h2 {
+  font: 400 clamp(26px, 4.4vw, 34px)/1.2 var(--serif);
+  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+}
+section > p { max-width: 58ch; color: var(--soft); }
+section > p + p { margin-top: 14px; }
+section > p kbd, section > p strong { color: var(--ink); font-weight: inherit; }
+
+.keys {
+  margin-top: 36px;
+  display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px;
+  border-top: 1px solid var(--line);
+}
+.keys div {
+  display: flex; gap: 20px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--soft);
+}
+.keys kbd { flex: 0 0 8ch; color: var(--ink); }
+
+.facts {
+  margin-top: 36px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--line);
+}
+.facts div { padding: 26px 0 28px; border-bottom: 1px solid var(--line); }
+.facts div:nth-child(odd) { padding-right: 32px; border-right: 1px solid var(--line); }
+.facts div:nth-child(even) { padding-left: 32px; }
+.facts h3 { font: inherit; color: var(--ink); margin-bottom: 6px; }
+.facts p { color: var(--soft); }
+
+.shell {
+  position: relative;
+  margin-top: 32px;
+  border: 1px solid var(--line);
+  padding: 22px 28px;
+  overflow-x: auto;
+}
+.shell pre { font: inherit; }
+.shell pre::before { content: none; }
+.shell .p { color: var(--faint); user-select: none; }
+.shell button {
+  position: absolute; top: 14px; right: 16px;
+  background: none; border: 0; cursor: pointer;
+  font: inherit; color: var(--faint);
+}
+.shell button:hover { color: var(--ink); }
+.after { margin-top: 20px; }
+
+footer {
+  margin-top: clamp(96px, 16vh, 150px); padding: 28px 0 44px;
+  border-top: 1px solid var(--line);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  color: var(--faint);
+}
+footer a { border: 0; }
+footer a:hover { color: var(--ink); }
+
+@media (max-width: 620px) {
+  body { font-size: 14px; }
+  .hero { padding: 64px 0 48px; }
+  .editor { height: 320px; }
+  .editor pre { padding: 20px 20px 44px; }
+  .editor .note { left: 20px; right: 20px; }
+  .keys, .facts { grid-template-columns: 1fr; }
+  .facts div:nth-child(n) { padding: 22px 0; border-right: 0; }
+  .shell { padding: 44px 20px 20px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <a class="name" href="./">zen</a>
+  <nav>
+    <a href="#install">install</a>
+    <a href="https://github.com/vajradevam/zen">source</a>
+  </nav>
+</header>
+
+<main>
+  <div class="hero">
+    <h1>Nothing but<br>a cursor.</h1>
+    <p class="lede">zen is a text editor for the terminal. No status bar, no line numbers, no menus, no shortcuts. You write. When you want to save, you type <kbd>;w</kbd>.</p>
+  </div>
+
+  <div class="editor" id="editor">
+    <pre id="view" aria-hidden="true"></pre>
+    <div class="note" id="note" aria-live="polite"></div>
+    <textarea id="keys" aria-label="Try zen: type here" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+  </div>
+  <p class="try">Click and write. Type quickly: <kbd>;#</kbd> count &nbsp; <kbd>;k</kbd> delete line &nbsp; <kbd>;y</kbd> duplicate &nbsp; <kbd>;u</kbd> undo &nbsp; <kbd>;;date</kbd></p>
+
+  <section>
+    <h2>Commands are typed, not pressed.</h2>
+    <p>There is no Ctrl and no Alt. A command is a short run of ordinary keys typed quickly. The keys show up as text, and the moment the sequence completes they vanish and the command runs.</p>
+    <p>Type the same keys slowly and they stay as text. Every sequence can be changed to anything you like, a symbol pair or a whole word.</p>
+    <div class="keys">
+      <div><kbd>;w</kbd>save</div>
+      <div><kbd>;q</kbd>quit</div>
+      <div><kbd>;x</kbd>save and quit</div>
+      <div><kbd>;u ;r</kbd>undo, redo</div>
+      <div><kbd>;f</kbd>find</div>
+      <div><kbd>;h</kbd>find and replace</div>
+      <div><kbd>;g</kbd>go to line</div>
+      <div><kbd>;v</kbd>select</div>
+      <div><kbd>;c ;d ;p</kbd>copy, cut, paste</div>
+      <div><kbd>;k</kbd>delete line</div>
+      <div><kbd>;j</kbd>re-wrap paragraph</div>
+      <div><kbd>;#</kbd>word count</div>
+      <div><kbd>;t</kbd>typewriter scrolling</div>
+      <div><kbd>;o</kbd>focus dimming</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Small on purpose.</h2>
+    <div class="facts">
+      <div>
+        <h3>An empty screen</h3>
+        <p>The bottom row appears only when zen has to ask you something, and is gone on the next key.</p>
+      </div>
+      <div>
+        <h3>One binary</h3>
+        <p>1.6 MB, statically linked. Written in Rust with no dependencies at all.</p>
+      </div>
+      <div>
+        <h3>One config file</h3>
+        <p>Margins, cursor, colours, every sequence and every feature. Plain text, read at startup.</p>
+      </div>
+      <div>
+        <h3>Made for prose</h3>
+        <p>Soft wrap, typewriter scrolling, focus dimming, paragraph reflow, text expansions.</p>
+      </div>
+      <div>
+        <h3>Careful with your words</h3>
+        <p>Atomic saves, crash recovery, a warning if the file changed on disk. It reopens where you left off.</p>
+      </div>
+      <div>
+        <h3>At home in a shell</h3>
+        <p>Pipe text in. Bind a sequence to any command and run it over your selection.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="install">
+    <h2>Install.</h2>
+    <p>Linux, with Rust 1.82 or newer and make.</p>
+    <div class="shell">
+      <button type="button" id="copy">copy</button>
+<pre><span class="p">$ </span>git clone https://github.com/vajradevam/zen.git
+<span class="p">$ </span>cd zen
+<span class="p">$ </span>make
+<span class="p">$ </span>sudo make install</pre>
+    </div>
+    <p class="after">Then <kbd>zen notes.txt</kbd>. Everything else is in <kbd>man zen</kbd> and the <a href="https://github.com/vajradevam/zen#readme">readme</a>.</p>
+  </section>
+</main>
+
+<footer>
+  <span>zen 0.1.0 · GPL-2.0 · Linux</span>
+  <a href="https://github.com/vajradevam/zen">github.com/vajradevam/zen</a>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  var view = document.getElementById('view');
+  var note = document.getElementById('note');
+  var keys = document.getElementById('keys');
+
+  var text = '', at = 0, pending = '', last = 0, undo = [], taken = false;
+  var TIMEOUT = 500;
+
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function today() { var d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+  function clock() { var d = new Date(); return pad(d.getHours()) + ':' + pad(d.getMinutes()); }
+  function lineBounds() {
+    var s = text.lastIndexOf('\n', at - 1) + 1;
+    var e = text.indexOf('\n', at);
+    return [s, e < 0 ? text.length : e];
+  }
+  function mark() { undo.push([text, at]); if (undo.length > 200) undo.shift(); }
+
+  var commands = {
+    ';w': function () {},
+    ';x': function () {},
+    ';q': function () { say('this one stays open'); },
+    ';u': function () { var s = undo.pop(); if (s) { text = s[0]; at = s[1]; } },
+    ';#': function () {
+      var words = (text.match(/\S+/g) || []).length;
+      say(words + ' words  ' + Array.from(text.replace(/\n/g, '')).length + ' characters');
+    },
+    ';k': function () {
+      mark();
+      var b = lineBounds(), end = b[1] < text.length ? b[1] + 1 : b[1];
+      var start = end === b[1] && b[0] > 0 ? b[0] - 1 : b[0];
+      text = text.slice(0, start) + text.slice(end);
+      at = Math.min(start, text.length);
+    },
+    ';y': function () {
+      mark();
+      var b = lineBounds(), line = text.slice(b[0], b[1]);
+      text = text.slice(0, b[1]) + '\n' + line + text.slice(b[1]);
+      at += line.length + 1;
+    },
+    ';;date': function () { put(today()); },
+    ';;time': function () { put(clock()); }
+  };
+  var names = Object.keys(commands);
+  function starts(s) { return names.some(function (n) { return n.indexOf(s) === 0; }); }
+
+  function say(m) { note.textContent = m; }
+  function put(s) { text = text.slice(0, at) + s + text.slice(at); at += s.length; }
+
+  // The heart of zen: keys are typed as text, and removed again
+  // the moment they complete a sequence.
+  function type(c, now) {
+    note.textContent = '';
+    if (now - last > TIMEOUT) pending = '';
+    last = now;
+    var cand = pending + c;
+    if (!starts(cand)) cand = starts(c) ? c : '';
+    if (commands[cand]) {
+      var n = cand.length - 1;
+      text = text.slice(0, at - n) + text.slice(at); at -= n;
+      pending = '';
+      commands[cand]();
+      return;
+    }
+    if (!cand && (c === ' ' || c === '\n' || !undo.length)) mark();
+    put(c);
+    pending = cand;
+  }
+
+  function draw() {
+    view.textContent = '';
+    view.append(text.slice(0, at));
+    var cur = document.createElement('span'); cur.className = 'cur';
+    view.append(cur, text.slice(at));
+    // Keep the cursor in sight, as the editor would.
+    var over = cur.offsetTop + cur.offsetHeight - (view.clientHeight - 44);
+    view.scrollTop = over > 0 ? over : 0;
+  }
+
+  // The opening demonstration, until the visitor takes over.
+  var script = [
+    'The page is empty.\n\n',
+    400,
+    'Saving is two keys, typed quickly: ', 300, ';w', 700,
+    '\n\nThey are gone, and the file is saved.\n\n',
+    500,
+    'Now you.'
+  ];
+  var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var timer = 0;
+  function play(i, j) {
+    if (taken || i >= script.length) return;
+    var step = script[i];
+    if (typeof step === 'number') { timer = setTimeout(play, step, i + 1, 0); return; }
+    if (j >= step.length) { play(i + 1, 0); return; }
+    var c = step[j];
+    // Sequences are typed fast, prose at a human pace.
+    type(c, step === ';w' ? j * 100 + 1e6 * (i + 1) : (i * 1e6 + j * 1e4));
+    draw();
+    timer = setTimeout(play, step === ';w' ? 260 : c === '\n' ? 260 : 34 + Math.random() * 50, i, j + 1);
+  }
+  function take() {
+    if (taken) return;
+    taken = true; clearTimeout(timer);
+    // Finish the demonstration instantly so nothing is left half typed.
+    text = script.filter(function (s) { return typeof s === 'string' && s !== ';w'; }).join('');
+    at = text.length; pending = ''; undo = []; note.textContent = '';
+    draw();
+  }
+
+  keys.addEventListener('focus', take);
+  keys.addEventListener('input', function (e) {
+    if (e.isComposing) return;
+    var v = keys.value; keys.value = '';
+    var now = performance.now();
+    Array.from(v.replace(/\r/g, '')).forEach(function (c) { type(c, now); });
+    draw();
+  });
+  keys.addEventListener('compositionend', function () {
+    var v = keys.value; keys.value = '';
+    var now = performance.now();
+    Array.from(v).forEach(function (c) { type(c, now); });
+    draw();
+  });
+  keys.addEventListener('keydown', function (e) {
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    var b;
+    switch (e.key) {
+      case 'Backspace':
+        if (at > 0) { mark(); text = text.slice(0, at - 1) + text.slice(at); at--; }
+        break;
+      case 'Delete':
+        if (at < text.length) { mark(); text = text.slice(0, at) + text.slice(at + 1); }
+        break;
+      case 'ArrowLeft': if (at > 0) at--; break;
+      case 'ArrowRight': if (at < text.length) at++; break;
+      case 'Home': at = lineBounds()[0]; break;
+      case 'End': at = lineBounds()[1]; break;
+      case 'ArrowUp':
+        b = lineBounds();
+        if (b[0] > 0) { var ps = text.lastIndexOf('\n', b[0] - 2) + 1; at = Math.min(ps + (at - b[0]), b[0] - 1); }
+        break;
+      case 'ArrowDown':
+        b = lineBounds();
+        if (b[1] < text.length) { var ne = text.indexOf('\n', b[1] + 1); if (ne < 0) ne = text.length; at = Math.min(b[1] + 1 + (at - b[0]), ne); }
+        break;
+      default: return;
+    }
+    e.preventDefault();
+    pending = ''; note.textContent = '';
+    draw();
+  });
+
+  if (calm) { taken = false; take(); taken = false; keys.addEventListener('focus', function () { taken = true; }); }
+  else { draw(); setTimeout(play, 900, 0, 0); }
+
+  var copy = document.getElementById('copy');
+  copy.addEventListener('click', function () {
+    var cmd = 'git clone https://github.com/vajradevam/zen.git\ncd zen\nmake\nsudo make install\n';
+    (navigator.clipboard ? navigator.clipboard.writeText(cmd) : Promise.reject()).then(function () {
+      copy.textContent = 'copied';
+      setTimeout(function () { copy.textContent = 'copy'; }, 1500);
+    }, function () { copy.textContent = 'select and copy'; });
+  });
+})();
+</script>
+</body>
+</html>
