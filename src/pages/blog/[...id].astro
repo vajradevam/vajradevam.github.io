@@ -28,19 +28,20 @@ const mins = readingTime(post.body);
   type="article"
 >
   <h1>{post.data.title}</h1>
-  <p class="post-meta">
+  <p>
     <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
     {post.data.updated && <> · updated {formatDate(post.data.updated)}</>}
     · {mins} min read
     {post.data.tags.length > 0 && <> · {post.data.tags.join(' · ')}</>}
   </p>
 
-  <article class="prose">
+  <article>
     <Content />
   </article>
 
-  <nav class="post-nav" aria-label="Adjacent posts">
-    {older && <span><small>Older:</small> <a href={`/blog/${older.id}/`}>{older.data.title}</a></span>}
-    {newer && <span class="next"><small>Newer:</small> <a href={`/blog/${newer.id}/`}>{newer.data.title}</a></span>}
+  <hr />
+  <nav aria-label="Adjacent posts">
+    {older && <p>Older: <a href={`/blog/${older.id}/`}>{older.data.title}</a></p>}
+    {newer && <p>Newer: <a href={`/blog/${newer.id}/`}>{newer.data.title}</a></p>}
   </nav>
 </Base>

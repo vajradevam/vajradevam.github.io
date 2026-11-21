@@ -1,7 +1,53 @@
-[
-  "Securing CXL memory fabrics: coherence directory poisoning, protocol-processor boundary attacks, compression side channels, and fabric-amplified Row Hammer",
-  "Security-aware architectural certification testing (SecACT) for RISC-V: PMP bypass via microarchitectural state, vendor extension validation, and the ACT security gap",
-  "Formalizing the Linux kernel shared-page mutation bug class: dirty invariant model, page-cache anti-forensics, zero-copy I/O abuse, and in-place crypto redesign",
-  "Fundamental side channels in LLM serving: SpecLeak, KV cache sharing isolation impossibility, and speculative decoding GPU microarchitectural leakage",
-  "Covert channels beyond cache timing: GPU coherence directory state as a cross-GPU communication primitive"
-]
+{
+  "intro": [
+    "Most of my work sits on one uncomfortable observation. Every layer of a computer system trusts the layer below it, and almost nothing checks that trust. The application trusts the kernel, the kernel trusts the hypervisor and the firmware, and all of them trust the silicon to do what the datasheet says. We have built an entire industry on delegating trust downward, and we have no real way to verify the bottom layer. I want to change that, or at least understand it well enough to say where it breaks.",
+    "Day to day this means I split my time between the Linux kernel, RISC-V microarchitecture, and the memory systems that connect them. Below are the threads I am pulling on right now."
+  ],
+  "items": [
+    {
+      "title": "Securing CXL memory fabrics",
+      "text": [
+        "CXL turns memory into something you plug into a fabric and share between hosts and devices, and it does that by extending cache coherence beyond the socket. Coherence was designed for a world where every participant was inside one trust boundary. That is no longer true, and I am studying what happens when it is not. The attacks I am looking at include poisoning the coherence directory so that one tenant corrupts or observes another's cache state, abusing the boundary between the protocol logic and the processor, and compression side channels where the size of a compressed line leaks what it contains.",
+        "The one that worries me most is Row Hammer on a fabric. Once memory is pooled, an attacker no longer needs to share a machine with the victim, only a fabric. The fabric can amplify the access rate and hide the source, which makes an old DRAM flaw look new again."
+      ]
+    },
+    {
+      "title": "Security-aware certification for RISC-V (SecACT)",
+      "text": [
+        "RISC-V has an architectural compliance test suite, and passing it tells you a core implements the instruction set correctly. It tells you very little about whether the core is safe. A chip can pass every functional test and still let PMP protections be bypassed through leftover microarchitectural state, for example a speculative access that fills a cache line before the permission check retires.",
+        "I call this the ACT security gap, and SecACT is my attempt to close it. The idea is to extend certification with tests that probe isolation properties instead of just correctness. It also covers vendor extensions, which are the part of the ecosystem nobody validates and where a lot of custom and untested logic quietly lives."
+      ]
+    },
+    {
+      "title": "The Linux shared-page mutation bug class",
+      "text": [
+        "A recurring pattern in the kernel is a page that two parties believe they own. Zero-copy I/O, the page cache, and splice-style paths all share pages by reference to avoid copying, and a bug in who is allowed to dirty such a page gives an attacker a write primitive into data they should only be able to read. I am trying to turn a pile of individual CVEs into one formal model built around a dirty invariant, so we can say precisely which paths can violate it instead of finding them one at a time.",
+        "Part of this is the forensic side. If you can mutate a page in the cache without it ever reaching disk, you leave no trace on the filesystem, which makes page-cache anti-forensics a real concern for incident response. I am also working on an in-place crypto design that avoids the unsafe sharing in the first place."
+      ]
+    },
+    {
+      "title": "Side channels in LLM serving",
+      "text": [
+        "Serving a large language model is mostly a scheduling and caching problem, and every optimisation that makes it faster also makes it share something. I am looking at SpecLeak, where speculative decoding leaks information about the input through how many tokens get accepted. I am also looking at why sharing a KV cache across users cannot be made isolated without giving up most of the savings, which I suspect is an impossibility result rather than an engineering gap. The GPU microarchitecture underneath speculative decoding leaks as well, in ways that are measurable from outside."
+      ]
+    },
+    {
+      "title": "Covert channels beyond cache timing",
+      "text": [
+        "Almost all side channel work is about the cache, because the cache is easy to time. I am more interested in the state that nobody thinks to time. On multi-GPU systems the coherence directory holds state that is shared across devices, and that state can carry a message from one GPU to another with no shared memory and no obvious signal. If the channel exists there, it probably exists in every coherent fabric."
+      ]
+    },
+    {
+      "title": "A Linux-capable RISC-V emulator",
+      "text": [
+        "To test any of this I need a machine I can see inside, so I am building a cycle-accurate RISC-V emulator that is capable of booting Linux. Real silicon is a black box, and a software model lets me observe and perturb microarchitectural state that no commercial core exposes. It is the instrument that the rest of the work depends on, and building it has taught me more about what a core actually does than reading any specification has."
+      ]
+    },
+    {
+      "title": "Auditing silicon",
+      "text": [
+        "This is the direction I most want to push. Software can be audited, because we can read it, rebuild it, and compare it against what is running. Hardware offers none of that. You receive a chip, you trust the vendor, and you hope the fabrication line did not add anything. I want to work on practical ways to check that a processor does only what it claims, starting with models and emulators that can be compared against real behaviour, and with test suites that look for what a chip does beyond its specification. It is an unsolved problem and an important one, since every other guarantee we give rests on it."
+      ]
+    }
+  ]
+}

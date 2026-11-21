@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import PageHead from '../components/PageHead.astro';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -26,14 +25,19 @@ try {
 ---
 
 <Base nav="writings" title="Writings" description="Longer writings by Aman Pathak, as PDFs.">
-  <PageHead title="Writings" kanji="書" sub="Longer-form work, typeset as PDF. New files dropped into public/writings/ appear here at build time." />
+  <h1>Writings</h1>
+  <p>Longer-form work, typeset as PDF.</p>
 
-  <ul class="plain">
-    {writings.map((w) => (
-      <li class="entry">
-        <a href={`/writings/${encodeURIComponent(w.file)}`}>{w.title}</a>
-        <span class="tags">PDF · {w.kb} KB</span>
-      </li>
-    ))}
-  </ul>
+  <table border="1" cellpadding="8" cellspacing="0" width="100%">
+    <thead><tr><th align="left">Title</th><th align="left">Format</th><th align="left">Size</th></tr></thead>
+    <tbody>
+      {writings.map((w) => (
+        <tr valign="top">
+          <td><a href={`/writings/${encodeURIComponent(w.file)}`}>{w.title}</a></td>
+          <td>PDF</td>
+          <td>{w.kb} KB</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
 </Base>

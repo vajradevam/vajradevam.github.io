@@ -3,11 +3,9 @@
 Personal site and blog of **Aman Pathak**, PhD scholar in hardware security and
 computer architecture at BITS Pilani, KK Birla Goa Campus.
 
-Static [Astro](https://astro.build/) site in a Shangri-La theme: ivory parchment
-under a golden radiance, vermillion and gold, hanko kanji seals, a prayer-flag strip,
-a golden serpent between sections, snow peaks above the footer, and a white tiger
-crest on the home page. All ornament is inline SVG and CSS. No JavaScript except the one interactive demo at `/hopcroft-karp/`,
-no web fonts, no trackers. Math renders at build time with KaTeX.
+Static [Astro](https://astro.build/) site. Plain semantic HTML with no site stylesheet:
+the browser defaults do the styling. No JavaScript except the interactive demo at
+`/hopcroft-karp/`, no web fonts, no trackers. Math renders at build time with KaTeX.
 
 ## Structure
 
@@ -16,17 +14,8 @@ src/
   content/blog/           blog posts (Markdown; front matter drives everything)
   data/                   publications, patents, projects, experience, skills,
                           now, and site metadata (site.ts)
-  layouts/Base.astro      page shell: head, header, flags, peaks, footer
-  components/
-    PageHead.astro        page title with seal, subtitle, serpent divider
-    ornaments/            Tiger, Serpent, Peaks (decorative inline SVG)
+  layouts/Base.astro      page shell: head, nav, footer
   pages/                  one file per route (+ blog/[...id] for posts, rss.xml)
-  styles/
-    global.css            imports the four sheets below
-    tokens.css            design tokens: colour, shadow, type
-    base.css              reset, typography, content primitives
-    chrome.css            header, floating sheet, peaks, footer
-    ornaments.css         seals, mantra, serpent, hero scene, motion
   lib/posts.ts            post sorting, dates, reading time
 public/                   CNAME, favicon, robots, KaTeX css+fonts, PDFs, research.bib
 ```

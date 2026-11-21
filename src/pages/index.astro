@@ -1,10 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
-import Tiger from '../components/ornaments/Tiger.astro';
-import Serpent from '../components/ornaments/Serpent.astro';
 import projects from '../data/projects.json';
 import publications from '../data/publications.json';
 import patents from '../data/patents.json';
+import { site } from '../data/site';
 import { getSortedPosts, formatDate } from '../lib/posts';
 
 const posts = await getSortedPosts();
@@ -12,51 +11,63 @@ const featured = projects.filter((p) => p.featured);
 ---
 
 <Base nav="home">
-  <header class="hero">
-    <span class="watermark" lang="sa" aria-hidden="true">वज्र</span>
-    <Tiger />
-    <p class="mantra" lang="sa" aria-hidden="true">ॐ मणि पद्मे हूँ</p>
-    <h1>Aman Pathak</h1>
-    <p class="deva-sub"><span lang="sa">वज्रदेवम्</span> · vajradevam</p>
-    <p class="intro">
-      PhD scholar in hardware security and computer architecture at BITS Pilani,
-      KK Birla Goa Campus. I break and defend RISC-V microarchitecture: side channels,
-      memory encryption, formal verification. <a href="/about/">More about me</a>.
-    </p>
-  </header>
+  <h1>Aman Pathak</h1>
+  <p>
+    I'm a PhD scholar in the Department of Computer Science and Information Systems at
+    BITS Pilani, KK Birla Goa Campus, working at the intersection of hardware security,
+    RISC-V architectures, and low-level software. My current work spans microarchitectural
+    side-channel attacks and their mitigation, memory encryption, formal verification of
+    cache coherency, and the security of CXL memory fabrics. I have six patents filed in
+    the RISC-V space covering data-flow integrity, crypto engines, and on-chip ML, and
+    earlier I designed Ku/X-band antennas at KIIT.
+  </p>
+  <p>
+    Outside of research I spend a lot of time building things close to the metal: a TCP/IP
+    stack from scratch, a malloc replacement, a cycle-accurate 6502 emulator, a container
+    runtime using raw namespaces and seccomp, a bytecode VM in Go, and neural networks
+    built purely from matrix operations. This is not an exhaustive list; I keep adding
+    projects to my <a href={site.github}>GitHub profile</a> as a hobby. I also write about
+    these topics on the <a href="/blog/">blog</a>, and I teach sometimes.
+  </p>
+  <p>
+    A C program is nothing but bytes in memory; there is no abstraction beyond that you
+    have to take on faith. More than low levels <i>per se</i>, I am interested in the
+    stripped-down, non-abstracted, naked-truth stuff.
+  </p>
 
-  <Serpent />
-
-  <h2 data-kanji="研">Research</h2>
-  <p class="meta">{publications.length} publications · {patents.length} patents filed · <a href="/research/">full record</a></p>
-  <ul class="plain">
+  <h2>Research</h2>
+  <p>{publications.length} publications, {patents.length} patents filed. <a href="/research/">Full record</a>.</p>
+  <ul>
     {publications.slice(0, 3).map((p) => (
       <li>
         {p.url ? <a href={p.url}>{p.title}</a> : p.title}
-        <p class="entry-desc"><i>{p.venue}</i>{p.year && <>, {p.year}</>}</p>
+        <br /><i>{p.venue}</i>{p.year && <>, {p.year}</>}
       </li>
     ))}
   </ul>
 
-  <h2 data-kanji="作">Selected projects</h2>
-  <p class="meta">Mostly built from scratch · <a href="/projects/">all {projects.length}</a></p>
-  <ul class="plain">
-    {featured.map((p) => (
-      <li class="entry">
-        <a href={p.repo}>{p.name}</a>
-        <span class="entry-desc" style="margin:0">{p.description}</span>
-      </li>
-    ))}
-  </ul>
+  <h2>Selected projects</h2>
+  <p>Mostly built from scratch. <a href="/projects/">All {projects.length}</a>.</p>
+  <table border="1" cellpadding="8" cellspacing="0" width="100%">
+    <thead><tr><th align="left">Project</th><th align="left">Description</th></tr></thead>
+    <tbody>
+      {featured.map((p) => (
+        <tr valign="top"><td><a href={p.repo}>{p.name}</a></td><td>{p.description}</td></tr>
+      ))}
+    </tbody>
+  </table>
 
-  <h2 data-kanji="記">Recent posts</h2>
-  <ul class="plain">
-    {posts.slice(0, 5).map((post) => (
-      <li class="entry">
-        <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
-        <a href={`/blog/${post.id}/`}>{post.data.title}</a>
-      </li>
-    ))}
-  </ul>
-  <p class="meta" style="margin-top:1em"><a href="/blog/">All posts</a> · <a href="/writings/">longer writings</a></p>
+  <h2>Recent posts</h2>
+  <table border="1" cellpadding="8" cellspacing="0" width="100%">
+    <thead><tr><th align="left">Date</th><th align="left">Post</th></tr></thead>
+    <tbody>
+      {posts.slice(0, 5).map((post) => (
+        <tr valign="top">
+          <td><time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time></td>
+          <td><a href={`/blog/${post.id}/`}>{post.data.title}</a></td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <p><a href="/blog/">All posts</a> | <a href="/writings/">Longer writings</a></p>
 </Base>

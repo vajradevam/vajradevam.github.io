@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import PageHead from '../components/PageHead.astro';
 import publications from '../data/publications.json';
 import patents from '../data/patents.json';
 import now from '../data/now.json';
@@ -10,58 +9,54 @@ const underReview = publications.filter((p) => p.status === 'under review');
 ---
 
 <Base nav="research" title="Research" description="Publications and patents of Aman Pathak: hardware security, RISC-V microarchitecture, side channels, formal verification.">
-  <PageHead
-    title="Research"
-    kanji="研"
-    sub={`${publications.length} publications · ${patents.length} patents filed`}
-  />
+  <h1>Research</h1>
+  <p>{publications.length} publications, {patents.length} patents filed.</p>
   <p>
     Hardware security of RISC-V microarchitecture: side channels, memory encryption,
     and formal verification. BibTeX for everything below: <a href="/research.bib">research.bib</a>.
   </p>
 
-  <h2 id="publications" data-kanji="論">Publications</h2>
-  <ol class="pubs">
+  <h2 id="publications">Publications</h2>
+  <ol>
     {published.map((p) => (
       <li>
         {p.url ? <a href={p.url}>{p.title}</a> : p.title}
-        <span class="authors">{p.authors.map((a, i) => (
-          <>{i > 0 && ', '}{a === 'A. Pathak' ? <b>{a}</b> : a}</>
-        ))}</span>
-        <span class="venue"><i>{p.venue}</i>{p.year && <>, {p.year}</>}</span>
-        <span class={`tag${p.status === 'accepted' ? '' : ' red'}`}>{p.status}</span>
-        {p.indexed && <span class="tag">{p.indexed}</span>}
+        <br />{p.authors.map((a, j) => (<>{j > 0 && ', '}{a === 'A. Pathak' ? <b>{a}</b> : a}</>))}
+        <br /><i>{p.venue}</i>{p.year && <>, {p.year}</>}
+        <br />{p.status}{p.indexed && <>; {p.indexed}</>}
       </li>
     ))}
   </ol>
 
-  <h2 id="under-review" data-kanji="審">Under review</h2>
-  <ol class="pubs" start={published.length + 1}>
+  <h2 id="under-review">Under review</h2>
+  <ol start={published.length + 1}>
     {underReview.map((p) => (
       <li>
         {p.url ? <a href={p.url}>{p.title}</a> : p.title}
-        <span class="authors">{p.authors.map((a, i) => (
-          <>{i > 0 && ', '}{a === 'A. Pathak' ? <b>{a}</b> : a}</>
-        ))}</span>
-        <span class="venue"><i>{p.venue}</i></span>
-        <span class="tag">under review</span>
+        <br />{p.authors.map((a, j) => (<>{j > 0 && ', '}{a === 'A. Pathak' ? <b>{a}</b> : a}</>))}
+        <br /><i>{p.venue}</i>
+        <br />under review
       </li>
     ))}
   </ol>
 
-  <h2 id="patents" data-kanji="特">Patents</h2>
-  <p class="meta">Indian patent applications, all in the RISC-V space.</p>
-  <table>
-    <thead><tr><th>Application</th><th>Title</th></tr></thead>
+  <h2 id="patents">Patents</h2>
+  <p>Indian patent applications, all in the RISC-V space.</p>
+  <table border="1" cellpadding="8" cellspacing="0" width="100%">
+    <thead><tr><th align="left">Application</th><th align="left">Title</th></tr></thead>
     <tbody>
       {patents.map((p) => (
-        <tr><td style="white-space:nowrap">{p.application}</td><td>{p.title}</td></tr>
+        <tr valign="top"><td>{p.application}</td><td>{p.title}</td></tr>
       ))}
     </tbody>
   </table>
 
-  <h2 id="now" data-kanji="今">Current work</h2>
-  <ul class="plain">
-    {now.map((item) => <li>{item}</li>)}
-  </ul>
+  <h2 id="now">Current work</h2>
+  {now.intro.map((t) => <p>{t}</p>)}
+  {now.items.map((item) => (
+    <>
+      <h3>{item.title}</h3>
+      {item.text.map((t) => <p>{t}</p>)}
+    </>
+  ))}
 </Base>

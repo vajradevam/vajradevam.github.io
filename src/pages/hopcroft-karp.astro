@@ -1,10 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
-import PageHead from '../components/PageHead.astro';
 ---
 
 <Base title="Hopcroft-Karp, step by step" description="An animated walk through the Hopcroft-Karp bipartite matching algorithm on a five-by-five example: BFS levels, DFS with deletion, and the matching update, phase by phase.">
-  <PageHead title="Hopcroft-Karp, step by step" kanji="道" sub="Five workers, five jobs, three phases. Press play, or step through at your own pace." />
+  <h1>Hopcroft-Karp, step by step</h1>
+  <p>Five workers, five jobs, three phases. Press play, or step through at your own pace.</p>
 
   <p>
     A <em>matching</em> pairs workers with jobs so nobody is used twice. Hopcroft and Karp (1973) find the biggest
@@ -60,127 +60,58 @@ import PageHead from '../components/PageHead.astro';
 
   <noscript><p>This page needs JavaScript for the animation. The algorithm is described in the lecture notes.</p></noscript>
 
-  <h2 data-kanji="要">What to take away</h2>
+  <h2>What to take away</h2>
   <ul>
     <li>Each phase finds a <em>maximal</em> set of vertex-disjoint shortest augmenting paths, then flips them all at once.</li>
     <li>The shortest length strictly grows from phase to phase: here 1, then 3, then 5.</li>
     <li>There are only about <code>√n</code> phases, and one phase costs <code>O(m+n)</code>, which gives <code>O(m√n)</code>.</li>
   </ul>
-  <p class="meta">Source: J. E. Hopcroft and R. M. Karp, <em>An n<sup>5/2</sup> algorithm for maximum matchings in bipartite graphs</em>, SIAM J. Comput. 2(4):225-231, 1973.</p>
+  <p>Source: J. E. Hopcroft and R. M. Karp, <em>An n<sup>5/2</sup> algorithm for maximum matchings in bipartite graphs</em>, SIAM J. Comput. 2(4):225-231, 1973.</p>
 </Base>
 
 <style is:global>
-  /* The animation uses the site's tokens; classes are prefixed hk- */
-  .hk { margin: 1.8rem 0 2.2rem; }
-  .hk-phases { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
-  .hk-phases button {
-    font: 600 0.78rem var(--sans); letter-spacing: 0.04em; color: var(--muted);
-    background: var(--soft); border: 1px solid var(--line); border-radius: 999px;
-    padding: 0.3rem 0.85rem; cursor: pointer; transition: all 0.25s;
-  }
-  .hk-phases button:hover { border-color: var(--gold-deco); color: var(--ink); }
-  .hk-phases button[aria-selected="true"] {
-    color: #fff; background: linear-gradient(180deg, var(--accent), var(--accent-deep));
-    border-color: var(--accent-deep); box-shadow: 0 2px 8px -2px rgba(126, 31, 24, 0.5);
-  }
-  .hk-stage { display: flex; gap: 0.8rem; flex-wrap: wrap; }
-  .hk-panel {
-    flex: 1 1 300px; margin: 0; background: var(--sheet); border: 1px solid var(--line);
-    border-radius: 6px; box-shadow: var(--shadow-sheet); padding: 0.5rem 0.6rem 0.4rem;
-    background-image: radial-gradient(ellipse 90% 40% at 50% 0%, rgba(232, 207, 122, 0.22), transparent 70%);
-  }
-  .hk-panel figcaption {
-    font: 600 0.72rem var(--sans); letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--gold); text-align: center; padding: 0.15rem 0 0.1rem;
-  }
-  .hk-panel svg { width: 100%; height: auto; display: block; }
-
-  /* nodes */
-  .hk-node circle.body { stroke-width: 2; transition: opacity 0.5s, fill 0.4s, stroke 0.4s; }
-  .hk-node.w circle.body { fill: #dfe8f3; stroke: var(--flag-blue); }
-  .hk-node.j circle.body { fill: #f6e8bd; stroke: var(--gold-deco); }
-  .hk-node text { font: 600 13px var(--serif); text-anchor: middle; dominant-baseline: central; fill: var(--ink); pointer-events: none; }
-  .hk-node .ring { fill: none; stroke: var(--flag-green); stroke-width: 2.4; opacity: 0; transition: opacity 0.45s; }
+  /* Functional only: the animation is SVG and its state is shown through these classes. */
+  .hk-phases button[aria-selected="true"] { font-weight: bold; }
+  .hk-panel svg { width: 100%; max-width: 380px; height: auto; }
+  .hk-stage { display: flex; flex-wrap: wrap; gap: 1em; }
+  .hk-panel { margin: 0; flex: 1 1 300px; }
+  .hk-node circle.body { stroke-width: 2; fill: #fff; stroke: #000; }
+  .hk-node.j circle.body { fill: #eee; }
+  .hk-node text { font: 13px monospace; text-anchor: middle; dominant-baseline: central; fill: #000; pointer-events: none; }
+  .hk-node .ring { fill: none; stroke: green; stroke-width: 2.4; opacity: 0; }
   .hk-node.free .ring { opacity: 1; }
-  .hk-node .halo { fill: none; stroke: var(--gold-deco); stroke-width: 2; opacity: 0; }
-  .hk-node.probe .halo { opacity: 1; animation: hk-pulse 1.1s ease-in-out infinite; }
-  .hk-node.onpath circle.body { stroke: var(--accent); }
+  .hk-node .halo { fill: none; stroke: #888; stroke-width: 2; opacity: 0; }
+  .hk-node.probe .halo { opacity: 1; }
+  .hk-node.onpath circle.body { stroke: red; }
   .hk-node.used circle.body { opacity: 0.8; }
-  .hk-node.dead circle.body { opacity: 0.4; }
-  .hk-node.dead text { opacity: 0.5; }
-  .hk-node .x { stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; opacity: 0; transition: opacity 0.4s; }
+  .hk-node.dead circle.body, .hk-node.dead text { opacity: 0.4; }
+  .hk-node .x { stroke: red; stroke-width: 2.4; opacity: 0; }
   .hk-node.dead .x { opacity: 1; }
   .hk-node.hide { opacity: 0; }
-  .hk-node { transition: opacity 0.6s, transform 0.6s; }
-  @keyframes hk-pulse { 0%,100% { opacity: 0.2; } 50% { opacity: 1; } }
-
-  /* edges */
-  .hk-edge { stroke: #b9aa8c; stroke-width: 1.4; fill: none; stroke-linecap: round;
-    transition: stroke 0.45s, stroke-width 0.45s, opacity 0.5s; }
-  .hk-edge.m { stroke: var(--ink-deco); stroke-width: 4.2; }
-  .hk-edge.red { stroke: var(--accent); stroke-width: 4.6; }
-  .hk-edge.cancel { stroke: var(--accent); stroke-width: 2.4; stroke-dasharray: 5 4; }
-  .hk-edge.probe { stroke: var(--gold-deco); stroke-width: 3.4; stroke-dasharray: 6 4; animation: hk-dash 0.8s linear infinite; }
+  .hk-edge { stroke: #999; stroke-width: 1.4; fill: none; }
+  .hk-edge.m { stroke: #000; stroke-width: 4; }
+  .hk-edge.red { stroke: red; stroke-width: 4; }
+  .hk-edge.cancel { stroke: red; stroke-width: 2.4; stroke-dasharray: 5 4; }
+  .hk-edge.probe { stroke: #555; stroke-width: 3; stroke-dasharray: 6 4; }
   .hk-edge.hide { opacity: 0; }
   .hk-edge.fade { opacity: 0.3; }
-  @keyframes hk-dash { to { stroke-dashoffset: -20; } }
-
-  .hk-lvl { font: 600 9.5px var(--sans); letter-spacing: 0.06em; fill: var(--gold); text-transform: uppercase; transition: opacity 0.5s; }
+  .hk-lvl { font: 9.5px monospace; fill: #555; text-transform: uppercase; }
   .hk-lvl.hide { opacity: 0; }
-  .hk-bracket { fill: none; stroke: var(--flag-green); stroke-width: 1.6; stroke-dasharray: 3 3; opacity: 0; transition: opacity 0.5s; }
+  .hk-bracket { fill: none; stroke: green; stroke-width: 1.6; stroke-dasharray: 3 3; opacity: 0; }
   .hk-bracket.on { opacity: 0.9; }
-  .hk-flabel { font: 600 11px var(--sans); fill: var(--flag-green); opacity: 0; transition: opacity 0.5s; }
+  .hk-flabel { font: 11px monospace; fill: green; opacity: 0; }
   .hk-flabel.on { opacity: 1; }
-  .hk-empty { font: italic 14px var(--serif); fill: var(--faint); text-anchor: middle; }
-
-  /* caption */
-  .hk-caption {
-    margin: 0.9rem 0 0.7rem; padding: 0.9rem 1.1rem 0.5rem; min-height: 9.2rem;
-    background: var(--sheet); border: 1px solid var(--line); border-left: 3px solid var(--accent);
-    border-radius: 4px; box-shadow: var(--shadow-sheet);
-  }
-  .hk-caption h2 { margin: 0 0 0.35rem; font-size: 1.12rem; }
-  .hk-caption p { margin: 0 0 0.5em; font-size: 0.95rem; line-height: 1.7; }
-  .hk-caption .hk-step-kind { font: 600 0.7rem var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin: 0 0 0.15rem; }
-  .hk-caption strong { color: var(--accent-deep); }
-  .hk-caption .mono { font-family: var(--mono); font-size: 0.86em; background: var(--soft); border: 1px solid var(--line); border-radius: 2px; padding: 0.04em 0.35em; }
-  .hk-caption.swap { animation: hk-in 0.45s ease; }
-  @keyframes hk-in { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
-
-  /* controls */
-  .hk-controls { display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; }
-  .hk-controls button {
-    font: 600 1.05rem var(--sans); min-width: 2.5rem; height: 2.4rem; padding: 0 0.8rem;
-    color: var(--ink); background: var(--sheet); border: 1px solid var(--dot); border-radius: 4px; cursor: pointer;
-    box-shadow: 0 1px 2px rgba(92, 70, 28, 0.12); transition: all 0.2s;
-  }
-  .hk-controls button:hover { border-color: var(--gold-deco); background: var(--gold-faint); }
-  .hk-controls button:active { transform: translateY(1px); }
-  .hk-controls button:disabled { opacity: 0.35; cursor: default; }
-  .hk-controls button.hk-primary {
-    min-width: 5.2rem; font-size: 0.9rem; letter-spacing: 0.06em; color: #fff;
-    background: linear-gradient(180deg, var(--accent), var(--accent-deep)); border-color: var(--accent-deep);
-  }
-  .hk-controls button.hk-primary:hover { filter: brightness(1.1); }
-  .hk-speed { margin-left: auto; font: 0.75rem var(--sans); color: var(--muted); display: flex; align-items: center; gap: 0.4rem; }
-  .hk-speed select { font: inherit; color: var(--ink); background: var(--sheet); border: 1px solid var(--dot); border-radius: 3px; padding: 0.2rem 0.3rem; }
-  .hk-bar { height: 4px; background: var(--line); border-radius: 2px; margin: 0.8rem 0 0.3rem; overflow: hidden; }
-  .hk-bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--gold-deco), var(--accent)); transition: width 0.4s; }
-  .hk-count { font: 0.75rem var(--sans); color: var(--faint); margin: 0; text-align: right; }
-
-  .hk-legend { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; padding: 0; margin: 1rem 0 0; font: 0.74rem var(--sans); color: var(--muted); }
-  .hk-legend li { display: flex; align-items: center; gap: 0.35rem; }
-  .hk-legend svg { width: 34px; height: 20px; }
-  .lg-free { fill: #dfe8f3; stroke: var(--flag-green); stroke-width: 2.4; }
-  .lg-m { stroke: var(--ink-deco); stroke-width: 4; }
-  .lg-red { stroke: var(--accent); stroke-width: 4; }
-  .lg-probe { stroke: var(--gold-deco); stroke-width: 3; stroke-dasharray: 5 3; }
-  .lg-dead { stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; fill: none; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hk-node.probe .halo, .hk-edge.probe { animation: none; }
-    .hk-caption.swap { animation: none; }
-  }
+  .hk-empty { font: italic 14px serif; fill: #777; text-anchor: middle; }
+  .hk-caption { min-height: 9em; }
+  .hk-bar { height: 4px; background: #ddd; }
+  .hk-bar span { display: block; height: 100%; width: 0; background: #000; }
+  .hk-legend { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4em 1.2em; padding: 0; }
+  .hk-legend svg { width: 34px; height: 20px; vertical-align: middle; }
+  .lg-free { fill: #fff; stroke: green; stroke-width: 2.4; }
+  .lg-m { stroke: #000; stroke-width: 4; }
+  .lg-red { stroke: red; stroke-width: 4; }
+  .lg-probe { stroke: #555; stroke-width: 3; stroke-dasharray: 5 3; }
+  .lg-dead { stroke: red; stroke-width: 2.4; fill: none; }
 </style>
 
 <script is:inline>
