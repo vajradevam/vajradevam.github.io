@@ -1,452 +1,911 @@
 [
   {
-    "ref": "SYS-001",
+    "ref": "P-001",
     "name": "whale",
     "category": "systems",
     "lang": "C",
     "description": "Minimal container runtime using Linux namespaces, cgroups v2, seccomp-BPF, and overlayfs from scratch",
     "repo": "https://github.com/vajradevam/whale",
-    "layer": "os",
     "featured": true
   },
   {
-    "ref": "SYS-002",
+    "ref": "P-002",
     "name": "vajrip",
     "category": "systems",
     "lang": "C",
     "description": "Userspace TCP/IP stack: Ethernet, ARP, IP, ICMP, UDP, TCP from scratch, Linux TAP",
     "repo": "https://github.com/vajradevam/vajrip",
-    "layer": "network",
     "featured": true
   },
   {
-    "ref": "SYS-003",
+    "ref": "P-003",
     "name": "memoria",
     "category": "systems",
     "lang": "C",
     "description": "malloc/free replacement, segregated free list, mmap heap, leak detection, 57 tests",
     "repo": "https://github.com/vajradevam/memoria",
-    "layer": "c",
     "featured": true
   },
   {
-    "ref": "SYS-004",
+    "ref": "P-004",
     "name": "slinep",
     "category": "systems",
     "lang": "C",
     "description": "Bezier rasterizer + 12 programs: fluid sim, cloth, metaballs, Fourier, terrain",
     "repo": "https://github.com/vajradevam/slinep",
-    "layer": "c",
     "featured": false
   },
   {
-    "ref": "SYS-005",
+    "ref": "P-005",
     "name": "lolfetch",
     "category": "systems",
     "lang": "C",
     "description": "System info fetch tool with ASCII art",
     "repo": "https://github.com/vajradevam/lolfetch",
-    "layer": "os",
     "featured": false
   },
   {
-    "ref": "SYS-006",
+    "ref": "P-006",
     "name": "ray-tracing-c",
     "category": "systems",
     "lang": "C",
     "description": "2D raycasting, 360 rays, interactive shadows, SDL2",
     "repo": "https://github.com/vajradevam/ray-tracing-c",
-    "layer": "c",
     "featured": false
   },
   {
-    "ref": "SYS-007",
+    "ref": "P-007",
     "name": "sell-shell",
     "category": "systems",
     "lang": "C",
     "description": "Minimal Unix shell, fork/exec, foreground/background processes",
     "repo": "https://github.com/vajradevam/sell-shell",
-    "layer": "os",
     "featured": false
   },
   {
-    "ref": "SYS-008",
+    "ref": "P-008",
     "name": "c-animation",
     "category": "systems",
     "lang": "C",
     "description": "ASCII physics animation using raw ANSI escape sequences",
     "repo": "https://github.com/vajradevam/c-animation",
-    "layer": "c",
     "featured": false
   },
   {
-    "ref": "SYS-009",
-    "name": "RV-Sparse",
+    "name": "systemcall",
     "category": "systems",
+    "lang": "C",
+    "description": "pidmon: two Linux system calls that let a process open a window on a descendant and enforce resource limits on it, with a QEMU build, boot and test harness",
+    "repo": "https://github.com/vajradevam/systemcall",
+    "featured": false,
+    "ref": "P-009"
+  },
+  {
+    "name": "cfsched",
+    "category": "systems",
+    "lang": "C",
+    "description": "Pedagogical Linux CFS scheduler in C99: per-CPU runqueues, vruntime RB-tree, priority weights, load balancing, sleep and wake queues, group scheduling",
+    "repo": "https://github.com/vajradevam/cfsched",
+    "featured": false,
+    "ref": "P-010"
+  },
+  {
+    "name": "capi",
+    "category": "systems",
+    "lang": "C",
+    "description": "Single-threaded HTTP API server in pure C on Linux epoll, non-blocking edge-triggered I/O, no libraries",
+    "repo": "https://github.com/vajradevam/capi",
+    "featured": false,
+    "ref": "P-011"
+  },
+  {
+    "name": "campnetd",
+    "category": "systems",
+    "lang": "C",
+    "description": "Single-file headless daemon that keeps the BITS Goa campnet captive portal logged in",
+    "repo": "https://github.com/vajradevam/campnetd",
+    "featured": false,
+    "ref": "P-012"
+  },
+  {
+    "name": "sortvis",
+    "category": "systems",
+    "lang": "C",
+    "description": "Sorting visualiser with 10 algorithms, audio feedback and an SDL2 interface",
+    "repo": "https://github.com/vajradevam/sortvis",
+    "featured": false,
+    "ref": "P-013"
+  },
+  {
+    "name": "zen",
+    "category": "systems",
+    "lang": "Rust",
+    "description": "Terminal text editor with nothing in it but a cursor: no status bar, no line numbers, no menus, no hotkeys",
+    "repo": "https://github.com/vajradevam/zen",
+    "featured": false,
+    "ref": "P-014"
+  },
+  {
+    "ref": "P-015",
+    "name": "RV-Sparse",
+    "category": "hardware",
     "lang": "C",
     "description": "CSR sparse matrix-vector multiply in C with zero dynamic allocation",
     "repo": "https://github.com/vajradevam/RV-Sparse",
-    "layer": "isa",
     "featured": false
   },
   {
-    "ref": "WEB-001",
-    "name": "nook",
-    "category": "web",
-    "lang": "Go",
-    "description": "Tiny embedded ordered key/value database with SQL and auth, built from scratch",
-    "repo": "https://github.com/vajradevam/nook",
-    "layer": "os",
-    "featured": true
-  },
-  {
-    "ref": "WEB-002",
-    "name": "mridu",
-    "category": "web",
-    "lang": "Go",
-    "description": "Bytecode VM interpreter in Go",
-    "repo": "https://github.com/vajradevam/mridu",
-    "layer": "language",
-    "featured": true
-  },
-  {
-    "ref": "WEB-003",
-    "name": "urls",
-    "category": "web",
-    "lang": "Astro",
-    "description": "URL shortener, custom slugs, analytics, QR codes, JWT auth, dark mode",
-    "repo": "https://github.com/vajradevam/urls",
-    "layer": "apps",
+    "ref": "P-016",
+    "name": "riscc",
+    "category": "hardware",
+    "lang": "Asm/C/Verilog",
+    "description": "RISC-V testbench: standalone C programs validating processor cores",
+    "repo": "https://github.com/vajradevam/riscc",
     "featured": false
   },
   {
-    "ref": "WEB-004",
-    "name": "alonzo",
-    "category": "web",
-    "lang": "React/Node",
-    "description": "FaaS platform: upload & execute JS functions via API, rate limiting",
-    "repo": "https://github.com/vajradevam/alonzo",
-    "layer": "apps",
-    "featured": false
+    "name": "veritas86",
+    "category": "hardware",
+    "lang": "C, TeX",
+    "description": "Black-box x86 instruction-set auditor. Single-steps byte strings on real ring-3 hardware, classifies what the chip does from the fault it raises, and diffs that against the documented behaviour",
+    "repo": "https://github.com/vajradevam/veritas86",
+    "featured": true,
+    "ref": "P-017"
   },
   {
-    "ref": "WEB-005",
-    "name": "juice",
-    "category": "web",
-    "lang": "Node.js",
-    "description": "VPS hardware monitor API: CPU, memory, disk, network over HTTP",
-    "repo": "https://github.com/vajradevam/juice",
-    "layer": "os",
-    "featured": false
+    "name": "bbcrypto",
+    "category": "hardware",
+    "lang": "C, TeX",
+    "description": "A BeagleBone Black over USB as a crypto accelerator. A kernel module registers SHA, HMAC, AES and GCM with the kernel crypto API and offloads each request to the board's hardware engines",
+    "repo": "https://github.com/vajradevam/bbcrypto",
+    "featured": false,
+    "ref": "P-018"
   },
   {
-    "ref": "WEB-006",
-    "name": "attendance-system",
-    "category": "web",
-    "lang": "Spring/React",
-    "description": "Role-based attendance tracking, timetable, real-time stats",
-    "repo": "https://github.com/vajradevam/Attendence-System",
-    "layer": "apps",
-    "featured": false
-  },
-  {
-    "ref": "WEB-007",
-    "name": "LLM-Ping",
-    "category": "web",
-    "lang": "Python",
-    "description": "TUI tool pinging free LLM models across NIM, OpenRouter, Groq, Z.AI",
-    "repo": "https://github.com/vajradevam/LLM-Ping",
-    "layer": "apps",
-    "featured": false
-  },
-  {
-    "ref": "WEB-008",
-    "name": "deeptrace",
-    "category": "web",
-    "lang": "C++",
-    "description": "Deep Packet Inspection CLI tool",
-    "repo": "https://github.com/vajradevam/deeptrace",
-    "layer": "network",
-    "featured": false
-  },
-  {
-    "ref": "WEB-009",
-    "name": "pit",
-    "category": "web",
-    "lang": "Python",
-    "description": "Git implementation in Python",
-    "repo": "https://github.com/vajradevam/pit",
-    "layer": "apps",
-    "featured": false
-  },
-  {
-    "ref": "WEB-010",
-    "name": "vectdb",
-    "category": "web",
-    "lang": "C++",
-    "description": "Vector database",
-    "repo": "https://github.com/vajradevam/vectdb",
-    "layer": "apps",
-    "featured": false
-  },
-  {
-    "ref": "EMU-001",
-    "name": "chip8",
-    "category": "emulators",
-    "lang": "C",
-    "description": "CHIP-8 emulator, SDL2, 35 opcodes, 60Hz timers, sound, debug",
-    "repo": "https://github.com/vajradevam/chip8",
-    "layer": "isa",
-    "featured": false
-  },
-  {
-    "ref": "EMU-002",
-    "name": "schip",
-    "category": "emulators",
-    "lang": "C",
-    "description": "Enhanced CHIP-8 emulator",
-    "repo": "https://github.com/vajradevam/schip",
-    "layer": "isa",
-    "featured": false
-  },
-  {
-    "ref": "EMU-003",
-    "name": "commodore64",
-    "category": "emulators",
-    "lang": "Java",
-    "description": "Cycle-accurate 6502 CPU, VIC-II text-mode graphics, PRG loading",
-    "repo": "https://github.com/vajradevam/commodore64",
-    "layer": "isa",
-    "featured": true
-  },
-  {
-    "ref": "EMU-004",
-    "name": "rv32i-emulator",
-    "category": "emulators",
-    "lang": "Java",
-    "description": "5-stage unpipelined RV32I, Swing GUI, step-through execution",
-    "repo": "https://github.com/vajradevam/rv32i-SingleBus-emulator",
-    "layer": "isa",
-    "featured": false
-  },
-  {
-    "ref": "ML-001",
-    "name": "wthr",
-    "category": "ml",
-    "lang": "Python",
-    "description": "Weather/AQI prediction, 109K observations, 25+ models benchmarked",
-    "repo": "https://github.com/vajradevam/wthr",
-    "layer": "apps",
-    "featured": false
-  },
-  {
-    "ref": "ML-002",
-    "name": "slm-bench",
-    "category": "ml",
-    "lang": "Python",
-    "description": "50+ quantized SLMs benchmarked across 5 quality domains, ROUGE scoring",
-    "repo": "https://github.com/vajradevam/slm-bench",
-    "layer": "apps",
-    "featured": false
-  },
-  {
-    "ref": "ML-003",
-    "name": "advx",
-    "category": "ml",
-    "lang": "PyTorch",
-    "description": "Adversarial attacks on MNIST: FGSM, PGD, DeepFool, CW, ~98% accuracy",
-    "repo": "https://github.com/vajradevam/advx",
-    "layer": "apps",
-    "featured": false
-  },
-  {
-    "ref": "ML-004",
-    "name": "lstm-weather",
-    "category": "ml",
-    "lang": "TF/Keras",
-    "description": "Multivariate LSTM, bidirectional, stacked, CNN-LSTM, ConvLSTM variants",
-    "repo": "https://github.com/vajradevam/basic-lstm-weather-prediction",
-    "layer": "apps",
-    "featured": false
-  },
-  {
-    "ref": "ML-005",
-    "name": "ml-nanosensor",
-    "category": "ml",
-    "lang": "Python",
-    "description": "ML for THz antenna design from CST Studio simulation data",
-    "repo": "https://github.com/vajradevam/ml-nanosensor-lab",
-    "layer": "apps",
-    "featured": false
-  },
-  {
-    "ref": "ML-006",
-    "name": "vajranet",
-    "category": "ml",
-    "lang": "PyTorch",
-    "description": "Neural networks from scratch on MNIST (784-128-128-64-10)",
-    "repo": "https://github.com/vajradevam/vajranet",
-    "layer": "language",
-    "featured": false
-  },
-  {
-    "ref": "ML-007",
-    "name": "takenizer",
-    "category": "ml",
-    "lang": "Python",
-    "description": "BPE tokenizer for LLMs trained on Shakespeare",
-    "repo": "https://github.com/vajradevam/takenizer",
-    "layer": "language",
-    "featured": false
-  },
-  {
-    "ref": "ML-008",
-    "name": "smol",
-    "category": "ml",
-    "lang": "Python",
-    "description": "Fine-tuning Phi-3 to Yoda-speak with LoRA, BitsAndBytes, PEFT",
-    "repo": "https://github.com/vajradevam/smol",
-    "layer": "apps",
-    "featured": false
-  },
-  {
-    "ref": "GAME-001",
-    "name": "jetris",
-    "category": "games",
-    "lang": "JavaFX",
-    "description": "Tetris: 7 tetrominoes, ghost piece, wall-kicks, hold, 2-player mode",
-    "repo": "https://github.com/vajradevam/jetris",
-    "layer": "apps",
-    "featured": false
-  },
-  {
-    "ref": "GAME-002",
-    "name": "minejweeper",
-    "category": "games",
-    "lang": "JavaFX",
-    "description": "Minesweeper: 4 difficulty levels, flood-fill, Win95-style UI",
-    "repo": "https://github.com/vajradevam/minejweeper",
-    "layer": "apps",
-    "featured": false
-  },
-  {
-    "ref": "GAME-003",
-    "name": "judoku",
-    "category": "games",
-    "lang": "JavaFX",
-    "description": "Sudoku: backtracking generator, hints, solver, leaderboard",
-    "repo": "https://github.com/vajradevam/judoku",
-    "layer": "apps",
-    "featured": false
-  },
-  {
-    "ref": "FE-001",
-    "name": "2048",
-    "category": "frontend",
-    "lang": "HTML/CSS/JS",
-    "description": "2048 game, touch support, CSS animations, Tailwind",
-    "repo": "https://github.com/vajradevam/2048",
-    "layer": "apps",
-    "featured": false
-  },
-  {
-    "ref": "FE-002",
-    "name": "game-of-life",
-    "category": "frontend",
-    "lang": "JS",
-    "description": "Conway's Game of Life, 50x50 grid, start/stop controls",
-    "repo": "https://github.com/vajradevam/game-of-life",
-    "layer": "apps",
-    "featured": false
-  },
-  {
-    "ref": "FE-003",
-    "name": "color-scheme",
-    "category": "frontend",
-    "lang": "CSS/JS",
-    "description": "Upload image to generate 5-color palette via ColorThief",
-    "repo": "https://github.com/vajradevam/color-scheme-generator",
-    "layer": "apps",
-    "featured": false
-  },
-  {
-    "ref": "COMP-001",
+    "ref": "P-019",
     "name": "Luma-Lang",
     "category": "compilers",
     "lang": "Java",
     "description": "Toy programming language: lexer, parser, AST, semantic analysis",
     "repo": "https://github.com/vajradevam/Luma-Lang",
-    "layer": "language",
     "featured": false
   },
   {
-    "ref": "COMP-002",
+    "ref": "P-020",
     "name": "yasl",
     "category": "compilers",
     "lang": "Python",
     "description": "Yet another scripting language: hand-rolled single-file interpreter in Python",
     "repo": "https://github.com/vajradevam/yasl",
-    "layer": "language",
     "featured": false
   },
   {
-    "ref": "COMP-003",
-    "name": "riscc",
+    "name": "sukti",
     "category": "compilers",
-    "lang": "Asm/C/Verilog",
-    "description": "RISC-V testbench: standalone C programs validating processor cores",
-    "repo": "https://github.com/vajradevam/riscc",
-    "layer": "rtl",
+    "lang": "Rust",
+    "description": "A small programming language written in ITRANS-romanised Sanskrit, whose grammar borrows ideas from Sanskrit that the compiler actually uses",
+    "repo": "https://github.com/vajradevam/sukti",
+    "featured": true,
+    "ref": "P-021"
+  },
+  {
+    "name": "sodium",
+    "category": "compilers",
+    "lang": "C++",
+    "description": "Compiler for Cyan, a small compiled systems language targeting x86-64 Linux and RISC-V 64",
+    "repo": "https://github.com/vajradevam/sodium",
+    "featured": false,
+    "ref": "P-022"
+  },
+  {
+    "name": "pyte",
+    "category": "compilers",
+    "lang": "C",
+    "description": "Minimal Python bytecode interpreter in about 1600 lines of C: single-pass compiler, small VM, no per-operation malloc",
+    "repo": "https://github.com/vajradevam/pyte",
+    "featured": false,
+    "ref": "P-023"
+  },
+  {
+    "ref": "P-024",
+    "name": "chip8",
+    "category": "emulators",
+    "lang": "C",
+    "description": "CHIP-8 emulator, SDL2, 35 opcodes, 60Hz timers, sound, debug",
+    "repo": "https://github.com/vajradevam/chip8",
     "featured": false
   },
   {
-    "ref": "MISC-001",
+    "ref": "P-025",
+    "name": "schip",
+    "category": "emulators",
+    "lang": "C",
+    "description": "Enhanced CHIP-8 emulator",
+    "repo": "https://github.com/vajradevam/schip",
+    "featured": false
+  },
+  {
+    "ref": "P-026",
+    "name": "commodore64",
+    "category": "emulators",
+    "lang": "Java",
+    "description": "Cycle-accurate 6502 CPU, VIC-II text-mode graphics, PRG loading",
+    "repo": "https://github.com/vajradevam/commodore64",
+    "featured": true
+  },
+  {
+    "ref": "P-027",
+    "name": "rv32i-emulator",
+    "category": "emulators",
+    "lang": "Java",
+    "description": "5-stage unpipelined RV32I, Swing GUI, step-through execution",
+    "repo": "https://github.com/vajradevam/rv32i-SingleBus-emulator",
+    "featured": false
+  },
+  {
+    "name": "gameboy-rs",
+    "category": "emulators",
+    "lang": "Rust",
+    "description": "Game Boy (DMG) emulator in Rust, with a dependency-free core crate and SDL2 for display and input",
+    "repo": "https://github.com/vajradevam/gameboy-rs",
+    "featured": false,
+    "ref": "P-028"
+  },
+  {
+    "ref": "P-029",
+    "name": "wthr",
+    "category": "ml",
+    "lang": "Python",
+    "description": "Weather/AQI prediction, 109K observations, 25+ models benchmarked",
+    "repo": "https://github.com/vajradevam/wthr",
+    "featured": false
+  },
+  {
+    "ref": "P-030",
+    "name": "slm-bench",
+    "category": "ml",
+    "lang": "Python",
+    "description": "50+ quantized SLMs benchmarked across 5 quality domains, ROUGE scoring",
+    "repo": "https://github.com/vajradevam/slm-bench",
+    "featured": false
+  },
+  {
+    "ref": "P-031",
+    "name": "advx",
+    "category": "ml",
+    "lang": "PyTorch",
+    "description": "Adversarial attacks on MNIST: FGSM, PGD, DeepFool, CW, ~98% accuracy",
+    "repo": "https://github.com/vajradevam/advx",
+    "featured": false
+  },
+  {
+    "ref": "P-032",
+    "name": "lstm-weather",
+    "category": "ml",
+    "lang": "TF/Keras",
+    "description": "Multivariate LSTM, bidirectional, stacked, CNN-LSTM, ConvLSTM variants",
+    "repo": "https://github.com/vajradevam/basic-lstm-weather-prediction",
+    "featured": false
+  },
+  {
+    "ref": "P-033",
+    "name": "ml-nanosensor",
+    "category": "ml",
+    "lang": "Python",
+    "description": "ML for THz antenna design from CST Studio simulation data",
+    "repo": "https://github.com/vajradevam/ml-nanosensor-lab",
+    "featured": false
+  },
+  {
+    "ref": "P-034",
+    "name": "vajranet",
+    "category": "ml",
+    "lang": "PyTorch",
+    "description": "Neural networks from scratch on MNIST (784-128-128-64-10)",
+    "repo": "https://github.com/vajradevam/vajranet",
+    "featured": false
+  },
+  {
+    "ref": "P-035",
+    "name": "takenizer",
+    "category": "ml",
+    "lang": "Python",
+    "description": "BPE tokenizer for LLMs trained on Shakespeare",
+    "repo": "https://github.com/vajradevam/takenizer",
+    "featured": false
+  },
+  {
+    "ref": "P-036",
+    "name": "smol",
+    "category": "ml",
+    "lang": "Python",
+    "description": "Fine-tuning Phi-3 to Yoda-speak with LoRA, BitsAndBytes, PEFT",
+    "repo": "https://github.com/vajradevam/smol",
+    "featured": false
+  },
+  {
+    "name": "cnn-rust",
+    "category": "ml",
+    "lang": "Rust",
+    "description": "Convolutional network that classifies MNIST digits, written from scratch in Rust with zero dependencies",
+    "repo": "https://github.com/vajradevam/cnn-rust",
+    "featured": false,
+    "ref": "P-037"
+  },
+  {
+    "name": "face-detection",
+    "category": "ml",
+    "lang": "Python",
+    "description": "Real-time face and hand perception: mood, gaze, gestures, handedness and persistent IDs across frames",
+    "repo": "https://github.com/vajradevam/face-detection",
+    "featured": false,
+    "ref": "P-038"
+  },
+  {
+    "name": "locate-anything-local",
+    "category": "ml",
+    "lang": "Python",
+    "description": "A grounding study running NVIDIA LocateAnything-3B locally with llama.cpp on an Intel iGPU laptop",
+    "repo": "https://github.com/vajradevam/locate-anything-local",
+    "featured": false,
+    "ref": "P-039"
+  },
+  {
+    "name": "nn-zth",
+    "category": "ml",
+    "lang": "Jupyter",
+    "description": "Deep learning from absolute basics, following Karpathy's lectures",
+    "repo": "https://github.com/vajradevam/nn-zth",
+    "featured": false,
+    "ref": "P-040"
+  },
+  {
+    "name": "simplest-markov-chain",
+    "category": "ml",
+    "lang": "Jupyter",
+    "description": "A minimalist Markov chain in Python",
+    "repo": "https://github.com/vajradevam/simplest-markov-chain",
+    "featured": false,
+    "ref": "P-041"
+  },
+  {
+    "name": "markov-chain-sequence-generator",
+    "category": "ml",
+    "lang": "HTML",
+    "description": "Web app that generates sentences from user-supplied text with a Markov chain",
+    "repo": "https://github.com/vajradevam/markov-chain-sequence-generator",
+    "featured": false,
+    "ref": "P-042"
+  },
+  {
+    "ref": "P-043",
+    "name": "nook",
+    "category": "web",
+    "lang": "Go",
+    "description": "Tiny embedded ordered key/value database with SQL and auth, built from scratch",
+    "repo": "https://github.com/vajradevam/nook",
+    "featured": true
+  },
+  {
+    "ref": "P-044",
+    "name": "mridu",
+    "category": "web",
+    "lang": "Go",
+    "description": "Bytecode VM interpreter in Go",
+    "repo": "https://github.com/vajradevam/mridu",
+    "featured": true
+  },
+  {
+    "ref": "P-045",
+    "name": "urls",
+    "category": "web",
+    "lang": "Astro",
+    "description": "URL shortener, custom slugs, analytics, QR codes, JWT auth, dark mode",
+    "repo": "https://github.com/vajradevam/urls",
+    "featured": false
+  },
+  {
+    "ref": "P-046",
+    "name": "alonzo",
+    "category": "web",
+    "lang": "React/Node",
+    "description": "FaaS platform: upload & execute JS functions via API, rate limiting",
+    "repo": "https://github.com/vajradevam/alonzo",
+    "featured": false
+  },
+  {
+    "ref": "P-047",
+    "name": "juice",
+    "category": "web",
+    "lang": "Node.js",
+    "description": "VPS hardware monitor API: CPU, memory, disk, network over HTTP",
+    "repo": "https://github.com/vajradevam/juice",
+    "featured": false
+  },
+  {
+    "ref": "P-048",
+    "name": "attendance-system",
+    "category": "web",
+    "lang": "Spring/React",
+    "description": "Role-based attendance tracking, timetable, real-time stats",
+    "repo": "https://github.com/vajradevam/Attendence-System",
+    "featured": false
+  },
+  {
+    "ref": "P-049",
+    "name": "LLM-Ping",
+    "category": "web",
+    "lang": "Python",
+    "description": "TUI tool pinging free LLM models across NIM, OpenRouter, Groq, Z.AI",
+    "repo": "https://github.com/vajradevam/LLM-Ping",
+    "featured": false
+  },
+  {
+    "ref": "P-050",
+    "name": "deeptrace",
+    "category": "web",
+    "lang": "C++",
+    "description": "Deep Packet Inspection CLI tool",
+    "repo": "https://github.com/vajradevam/deeptrace",
+    "featured": false
+  },
+  {
+    "ref": "P-051",
+    "name": "pit",
+    "category": "web",
+    "lang": "Python",
+    "description": "Git implementation in Python",
+    "repo": "https://github.com/vajradevam/pit",
+    "featured": false
+  },
+  {
+    "ref": "P-052",
+    "name": "vectdb",
+    "category": "web",
+    "lang": "C++",
+    "description": "Vector database",
+    "repo": "https://github.com/vajradevam/vectdb",
+    "featured": false
+  },
+  {
+    "name": "black-scholes",
+    "category": "web",
+    "lang": "TypeScript",
+    "description": "Option pricing dashboard for US equities: Black-Scholes and Greeks, Monte Carlo, multi-leg strategies, real market data",
+    "repo": "https://github.com/vajradevam/black-scholes",
+    "featured": false,
+    "ref": "P-053"
+  },
+  {
+    "name": "programming-challenges-v5",
+    "category": "web",
+    "lang": "CSS",
+    "description": "500 programming challenges across 16 domains, browsable and filterable on the web",
+    "repo": "https://github.com/vajradevam/programming-challenges-v5",
+    "featured": false,
+    "ref": "P-054"
+  },
+  {
+    "name": "vajradevam.github.io",
+    "category": "web",
+    "lang": "Astro",
+    "description": "This website",
+    "repo": "https://github.com/vajradevam/vajradevam.github.io",
+    "featured": false,
+    "ref": "P-101"
+  },
+  {
+    "ref": "P-055",
+    "name": "jetris",
+    "category": "games",
+    "lang": "JavaFX",
+    "description": "Tetris: 7 tetrominoes, ghost piece, wall-kicks, hold, 2-player mode",
+    "repo": "https://github.com/vajradevam/jetris",
+    "featured": false
+  },
+  {
+    "ref": "P-056",
+    "name": "minejweeper",
+    "category": "games",
+    "lang": "JavaFX",
+    "description": "Minesweeper: 4 difficulty levels, flood-fill, Win95-style UI",
+    "repo": "https://github.com/vajradevam/minejweeper",
+    "featured": false
+  },
+  {
+    "ref": "P-057",
+    "name": "judoku",
+    "category": "games",
+    "lang": "JavaFX",
+    "description": "Sudoku: backtracking generator, hints, solver, leaderboard",
+    "repo": "https://github.com/vajradevam/judoku",
+    "featured": false
+  },
+  {
+    "name": "heavy-driver",
+    "category": "games",
+    "lang": "JavaScript",
+    "description": "Browser multiplayer driving game on a 3D world generated live from OpenStreetMap, with no game server or accounts",
+    "repo": "https://github.com/vajradevam/heavy-driver",
+    "featured": false,
+    "ref": "P-058"
+  },
+  {
+    "ref": "P-059",
+    "name": "2048",
+    "category": "frontend",
+    "lang": "HTML/CSS/JS",
+    "description": "2048 game, touch support, CSS animations, Tailwind",
+    "repo": "https://github.com/vajradevam/2048",
+    "featured": false
+  },
+  {
+    "ref": "P-060",
+    "name": "game-of-life",
+    "category": "frontend",
+    "lang": "JS",
+    "description": "Conway's Game of Life, 50x50 grid, start/stop controls",
+    "repo": "https://github.com/vajradevam/game-of-life",
+    "featured": false
+  },
+  {
+    "ref": "P-061",
+    "name": "color-scheme",
+    "category": "frontend",
+    "lang": "CSS/JS",
+    "description": "Upload image to generate 5-color palette via ColorThief",
+    "repo": "https://github.com/vajradevam/color-scheme-generator",
+    "featured": false
+  },
+  {
+    "ref": "P-062",
     "name": "DDownloader",
     "category": "misc",
     "lang": "Python",
     "description": "Discord bot: download all media from a specific user across an entire server",
     "repo": "https://github.com/vajradevam/DDownloader",
-    "layer": "apps",
     "featured": false
   },
   {
-    "ref": "MISC-002",
+    "ref": "P-063",
     "name": "chatbot",
     "category": "misc",
     "lang": "Python",
     "description": "Groq API chatbot with LLaMA, Gemma, Qwen, DeepSeek models",
     "repo": "https://github.com/vajradevam/chatbot",
-    "layer": "apps",
     "featured": false
   },
   {
-    "ref": "MISC-003",
+    "ref": "P-064",
     "name": "chatora",
     "category": "misc",
     "lang": "Python",
     "description": "Gemini API chatbot built with Streamlit",
     "repo": "https://github.com/vajradevam/chatora",
-    "layer": "apps",
     "featured": false
   },
   {
-    "ref": "MISC-004",
+    "ref": "P-065",
     "name": "cst-pipeline",
     "category": "misc",
     "lang": "Python",
     "description": "S11/gain extraction from CST Studio ASCII exports with GUI",
     "repo": "https://github.com/vajradevam/cst-studio-pipeline",
-    "layer": "apps",
     "featured": false
   },
   {
-    "ref": "MISC-005",
+    "ref": "P-066",
     "name": "cst-plotter",
     "category": "misc",
     "lang": "Python",
     "description": "Publication-quality graphs: S11, gain, VSWR, efficiency",
     "repo": "https://github.com/vajradevam/cst-studio-plotter",
-    "layer": "apps",
     "featured": false
+  },
+  {
+    "name": "git-bundle-grader",
+    "category": "misc",
+    "lang": "Python",
+    "description": "Grading platform for lab submissions delivered as git bundles or zips, with C++/CTest and Java/JUnit tracks",
+    "repo": "https://github.com/vajradevam/git-bundle-grader",
+    "featured": false,
+    "ref": "P-067"
+  },
+  {
+    "name": "gradle-cache-warmer",
+    "category": "misc",
+    "lang": "Java",
+    "description": "Fills the Gradle cache so freshly generated projects build offline during an exam",
+    "repo": "https://github.com/vajradevam/gradle-cache-warmer",
+    "featured": false,
+    "ref": "P-068"
+  },
+  {
+    "name": "java-cae",
+    "category": "misc",
+    "lang": "Java",
+    "description": "Example code for the blog post Compiling and Executing a Java Program",
+    "repo": "https://github.com/vajradevam/java-cae",
+    "featured": false,
+    "ref": "P-069"
+  },
+  {
+    "name": "is_even",
+    "category": "misc",
+    "lang": "C",
+    "description": "Decides whether a number is even with a switch statement. Deadly serious",
+    "repo": "https://github.com/vajradevam/is_even",
+    "featured": false,
+    "ref": "P-070"
+  },
+  {
+    "name": "dotfiles",
+    "category": "misc",
+    "lang": "Shell",
+    "description": "Hyprland rice and CLI toolchain config with an installer for Arch, Debian, Fedora and openSUSE",
+    "repo": "https://github.com/vajradevam/dotfiles",
+    "featured": false,
+    "ref": "P-071"
+  },
+  {
+    "name": "sickastley-dots",
+    "category": "misc",
+    "lang": "Shell",
+    "description": "Older Arch Linux and i3wm dotfiles",
+    "repo": "https://github.com/vajradevam/sickastley-dots",
+    "featured": false,
+    "ref": "P-072"
+  },
+  {
+    "name": "classmate",
+    "category": "misc",
+    "lang": "C",
+    "description": "C code, no description",
+    "repo": "https://github.com/vajradevam/classmate",
+    "featured": false,
+    "ref": "P-095"
+  },
+  {
+    "name": "decent",
+    "category": "misc",
+    "lang": "JavaScript",
+    "description": "JavaScript, no description",
+    "repo": "https://github.com/vajradevam/decent",
+    "featured": false,
+    "ref": "P-096"
+  },
+  {
+    "name": "thrice.js",
+    "category": "misc",
+    "lang": "Unknown",
+    "description": "No description",
+    "repo": "https://github.com/vajradevam/thrice.js",
+    "featured": false,
+    "ref": "P-097"
+  },
+  {
+    "name": "test-pit",
+    "category": "misc",
+    "lang": "Unknown",
+    "description": "Test repository for pit",
+    "repo": "https://github.com/vajradevam/test-pit",
+    "featured": false,
+    "ref": "P-098"
+  },
+  {
+    "name": "cst-studio-extractor",
+    "category": "misc",
+    "lang": "Python",
+    "description": "Deprecated CST Studio data extractor, replaced by cst-studio-pipeline",
+    "repo": "https://github.com/vajradevam/cst-studio-extractor",
+    "featured": false,
+    "ref": "P-099"
+  },
+  {
+    "name": "vajradevam",
+    "category": "misc",
+    "lang": "Unknown",
+    "description": "GitHub profile repository",
+    "repo": "https://github.com/vajradevam/vajradevam",
+    "featured": false,
+    "ref": "P-100"
+  },
+  {
+    "name": "aoc_2023",
+    "category": "coursework",
+    "lang": "Python",
+    "description": "Advent of Code 2023 solutions",
+    "repo": "https://github.com/vajradevam/aoc_2023",
+    "featured": false,
+    "ref": "P-073"
+  },
+  {
+    "name": "aoc_2024",
+    "category": "coursework",
+    "lang": "C",
+    "description": "Advent of Code 2024 in C",
+    "repo": "https://github.com/vajradevam/aoc_2024",
+    "featured": false,
+    "ref": "P-074"
+  },
+  {
+    "name": "aoc_2025",
+    "category": "coursework",
+    "lang": "Haskell",
+    "description": "Advent of Code 2025 in Haskell",
+    "repo": "https://github.com/vajradevam/aoc_2025",
+    "featured": false,
+    "ref": "P-075"
+  },
+  {
+    "name": "CSG-526",
+    "category": "coursework",
+    "lang": "TeX",
+    "description": "Slides and notes on Hopcroft-Karp bipartite matching",
+    "repo": "https://github.com/vajradevam/CSG-526",
+    "featured": false,
+    "ref": "P-076"
+  },
+  {
+    "name": "ad-lab",
+    "category": "coursework",
+    "lang": "Jupyter",
+    "description": "Applications Development Laboratory: machine learning coursework",
+    "repo": "https://github.com/vajradevam/ad-lab",
+    "featured": false,
+    "ref": "P-077"
+  },
+  {
+    "name": "daa-lab",
+    "category": "coursework",
+    "lang": "Assembly",
+    "description": "Design and analysis of algorithms lab",
+    "repo": "https://github.com/vajradevam/daa-lab",
+    "featured": false,
+    "ref": "P-078"
+  },
+  {
+    "name": "labs-s4-2024",
+    "category": "coursework",
+    "lang": "Java",
+    "description": "Semester 4 lab programs",
+    "repo": "https://github.com/vajradevam/labs-s4-2024",
+    "featured": false,
+    "ref": "P-079"
+  },
+  {
+    "name": "cn-lab",
+    "category": "coursework",
+    "lang": "C",
+    "description": "Computer networks lab programs",
+    "repo": "https://github.com/vajradevam/cn-lab",
+    "featured": false,
+    "ref": "P-090"
+  },
+  {
+    "name": "ai-lab",
+    "category": "coursework",
+    "lang": "Python",
+    "description": "AI lab exercises",
+    "repo": "https://github.com/vajradevam/ai-lab",
+    "featured": false,
+    "ref": "P-091"
+  },
+  {
+    "name": "mp",
+    "category": "coursework",
+    "lang": "Jupyter",
+    "description": "Notebooks, no description",
+    "repo": "https://github.com/vajradevam/mp",
+    "featured": false,
+    "ref": "P-092"
+  },
+  {
+    "name": "sim-ts",
+    "category": "coursework",
+    "lang": "Jupyter",
+    "description": "Notebooks, no description",
+    "repo": "https://github.com/vajradevam/sim-ts",
+    "featured": false,
+    "ref": "P-093"
+  },
+  {
+    "name": "kourshera",
+    "category": "coursework",
+    "lang": "Jupyter",
+    "description": "Notebooks, no description",
+    "repo": "https://github.com/vajradevam/kourshera",
+    "featured": false,
+    "ref": "P-094"
+  },
+  {
+    "name": "xv6-riscv",
+    "category": "forks",
+    "lang": "C",
+    "description": "Fork. Xv6 for RISC-V.",
+    "repo": "https://github.com/vajradevam/xv6-riscv",
+    "featured": false,
+    "ref": "P-080"
+  },
+  {
+    "name": "xv6-public",
+    "category": "forks",
+    "lang": "C",
+    "description": "Fork. xv6 teaching OS.",
+    "repo": "https://github.com/vajradevam/xv6-public",
+    "featured": false,
+    "ref": "P-081"
+  },
+  {
+    "name": "ibex",
+    "category": "forks",
+    "lang": "Verilog",
+    "description": "Fork. Ibex, a small 32-bit RISC-V CPU core, previously zero-riscy.",
+    "repo": "https://github.com/vajradevam/ibex",
+    "featured": false,
+    "ref": "P-082"
+  },
+  {
+    "name": "VibeOS",
+    "category": "forks",
+    "lang": "Unknown",
+    "description": "Fork. A completely vibecoded operating system targeting Aarch64.",
+    "repo": "https://github.com/vajradevam/VibeOS",
+    "featured": false,
+    "ref": "P-083"
+  },
+  {
+    "name": "zero",
+    "category": "forks",
+    "lang": "Unknown",
+    "description": "Fork. The programming language for agents.",
+    "repo": "https://github.com/vajradevam/zero",
+    "featured": false,
+    "ref": "P-084"
+  },
+  {
+    "name": "CyanTube",
+    "category": "forks",
+    "lang": "Python",
+    "description": "Fork. A YouTube video downloader built on Python.",
+    "repo": "https://github.com/vajradevam/CyanTube",
+    "featured": false,
+    "ref": "P-085"
+  },
+  {
+    "name": "vishuddha",
+    "category": "forks",
+    "lang": "JavaScript",
+    "description": "Fork. A Hindi website, inspired by johnkarter767612.",
+    "repo": "https://github.com/vajradevam/vishuddha",
+    "featured": false,
+    "ref": "P-086"
+  },
+  {
+    "name": "minorproject",
+    "category": "forks",
+    "lang": "Jupyter",
+    "description": "Fork. Minor project notebooks.",
+    "repo": "https://github.com/vajradevam/minorproject",
+    "featured": false,
+    "ref": "P-087"
+  },
+  {
+    "name": "ScriptDerivation",
+    "category": "forks",
+    "lang": "Unknown",
+    "description": "Fork. No description.",
+    "repo": "https://github.com/vajradevam/ScriptDerivation",
+    "featured": false,
+    "ref": "P-088"
+  },
+  {
+    "name": "Hinduism",
+    "category": "forks",
+    "lang": "Unknown",
+    "description": "Fork. No description.",
+    "repo": "https://github.com/vajradevam/Hinduism",
+    "featured": false,
+    "ref": "P-089"
   }
 ]

@@ -4,20 +4,23 @@ import projects from '../data/projects.json';
 
 const catNames: Record<string, string> = {
   systems: 'Systems',
+  hardware: 'Hardware and security',
   web: 'Web and backends',
   emulators: 'Emulators',
   ml: 'Machine learning',
   games: 'Games',
   frontend: 'Frontend',
   compilers: 'Compilers and languages',
-  misc: 'Miscellaneous',
+  misc: 'Tools and miscellany',
+  coursework: 'Coursework and puzzles',
+  forks: 'Forks',
 };
-const cats = [...new Set(projects.map((p) => p.category))];
+const cats = Object.keys(catNames).filter((c) => projects.some((p) => p.category === c));
 ---
 
 <Base nav="projects" title="Projects" description={`${projects.length} projects by Aman Pathak: systems programming in C, emulators, compilers, ML, and web, mostly built from scratch.`}>
   <h1>Projects</h1>
-  <p>{projects.length} projects, mostly built from scratch. All code on GitHub.</p>
+  <p>{projects.length} projects, mostly built from scratch. Every public repository on GitHub, forks included.</p>
 
   <p>
     {cats.map((c, i) => (
