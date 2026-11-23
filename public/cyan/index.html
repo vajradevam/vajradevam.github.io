@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cyan, a small systems language</title>
+<meta name="description" content="Cyan is a small C-like systems language. Its compiler, Sodium, produces freestanding x86-64 and RISC-V 64 Linux executables with no libc.">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="Cyan">
+<meta property="og:description" content="A small systems language with no libc, two native targets and a compiler you can read.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vajradevam.in/cyan/">
+<link rel="canonical" href="https://vajradevam.in/cyan/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%2300b4c8'/%3E%3Cpath d='M10.5 5.2A3.8 3.8 0 1 0 10.5 10.8' fill='none' stroke='%23062a30' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root {
+  --bg: #ffffff;
+  --bg2: #f3f8f9;
+  --ink: #16282c;
+  --soft: #4d6469;
+  --line: #d5e3e6;
+  --cyan: #008fa3;
+  --cyan-bright: #00b4c8;
+  --on-cyan: #04262c;
+  --code-bg: #0d1f23;
+  --code-ink: #d7e8eb;
+  --code-soft: #6f8f95;
+  --tk-kw: #4fd8e8;
+  --tk-ty: #f2c86b;
+  --tk-str: #9fdc8a;
+  --tk-num: #f29b7a;
+  --tk-cm: #6f8f95;
+  --tk-pp: #c4a4f0;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Mono", "DejaVu Sans Mono", Menlo, Consolas, monospace;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #081417;
+    --bg2: #0c1c20;
+    --ink: #e2eff1;
+    --soft: #93adb2;
+    --line: #1c343a;
+    --cyan: #3ed3e4;
+    --code-bg: #050e10;
+  }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font: 17px/1.7 var(--sans); font-feature-settings: "cv11", "ss03";
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--cyan); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--cyan-bright); outline-offset: 3px; }
+code, pre, kbd { font-family: var(--mono); }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+/* top bar */
+.bar { position: sticky; top: 0; z-index: 5; background: var(--cyan-bright); color: var(--on-cyan); }
+.bar .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+.bar a { color: var(--on-cyan); }
+.bar a:hover { text-decoration: none; }
+.logo { font: 700 22px/1 var(--mono); letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px; }
+.logo svg { width: 24px; height: 24px; }
+.bar nav { display: flex; gap: 6px; }
+.bar nav a { padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 15px; }
+.bar nav a:hover { background: rgba(4, 38, 44, 0.14); }
+
+/* hero */
+.hero { padding: 88px 0 72px; background: linear-gradient(180deg, var(--bg2), var(--bg)); border-bottom: 1px solid var(--line); }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 56px; align-items: center; }
+h1 { font: 700 clamp(38px, 5.2vw, 62px)/1.08 var(--sans); letter-spacing: -0.03em; }
+h1 em { font-style: normal; color: var(--cyan); }
+.lede { margin-top: 22px; font-size: 19px; color: var(--soft); max-width: 36em; }
+.cta { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px; }
+.btn { display: inline-block; padding: 12px 22px; border-radius: 8px; font-weight: 700; border: 2px solid var(--cyan-bright); }
+.btn.primary { background: var(--cyan-bright); color: var(--on-cyan); }
+.btn.ghost { color: var(--ink); }
+.btn:hover { text-decoration: none; filter: brightness(1.06); }
+.btn.ghost:hover { background: var(--bg2); }
+
+/* code blocks */
+pre.code {
+  background: var(--code-bg); color: var(--code-ink);
+  padding: 20px 24px; border-radius: 10px;
+  font-size: 14.5px; line-height: 1.6;
+  overflow-x: auto; tab-size: 4;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 12px 32px -16px rgba(0, 40, 50, 0.45);
+}
+pre.code .kw { color: var(--tk-kw); }
+pre.code .ty { color: var(--tk-ty); }
+pre.code .st { color: var(--tk-str); }
+pre.code .nu { color: var(--tk-num); }
+pre.code .cm { color: var(--tk-cm); font-style: italic; }
+pre.code .pp { color: var(--tk-pp); }
+pre.code .pr { color: var(--code-soft); user-select: none; }
+.cap { font-size: 13px; color: var(--soft); margin: 8px 4px 0; }
+
+/* facts strip */
+.facts { border-bottom: 1px solid var(--line); }
+.facts .wrap { display: grid; grid-template-columns: repeat(4, 1fr); }
+.fact { padding: 30px 20px; border-left: 1px solid var(--line); }
+.fact:last-child { border-right: 1px solid var(--line); }
+.fact b { display: block; font: 700 34px/1.1 var(--mono); color: var(--cyan); letter-spacing: -0.03em; }
+.fact span { display: block; margin-top: 6px; font-size: 14.5px; color: var(--soft); }
+
+/* sections */
+section { padding: 84px 0 0; }
+h2 { font: 700 clamp(28px, 3.4vw, 38px)/1.15 var(--sans); letter-spacing: -0.02em; margin-bottom: 14px; }
+h3 { font: 700 20px/1.3 var(--sans); margin-bottom: 8px; }
+.intro { color: var(--soft); max-width: 44em; font-size: 18px; }
+
+.cards { margin-top: 40px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.card { padding: 26px 24px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg2); }
+.card p { color: var(--soft); font-size: 15.5px; }
+.card code { font-size: 13.5px; color: var(--ink); background: var(--bg); padding: 1px 6px; border-radius: 4px; border: 1px solid var(--line); }
+
+.prose { margin-top: 32px; max-width: 40em; }
+.prose p { color: var(--ink); font-size: 18px; }
+.prose p + p { margin-top: 18px; }
+.prose code { font-size: 15px; }
+
+/* feature rows */
+.row { margin-top: 56px; display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 48px; align-items: start; }
+.row.flip { grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); }
+.row.flip .text { order: 2; }
+.row .text p { color: var(--soft); }
+.row .text p + p { margin-top: 12px; }
+.row .text code { font-size: 14px; color: var(--ink); }
+
+/* tables */
+.tbl { margin-top: 32px; width: 100%; border-collapse: collapse; font-size: 15.5px; }
+.tbl th, .tbl td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tbl th { font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--soft); border-bottom: 2px solid var(--line); }
+.tbl td:first-child { white-space: nowrap; }
+.tbl code { font-size: 14px; }
+.tbl .yes { color: var(--cyan); font-weight: 700; }
+.tbl .no { color: var(--soft); }
+.scroll { overflow-x: auto; }
+
+/* steps */
+.steps { margin-top: 36px; display: grid; gap: 28px; counter-reset: s; }
+.step { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 20px; }
+.step::before {
+  counter-increment: s; content: counter(s);
+  width: 44px; height: 44px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--cyan-bright); color: var(--on-cyan); font: 700 18px var(--mono);
+}
+.step p { color: var(--soft); margin-bottom: 10px; }
+
+/* limits */
+.limits { margin-top: 28px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 40px; list-style: none; }
+.limits li { padding: 14px 0 14px 22px; border-bottom: 1px solid var(--line); color: var(--soft); position: relative; font-size: 15.5px; }
+.limits li::before { content: ""; position: absolute; left: 0; top: 24px; width: 8px; height: 8px; border-radius: 2px; background: var(--cyan-bright); }
+
+footer { margin-top: 110px; padding: 36px 0 56px; border-top: 1px solid var(--line); color: var(--soft); font-size: 14.5px; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between; }
+footer .links { display: flex; gap: 22px; flex-wrap: wrap; }
+
+@media (max-width: 900px) {
+  .hero .wrap, .row, .row.flip { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .row.flip .text { order: 0; }
+  .cards { grid-template-columns: minmax(0, 1fr); }
+  .facts .wrap { grid-template-columns: repeat(2, 1fr); }
+  .fact:nth-child(2) { border-right: 1px solid var(--line); }
+  .limits { grid-template-columns: minmax(0, 1fr); }
+  .hero { padding: 56px 0 48px; }
+  section { padding-top: 64px; }
+}
+@media (max-width: 520px) {
+  .bar nav a { padding: 6px 8px; font-size: 14px; }
+  .bar nav .hide-s { display: none; }
+  pre.code { font-size: 13px; padding: 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="wrap">
+    <a class="logo" href="/cyan/" aria-label="Cyan home">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M16.5 7.4A6.2 6.2 0 1 0 16.5 16.6" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+      cyan
+    </a>
+    <nav>
+      <a href="#why">Why Cyan</a>
+      <a href="#tour" class="hide-s">Tour</a>
+      <a href="#targets" class="hide-s">Targets</a>
+      <a href="#start">Get started</a>
+      <a href="https://github.com/vajradevam/sodium">Source</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <h1>A small systems language that stays out of your way.</h1>
+      <p class="lede">I am God\'s Chosen Programmer. I was handed a short list, a RISC-V processor, a language, a compiler and an operating system, and told to build all of it. Cyan is the language, the foundation the rest will stand on. Sodium is its compiler, because Cyan is a god and gods have favourites.</p>
+      <div class="cta">
+        <a class="btn primary" href="#start">Get started</a>
+        <a class="btn ghost" href="https://github.com/vajradevam/sodium">View the source</a>
+      </div>
+    </div>
+    <div>
+<pre class="code" data-lang="cyan">function fact(n: i64) -&gt; i64 {
+    if (n &lt;= 1) { return 1; }
+    return n * fact(n - 1);
+}
+
+function main() {
+    print("hello, Cyan");
+    print("10! is %d", fact(10));
+    return 0;
+}</pre>
+    </div>
+  </div>
+</header>
+
+<section id="why">
+  <div class="wrap">
+    <h2>The first commandment</h2>
+    <p class="intro">Everything else gets built on top of this, so it has to be right. It has to be small enough that one chosen programmer can hold all of it in their head, and honest enough that nothing is hiding underneath.</p>
+
+    <div class="prose">
+<p>Cyan answers to no standard library. A program begins in a tiny <code>_start</code> and speaks to the kernel directly. The allocator, the printer and the float formatter all live in <code>sodium-rt</code>, and I wrote every line of it myself.</p>
+<p>There are two altars. x86-64 is for the machine on my desk, and RISC-V 64 is for the processor I was told to build. One source file goes through one register allocator and comes out as two native programs. An IR verifier watches Sodium's own work between every pass, because even a favourite can slip.</p>
+<p>When something does go wrong, Cyan can make you pay for it. Pass <code>--bounds</code>, <code>--check-null</code> or <code>--stack-probe</code> and a bad access ends the program with exit status 70 and a clear message. Leave the flags off and you pay nothing, the output is the same as ever.</p>
+<p>It still speaks C. Calls follow the usual conventions on both targets, floats and small structs included, and I check them against gcc, so the old world and the new one can keep talking to each other.</p>
+<p>Even prophets like their editors to be helpful. There is a language server for errors, completion, hover and go to definition, and a VS Code extension that connects it.</p>
+<p>Every example in the README is compiled and run by the tests. If the docs ever stop matching the compiler, the build breaks and I hear about it immediately.</p>
+</div>
+  </div>
+</section>
+
+<section id="tour">
+  <div class="wrap">
+    <h2>A quick tour</h2>
+    <p class="intro">If you have written C, most of this will feel familiar. The differences are small, and they are mostly about removing annoyances.</p>
+
+    <div class="row">
+      <div class="text">
+        <h3>Types that say their width</h3>
+        <p>Integers are <code>i8</code> to <code>i64</code> and <code>u8</code> to <code>u64</code>. A plain <code>var</code> becomes an <code>i64</code>, and small types promote to <code>i32</code> just like in C, so nothing sneaks up on you.</p>
+        <p>You also get <code>bool</code>, <code>char</code> and type aliases.</p>
+      </div>
+      <div>
+<pre class="code" data-lang="cyan">function main() {
+    var a = 5;            // inferred i64
+    var b: i32 = 10;      // explicit width
+    var c: u8 = 255;
+    var flag: bool = true;
+    var ch: char = 65;
+    print("%d %d %d %d %d", a, b, c, flag, ch);
+    return 0;
+}</pre>
+      </div>
+    </div>
+
+    <div class="row flip">
+      <div class="text">
+        <h3>Structs, enums and pointers</h3>
+        <p>Structs are just typed fields. Pass them by pointer or return them by value. Enums are named constants, and you can pick the values yourself.</p>
+        <p>Pointer arithmetic scales by element size, and <code>malloc</code> and <code>free</code> come from a small allocator built into the runtime.</p>
+      </div>
+      <div>
+<pre class="code" data-lang="cyan">struct Point { var x: i64; var y: i64; };
+enum Color { Red, Green = 5, Blue };
+
+function main() {
+    var p: Point;
+    p.x = 10;
+    p.y = p.x + 5;
+    print("%d %d", p.x, p.y);
+    print("%d %d %d", Red, Green, Blue);
+
+    var buf = malloc(32);
+    *buf = 7;
+    *(buf + 8) = 9;
+    print("%d", *buf + *(buf + 8));
+    free(buf);
+    return 0;
+}</pre>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="text">
+        <h3>Floats that match the ABI</h3>
+        <p><code>f32</code> and <code>f64</code> follow the C calling convention on both targets. Printing is handled by the runtime itself, with no libc <code>printf</code> behind it.</p>
+        <p>Conversions are spelled out with <code>as</code>, so a float never turns into an integer behind your back.</p>
+      </div>
+      <div>
+<pre class="code" data-lang="cyan">function main() {
+    var a: f64 = 7.5;
+    var b: f64 = 2.5;
+    var c: f32 = 1.5f;
+    print("%f %f %f", a + b, a * b, a / b);
+    print("%f", c);
+    print("%d", (a + b) as i64);
+    print("%f", 1e3 + 2.5e-1);
+    return 0;
+}</pre>
+      </div>
+    </div>
+
+    <div class="row flip">
+      <div class="text">
+        <h3>A preprocessor and inline assembly</h3>
+        <p>Macros and conditional compilation work the way you expect. When you need a single machine instruction, <code>asm</code> takes the architecture, the line and a clobber list, so one file can carry code for both targets.</p>
+      </div>
+      <div>
+<pre class="code" data-lang="cyan">#define LIMIT 3
+#define DOUBLE(x) ((x) * 2)
+
+function main() {
+#if defined(LIMIT) &amp;&amp; LIMIT == 3
+    var n = DOUBLE(2);
+#else
+    var n = 0;
+#endif
+    asm("x86_64", "nop", []);
+    asm("riscv64", "nop", []);
+    print("%d", n);
+    return 0;
+}</pre>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="text">
+        <h3>Safety when you ask for it</h3>
+        <p>The checks are off by default. Switch them on and a bad access stops with exit status 70 and a clear message, instead of a mystery crash three functions later.</p>
+      </div>
+      <div>
+<pre class="code" data-lang="shell"><span class="pr">$ </span>sodium --bounds --check-null --stack-probe app.cyan
+<span class="pr">$ </span>./app
+<span class="pr">$ </span>echo $?
+70</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="targets">
+  <div class="wrap">
+    <h2>One source, two machines</h2>
+    <p class="intro">Pick the target with a flag. Every test runs on both and has to give the same answer, so what works on your laptop also works under qemu on RISC-V.</p>
+
+<pre class="code" data-lang="shell" style="margin-top:32px"><span class="pr">$ </span>sodium -o myprog program.cyan             <span class="cm"># x86-64 is the default</span>
+<span class="pr">$ </span>./myprog
+
+<span class="pr">$ </span>sodium --target riscv64 program.cyan
+<span class="pr">$ </span>qemu-riscv64 ./program
+
+<span class="pr">$ </span>sodium -S program.cyan                    <span class="cm"># stop at assembly</span>
+<span class="pr">$ </span>sodium -g program.cyan                    <span class="cm"># line tables for gdb</span></pre>
+
+    <div class="scroll">
+    <table class="tbl">
+      <thead><tr><th>Capability</th><th>x86-64</th><th>RISC-V 64</th></tr></thead>
+      <tbody>
+        <tr><td>Assembler</td><td>NASM</td><td>GNU as</td></tr>
+        <tr><td>Calling convention</td><td>System V AMD64</td><td>LP64D</td></tr>
+        <tr><td>Linux executables without libc</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+        <tr><td>Register allocation and optimization</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+        <tr><td>Float and struct ABI checked against gcc</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+        <tr><td>Debug line tables with <code>-g</code></td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+        <tr><td>WebAssembly or aarch64</td><td class="no" colspan="2">Planned, not started</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<section id="start">
+  <div class="wrap">
+    <h2>Get started</h2>
+    <p class="intro">You will need a C++20 compiler, CMake and NASM. If you want to try RISC-V too, add the RISC-V binutils and qemu.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div>
+          <h3>Build the compiler</h3>
+<pre class="code" data-lang="shell"><span class="pr">$ </span>git clone https://github.com/vajradevam/sodium
+<span class="pr">$ </span>cd sodium
+<span class="pr">$ </span>cmake -B build -DCMAKE_BUILD_TYPE=Release
+<span class="pr">$ </span>cmake --build build -j$(nproc)</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div>
+          <h3>Write a program</h3>
+          <p>Everything starts in <code>main</code>, and whatever it returns becomes the exit code.</p>
+<pre class="code" data-lang="cyan">function main() {
+    print("hello, Cyan");
+    return 0;
+}</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div>
+          <h3>Compile and run</h3>
+<pre class="code" data-lang="shell"><span class="pr">$ </span>./build/sodium hello.cyan
+<span class="pr">$ </span>./hello
+hello, Cyan</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div>
+          <h3>Keep it around</h3>
+          <p>This puts <code>sodium</code> on your path and sets up the VS Code extension as well.</p>
+<pre class="code" data-lang="shell"><span class="pr">$ </span>./scripts/install.sh --vscode</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="flags">
+  <div class="wrap">
+    <h2>Compiler flags</h2>
+    <div class="scroll">
+    <table class="tbl">
+      <thead><tr><th>Flag</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td><code>-o &lt;file&gt;</code></td><td>Output path, defaulting to the input name without <code>.cyan</code></td></tr>
+        <tr><td><code>--target &lt;arch&gt;</code></td><td><code>x86_64</code> (default) or <code>riscv64</code></td></tr>
+        <tr><td><code>-O0</code>, <code>-O1</code></td><td>Optimization level, with <code>-O1</code> as the default</td></tr>
+        <tr><td><code>-S</code></td><td>Emit assembly and stop</td></tr>
+        <tr><td><code>-g</code></td><td>Emit DWARF line tables for gdb</td></tr>
+        <tr><td><code>--bounds</code>, <code>--check-null</code>, <code>--stack-probe</code></td><td>Runtime checks that exit with status 70 on failure</td></tr>
+        <tr><td><code>-I &lt;dir&gt;</code></td><td>Add an include search directory</td></tr>
+        <tr><td><code>-w</code>, <code>-Werror</code></td><td>Silence warnings or turn them into errors</td></tr>
+        <tr><td><code>--verify-ir</code></td><td>Run the IR verifier after every pass</td></tr>
+        <tr><td><code>--emit-ir</code>, <code>--print-ast</code></td><td>Inspect the IR or the syntax tree</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>Cyan and Sodium are MIT licensed.</div>
+    <div class="links">
+      <a href="https://github.com/vajradevam/sodium">Source</a>
+      <a href="https://github.com/vajradevam/sodium/issues">Issues</a>
+      <a href="/">vajradevam.in</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Tiny highlighter for the cyan blocks. Pure decoration, the page reads fine without it.
+(function () {
+  var KW = /^(function|var|const|global|static|struct|enum|type|if|else|while|do|for|switch|case|default|break|continue|return|as|asm|true|false)$/;
+  var TY = /^(i8|i16|i32|i64|u8|u16|u32|u64|f32|f64|bool|char)$/;
+  var re = /(\/\/[^\n]*)|("(?:[^"\\]|\\.)*")|(^#[^\n]*)|(\b0x[0-9a-fA-F]+\b|\b\d+(?:\.\d+)?(?:e-?\d+)?f?\b)|([A-Za-z_]\w*)/gm;
+  document.querySelectorAll('pre.code[data-lang="cyan"]').forEach(function (pre) {
+    var src = pre.textContent, out = '', last = 0, m;
+    function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+    re.lastIndex = 0;
+    while ((m = re.exec(src))) {
+      out += esc(src.slice(last, m.index));
+      var t = m[0], c = null;
+      if (m[1]) c = 'cm';
+      else if (m[2]) c = 'st';
+      else if (m[3]) c = 'pp';
+      else if (m[4]) c = 'nu';
+      else if (KW.test(t)) c = 'kw';
+      else if (TY.test(t)) c = 'ty';
+      out += c ? '<span class="' + c + '">' + esc(t) + '</span>' : esc(t);
+      last = m.index + t.length;
+    }
+    pre.innerHTML = out + esc(src.slice(last));
+  });
+})();
+</script>
+</body>
+</html>
